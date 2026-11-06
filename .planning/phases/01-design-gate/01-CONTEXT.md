@@ -84,6 +84,9 @@ No product code. This phase delivers:
 
 ### Material
 - `/home/atlas/Downloads/DEVFEST 2026.jpeg`: portrait source (D-22)
+- `https://agisback.crcrobotics.com/fr/`: AG robotics team website (CRC). Optional. Use it as the outbound link on the robot firmware project and as a fact source for the CRC results.
+- `/home/atlas/Downloads/AG Logos Mø-Duel 2026/AG Logos Mø-Duel 2026/AG Files 2025-2026/AG_svg_files/`: team logo (SVG, black and white versions; PNGs in the sibling `AG_png_files/`). Optional. If used, only the single-colour white SVG, small, next to the robot project as attribution, never as decoration (DSGN-06). Skip `AG Online` (social banners) and the `__MACOSX` junk.
+- Robot 3D model: may arrive later; not needed for Phase 1. It feeds the Phase 6 robot project and Phase 8.
 
 </canonical_refs>
 
