@@ -29,6 +29,13 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 - [ ] Depth-map aesthetic placed somewhere deliberate (leading idea: a real depth map of a portrait of Yahya on About) — placement still open
 - [ ] Accessible: keyboard navigation, focus states, inactive pages inert, reduced-motion versions of every animation, works without the pointer
 - [ ] Works on phones (swipe paging, letter rail scaled down)
+- [ ] Hero shows a role line and one proof line beside the giant YAHYA, readable with no interaction
+- [ ] Resume PDF (self-hosted) on Say hi and reachable from every page
+- [ ] Contact visible from every page
+- [ ] Each page has its own real URL (/achievements/ etc.); Back steps through visited pages
+- [ ] First-visit hint and visible Next control
+- [ ] SEO and sharing: titles, description, canonical, Person JSON-LD, Open Graph card, favicon, on-brand 404
+- [ ] Skip link, live region announcing page changes, contrast-tested tokens (small grey text no lighter than #8a8a8a on black)
 - [ ] Final copy and descriptions written by Yahya (deferred to a later phase)
 
 ### Out of Scope
@@ -66,6 +73,12 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 | Inter Tight as the single family | Swiss grotesque feel, free, variable | ⚠️ Revisit (final font still open) |
 | Remove Icons8 illustrations | "Remove those cartoonish assets" | ✓ Good |
 | Design before copy | "getting the design is the most important" | — Pending |
+| Real URLs per page, Back steps through pages | Shareable links, per-page metadata, no load flash (research Decision 1) | — Pending |
+| Letters-to-rail FLIP with the native Web Animations API, no library | 0 kB, interruptible; swap to GSAP Flip only if bugs cost over a day (Decision 2) | — Pending |
+| Add a resume PDF | Recruiters expect it (Decision 5) | — Pending |
+| Buy yahya-h.dev before the first deploy | Avoids the basePath stage and asset-path bugs (Decision 6) | — Pending |
+| Left rail kept; iOS edge-swipe mitigated (inset, edge exclusion, device test) | His choice "on the left for the name" (Decision 3) | — Pending |
+| Pages designed to fit one screen, inner scroll as safety net | Zoom/reflow accessibility (Decision 4) | — Pending |
 | Depth map placement deferred | He asked to focus on Swiss typography first | — Pending |
 
 ## Evolution
@@ -86,4 +99,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-11-06 after initialization*
+*Last updated: 2026-11-06 after research decisions*
