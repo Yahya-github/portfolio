@@ -56,7 +56,7 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 
 ## Constraints
 
-- **Tech stack**: Next.js static export hosted on GitHub Pages — free hosting, no server
+- **Tech stack**: Next.js static export hosted on Vercel (switched from GitHub Pages 2026-11-06) — free hobby tier, real headers, no basePath stage
 - **Domain**: yahya-h.dev (not bought yet)
 - **Content**: only verified, real facts; no invented numbers
 - **Assets**: self-host fonts and media; no hotlinked sprites in production
@@ -79,6 +79,16 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 | Buy yahya-h.dev before the first deploy | Avoids the basePath stage and asset-path bugs (Decision 6) | — Pending |
 | Left rail kept; iOS edge-swipe mitigated (inset, edge exclusion, device test) | His choice "on the left for the name" (Decision 3) | — Pending |
 | Pages designed to fit one screen, inner scroll as safety net | Zoom/reflow accessibility (Decision 4) | — Pending |
+| Host on Vercel, not GitHub Pages | His choice; real headers, no basePath stage | — Pending |
+| Style-led "wow" over a story concept | He finds speed/"cracked" hard to convey; wow must come from craft (letters, depth-map imagery, distinct page compositions) | — Pending |
+| Green = nature and terminals | His meaning for the accent | — Pending |
+| Depth map = one treatment for all real photos/screenshots of his work | Solves missing visual proof and gives the aesthetic a purpose | — Pending |
+| Drop the 75-dot judge; static typographic 75/75 | Read as a loader in the Swiss direction | ✓ Good |
+| Remove pixel stickers; personality via About in his voice | Clash with dark Swiss | ✓ Good |
+| Facturo is the flagship project | Real users, 700+ tests | — Pending |
+| One motion rule: horizontal, fast, no bounce | Ties all animation together | — Pending |
+| Short first-visit intro (<1 s, skippable) | His request, bounded by recruiter research | — Pending |
+| Portrait phone version, no rotate gate | Recruiters open links on phones, often rotation-locked | — Pending |
 | Depth map placement deferred | He asked to focus on Swiss typography first | — Pending |
 
 ## Evolution
