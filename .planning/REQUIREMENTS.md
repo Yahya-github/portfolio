@@ -76,7 +76,55 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - Invented metrics, testimonials or logos — only real facts
 
 ## Traceability
-(Filled by the roadmap.)
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| DSGN-01 | Phase 3 | Pending |
+| DSGN-02 | Phase 3 | Pending |
+| DSGN-03 | Phase 6 | Pending |
+| DSGN-04 | Phase 5 | Pending |
+| DSGN-05 | Phase 8 | Pending |
+| DSGN-06 | Phase 3 | Pending |
+| NAV-01 | Phase 4 | Pending |
+| NAV-02 | Phase 4 | Pending |
+| NAV-03 | Phase 4 | Pending |
+| NAV-04 | Phase 4 | Pending |
+| NAV-05 | Phase 5 | Pending |
+| NAV-06 | Phase 5 | Pending |
+| NAV-07 | Phase 4 | Pending |
+| LTR-01 | Phase 3 | Pending |
+| LTR-02 | Phase 3 | Pending |
+| LTR-03 | Phase 5 | Pending |
+| LTR-04 | Phase 5 | Pending |
+| LTR-05 | Phase 5 | Pending |
+| LTR-06 | Phase 5 | Pending |
+| CONT-01 | Phase 3 | Pending |
+| CONT-02 | Phase 6 | Pending |
+| CONT-03 | Phase 6 | Pending |
+| CONT-04 | Phase 6 | Pending |
+| CONT-05 | Phase 6 | Pending |
+| CONT-06 | Phase 7 | Pending |
+| CONT-07 | Phase 6 | Pending |
+| CONT-08 | Phase 6 | Pending |
+| CONT-09 | Phase 3 | Pending |
+| EXP-01 | Phase 5 | Pending |
+| EXP-02 | Phase 6 | Pending |
+| SEO-01 | Phase 7 | Pending |
+| SEO-02 | Phase 7 | Pending |
+| A11Y-01 | Phase 4 | Pending |
+| A11Y-02 | Phase 3 | Pending |
+| A11Y-03 | Phase 3 | Pending |
+| A11Y-04 | Phase 5 | Pending |
+| A11Y-05 | Phase 3 | Pending |
+| DEP-01 | Phase 2 | Pending |
+| DEP-02 | Phase 2 | Pending |
+
+**Coverage:**
+- v1 requirements: 39 total
+- Mapped to phases: 39
+- Unmapped: 0
+
+Phase 1 (Design Gate) carries no requirement directly; it is the approval gate that enables every later phase.
 
 ---
 *Defined: 2026-11-06*
