@@ -179,7 +179,7 @@
   .reel { position: relative; flex: 1 1 auto; min-height: 120px; height: 0; overflow: hidden; background: var(--color-ground); }
   .reel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 0 0; opacity: 0; transform-origin: 0 0;
               transition: opacity 900ms var(--ease-ui); }
-  .reel img.tall { object-fit: contain; }   /* the 390px phone screen stays whole, flush left */
+  .reel img.tall { object-fit: contain; object-position: 50% 50%; transform-origin: 50% 50%; }   /* portrait frames (the 390px phone screen) stay whole and centred; JS adds .tall from width/height and pushes them in around the centre */
   .reel img.on { opacity: 1; }
   .ctl { display: flex; align-items: baseline; gap: var(--space-lg); margin-top: var(--space-sm); }
   .proj .lead .ctl { align-self: stretch; margin-top: var(--space-sm); }
@@ -322,7 +322,7 @@
           <img data-src="../material/screenshots/facturo-06-palette-grey.png" alt="Facturo command palette" data-name="Command palette" width="1440" height="900" decoding="async" aria-hidden="true">
           <img data-src="../material/screenshots/facturo-07-accueil-sombre-grey.png" alt="Facturo home screen in the dark theme, fictional data" data-name="Home, dark theme" width="1440" height="900" decoding="async" aria-hidden="true">
           <img data-src="../material/screenshots/facturo-08-menu-reduit-grey.png" alt="Facturo with the sidebar collapsed, fictional data" data-name="Collapsed sidebar" width="1440" height="900" decoding="async" aria-hidden="true">
-          <img class="tall" data-src="../material/screenshots/facturo-09-mobile-grey.png" alt="Facturo on a 390px phone screen, fictional data" data-name="Phone" width="390" height="844" decoding="async" aria-hidden="true">
+          <img data-src="../material/screenshots/facturo-09-mobile-grey.png" alt="Facturo on a 390px phone screen, fictional data" data-name="Phone" width="390" height="844" decoding="async" aria-hidden="true">
           <img data-src="../material/screenshots/facturo-10-clients-grey.png" alt="Facturo client list, fictional clients" data-name="Clients" width="1440" height="900" decoding="async" aria-hidden="true">
         </div>
         <div class="ctl lab"><button type="button" id="rp" aria-pressed="false">Pause</button><button type="button" id="rprev">Previous</button><button type="button" id="rnext">Next</button><span class="cnt dim num" id="rcnt" aria-live="off">01 / 10, Home</span></div>
@@ -447,6 +447,7 @@
       nx.textContent = n < N - 1 ? 'Next, ' + names[n + 1].replace(/^\d+ /, '') : 'Back to the start';
       if (!instant) live.textContent = names[n].replace(/^\d+ /, '') + ', page ' + (n + 1) + ' of ' + N;
       if (history.replaceState) history.replaceState(null, '', n ? '#p' + n : location.pathname + location.search);
+      if (n !== PROJ) pointerIn = false;
       reelSync();
       setTimeout(function () { locked = false; quietUntil = performance.now() + 180; layoutBox(); }, instant ? 50 : DUR_PAGE + 50);
     }
@@ -565,40 +566,57 @@
     portrait.addEventListener('click', function () { portrait.setAttribute('aria-pressed', String(portrait.getAttribute('aria-pressed') !== 'true')); });
 
     // Projects: Facturo walkthrough. Each frame pushes in slowly (transform) while it shows, then crossfades (opacity).
-    // Pauses on hover and focus, on the Pause control, off the Projects page, when scrolled out of view or the tab is hidden.
-    // Under reduced motion there is no auto-advance: Previous and Next step through the frames.
-    var reel = document.getElementById('reel'), frames = [].slice.call(reel.querySelectorAll('img'));
+    // One clock: the current frame's push-in animation. Its finish advances the reel; pausing is Animation.pause(), and
+    // resuming continues the same frame from where it stopped. running() is the single source of truth and reelSync()
+    // applies it; every input only updates its own flag (or nothing) and calls reelSync().
+    // Pauses while the pointer is over the block, while keyboard focus (focus-visible) is inside it, on the Pause control,
+    // off the Projects page, when scrolled out of view and when the tab is hidden. Under reduced motion there is no
+    // auto-advance: Previous and Next step through the frames.
+    // v7 bug (Yahya 2026-11-07, "sometimes it freezes when you pass and remove your cursor"): hover and focus shared one
+    // flag, and pointerleave set it to "focus is inside". A mouse click on Pause, Play, Previous or Next leaves focus on
+    // that button, so after the pointer left the reel stayed paused for good. Hover and keyboard focus are now separate,
+    // and a mouse-focused button does not hold the pause.
+    var reel = document.getElementById('reel'), frames = [].slice.call(reel.querySelectorAll('img')), lead = reel.parentNode;
     var rp = document.getElementById('rp'), rcnt = document.getElementById('rcnt');
     var FRAME_MS = 5200, PUSH = ['scale(1.06) translate(-1.5%, -1%)', 'scale(1.06) translate(0, -1.5%)', 'scale(1.06) translate(-1%, 0)'];
-    var fi = 0, anim = null, userPaused = false, hovering = false, inView = true, PROJ = 2;
+    var fi = 0, anim = null, seq = 0, userPaused = false, pointerIn = false, inView = true, PROJ = 2;
+    // portrait frames (the phone screen) are shown whole and centred, and push in around their centre
+    frames.forEach(function (f) { if (+f.getAttribute('height') > +f.getAttribute('width')) f.classList.add('tall'); });
     function load(i) { var f = frames[i]; if (f && f.dataset.src) { f.src = f.dataset.src; f.removeAttribute('data-src'); } return f; }
-    function running() { return !reduce && !userPaused && !hovering && inView && page === PROJ && !document.hidden; }
+    function keyFocusIn() { var a = document.activeElement; return !!a && lead.contains(a) && a.matches(':focus-visible'); }
+    function running() { return !reduce && !userPaused && !pointerIn && !keyFocusIn() && inView && page === PROJ && !document.hidden; }
+    function reelSync() {
+      if (!anim) return;
+      if (running()) { if (anim.playState === 'paused') anim.play(); }
+      else if (anim.playState === 'running') anim.pause();
+    }
     function show(i) {
       i = (i + frames.length) % frames.length;
-      var next = load(i); load(i + 1);
+      var my = ++seq, next = load(i); load(i + 1);
       var ready = next.decode ? next.decode().then(null, function () {}) : Promise.resolve();
       ready.then(function () {
+        if (my !== seq) return;   /* a newer Previous/Next/auto step was asked for while this frame decoded */
         var prev = frames[fi];
         if (prev !== next) { prev.classList.remove('on'); prev.setAttribute('aria-hidden', 'true'); }
         fi = i; next.classList.add('on'); next.removeAttribute('aria-hidden');
         rcnt.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(frames.length).padStart(2, '0') + ', ' + next.dataset.name;
-        var old = anim;   /* the outgoing frame keeps its push-in while it fades, then resets */
-        if (old) setTimeout(function () { old.cancel(); }, 1000);
+        var old = anim;   /* the outgoing frame keeps its push-in while it fades, then resets; it can no longer advance the reel */
+        if (old) { old.onfinish = null; setTimeout(function () { old.cancel(); }, 1000); }
         if (reduce) { anim = null; return; }
-        anim = next.animate([{ transform: 'none' }, { transform: PUSH[i % PUSH.length] }], { duration: FRAME_MS, easing: 'linear', fill: 'forwards' });
+        var push = next.classList.contains('tall') ? 'scale(1.06)' : PUSH[i % PUSH.length];
+        anim = next.animate([{ transform: 'none' }, { transform: push }], { duration: FRAME_MS, easing: 'linear', fill: 'forwards' });
         anim.onfinish = function () { rcnt.setAttribute('aria-live', 'off'); show(fi + 1); };
         reelSync();
       });
     }
-    function reelSync() { if (!anim) return; if (running()) { if (anim.playState === 'paused') anim.play(); } else if (anim.playState === 'running') anim.pause(); }
     rp.addEventListener('click', function () { userPaused = !userPaused; rp.setAttribute('aria-pressed', String(userPaused)); rp.textContent = userPaused ? 'Play' : 'Pause'; reelSync(); });
     document.getElementById('rprev').addEventListener('click', function () { rcnt.setAttribute('aria-live', 'polite'); show(fi - 1); });
     document.getElementById('rnext').addEventListener('click', function () { rcnt.setAttribute('aria-live', 'polite'); show(fi + 1); });
-    var lead = reel.parentNode;
-    lead.addEventListener('pointerenter', function () { hovering = true; reelSync(); });
-    lead.addEventListener('pointerleave', function () { hovering = lead.contains(document.activeElement); reelSync(); });
-    lead.addEventListener('focusin', function () { hovering = true; reelSync(); });
-    lead.addEventListener('focusout', function (e) { hovering = lead.contains(e.relatedTarget) || lead.matches(':hover'); reelSync(); });
+    lead.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') { pointerIn = true; reelSync(); } });
+    lead.addEventListener('pointerleave', function () { pointerIn = false; reelSync(); });
+    lead.addEventListener('focusin', reelSync);
+    lead.addEventListener('focusout', function () { setTimeout(reelSync, 0); });   /* activeElement settles after focusout */
+    addEventListener('keydown', function () { setTimeout(reelSync, 0); });   /* a key press can make a mouse-focused button focus-visible */
     document.addEventListener('visibilitychange', reelSync);
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { inView = es[0].isIntersecting; reelSync(); }).observe(reel);
     show(0);
