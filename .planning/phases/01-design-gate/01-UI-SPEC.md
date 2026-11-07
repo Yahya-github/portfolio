@@ -55,6 +55,7 @@ Trial page layout, one block per face, all on the `#0b0b0b` ground:
 3. One body paragraph at 16px/1.5, weight 400 (use the verified About draft line "I decide fast under pressure, and I build things that run themselves." plus the Facturo summary from `portfolio-voice-and-facts`).
 4. Numerals `00 / 05` and `75/75` at 48px for reference only, with `font-variant-numeric: tabular-nums` (D-06).
 5. Face name, licence status and the measured `--yahya-fit` constant (advance width of "YAHYA" in em) under each block.
+6. Fit checks for the winning face, recorded in the doc: the word "Achievements" at the 64px Display floor inside a 390px wide phone frame (16px margins plus the rail column), and "Involvement" at desktop Display inside cols 7-12 at 1366px and 1440px. Record whether each fits on one line. If a word does not fit on phone, Phase 6 solves it in layout (line break, title moved, or the title set at Heading on that page) without adding a new type size.
 
 Pass/fail criteria (D-03 to D-07), recorded in the doc for the winner:
 - The Y arms and A apexes hold together at giant size with negative tracking (PITFALLS: check the actual word).
@@ -82,15 +83,16 @@ Declared values (all multiples of 4):
 | `--space-xl` | 32px | Gap between groups inside a page (title to list) |
 | `--space-2xl` | 48px | Gap between major blocks on a page |
 | `--space-3xl` | 64px | Page-level breathing room above poster type |
-| `--space-4xl` | 96px | Distance from the hero word's bottom edge to the footer (v6 used 92, rounded to the scale) |
 
 Rhythm rule: more space between groups than within (Swiss principle). Within a list row use `sm`/`md`; between a title and its list use `xl`; between blocks use `2xl` or more. Never the same padding on every element.
 
 Exceptions:
+- Hero bottom gap: `--hero-bottom-gap: calc(var(--space-3xl) + var(--space-xl))` = 96px, a named one-off used only for the distance from the hero YAHYA's bottom edge to the footer. Justification: v6 used 92px so the captions clear the footer; rounded to a multiple of 4. Not a general spacing step.
 - Frame offsets: header height 72px (`--frame-top`), footer height 56px (`--frame-bottom`). Pages pad by these so content never sits under the fixed frame. Both are multiples of 4.
 - Rail column: non-hero pages pad left by `--grid-margin + 56px` desktop (rail width 32px plus 24px gap) and `16px + 36px` on phones, so content never sits under the rail.
 - Phone rail inset: rail letters sit 24px from the left screen edge (research Decision 3, LTR-06). Swipe starts within 20px of the left edge are ignored for paging.
 - Touch targets: every link, rail letter and control is at least 44x44px hit area on touch devices (padding may extend past the glyph).
+- Rail pitch on touch: at 22px with gap 8px the phone rail pitch is about 25px, below 44px. Resolution: under `(pointer: coarse)` the rail gap becomes 28px (pitch about 45px), and each letter's hit area is 44x44px, extended outward to the right and vertically only up to half the gap, so hit areas never overlap and never reach into the 20px left-edge swipe zone. Fine pointers keep the 8px gap.
 - Hairline thickness 1px and progress bar 2px are line weights, not spacing.
 
 ### Grid
@@ -120,6 +122,7 @@ One family (D-06). Two weights. Four set sizes, plus one fitted Poster role that
 | Poster (hero YAHYA only) | `calc(var(--grid-width) / var(--yahya-fit))`, capped by `min()` against `100svh` so it fits short screens | display weight (700 default; the trial may set one value in 700-800, which then replaces 700 site-wide) | 0.76 | -0.04em (trial sets the final value) | The giant YAHYA. Rail letters are the same glyphs scaled down by transform, resting rail size 30px desktop, 22px phone |
 
 Rules:
+- The Poster YAHYA and the rail letters are one wordmark element (the same five glyphs, resized only by transform). They sit outside the 4-size text scale and are never reused as a text size for anything else.
 - Exactly 2 weights ship: 400 and the display weight. No 200 light (the v6 75/75 at 200 is retired), no 500, no 800 second heavy.
 - No italics anywhere (D-05). Emphasis is weight, size or the accent.
 - Counters and `75/75` use `font-variant-numeric: tabular-nums` (D-06).
@@ -135,14 +138,14 @@ Rules:
 |------|-------|-------|
 | Dominant (60%) | `--color-ground: #0b0b0b` | The single flat ground: pages, header, footer. No second surface colour exists; there are no cards |
 | Secondary (30%) | `--color-ink: #f0f0f0` (17.27:1 on ground) | All type, the progress bar, YAHYA at rest. Off-white, not #fff, to avoid halation |
-| Secondary support | `--color-dim: #8e8e8e` (6.01:1) | Label-role metadata only: caption numbers, dates, the second line of a list item, the Projects intro line. Never for a fact that only exists in grey |
+| Secondary support | `--color-dim: #8e8e8e` (6.01:1) | Label text and secondary Body lines only: caption numbers, dates, list item details (Achievements detail, Experience organisation, project problem/role/result lines), the Projects intro line. Never for a primary name or heading |
 | Structure | `--color-hair: #2e2e2e` (1.45:1, non-text) | 1px hairlines only where real structure exists: header bottom rule, results list, compact project rows, Experience table, the seam between pages. Not under titles, not as decoration |
 | Accent (10%) | `--color-accent: #5fae84` (7.38:1 on ground) | See reserved list |
 | Destructive | none | The site has no destructive actions, so there is no destructive token |
 
 Accent reserved for exactly these:
 1. The current section's rail letter (LTR-05), always paired with a non-colour cue: its numbered section name stays visible beside it (other letters show their name only on hover/focus) and `aria-current="page"`.
-2. Hover and focus colour of the YAHYA letters, their captions, the Say hi lines and inline text links.
+2. Hover and focus colour of every interactive text: the hero YAHYA letters and their captions, non-current rail letters, the header links ("Resume (PDF)", "Say hi"), the footer Next control, the Say hi lines, the Facturo deep-dive link and inline text links.
 3. The focus ring: `outline: 2px solid var(--color-accent); outline-offset: 4px` on every focusable element.
 4. The `75/75` numeral on Achievements, the single emphasis figure of the site.
 5. Cursor variant (b) stroke, if that variant wins.
@@ -186,7 +189,7 @@ One rule (DSGN-04): movement on the horizontal axis, fast and decisive, no bounc
 | Header | Fixed, 72px, Label role, hairline bottom rule. Cols 1-3 "Yahya Hallani"; cols 4-6 current section name in dim; cols 10-12 flush right "Resume (PDF)" and "Say hi" as Label links (CONT-08: resume and contact reachable from every page) |
 | Footer | Fixed, 56px, Label role. Cols 1-3 counter `00 / 05` (tabular); cols 10-12 flush right Next control; 2px ink progress bar along the bottom edge, width 1/6, translating by page |
 | Hero letters | Five real `<a href>` links (Y `/achievements/`, A `/projects/`, H `/experience/`, Y `/about/`, A `/say-hi/`). Caption under each: dim number plus ink name, Label role, e.g. "01 Achievements" |
-| Rail | Vertical stack in the left margin, 30px desktop / 22px phone, gap 8px, top aligned to `--frame-top`. Hover/focus reveals the section name as a Label to the right of the letter. Current letter: accent plus permanent name |
+| Rail | Vertical stack in the left margin, 30px desktop / 22px phone, gap 8px (28px under `pointer: coarse`), top aligned to `--frame-top`. Hover/focus reveals the section name as a Label to the right of the letter. Current letter: accent plus permanent name. Every rail letter is a real link whose accessible name is the section name (`aria-label="Achievements"` etc., or visually hidden text), so touch and screen-reader users get the name without hover; the current one also has `aria-current="page"`. The visible glyph stays the letter |
 | Skip link | First Tab stop, "Skip to content", Label role, ink on ground, visible only on focus, top left at the grid margin |
 | Focus | 2px accent outline, 4px offset, never removed |
 | Hover | Colour shift to accent only. No movement, scale or underline animation. One hover treatment site-wide |
@@ -202,7 +205,7 @@ Each page borrows one Swiss poster device. Each has exactly one dominant element
 
 | # | Page | Poster device | Column spans (desktop) | Display group | Phone portrait intent (D-16, one line) |
 |---|------|---------------|------------------------|---------------|----------------------------------------|
-| 00 | Index | Wordmark as image, bottom-anchored | Role line + proof line cols 1-4 top; meta labels (Software engineering, McGill University, Montréal, Québec) cols 7-12 top, three-up; YAHYA Poster cols 1-12, bottom edge `--space-4xl` above the footer, captions beneath | YAHYA (Poster) | YAHYA fitted to phone width, captions stacked number over name, role and proof lines above |
+| 00 | Index | Wordmark as image, bottom-anchored | Role line + proof line cols 1-4 top; meta labels (Software engineering, McGill University, Montréal, Québec) cols 7-12 top, three-up; YAHYA Poster cols 1-12, bottom edge `--hero-bottom-gap` above the footer, captions beneath | YAHYA (Poster) | YAHYA fitted to phone width, captions stacked number over name, role and proof lines above |
 | 01 | Achievements, variant (a) | Dominant numeral, extreme scale contrast | Label "Canadian Computing Competition, perfect score" then `75/75` in Display, accent, cols 1-7, upper-middle (35-45% from top); four first places as a ruled list cols 8-12, name Heading left, rank Heading flush right, detail Body dim below; page title "Achievements" in Heading above the list | `75/75` (smaller than YAHYA by definition, since Display caps at 168px) | 75/75 on top at full width, ruled list below |
 | 01 | Achievements, variant (b) | Typographic list, no rules | Title "Achievements" Display cols 1-12 top; below, five unruled lines cols 3-12, each: rank Heading, then result Heading, then detail Body dim on the same baseline; the first line is "75/75, Canadian Computing Competition, perfect score" at the same Heading size, numeral in accent. Separated by `--space-lg` | Title "Achievements" | Title, then lines stacked rank above result. If (b) wins, CONT-02 ("giant 75/75") must be rewritten in REQUIREMENTS.md (D-11) |
 | 02 | Projects | Asymmetric split 8/4 with a hard-cropped image | Facturo cols 1-8: greyscale screenshot hard-cropped across cols 1-8, name "Facturo" in Display, one Body line each for problem and result, a Label link "Read the deep dive" to `/projects/facturo/`. Cols 9-12: Atlantis, CRC problems, Robot firmware, Showdown AI as compact ruled rows: number Label dim, name Heading, then problem, role, result in Body, links in Label (D-12) | "Facturo" | Facturo block full width first, four compact rows stacked below |
