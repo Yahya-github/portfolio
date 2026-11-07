@@ -177,15 +177,21 @@
 
   /* 02 projects: Facturo walkthrough, 10 greyscale frames, slow push-in plus crossfade (transform and opacity only) */
   .reel { position: relative; flex: 1 1 auto; min-height: 120px; height: 0; overflow: hidden; background: var(--color-ground); }
-  .reel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 0 0; opacity: 0; transform-origin: 0 0;
-              transition: opacity 900ms var(--ease-ui); }
-  .reel img.tall { object-fit: contain; object-position: 50% 50%; transform-origin: 50% 50%; }   /* portrait frames (the 390px phone screen) stay whole and centred; JS adds .tall from width/height and pushes them in around the centre */
-  .reel img.on { opacity: 1; }
+  .reel .fr { position: absolute; inset: 0; opacity: 0; transform-origin: 0 0; transition: opacity 900ms var(--ease-ui); }
+  .reel .fr.on { opacity: 1; }
+  .reel img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: 0 0; }
+  .reel .fr.tall { transform-origin: 50% 50%; }   /* portrait frames (the 390px phone screen) stay whole and centred; JS adds .tall from width/height and pushes them in around the centre */
+  .reel .fr.tall img { object-fit: contain; object-position: 50% 50%; }
+  /* colour on hover (Yahya, 2026-11-07, round 2): the frame under the pointer, keyboard focus or a tap crossfades to its colour
+     original, the same moment the walkthrough pauses. The colours are the screenshot's own (Facturo's green is content), never an accent use */
+  .reel img.c { opacity: 0; transition: opacity 400ms var(--ease-ui); }
+  .reel.col img.c.ok { opacity: 1; }
+  .reel:focus-visible { outline-offset: -2px; }
   .ctl { display: flex; align-items: baseline; gap: var(--space-lg); margin-top: var(--space-sm); }
   .proj .lead .ctl { align-self: stretch; margin-top: var(--space-sm); }
   .ctl .cnt { margin-left: auto; }
   .ctl button { min-height: 24px; }
-  @media (prefers-reduced-motion: reduce) { .reel img { transition: none; } .ctl #rp { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .reel .fr, .reel img.c { transition: none; } .ctl #rp { display: none; } }
 
   /* 02 projects: asymmetric split 8/4 with a hard-cropped image */
   .proj .grid { grid-template-rows: 100%; }
@@ -325,17 +331,17 @@
   <section class="page proj" data-name="02 Projects" aria-label="Projects">
     <div class="grid top">
       <div class="lead">
-        <div class="reel" id="reel" role="group" aria-roledescription="walkthrough" aria-label="Facturo screens">
-          <img src="../material/screenshots/facturo-01-accueil-grey.png" alt="Facturo home screen: the dashboard of the Demo Transport Inc. workspace, with fictional clients and invoices" data-name="Home" width="1440" height="900" decoding="async">
-          <img src="../material/screenshots/facturo-02-historique-grey.png" alt="Facturo invoice history, fictional data" data-name="History" width="1440" height="900" decoding="async" aria-hidden="true">
-          <img data-src="../material/screenshots/facturo-03-nouvelle-facture-grey.png" alt="Facturo new invoice form, fictional data" data-name="New invoice" width="1440" height="900" decoding="async" aria-hidden="true">
-          <img data-src="../material/screenshots/facturo-04-paiements-grey.png" alt="Facturo payments screen, fictional data" data-name="Payments" width="1440" height="900" decoding="async" aria-hidden="true">
-          <img data-src="../material/screenshots/facturo-05-parametres-grey.png" alt="Facturo settings screen" data-name="Settings" width="1440" height="900" decoding="async" aria-hidden="true">
-          <img data-src="../material/screenshots/facturo-06-palette-grey.png" alt="Facturo command palette" data-name="Command palette" width="1440" height="900" decoding="async" aria-hidden="true">
-          <img data-src="../material/screenshots/facturo-07-accueil-sombre-grey.png" alt="Facturo home screen in the dark theme, fictional data" data-name="Home, dark theme" width="1440" height="900" decoding="async" aria-hidden="true">
-          <img data-src="../material/screenshots/facturo-08-menu-reduit-grey.png" alt="Facturo with the sidebar collapsed, fictional data" data-name="Collapsed sidebar" width="1440" height="900" decoding="async" aria-hidden="true">
-          <img data-src="../material/screenshots/facturo-09-mobile-grey.png" alt="Facturo on a 390px phone screen, fictional data" data-name="Phone" width="390" height="844" decoding="async" aria-hidden="true">
-          <img data-src="../material/screenshots/facturo-10-clients-grey.png" alt="Facturo client list, fictional clients" data-name="Clients" width="1440" height="900" decoding="async" aria-hidden="true">
+        <div class="reel" id="reel" role="group" aria-roledescription="walkthrough" aria-label="Facturo screens" tabindex="0">
+          <div class="fr" data-name="Home"><img src="../material/screenshots/facturo-01-accueil-grey.png" alt="Facturo home screen: the dashboard of the Demo Transport Inc. workspace, with fictional clients and invoices" width="1440" height="900" decoding="async"><img class="c" data-src="../material/screenshots/facturo-01-accueil.png" alt="" width="1440" height="900" decoding="async"></div>
+          <div class="fr" data-name="History" aria-hidden="true"><img src="../material/screenshots/facturo-02-historique-grey.png" alt="Facturo invoice history, fictional data" width="1440" height="900" decoding="async"><img class="c" data-src="../material/screenshots/facturo-02-historique.png" alt="" width="1440" height="900" decoding="async"></div>
+          <div class="fr" data-name="New invoice" aria-hidden="true"><img data-src="../material/screenshots/facturo-03-nouvelle-facture-grey.png" alt="Facturo new invoice form, fictional data" width="1440" height="900" decoding="async"><img class="c" data-src="../material/screenshots/facturo-03-nouvelle-facture.png" alt="" width="1440" height="900" decoding="async"></div>
+          <div class="fr" data-name="Payments" aria-hidden="true"><img data-src="../material/screenshots/facturo-04-paiements-grey.png" alt="Facturo payments screen, fictional data" width="1440" height="900" decoding="async"><img class="c" data-src="../material/screenshots/facturo-04-paiements.png" alt="" width="1440" height="900" decoding="async"></div>
+          <div class="fr" data-name="Settings" aria-hidden="true"><img data-src="../material/screenshots/facturo-05-parametres-grey.png" alt="Facturo settings screen" width="1440" height="900" decoding="async"><img class="c" data-src="../material/screenshots/facturo-05-parametres.png" alt="" width="1440" height="900" decoding="async"></div>
+          <div class="fr" data-name="Command palette" aria-hidden="true"><img data-src="../material/screenshots/facturo-06-palette-grey.png" alt="Facturo command palette" width="1440" height="900" decoding="async"><img class="c" data-src="../material/screenshots/facturo-06-palette.png" alt="" width="1440" height="900" decoding="async"></div>
+          <div class="fr" data-name="Home, dark theme" aria-hidden="true"><img data-src="../material/screenshots/facturo-07-accueil-sombre-grey.png" alt="Facturo home screen in the dark theme, fictional data" width="1440" height="900" decoding="async"><img class="c" data-src="../material/screenshots/facturo-07-accueil-sombre.png" alt="" width="1440" height="900" decoding="async"></div>
+          <div class="fr" data-name="Collapsed sidebar" aria-hidden="true"><img data-src="../material/screenshots/facturo-08-menu-reduit-grey.png" alt="Facturo with the sidebar collapsed, fictional data" width="1440" height="900" decoding="async"><img class="c" data-src="../material/screenshots/facturo-08-menu-reduit.png" alt="" width="1440" height="900" decoding="async"></div>
+          <div class="fr" data-name="Phone" aria-hidden="true"><img data-src="../material/screenshots/facturo-09-mobile-grey.png" alt="Facturo on a 390px phone screen, fictional data" width="390" height="844" decoding="async"><img class="c" data-src="../material/screenshots/facturo-09-mobile.png" alt="" width="390" height="844" decoding="async"></div>
+          <div class="fr" data-name="Clients" aria-hidden="true"><img data-src="../material/screenshots/facturo-10-clients-grey.png" alt="Facturo client list, fictional clients" width="1440" height="900" decoding="async"><img class="c" data-src="../material/screenshots/facturo-10-clients.png" alt="" width="1440" height="900" decoding="async"></div>
         </div>
         <div class="ctl lab"><button type="button" id="rp" aria-pressed="false">Pause</button><button type="button" id="rprev">Previous</button><button type="button" id="rnext">Next</button><span class="cnt dim num" id="rcnt" aria-live="off">01 / 10, Home</span></div>
         <h2 class="display">Facturo</h2>
@@ -463,7 +469,7 @@
       nx.textContent = n < N - 1 ? 'Next, ' + names[n + 1].replace(/^\d+ /, '') : 'Back to the start';
       if (!instant) live.textContent = names[n].replace(/^\d+ /, '') + ', page ' + (n + 1) + ' of ' + N;
       if (history.replaceState) history.replaceState(null, '', n ? '#p' + n : location.pathname + location.search);
-      if (n !== PROJ) { overReel = onFrame = onCtl = false; }
+      if (n !== PROJ) { overReel = onFrame = onCtl = touchHold = false; }
       reelSync();
       setTimeout(function () { locked = false; quietUntil = performance.now() + 180; layoutBox(); }, instant ? 50 : DUR_PAGE + 50);
     }
@@ -603,28 +609,46 @@
     // the hover listeners sat on .lead, the whole cols 1-8 block (frame, controls, heading, two paragraphs, link and its
     // bottom padding), 882x748px at 1440 against a 882x426px frame. Hover is now tested against the visible frame only
     // (the reel box; for a portrait frame the picture inside it, which is centred and narrower) plus the three buttons.
-    var reel = document.getElementById('reel'), frames = [].slice.call(reel.querySelectorAll('img')), lead = reel.parentNode;
+    // Colour (Yahya 2026-11-07, round 2: "when going over the showcase it stops like usually but also shows color"): the
+    // screenshots are greyscale; whatever pauses the reel for the visitor (pointer over the frame or a control, keyboard
+    // focus on them, or a tap on the frame on touch) also crossfades the current frame to its colour original. engaged()
+    // is that one condition, so colour and pause can never disagree. The colour twins load on demand, the current frame
+    // and its neighbours, and a step taken while engaged waits for the new frame's colour so it arrives in colour.
+    var reel = document.getElementById('reel'), frames = [].slice.call(reel.querySelectorAll('.fr')), lead = reel.parentNode;
     var rp = document.getElementById('rp'), rcnt = document.getElementById('rcnt');
     var FRAME_MS = 5200, PUSH = ['scale(1.06) translate(-1.5%, -1%)', 'scale(1.06) translate(0, -1.5%)', 'scale(1.06) translate(-1%, 0)'];
     var fi = 0, anim = null, seq = 0, userPaused = false, inView = true, PROJ = 2;
     var ctlBtns = [rp, document.getElementById('rprev'), document.getElementById('rnext')];
-    var overReel = false, px = 0, py = 0, onFrame = false, onCtl = false;
+    var overReel = false, px = 0, py = 0, onFrame = false, onCtl = false, touchHold = false, tapX = 0, tapY = 0;
+    function grey(f) { return f.firstElementChild; }
+    function colourOf(f) { return f.querySelector('img.c'); }
     // portrait frames (the phone screen) are shown whole and centred, and push in around their centre
-    frames.forEach(function (f) { if (+f.getAttribute('height') > +f.getAttribute('width')) f.classList.add('tall'); });
-    function load(i) { var f = frames[i]; if (f && f.dataset.src) { f.src = f.dataset.src; f.removeAttribute('data-src'); } return f; }
+    frames.forEach(function (f) { var g = grey(f); if (+g.getAttribute('height') > +g.getAttribute('width')) f.classList.add('tall'); });
+    function fetchImg(img) { if (img.dataset.src) { img.src = img.dataset.src; img.removeAttribute('data-src'); } return img.decode ? img.decode().then(null, function () {}) : Promise.resolve(); }
+    function load(i) { var f = frames[(i + frames.length) % frames.length]; fetchImg(grey(f)); return f; }
+    function loadColour(i) {
+      var c = colourOf(frames[(i + frames.length) % frames.length]);
+      if (!c.colourReady) c.colourReady = fetchImg(c).then(function () { c.classList.add('ok'); });
+      return c.colourReady;
+    }
     function keyFocusIn() { var a = document.activeElement; return !!a && (a === reel || ctlBtns.indexOf(a) >= 0) && a.matches(':focus-visible'); }
-    function running() { return !reduce && !userPaused && !onFrame && !onCtl && !keyFocusIn() && inView && page === PROJ && !document.hidden; }
+    function engaged() { return onFrame || onCtl || touchHold || keyFocusIn(); }
+    function running() { return !reduce && !userPaused && !engaged() && inView && page === PROJ && !document.hidden; }
     // the visible frame: the reel box, or for a portrait frame (object-fit: contain) its picture at the current push-in scale
     function frameBox() {
-      var r = reel.getBoundingClientRect(), f = frames[fi];
+      var r = reel.getBoundingClientRect(), f = frames[fi], g = grey(f);
       if (!f.classList.contains('tall')) return r;
-      var iw = +f.getAttribute('width'), ih = +f.getAttribute('height'), k = Math.min(r.width / iw, r.height / ih);
+      var iw = +g.getAttribute('width'), ih = +g.getAttribute('height'), k = Math.min(r.width / iw, r.height / ih);
       var t = getComputedStyle(f).transform, sc = t && t !== 'none' ? new DOMMatrixReadOnly(t).a : 1, w = iw * k * sc, h = ih * k * sc;
       return { left: Math.max(r.left, r.left + (r.width - w) / 2), right: Math.min(r.right, r.left + (r.width + w) / 2),
                top: Math.max(r.top, r.top + (r.height - h) / 2), bottom: Math.min(r.bottom, r.top + (r.height + h) / 2) };
     }
-    function hit() { var b = overReel && frameBox(); onFrame = !!b && px >= b.left && px < b.right && py >= b.top && py < b.bottom; }
+    function inFrame(x, y) { var b = frameBox(); return x >= b.left && x < b.right && y >= b.top && y < b.bottom; }
+    function hit() { onFrame = overReel && inFrame(px, py); }
     function reelSync() {
+      var col = engaged() && page === PROJ;
+      if (col) { loadColour(fi); loadColour(fi + 1); loadColour(fi - 1); }
+      reel.classList.toggle('col', col);
       if (!anim) return;
       if (running()) { if (anim.playState === 'paused') anim.play(); }
       else if (anim.playState === 'running') anim.pause();
@@ -632,7 +656,7 @@
     function show(i) {
       i = (i + frames.length) % frames.length;
       var my = ++seq, next = load(i); load(i + 1);
-      var ready = next.decode ? next.decode().then(null, function () {}) : Promise.resolve();
+      var ready = Promise.all([fetchImg(grey(next)), engaged() ? loadColour(i) : null]);
       ready.then(function () {
         if (my !== seq) return;   /* a newer Previous/Next/auto step was asked for while this frame decoded */
         var prev = frames[fi];
@@ -642,7 +666,7 @@
         var old = anim;   /* the outgoing frame keeps its push-in while it fades, then resets; it can no longer advance the reel */
         if (old) { old.onfinish = null; setTimeout(function () { old.cancel(); }, 1000); }
         hit();   /* the new frame may be a different shape under a still pointer */
-        if (reduce) { anim = null; return; }
+        if (reduce) { anim = null; reelSync(); return; }
         var push = next.classList.contains('tall') ? 'scale(1.06)' : PUSH[i % PUSH.length];
         anim = next.animate([{ transform: 'none' }, { transform: push }], { duration: FRAME_MS, easing: 'linear', fill: 'forwards' });
         anim.onfinish = function () { rcnt.setAttribute('aria-live', 'off'); show(fi + 1); };
@@ -655,6 +679,13 @@
     function reelPointer(e) { if (e.pointerType === 'touch') return; overReel = true; px = e.clientX; py = e.clientY; hit(); reelSync(); }
     reel.addEventListener('pointerenter', reelPointer); reel.addEventListener('pointermove', reelPointer);
     reel.addEventListener('pointerleave', function () { overReel = false; onFrame = false; reelSync(); });
+    // touch: a tap on the frame (not a swipe) toggles colour and pause; a second tap releases both
+    reel.addEventListener('pointerdown', function (e) { tapX = e.clientX; tapY = e.clientY; });
+    reel.addEventListener('pointerup', function (e) {
+      if (e.pointerType !== 'touch' || Math.abs(e.clientX - tapX) > 10 || Math.abs(e.clientY - tapY) > 10) return;
+      if (touchHold || inFrame(e.clientX, e.clientY)) { touchHold = !touchHold; reelSync(); }
+    });
+    reel.addEventListener('mousedown', function (e) { e.preventDefault(); });   /* the frame takes focus from the keyboard only */
     ctlBtns.forEach(function (b) {
       b.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') { onCtl = true; reelSync(); } });
       b.addEventListener('pointerleave', function () { onCtl = false; reelSync(); });
