@@ -293,3 +293,40 @@ Run settings: display weight 700, YAHYA tracking -0.04em, Display tracking -0.05
 | Neue Haas Grotesk Display | Monotype | not measured: needs Yahya's test files; price not verified |
 
 The trial page measures these live once the files sit in `docs/reference/fonts-private/` (git-ignored) or are installed system-wide.
+
+## Winner
+
+Confirmed by Yahya on 2026-11-07 (plan 01-05). Re-measured on 2026-11-07 (plan 01-06) with the committed script: `metrics.py "$S/fonts-src" --faces InstrumentSans --display-weight 700 --yahya-track -0.045 --wdth 75` (Display tracking -0.05em). For the rerun, the WOFF2 was decompressed to `$S/fonts-src/InstrumentSans.ttf`.
+
+- Face: **Instrument Sans**
+- File: `docs/reference/fonts/InstrumentSans-wdth-wght.woff2` (one variable file: wdth 75-100, wght 400-700)
+- Licence: SIL Open Font License 1.1 (`docs/reference/fonts/OFL-InstrumentSans.txt`), self-hosted, no purchase
+- Display weight: 700 (the font's maximum, so there is no 800)
+- Width: wdth 75 for YAHYA and the Display words; wdth 100 for body text
+- Tracking: YAHYA -0.045em; Display words -0.05em
+- Tabular figures: yes, through a real `tnum` feature
+- YAHYA shaped advance at wdth 75, weight 700: 2.380 em
+- `--yahya-fit`: **2.155** (2.380 + 5 x -0.045)
+
+Poster YAHYA, `min(Gh / 2.155, Hb / 0.76)`:
+
+| Viewport | Poster size | Bound |
+|---|---|---|
+| 1440x900 | 646px | width-bound |
+| 1366x768 | 589px | height-bound |
+| 390x844 | 166px | width-bound |
+
+Display-word fit at weight 700, wdth 75, tracking -0.05em:
+
+| Word / slot | Viewport | Width / available | Fits |
+|---|---|---|---|
+| "Involvement" cols 7-12 | 1366 | 489px / 619px | yes |
+| "Involvement" cols 7-12 | 1440 | 516px / 656px | yes |
+| "Involvement" cols 6-12 | 1366 | 489px / 726px | yes |
+| "Involvement" cols 6-12 | 1440 | 516px / 769px | yes |
+| "Achievements" at 64px, 390 phone | 390 | 290px / 322px | yes |
+| "Resume (PDF)" cols 1-9 | 1366 | 551px / 940px | yes |
+| "Resume (PDF)" cols 1-9 | 1440 | 581px / 996px | yes |
+| "75/75" cols 1-7 (tabular-nums) | 1366 | 253px / 726px | yes |
+
+Consequence: "Involvement" fits cols 7-12 at both 1366 and 1440, so the Experience page uses the 6/6 split (Work cols 1-6, Involvement cols 7-12).
