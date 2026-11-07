@@ -25,7 +25,9 @@ sc_4a() { ls docs/material/portrait*.jpg docs/material/*.pdf "$L"; }
 sc_4b() { local t; t=$(pdftotext "$R" - 2>/dev/null) || return 1
           ! grep -Eq '\(?[0-9]{3}\)?[ .-]?[0-9]{3}[ .-][0-9]{4}' <<<"$t" && ! grep -q 'May 2023' <<<"$t" && grep -q '2025' <<<"$t"; }
 sc_4c() { local gps f; gps=$(exiftool -q -q -if '$GPSLatitude' -p '$FileName' -r docs/material 2>/dev/null); [ -z "$gps" ] || { echo "GPS in: $gps"; return 1; }
-          for f in docs/material/portrait*.jpg; do [ "$(magick identify -format '%[colorspace]' "$f")" = Gray ] || { echo "not Gray: $f"; return 1; }; done; }
+          # portrait-*-color.jpg is the one documented exception (colour on hover, plan 01-07); it must still carry no camera tags
+          for f in docs/material/portrait*.jpg; do case "$f" in *-color.jpg) [ -z "$(exiftool -q -q -Make -Model -Software -SerialNumber -s3 "$f")" ] || { echo "camera tags in: $f"; return 1; }; continue;; esac
+            [ "$(magick identify -format '%[colorspace]' "$f")" = Gray ] || { echo "not Gray: $f"; return 1; }; done; }
 sc_4d() { grep -q 'linkedin.com/in/' "$L" && grep -q 'github.com/Yahya-github' "$L" && grep -q '@' "$L"; }
 # SC-4f: each of facturo/robot/atlantis has material in docs/material, or links.md carries an explicit waiver line "- Waiver: <item> ..."
 sc_4f() { local m=0 k; for k in facturo robot atlantis; do compgen -G "docs/material/screenshots/$k-*" >/dev/null || compgen -G "docs/material/photos/$k-*" >/dev/null || grep -Eqi "^- Waiver: $k" "$L" || { echo "no $k material and no waiver"; m=1; }; done; return $m; }
