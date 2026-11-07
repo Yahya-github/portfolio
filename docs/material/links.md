@@ -43,6 +43,7 @@ The LinkedIn profile URL answers 999 to scripted requests (LinkedIn's bot wall).
 | File | What | Source | Treatment |
 |------|------|--------|-----------|
 | portrait-devfest-2026-grey.jpg | Portrait master (plan 01-01) | DevFest 2026 photo | Cropped above banner, greyscale, stripped |
+| portrait-devfest-2026-color.jpg | True-colour twin of the portrait master, shown on hover in About (plan 01-07) | DevFest 2026 photo | Same crop as the grey master (1512x1240+0+0), colour kept, all metadata stripped |
 | resume-public.pdf | Public resume, 1 page | Re-rendered from the JobOps resume JSON with the same Typst 0.14.2 ultra-compact theme (read-only DB copy; nothing written to JobOps) | Phone and contest-platform bullet removed; Author "Yahya Hallani"; no tenant or id metadata |
 | photos/diro-hackathon-2026-award.jpg | DIRO hackathon 2026 winners with certificates | Image pasted by Yahya, 2026-11-07 | Metadata stripped |
 | photos/diro-hackathon-2026-award-grey.jpg | Greyscale derivative | same | Greyscale, stripped |
