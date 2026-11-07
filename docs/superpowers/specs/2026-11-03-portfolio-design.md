@@ -1,6 +1,6 @@
 # Portfolio website: design
 
-Status: DRAFT for Yahya's approval (revision 5: dark Swiss horizontal). Nothing is built. Date: 2026-11-07 (Phase 1 picks recorded; review change rounds 1 to 6 applied).
+Status: DRAFT for Yahya's approval (revision 5: dark Swiss horizontal). Nothing is built. Date: 2026-11-07 (Phase 1 picks recorded; review change rounds 1 to 7 applied).
 Owner: Yahya Hallani. Domain: `yahya-h.dev` (Yahya buys it before the first deploy). Host: Vercel.
 
 Visual contract: `.planning/phases/01-design-gate/01-UI-SPEC.md` holds every token value; this doc records decisions, the trial results and the page compositions. Where they disagree, this doc wins after approval. This revision overrides the `portfolio-design` skill and the stack notes in `CLAUDE.md` wherever they disagree.
@@ -209,21 +209,22 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 - Dominant element: the Facturo block.
 - Display group: "Facturo".
 - Phone portrait intent: the Facturo block full width first, the five compact rows stacked below.
-- Content: Facturo is a local-first invoicing app for a Quebec trucking company, from paper tickets to tax-correct invoices, with 700+ tests. Then MAME Tool Rental, Atlantis, CRC problems, Robot firmware and Showdown AI as compact rows, each with problem, role, result and links (D-12). Robot firmware's result reads "1st place, robot competition, 2026". Showdown AI's result reads "In progress, nothing built yet".
+- Content: Facturo is a local-first invoicing app for a Quebec trucking company, from paper tickets to tax-correct invoices, with 700+ tests. Then MAME Tool Rental, Atlantis, CRC problems, Robot firmware and Showdown AI as compact rows, each with problem, role, result and links (D-12). Robot firmware's result reads "1st place, robot competition, 2026". Showdown AI's lines (Yahya, round 7: "showdown: replace the planned by a quick description, keep the in progress"): "A competitive battle agent"; "An agent that plays ranked Pokémon Showdown battles" (his pick, replacing "Planned"); "In progress, nothing built yet". The new middle line fits one line in cols 9-12 at 1440 and wider, is hidden by the short-height rule below 880px like every middle line, and wraps to two lines on phones; the row budget is unchanged (rows end 794 of 820 at 1440x900).
 
 ### 03 Experience
 
 - Poster device: Ruled two-column table
 - Columns (desktop): Work cols 1-6, Involvement cols 7-12, column heads in Display on one row, rows separated by hairlines: years in Label flush left on their own line, role in Heading, organisation in dim Body. Years and roles flush left (D-13).
-- Organisation marks (Yahya, 2026-11-07): a row whose organisation has a real mark shows it 28px tall, vertically centred in the row, its right edge on the column's right edge (col 6 for Work, col 12 for Involvement). Marks rest in one mono colour, the dim grey `#8e8e8e`, from pre-made mono files (not a CSS filter); hovering the row (fine pointer) or tapping it on touch crossfades to the brand colours over 400ms, instantly under reduced motion. Marks are decorative (empty alt); the text already names the organisation. They stay far smaller than the Display heads. Rows: Mercor, Facturo, CRC 2027 (Work); McGill Robotics, Google Developer Group at McGill, McGill Compete / ICPC (Involvement). Freelance has no mark. Treatment recommended by Claude in round 1; Yahya did not answer the round-1 questions, so these defaults stand (change round 2, 2026-11-07): marks dim grey with colour on hover or tap; the Facturo mark keeps its brand green (`#4ea672`) on hover, which is the mark's own colour and content, not the accent; the ICPC three-square mark stays on the McGill Compete / ICPC NENA row; the generic Google Developer Groups chevron stays on the GDG row. Yahya may still override. Files: `docs/material/logos/*-mark.*` and `*-mark-mono.*`.
+- Organisation marks (Yahya, 2026-11-07): a row whose organisation has a real mark shows it 28px tall, vertically centred in the row, its right edge on the column's right edge (col 6 for Work, col 12 for Involvement). Marks rest in one mono colour, the dim grey `#8e8e8e`, from pre-made mono files (not a CSS filter); hovering the row (fine pointer) or tapping it on touch crossfades to the brand colours over 400ms, instantly under reduced motion. Marks are decorative (empty alt); the text already names the organisation. They stay far smaller than the Display heads. Rows: MAME, Mercor, Facturo, CRC 2027 (Work); McGill Robotics, Google Developer Group at McGill, McGill Compete / ICPC (Involvement). Freelance has no mark. Treatment recommended by Claude in round 1; Yahya did not answer the round-1 questions, so these defaults stand (change round 2, 2026-11-07): marks dim grey with colour on hover or tap; the Facturo mark keeps its brand green (`#4ea672`) on hover, which is the mark's own colour and content, not the accent; the ICPC three-square mark stays on the McGill Compete / ICPC NENA row; the generic Google Developer Groups chevron stays on the GDG row. Yahya may still override. Files: `docs/material/logos/*-mark.*` and `*-mark-mono.*`.
 - Edge-cropped number (round 3, section 4.2): "03", sized to the free height under the Involvement table, sits on the footer line in cols 9-12 and is cut by the page's right edge. It is decorative (`aria-hidden`) and hidden on phones.
 - Display fit: "Involvement" at Display fits cols 7-12 at 1366 and 1440 in Instrument Sans (489px of 619px at 1366, 516px of 656px at 1440), so Work spans cols 1-6 and Involvement cols 7-12.
 - Dominant element: the ruled table.
 - Display group: the "Work" and "Involvement" head row.
 - Phone portrait intent: the Work table, then the Involvement table, stacked.
-- Content, Work: Coding agent evaluator (Mercor, contractor, since Sep 2026); Developer (Facturo, Jun 2026 to Oct 2026, a past role; Yahya, round 6: "I stopped being a dev for facturo in october 2026"); Problem author (CRC 2027, volunteer, since Feb 2026); Freelance developer (12 projects for 9 clients, since 2025).
-- Dates: a current role reads "Since Mon YYYY"; an ended role reads "Mon YYYY to Mon YYYY" and never uses "since". Rows keep start-date order.
-- MAME is not on Experience: there is no Work or Involvement entry for it yet, so no mark is added here (see section 10).
+- Content, Work: Developer (MAME Tool Rental, McGill Association of Mechanical Engineers, since Nov 2026; Yahya, round 7: "mame-experience: Developper Nov 2026", spelled "Developer" on the site); Coding agent evaluator (Mercor, contractor, since Sep 2026); Developer (Facturo, Jun 2026 to Oct 2026, a past role; Yahya, round 6: "I stopped being a dev for facturo in october 2026"); Problem author (CRC 2027, volunteer, since Feb 2026); Freelance developer (12 projects for 9 clients, since 2025).
+- Dates: a current role reads "Since Mon YYYY"; an ended role reads "Mon YYYY to Mon YYYY" and never uses "since". Rows keep start-date order, newest first, so the MAME row (Nov 2026) leads Work.
+- MAME row (round 7): role "Developer", organisation "MAME Tool Rental, McGill Association of Mechanical Engineers" (one line at every desktop size, two on phones), "Since Nov 2026", with the MAME shield mark (mono at rest, its red on row hover or tap), the same file and rule as on its Projects row.
+- Height budget (round 7): five Work rows ran 36px past the 24px gap above the footer at 1366x768 and 77px at 1280x720. The consistent tightening, the same as Projects: below 880px of viewport height (desktop only) every row closes from 12px to 8px. And the Work and Involvement heads keep the Display size unless the free height is too small for it, the rule the Say hi links already follow: `max(64px, min(Display, (100svh - 660px) / 0.88))`. This only shrinks the heads near 720px of height (68px at 1280x720); at 1366x768 they stay at the full 123px. Measured: Work ends 730 of 820 at 1440x900, 684 of 688 at 1366x768, 636 of 640 at 1280x720 and 764 of 1000 at 1920x1080. The cropped "03" (cols 9-12, under Involvement) is unchanged and clear of every text box and mark at all four sizes.
 - Content, Involvement: Software (McGill Robotics); Full-stack (Google Developer Group at McGill, subteam project); Competitor (McGill Compete, ICPC NENA).
 
 ### 04 About
@@ -302,7 +303,7 @@ Still missing (copied from links.md):
 
 1. CCC "top 1" scope. Until it is confirmed, the site says only "perfect score, 75/75".
 2. Atlantis line counts. Not shown until confirmed.
-3. Showdown AI status.
+3. Showdown AI status. Settled 2026-11-07, round 7: kept as "In progress, nothing built yet" ("keep the in progress"), with the description "An agent that plays ranked Pokémon Showdown battles" in place of "Planned".
 4. Domain purchase.
 5. Font purchase, if a paid face wins; the licence must name yahya-h.dev.
 6. Robot CAD file (Phase 8).
@@ -320,8 +321,8 @@ Still missing (copied from links.md):
 18. The Say hi spiral speed and its centre. Settled 2026-11-07, round 6: speed kept at 2.5s per step ("keep"); the words vanish at the centre, no still core word ("vanish is good").
 19. The About rings' brightness. Settled 2026-11-07, round 6: kept at 22% ("keep").
 20. The MAME live-site link while the live site shows a demo banner and demo data. Settled 2026-11-07, round 6: the link stays as is ("dw").
-21. Whether MAME also gets a Work or Involvement entry on Experience (with its mark), and its wording.
-22. The short-height rule for the Projects rows (the middle line hidden below 880px of height), or dropping a row such as Showdown AI to keep all three lines everywhere.
+21. Whether MAME also gets a Work or Involvement entry on Experience (with its mark), and its wording. Settled 2026-11-07, round 7: a Work row, "Developer", since Nov 2026 ("mame-experience: Developper Nov 2026"), with its mark.
+22. The short-height rule for the Projects rows (the middle line hidden below 880px of height), or dropping a row such as Showdown AI to keep all three lines everywhere. Settled 2026-11-07, round 7: Showdown AI keeps its row ("keep the in progress"), so the short-height rule stays, and Experience follows it (section 7, 03 Experience).
 
 ## 11. Success
 

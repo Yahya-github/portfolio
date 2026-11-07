@@ -21,11 +21,11 @@ Collected 2026-11-07 (plan 01-04). Every URL below was fetched once on 2026-11-0
 | AG robotics team site | https://agisback.crcrobotics.com/fr/ | n/a | 200 |
 | DIRO hackathon 2026 project | none | No repo: the code had to stay private during the competition | n/a |
 | CRC problems | none | No public link (problems for CRC 2027; the contest platform is not mentioned) | n/a |
-| Showdown AI | none | In progress, nothing built yet | n/a |
+| Showdown AI (an agent that plays ranked Pokémon Showdown battles; Yahya's description, 2026-11-07, change round 7) | none | In progress, nothing built yet | n/a |
 
 Facturo deep dive route on the site: /projects/facturo/
 
-MAME Tool Rental proof: the live site (its footer reads "Built by Yahya Hallani for the McGill Association of Mechanical Engineers."). Facts from the private repo (read with gh, 2026-11-07): FastAPI and SQLite backend on Render, Next.js frontend on Vercel; GitHub Actions deploys only after every test passes, then runs a smoke test; 22 API pytest files, 47 web Vitest files and Playwright end-to-end specs for the main flows; 63 commits from 2026-11-05 to 2026-11-07. Status (Yahya, 2026-11-07): "Built for MAME, in use at MAME."
+MAME Tool Rental proof: the live site (its footer reads "Built by Yahya Hallani for the McGill Association of Mechanical Engineers."). Facts from the private repo (read with gh, 2026-11-07): FastAPI and SQLite backend on Render, Next.js frontend on Vercel; GitHub Actions deploys only after every test passes, then runs a smoke test; 22 API pytest files, 47 web Vitest files and Playwright end-to-end specs for the main flows; 63 commits from 2026-11-05 to 2026-11-07. Status (Yahya, 2026-11-07): "Built for MAME, in use at MAME." Experience (Yahya, 2026-11-07, change round 7: "mame-experience: Developper Nov 2026"): Work row "Developer", since Nov 2026, with the MAME mark (`logos/mame-mark.png`, `mame-mark-mono.png`).
 
 ## Proof links (competitions)
 
