@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-05-PLAN.md
-last_updated: "2026-11-07T14:32:49.253Z"
+stopped_at: Completed 01-04-PLAN.md
+last_updated: "2026-11-07T15:14:01.743Z"
 last_activity: 2026-11-07
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 8
-  completed_plans: 4
-  percent: 50
+  completed_plans: 5
+  percent: 63
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-11-06)
 ## Current Position
 
 Phase: 01 (design-gate) — EXECUTING
-Plan: 4 of 8
+Plan: 6 of 8
 Status: Ready to execute
 Last activity: 2026-11-07
 
-Progress: [█████░░░░░] 50%
+Progress: [██████░░░░] 63%
 
 ## Performance Metrics
 
@@ -56,6 +56,7 @@ Progress: [█████░░░░░] 50%
 | Phase 01 P02 | 10 min | 3 tasks | 15 files |
 | Phase 01 P03 | 5 min | 2 tasks | 5 files |
 | Phase 01 P05 | 3 min | 3 tasks | 1 files |
+| Phase 01 P04 | 12 min | 3 tasks | 33 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,8 @@ Recent decisions affecting current work:
 - [Phase 1 P03]: Design doc rev 5 draft written; font, Achievements variant and cursor form stay open for plan 07; Experience split 5/7 until the winning face is checked
 - [Phase 1 P03]: Custom cursor is v1 requirement EXP-03 (Phase 5), 1:1 with the pointer
 - [Phase 1 P05]: Font: Hanken Grotesk (OFL), display weight 700, YAHYA tracking -0.035em; confirmed by Yahya 2026-11-07
+- [Phase 1 P04]: Public resume re-rendered read-only from JobOps resume JSON (ultra-compact Typst); no phone, no contest-platform bullet, Author Yahya Hallani
+- [Phase 1 P04]: AG logo not used; Atlantis = 2-3 greyscale screenshots + repo link; CCC 75/75 a regular line (Claude recommendations; Yahya may override at 01-07)
 
 ### Pending Todos
 
@@ -81,7 +84,7 @@ None yet.
 ### Blockers/Concerns
 
 - yahya-h.dev must be bought before Phase 2 (the `.dev` HTTPS setup can take up to 24 h)
-- Phase 1 needs real material from Yahya: photos and screenshots, the resume PDF, links
+- Material collected (plan 04); still missing: Atlantis screenshots (to capture), higher-res robot CAD capture, physical robot photo (see docs/material/links.md)
 - Font decided (Hanken Grotesk 700, plan 05); "Achievements" overflows a 390px phone at full width, v7 must handle it
 - Phase 4 needs real devices: Mac trackpad, Magic Mouse, Windows wheel, Linux touchpad, iPhone (Safari and LinkedIn in-app browser), Android
 - The canonical policy for six routes that each contain all content is still to decide (Phase 3/7)
@@ -96,6 +99,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-07T14:32:49.240Z
-Stopped at: Completed 01-05-PLAN.md
+Last session: 2026-11-07T15:14:01.727Z
+Stopped at: Completed 01-04-PLAN.md
 Resume file: None
