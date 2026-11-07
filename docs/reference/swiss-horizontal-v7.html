@@ -244,16 +244,18 @@
   .about .txt .lead { font: 400 24px/1.35 var(--font-sans); letter-spacing: -0.015em; }
   .about .txt p + p { margin-top: var(--space-md); }
 
-  /* 05 say hi (change round 4): the four giant links in cols 1-6, top-aligned with the "say hi" square in cols 7-12
-     (the vortex); the address and the motion control share the line under them. --S is the square's side: six columns,
-     or less if the content height is shorter (it keeps one Label line under it) */
+  /* 05 say hi (change round 5): the four giant links in cols 1-6 on plain ground; the "say hi" spiral fills the page
+     from col 7 to the page's right edge (see (2) below); the address and the Pause motion control share the Label line
+     under the links. --S is the links block's height (the round-4 square's side, kept as the links' size budget) */
   .hi { --col: calc((100vw - 2 * var(--grid-margin) - var(--rail-col) - 11 * var(--grid-gutter)) / 12);
-        --S: min(calc(6 * var(--col) + 5 * var(--grid-gutter)), calc(100svh - var(--frame-top) - var(--frame-bottom) - 2 * var(--space-lg) - 40px)); }
+        --S: min(calc(6 * var(--col) + 5 * var(--grid-gutter)), calc(100svh - var(--frame-top) - var(--frame-bottom) - 2 * var(--space-lg) - 40px));
+        --clipx: calc(var(--grid-margin) + var(--rail-col) + 6 * (var(--col) + var(--grid-gutter)) - var(--grid-gutter) / 2); }
   .hi .grid { grid-template-rows: var(--S) auto; align-content: start; row-gap: var(--space-md); padding-top: var(--space-lg); }
   .hi .links { grid-column: 1 / 7; grid-row: 1; align-self: start; position: relative; z-index: 1; }
   .hi .links > * { display: block; width: max-content; }
   .hi .links > .display { font-size: min(clamp(64px, 9vw, 168px), calc(var(--S) / 4 / 0.88), calc((6 * var(--col) + 5 * var(--grid-gutter)) / 3.6)); }
-  .hi .side { grid-column: 1 / 7; grid-row: 2; overflow-wrap: anywhere; position: relative; }
+  .hi .side { grid-column: 1 / 4; grid-row: 2; overflow-wrap: anywhere; position: relative; z-index: 1; }
+  .hi .mo { grid-column: 4 / 7; grid-row: 2; justify-self: start; align-self: start; min-height: 24px; position: relative; z-index: 1; }
   .hi #addr { text-transform: none; }   /* the address keeps its real case so it can be read and selected */
 
   /* change round 3 (Yahya, 2026-11-07): four devices picked from his Swiss references. Type and grid only: no colour
@@ -269,55 +271,44 @@
   .ach h2.lt { grid-column: 1 / 3; grid-row: 1; font-size: min(clamp(64px, 9vw, 168px), calc((100svh - var(--frame-top) - var(--frame-bottom) - 2 * var(--space-lg)) / 6 / 0.82)); }
   .about h2.lt { grid-column: 5 / 9; }
 
-  /* (2) "say hi" square and vortex on Say hi (change round 4, Yahya: "a frame like this [Image #12] and like an animation
-     rotating in a spiral (lighter and fainter to not be too distracting)"). Like the "universe" poster: ONE "say hi" per
-     edge, each edge a quarter turn further (top 0deg, right 90deg, bottom 180deg, left 270deg, letter tops out), each word
-     running from its corner to the next edge's band, so the four meet pinwheel-wise. The font size is the side / 2.644:
-     the word's advance (1.724em at wdth 75, -0.05em tracking) plus the band (0.92em, the ink from ascender to descender)
-     is exactly the side. Inside, 10 rings: each is a copy of the four words cut to a thin slice through the x-height
-     (0.50em to 0.70em in from the outer edge, so stems read as squares and bowls as arcs, the poster's fragments),
-     scaled by 0.72 per step toward the centre and turned 9deg per step (the twist that makes the tunnel a spiral).
-     Motion: every ring runs the same keyframes (one step = 3s, 30s from the frame's inner edge to the centre), offset
-     by -3s per ring, so the rings flow inward along the spiral and the loop is seamless. Transform and opacity only, on
-     the compositor, no script per frame. Faint: the words are ink at 22%, the rings at 20% falling to 0 at the centre.
-     It runs only while Say hi is the current page and the tab is visible, stops with the Pause motion button, and
-     under reduced motion it never runs (the paused offsets are the static twisted frame) */
-  .vx { grid-column: 7 / 13; grid-row: 1 / 3; justify-self: end; display: grid; grid-template-rows: var(--S) auto; row-gap: var(--space-md); }
-  .sq { position: relative; width: var(--S); height: var(--S); font: 700 calc(var(--S) / 3.423)/1 var(--font-sans); font-stretch: var(--wdth-body);
-        letter-spacing: -0.03em; pointer-events: none; user-select: none; color: var(--color-ink); }
-  .sq .rg, .sq .fr { position: absolute; inset: 0; }
-  .sq .fr { opacity: 0.22; }
-  .sq .e { position: absolute; left: 0; top: 0; width: calc(var(--S) - 0.94em); height: 0.94em; transform-origin: 0 0; white-space: nowrap; }
-  .sq .e > span { display: block; margin: -0.12em 0 0 -0.01em; }
-  .sq .er { transform: translateX(var(--S)) rotate(90deg); }
-  .sq .eb { transform: translate(var(--S), var(--S)) rotate(180deg); }
-  .sq .el { transform: translateY(var(--S)) rotate(-90deg); }
-  .sq .rg { transform-origin: 50% 50%; will-change: transform, opacity;
-            clip-path: polygon(evenodd, 0.5em 0.5em, calc(100% - 0.5em) 0.5em, calc(100% - 0.5em) calc(100% - 0.5em), 0.5em calc(100% - 0.5em), 0.5em 0.5em,
-                                         0.7em 0.7em, calc(100% - 0.7em) 0.7em, calc(100% - 0.7em) calc(100% - 0.7em), 0.7em calc(100% - 0.7em), 0.7em 0.7em);
-            animation: vx 35s linear infinite paused; animation-delay: calc(var(--i) * -2.5s); }
-  html[data-page="5"]:not(.tab-hidden) .vx:not(.stopped) .rg { animation-play-state: running; }
-  .vx .mo { justify-self: start; min-height: 24px; }
-  @media (prefers-reduced-motion: reduce) { .sq .rg { animation-play-state: paused !important; } .vx .mo { display: none; } }
-  @keyframes vx { 0% { transform: rotate(0deg) scale(0.6000); opacity: 0; } 7.14% { transform: rotate(6.5deg) scale(0.4800); opacity: 0.2; } 14.29% { transform: rotate(13deg) scale(0.3840); opacity: 0.185; } 21.43% { transform: rotate(19.5deg) scale(0.3072); opacity: 0.169; } 28.57% { transform: rotate(26deg) scale(0.2458); opacity: 0.154; } 35.71% { transform: rotate(32.5deg) scale(0.1966); opacity: 0.138; } 42.86% { transform: rotate(39deg) scale(0.1573); opacity: 0.123; } 50% { transform: rotate(45.5deg) scale(0.1258); opacity: 0.108; } 57.14% { transform: rotate(52deg) scale(0.1007); opacity: 0.092; } 64.29% { transform: rotate(58.5deg) scale(0.0805); opacity: 0.077; } 71.43% { transform: rotate(65deg) scale(0.0644); opacity: 0.062; } 78.57% { transform: rotate(71.5deg) scale(0.0515); opacity: 0.046; } 85.71% { transform: rotate(78deg) scale(0.0412); opacity: 0.031; } 92.86% { transform: rotate(84.5deg) scale(0.0330); opacity: 0.015; } 100% { transform: rotate(91deg) scale(0.0264); opacity: 0.0; } }
-  @keyframes vx7 { 0% { transform: rotate(0deg) scale(0.6000); opacity: 0; } 14.29% { transform: rotate(13deg) scale(0.3840); opacity: 0.2; } 28.57% { transform: rotate(26deg) scale(0.2458); opacity: 0.167; } 42.86% { transform: rotate(39deg) scale(0.1573); opacity: 0.133; } 57.14% { transform: rotate(52deg) scale(0.1007); opacity: 0.1; } 71.43% { transform: rotate(65deg) scale(0.0644); opacity: 0.067; } 85.71% { transform: rotate(78deg) scale(0.0412); opacity: 0.033; } 100% { transform: rotate(91deg) scale(0.0264); opacity: 0.0; } }
-  /* (5) About's empty top right (change round 4, Yahya: "maybe but a design shape to fill the top right space"):
-     one geometric shape in ink, in cols 9-12 from the header line down to 48px above the text, cut by the box (the
-     grid's right edge, not the page edge, because the right margin carries the rotated micro-text). Three candidates
-     behind a sketch-only toggle in the header; Yahya picks one. aria-hidden, no pointer events, hidden on phones */
+  /* (2) "say hi" spiral on Say hi (change round 5, Yahya: "Spiral with the words in the center. A true spiral not
+     only fading in so it starts overscreen before"; round 4 had a square of four words with ring slices fading in).
+     ONE logarithmic spiral path, r = r0 * 0.45^(turns), screen-clockwise, centred in the free right part of the
+     page. The phrase "say hi" is set ON the path (SVG textPath, bold, body width, letter tops facing out like the
+     pinwheel frame), 4.5 words per turn, so it reads "say hi say hi ..." round and round into the centre.
+     Why it can move on the compositor: a log spiral maps onto itself under rotate(a) + scale(0.45^(a/360)) about
+     its centre. Every word is the same small SVG (one <use> of the word on the path), and each runs the same keyframes
+     (rotate 80deg and scale 0.8374 per step, 2.5s per step, 22 steps = 55s), offset by -2.5s per word: so
+     each word glides along the spiral to the next word's place every 2.5s, shrinking as it winds in, and the loop is
+     seamless. Transform and opacity only; no script per frame.
+     Starts overscreen: step 0 lies wholly past the page's right edge, so words slide in from off-screen; the outer turn
+     also runs under the footer. Nothing fades in at a fixed ring. The words are ink at 22% at the edge and fade to 0
+     at the centre (no accent). The page clips them (overflow: clip on the layer, so nothing can scroll). The layer
+     starts half a gutter left of col 7 and the spiral is sized (--u) so its outer band never reaches that line: no
+     word passes behind the links, the address or the control. Runs only while Say hi is current and the tab is
+     visible; Pause motion stops it (WCAG 2.2.2); under reduced motion the paused offsets are the static spiral.
+     The static square frame of round 4 is gone: the moving outer turn is the frame now (round 5 screenshots) */
+  .spw { position: absolute; top: 0; bottom: 0; left: var(--clipx); right: 0; overflow: clip; pointer-events: none; user-select: none;
+         color: var(--color-ink); --u: calc((100vw - var(--clipx) - 12px) / 162.5); }
+  .sp { position: absolute; width: 0; height: 0; left: calc(8px + var(--u) * 91.77);
+        top: calc(var(--frame-top) + (100svh - var(--frame-top) - var(--frame-bottom)) / 2);
+        font-family: var(--font-sans); font-weight: 700; font-stretch: var(--wdth-body); }
+  .sp .w { position: absolute; overflow: visible; fill: currentColor;
+           left: calc(var(--u) * 72.7); top: calc(var(--u) * -67); width: calc(var(--u) * 71.5); height: calc(var(--u) * 133.7);
+           transform-origin: calc(var(--u) * -72.7) calc(var(--u) * 67); will-change: transform, opacity;   /* box = the word's measured ink (getBBox) + 2 units */
+           animation: sp 55s linear infinite paused; animation-delay: calc(var(--i) * -2.5s); }
+  html[data-page="5"]:not(.tab-hidden) .spw:not(.stopped) .w { animation-play-state: running; }
+  @media (prefers-reduced-motion: reduce) { .sp .w { animation-play-state: paused !important; } .hi .mo { display: none; } }
+  @keyframes sp { 0% { transform: rotate(0.00deg) scale(1.00000); opacity: 0.220; } 2.273% { transform: rotate(40.00deg) scale(0.91510); opacity: 0.215; } 4.545% { transform: rotate(80.00deg) scale(0.83741); opacity: 0.210; } 6.818% { transform: rotate(120.00deg) scale(0.76631); opacity: 0.205; } 9.091% { transform: rotate(160.00deg) scale(0.70125); opacity: 0.200; } 11.364% { transform: rotate(200.00deg) scale(0.64171); opacity: 0.195; } 13.636% { transform: rotate(240.00deg) scale(0.58723); opacity: 0.190; } 15.909% { transform: rotate(280.00deg) scale(0.53737); opacity: 0.185; } 18.182% { transform: rotate(320.00deg) scale(0.49175); opacity: 0.180; } 20.455% { transform: rotate(360.00deg) scale(0.45000); opacity: 0.175; } 22.727% { transform: rotate(400.00deg) scale(0.41179); opacity: 0.170; } 25% { transform: rotate(440.00deg) scale(0.37683); opacity: 0.165; } 27.273% { transform: rotate(480.00deg) scale(0.34484); opacity: 0.160; } 29.545% { transform: rotate(520.00deg) scale(0.31556); opacity: 0.155; } 31.818% { transform: rotate(560.00deg) scale(0.28877); opacity: 0.150; } 34.091% { transform: rotate(600.00deg) scale(0.26425); opacity: 0.145; } 36.364% { transform: rotate(640.00deg) scale(0.24182); opacity: 0.140; } 38.636% { transform: rotate(680.00deg) scale(0.22129); opacity: 0.135; } 40.909% { transform: rotate(720.00deg) scale(0.20250); opacity: 0.130; } 43.182% { transform: rotate(760.00deg) scale(0.18531); opacity: 0.125; } 45.455% { transform: rotate(800.00deg) scale(0.16957); opacity: 0.120; } 47.727% { transform: rotate(840.00deg) scale(0.15518); opacity: 0.115; } 50% { transform: rotate(880.00deg) scale(0.14200); opacity: 0.110; } 52.273% { transform: rotate(920.00deg) scale(0.12995); opacity: 0.105; } 54.545% { transform: rotate(960.00deg) scale(0.11891); opacity: 0.100; } 56.818% { transform: rotate(1000.00deg) scale(0.10882); opacity: 0.095; } 59.091% { transform: rotate(1040.00deg) scale(0.09958); opacity: 0.090; } 61.364% { transform: rotate(1080.00deg) scale(0.09113); opacity: 0.085; } 63.636% { transform: rotate(1120.00deg) scale(0.08339); opacity: 0.080; } 65.909% { transform: rotate(1160.00deg) scale(0.07631); opacity: 0.075; } 68.182% { transform: rotate(1200.00deg) scale(0.06983); opacity: 0.070; } 70.455% { transform: rotate(1240.00deg) scale(0.06390); opacity: 0.065; } 72.727% { transform: rotate(1280.00deg) scale(0.05848); opacity: 0.060; } 75% { transform: rotate(1320.00deg) scale(0.05351); opacity: 0.055; } 77.273% { transform: rotate(1360.00deg) scale(0.04897); opacity: 0.050; } 79.545% { transform: rotate(1400.00deg) scale(0.04481); opacity: 0.045; } 81.818% { transform: rotate(1440.00deg) scale(0.04101); opacity: 0.040; } 84.091% { transform: rotate(1480.00deg) scale(0.03752); opacity: 0.035; } 86.364% { transform: rotate(1520.00deg) scale(0.03434); opacity: 0.030; } 88.636% { transform: rotate(1560.00deg) scale(0.03142); opacity: 0.025; } 90.909% { transform: rotate(1600.00deg) scale(0.02876); opacity: 0.020; } 93.182% { transform: rotate(1640.00deg) scale(0.02631); opacity: 0.015; } 95.455% { transform: rotate(1680.00deg) scale(0.02408); opacity: 0.010; } 97.727% { transform: rotate(1720.00deg) scale(0.02204); opacity: 0.005; } 100% { transform: rotate(1760.00deg) scale(0.02016); opacity: 0.000; } }
+  @keyframes sp14 { 0% { transform: rotate(0.00deg) scale(1.00000); opacity: 0.220; } 3.571% { transform: rotate(40.00deg) scale(0.91510); opacity: 0.212; } 7.143% { transform: rotate(80.00deg) scale(0.83741); opacity: 0.204; } 10.714% { transform: rotate(120.00deg) scale(0.76631); opacity: 0.196; } 14.286% { transform: rotate(160.00deg) scale(0.70125); opacity: 0.189; } 17.857% { transform: rotate(200.00deg) scale(0.64171); opacity: 0.181; } 21.429% { transform: rotate(240.00deg) scale(0.58723); opacity: 0.173; } 25% { transform: rotate(280.00deg) scale(0.53737); opacity: 0.165; } 28.571% { transform: rotate(320.00deg) scale(0.49175); opacity: 0.157; } 32.143% { transform: rotate(360.00deg) scale(0.45000); opacity: 0.149; } 35.714% { transform: rotate(400.00deg) scale(0.41179); opacity: 0.141; } 39.286% { transform: rotate(440.00deg) scale(0.37683); opacity: 0.134; } 42.857% { transform: rotate(480.00deg) scale(0.34484); opacity: 0.126; } 46.429% { transform: rotate(520.00deg) scale(0.31556); opacity: 0.118; } 50% { transform: rotate(560.00deg) scale(0.28877); opacity: 0.110; } 53.571% { transform: rotate(600.00deg) scale(0.26425); opacity: 0.102; } 57.143% { transform: rotate(640.00deg) scale(0.24182); opacity: 0.094; } 60.714% { transform: rotate(680.00deg) scale(0.22129); opacity: 0.086; } 64.286% { transform: rotate(720.00deg) scale(0.20250); opacity: 0.079; } 67.857% { transform: rotate(760.00deg) scale(0.18531); opacity: 0.071; } 71.429% { transform: rotate(800.00deg) scale(0.16957); opacity: 0.063; } 75% { transform: rotate(840.00deg) scale(0.15518); opacity: 0.055; } 78.571% { transform: rotate(880.00deg) scale(0.14200); opacity: 0.047; } 82.143% { transform: rotate(920.00deg) scale(0.12995); opacity: 0.039; } 85.714% { transform: rotate(960.00deg) scale(0.11891); opacity: 0.031; } 89.286% { transform: rotate(1000.00deg) scale(0.10882); opacity: 0.024; } 92.857% { transform: rotate(1040.00deg) scale(0.09958); opacity: 0.016; } 96.429% { transform: rotate(1080.00deg) scale(0.09113); opacity: 0.008; } 100% { transform: rotate(1120.00deg) scale(0.08339); opacity: 0.000; } }
+  /* (5) About's empty top right (change round 4, Yahya: "maybe but a design shape to fill the top right space"; round 5
+     he picked (b)): quarter rings round the top-right corner of cols 9-12, from the header line down to 48px above the
+     text, each ring 0.8 of the last and 16.5% thick (the Say hi slices flattened into arcs), cut by the grid's right edge
+     (not the page edge: the right margin carries the rotated micro-text). Dimmed to the Say hi spiral's faintness (ink at
+     22%), not solid white. aria-hidden, no pointer events, hidden on phones */
   .shape { grid-column: 9 / 13; grid-row: 1 / 3; position: relative; overflow: hidden; container-type: size; min-height: 0;
-           margin-bottom: var(--space-2xl); pointer-events: none; color: var(--color-ink); }
-  .shape > * { display: none; position: absolute; }
-  .about[data-shape="a"] .sa, .about[data-shape="b"] .sb, .about[data-shape="c"] .sc { display: block; }
-  /* (a) a disc, its centre on the box's right edge, as tall as the box allows: the grid edge cuts it in half */
-  .shape .sa { width: min(100cqh, 200cqw); aspect-ratio: 1; right: calc(min(100cqh, 200cqw) / -2); top: calc((100cqh - min(100cqh, 200cqw)) / 2); border-radius: 50%; background: currentColor; }
-  /* (b) quarter rings round the top-right corner, each 0.8 of the last and 16.5% thick: the Say hi tunnel's slices, flattened */
-  .shape .sb { right: 0; top: 0; width: 100cqmin; height: 100cqmin; }
-  /* (c) a fragment of a giant Y (Display weight and width, the YAHYA face): the crotch and both arms, cut by the box */
-  .shape .sc { left: calc(55cqw - 0.3em); top: calc(75cqh - 0.5em); font: 700 calc(100cqh * 2.2)/1 var(--font-sans); font-stretch: var(--wdth-display); letter-spacing: 0; }
-  .head .sk { grid-column: 7 / 10; display: flex; flex-direction: column; gap: var(--space-xs); white-space: nowrap; }
-  .head .sk button { color: var(--color-dim); padding: 0 2px; }
-  .head .sk button[aria-pressed="true"] { color: var(--color-ink); text-decoration: underline; text-underline-offset: 3px; }
+           margin-bottom: var(--space-2xl); pointer-events: none; color: var(--color-ink); opacity: 0.22; }
+  .shape .sb { position: absolute; right: 0; top: 0; width: 100cqmin; height: 100cqmin; }
 
   /* (3) edge-cropped type (Basel tension): Experience's number, cut by the page's right edge (the page clips it, the body never scrolls) */
   .xp { overflow: clip; }   /* clip, not hidden: a hidden overflow is still a scroll container that focus could scroll */
@@ -340,10 +331,15 @@
     .lt .lp { display: none; } .lt .one { display: block; text-transform: none; }   /* "Achievements" at the 64px floor, title case: 290px of 322px */
     .gl > span { border-right: 0; }   /* phones: one line per column start, not 24 lines 16px apart */
     .about h2.lt .lp { display: block; } .about h2.lt .one { display: none; }
-    .hi { --S: calc(100vw - 2 * var(--grid-margin) - var(--rail-col)); }   /* phones: the square is the full content width, under the links */
-    .sq .rg:nth-child(n+9) { display: none; }   /* 7 rings (children 2-8), twice the step, same depth */
-    .sq .rg { animation-name: vx7; animation-duration: 17.5s; }
-    .crop, .edge, .shape, .head .sk { display: none; }
+    /* phones: the spiral sits in its own band under the links and the address, from the content's left edge to the
+       page's right edge (words still enter from off-screen right); 14 words instead of 22, the same path and step,
+       fading out sooner (35s) */
+    .spw { position: relative; left: auto; top: auto; bottom: auto; margin: var(--space-xl) calc(-1 * var(--grid-margin)) 0 0;
+           height: calc(var(--u) * 187.2 + 24px); --u: calc((100vw - var(--grid-margin) - var(--rail-col) - 12px) / 162.5); }
+    .sp { top: calc(8px + var(--u) * 75.16); }
+    .sp .w:nth-child(n+15) { display: none; }
+    .sp .w { animation-name: sp14; animation-duration: 35s; }
+    .crop, .edge, .shape { display: none; }
   }
 
   @media (max-width: 820px) {
@@ -368,7 +364,7 @@
     .hi .grid { padding: var(--space-lg) 0 var(--space-lg); }
     .hi .links > .display { font-size: 64px; }
     .hi .side { padding-top: var(--space-lg); }
-    .vx { margin-top: var(--space-xl); }
+    .hi .mo { display: block; margin-top: var(--space-md); }
     .hero .meta { display: none; }
     .rail { left: var(--space-lg); } .rail .slot { font-size: 22px; }
   }
@@ -380,10 +376,6 @@
 
 <header class="head grid lab">
   <span class="who">Yahya Hallani</span><span class="dim" id="where">Index</span>
-  <div class="sk dim" aria-label="Sketch toggles">
-    <span>About shape: <button type="button" data-shape-set="a" aria-pressed="true">a</button> / <button type="button" data-shape-set="b" aria-pressed="false">b</button> / <button type="button" data-shape-set="c" aria-pressed="false">c</button></span>
-    <span class="note">Sketch only, not part of the site</span>
-  </div>
   <nav class="links" aria-label="Contact"><a href="../material/resume-public.pdf">Resume (PDF)</a><a href="#p5" data-go="5">Say hi</a></nav>
 </header>
 
@@ -491,12 +483,10 @@
     <span class="edge lab dim" aria-hidden="true">Montréal, Québec, 2026</span>
   </section>
 
-  <section class="page about" id="about" data-name="04 About" data-shape="a" aria-label="About">
+  <section class="page about" id="about" data-name="04 About" aria-label="About">
     <div class="grid">
       <div class="shape" aria-hidden="true">
-        <i class="sa"></i>
         <svg class="sb" viewBox="0 0 100 100" fill="none" stroke="currentColor"><circle cx="100" cy="0" r="91.75" stroke-width="16.50"/><circle cx="100" cy="0" r="73.40" stroke-width="13.20"/><circle cx="100" cy="0" r="58.72" stroke-width="10.56"/><circle cx="100" cy="0" r="46.98" stroke-width="8.45"/><circle cx="100" cy="0" r="37.58" stroke-width="6.76"/><circle cx="100" cy="0" r="30.06" stroke-width="5.41"/><circle cx="100" cy="0" r="24.05" stroke-width="4.33"/><circle cx="100" cy="0" r="19.24" stroke-width="3.46"/><circle cx="100" cy="0" r="15.39" stroke-width="2.77"/><circle cx="100" cy="0" r="12.31" stroke-width="2.21"/><circle cx="100" cy="0" r="9.85" stroke-width="1.77"/><circle cx="100" cy="0" r="7.88" stroke-width="1.42"/><circle cx="100" cy="0" r="6.31" stroke-width="1.13"/><circle cx="100" cy="0" r="5.04" stroke-width="0.91"/></svg>
-        <span class="sc">Y</span>
       </div>
       <button type="button" class="portrait" id="portrait" aria-pressed="false" data-tag="Colour">
         <img src="../material/portrait-devfest-2026-grey.jpg" alt="Yahya Hallani at DevFest Montreal 2026" width="1512" height="1240">
@@ -521,26 +511,11 @@
         <a class="display" href="../material/resume-public.pdf">Resume (PDF)</a>
       </div>
       <p class="side lab" aria-live="polite"><a class="ulink" id="addr" href="mailto:yahya.hallani.email@gmail.com">yahya.hallani.email@gmail.com</a></p>
-      <div class="vx" id="vx">
-        <div class="sq" aria-hidden="true">
-          <div class="fr"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:0"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:1"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:2"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:3"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:4"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:5"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:6"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:7"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:8"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:9"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:10"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:11"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:12"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-          <div class="rg" style="--i:13"><p class="e et"><span>say hi</span></p><p class="e er"><span>say hi</span></p><p class="e eb"><span>say hi</span></p><p class="e el"><span>say hi</span></p></div>
-        </div>
-        <button type="button" class="mo lab" id="motion">Pause motion</button>
+      <div class="spw" id="vx" aria-hidden="true">
+        <svg width="0" height="0" style="position:absolute"><defs><path id="spp" d="M92.78 -52.92L93.48 -51.18L94.15 -49.43L94.79 -47.67L95.39 -45.91L95.97 -44.14L96.51 -42.36L97.02 -40.58L97.49 -38.80L97.94 -37.01L98.35 -35.22L98.73 -33.42L99.08 -31.62L99.40 -29.82L99.68 -28.02L99.93 -26.22L100.15 -24.41L100.34 -22.61L100.50 -20.81L100.62 -19.01L100.71 -17.22L100.78 -15.42L100.81 -13.63L100.80 -11.84L100.77 -10.06L100.71 -8.28L100.61 -6.51L100.49 -4.74L100.33 -2.98L100.15 -1.22L99.93 0.52L99.69 2.26L99.41 3.99L99.11 5.71L98.77 7.43L98.41 9.13L98.02 10.82L97.60 12.50L97.15 14.17L96.67 15.83L96.17 17.48L95.63 19.11L95.07 20.73L94.49 22.34L93.88 23.93L93.24 25.51L92.57 27.07L91.88 28.62L91.17 30.15L90.43 31.67L89.66 33.17L88.87 34.65L88.06 36.11L87.22 37.56L86.36 38.99L85.47 40.40L84.57 41.80L83.64 43.17L82.69 44.52L81.72 45.86L80.73 47.17L79.71 48.47L78.68 49.74L77.63 50.99L76.56 52.22L75.47 53.43L74.36 54.62L73.23 55.79L72.09 56.93L70.92 58.05L69.75 59.15L68.55 60.22L67.34 61.27L66.11 62.30L64.87 63.31L63.62 64.29L62.35 65.24L61.06 66.17L59.76 67.08L58.46 67.96L57.13 68.82L55.80 69.65L54.45 70.46L53.10 71.24L51.73 71.99L50.36 72.72L48.97 73.43L47.58 74.11L46.17 74.76L44.76 75.39"/><g id="sw"><text font-size="42" letter-spacing="-1.26"><textPath href="#spp">say hi</textPath></text></g></defs></svg>
+        <div class="sp"><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:0"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:1"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:2"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:3"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:4"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:5"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:6"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:7"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:8"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:9"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:10"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:11"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:12"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:13"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:14"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:15"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:16"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:17"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:18"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:19"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:20"><use href="#sw"/></svg><svg class="w" viewBox="72.7 -67 71.5 133.7" style="--i:21"><use href="#sw"/></svg></div>
       </div>
+      <button type="button" class="mo lab" id="motion">Pause motion</button>
     </div>
     <span class="edge lab dim" aria-hidden="true">Montréal, Québec, 2026</span>
   </section>
@@ -865,14 +840,7 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { inView = es[0].isIntersecting; reelSync(); }).observe(reel);
     show(0);
 
-    // sketch toggle (round 4): About shape (a) / (b) / (c), header buttons; not part of the site
-    var about = document.getElementById('about'), shapeBtns = [].slice.call(document.querySelectorAll('[data-shape-set]'));
-    shapeBtns.forEach(function (b) { b.addEventListener('click', function () {
-      about.dataset.shape = b.dataset.shapeSet;
-      shapeBtns.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
-    }); });
-
-    // Say hi vortex (round 4): CSS runs it; script only says when. It runs while Say hi is the current page (data-page)
+    // Say hi spiral (rounds 4 and 5): CSS runs it; script only says when. It runs while Say hi is the current page (data-page)
     // and the tab is visible, and the visitor can stop it (WCAG 2.2.2). Nothing is stored, so every load starts running.
     var vx = document.getElementById('vx'), motion = document.getElementById('motion');
     motion.addEventListener('click', function () {
