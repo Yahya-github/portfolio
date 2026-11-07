@@ -154,16 +154,16 @@
   /* 01 achievements, variant (b) chosen 2026-11-07: typographic list without rules. Each line previews its proof
      (greyscale photo plus one line) in the empty cols 1-2 on hover and focus; lines with an article open it */
   .ach .grid { align-content: start; }
-  .ach h2 { grid-column: 1 / -1; }
-  .ach .plain { grid-column: 3 / 13; display: grid; grid-template-columns: subgrid; row-gap: var(--space-lg); margin-top: var(--space-2xl); }
+  /* round 3: the title is a letter-pair stack in cols 1-2, the list sits beside it in cols 3-10 and the preview moves to cols 11-12 */
+  .ach .plain { grid-column: 3 / 11; grid-row: 1; display: grid; grid-template-columns: subgrid; align-content: start; row-gap: var(--space-lg); padding-top: 0.06em; }
   .ach .plain > li { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; position: relative; }
   .ach .row { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: baseline; }
-  .ach .rk { grid-column: 1 / 3; } .ach .res { grid-column: 3 / 7; } .ach .det { grid-column: 7 / 11; }
+  .ach .rk { grid-column: 1 / 3; } .ach .res { grid-column: 3 / 6; } .ach .det { grid-column: 6 / 9; }
   .ach a.row:hover .res, .ach a.row:focus-visible .res { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
   .ach .row[tabindex]:focus-visible { outline-offset: 8px; }
   .ach .src { margin-top: var(--space-xs); }
-  /* preview: two columns wide (cols 1-2 of the page grid), top on the line, nudged up in JS if it would leave the viewport */
-  .pv { position: absolute; top: 0; right: calc(100% + var(--grid-gutter)); width: calc((100% - 9 * var(--grid-gutter)) / 10 * 2 + var(--grid-gutter));
+  /* preview: two columns wide (cols 11-12 of the page grid, right of the 8-column list), top on the line, nudged up in JS if it would leave the viewport */
+  .pv { position: absolute; top: 0; left: calc(100% + var(--grid-gutter)); width: calc((100% - 7 * var(--grid-gutter)) / 8 * 2 + var(--grid-gutter));
         pointer-events: none; opacity: 0; transition: opacity var(--dur-ui) var(--ease-ui); transform: translate3d(0, var(--pv-y, 0px), 0); }
   .pv picture { display: block; }
   .pv img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
@@ -244,12 +244,69 @@
   .about .txt .lead { font: 400 24px/1.35 var(--font-sans); letter-spacing: -0.015em; }
   .about .txt p + p { margin-top: var(--space-md); }
 
-  /* 05 say hi: type as interface, stacked giant links */
-  .hi .grid { grid-template-rows: 100%; }
-  .hi .links { grid-column: 1 / 10; align-self: end; padding-bottom: var(--space-lg); }
+  /* 05 say hi: type as interface, stacked giant links inside the word frame (round 3): links cols 2-9, address cols 9-11,
+     both inside the band that stands on cols 1 and 12; the four lines shrink below Display only if the frame's inside is too short */
+  .hi .grid { grid-template-rows: 100%; padding: calc(var(--space-lg) + var(--band) + var(--grid-gutter)) 0; }
+  .hi .links { grid-column: 2 / 10; grid-row: 1; align-self: center; position: relative; }
   .hi .links > * { display: block; width: max-content; }
-  .hi .side { grid-column: 10 / 13; align-self: end; padding-bottom: var(--space-lg); overflow-wrap: anywhere; }
+  .hi .links > .display { font-size: min(clamp(64px, 9vw, 168px), calc(var(--hi-in) / 4 / 0.88)); }
+  .hi .side { grid-column: 9 / 12; grid-row: 1; align-self: end; overflow-wrap: anywhere; position: relative; }
   .hi #addr { text-transform: none; }   /* the address keeps its real case so it can be read and selected */
+
+  /* change round 3 (Yahya, 2026-11-07): four devices picked from his Swiss references. Type and grid only: no colour
+     (ink, dim and hairline grey; the accent stays reserved), no motion except one opacity change, all decorative copies aria-hidden */
+
+  /* (1) letter-pair titles: a title broken into rows of two or three capitals, each row flush left on the title's
+     first column line, tight leading (the MO/DE/RN poster). One letter per grid column read as two vertical columns
+     instead of pairs, so the letters of a row stay set as one word. The heading's name is the visually hidden full
+     word; the letter rows are aria-hidden */
+  .lt { text-transform: uppercase; }
+  .lt .lp > span { display: block; line-height: 0.82; }
+  .lt .one { display: none; }
+  .ach h2.lt { grid-column: 1 / 3; grid-row: 1; font-size: min(clamp(64px, 9vw, 168px), calc((100svh - var(--frame-top) - var(--frame-bottom) - 2 * var(--space-lg)) / 6 / 0.82)); }
+  .about h2.lt { grid-column: 5 / 9; }
+
+  /* (2) word frame on Say hi: "say hi" repeated round all four edges, pinwheel-wise like the "universe" poster
+     (top 0deg, right 90deg, bottom 180deg, left 270deg, letter tops facing out). The band is one grid column thick,
+     so the frame stands on cols 1 and 12; JS fills each edge with as many words as fit, spread edge to edge */
+  .hi { --band: calc((100vw - 2 * var(--grid-margin) - var(--rail-col) - 11 * var(--grid-gutter)) / 12);
+        --hi-in: calc(100svh - var(--frame-top) - var(--frame-bottom) - 2 * (var(--space-lg) + var(--band) + var(--grid-gutter))); }
+  .wf { position: absolute; top: calc(var(--frame-top) + var(--space-lg)); bottom: calc(var(--frame-bottom) + var(--space-lg));
+        left: calc(var(--grid-margin) + var(--rail-col)); right: var(--grid-margin); container-type: size; pointer-events: none; }
+  .wf .e { position: absolute; left: 0; top: 0; height: var(--band); display: flex; align-items: center;
+           transform-origin: 0 0; white-space: nowrap; overflow: hidden;
+           font: 700 calc(var(--band) * 1.02)/1 var(--font-sans); font-stretch: var(--wdth-display); letter-spacing: var(--display-track); }
+  .wf .et { width: calc(100cqw - var(--band)); }
+  .wf .er { width: calc(100cqh - var(--band)); transform: translateX(100cqw) rotate(90deg); }
+  .wf .eb { width: calc(100cqw - var(--band)); transform: translate(100cqw, 100cqh) rotate(180deg); }
+  .wf .el { width: calc(100cqh - var(--band)); transform: translateY(100cqh) rotate(-90deg); }
+
+  /* (3) edge-cropped type (Basel tension): Experience's number, cut by the page's right edge (the page clips it, the body never scrolls) */
+  .xp { overflow: clip; }   /* clip, not hidden: a hidden overflow is still a scroll container that focus could scroll */
+  .crop { position: absolute; right: -0.14em; bottom: calc(var(--frame-bottom) - 0.035em); pointer-events: none;
+          font: 700 clamp(160px, calc((100svh - 568px) / 0.72), 480px)/0.72 var(--font-sans); font-stretch: var(--wdth-display); letter-spacing: var(--display-track); }
+
+  /* (4a) rotated micro-text: a Label set vertically in the right page margin (the rail owns the left one) */
+  .edge { position: absolute; top: calc(var(--frame-top) + var(--space-lg)); right: calc((var(--grid-margin) - 12px * 1.3) / 2);
+          writing-mode: vertical-rl; white-space: nowrap; pointer-events: none; }
+  /* (4b) the Index's 12 columns drawn as faint hairlines behind the type; they come up to full hairline grey while
+     the pointer is on a YAHYA letter or a letter has keyboard focus (opacity only) */
+  .gl { position: absolute; inset: 0 var(--grid-margin); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--grid-gutter);
+        pointer-events: none; opacity: 0.45; transition: opacity 400ms var(--ease-ui); }
+  .gl > span { border-left: 1px solid var(--color-hair); border-right: 1px solid var(--color-hair); }
+  .hero > .grid { position: relative; }
+  html[data-page="0"]:has(#fly a:hover) .gl, html[data-page="0"]:has(#fly a:focus-visible) .gl { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .gl { transition: none; } }
+
+  @media (max-width: 820px) {
+    .lt .lp { display: none; } .lt .one { display: block; text-transform: none; }   /* "Achievements" at the 64px floor, title case: 290px of 322px */
+    .gl > span { border-right: 0; }   /* phones: one line per column start, not 24 lines 16px apart */
+    .about h2.lt .lp { display: block; } .about h2.lt .one { display: none; }
+    .hi { --band: 44px; --hi-in: 0px; }
+    .wf .er, .wf .el { display: none; }
+    .wf .et, .wf .eb { width: 100cqw; }
+    .crop, .edge { display: none; }
+  }
 
   @media (max-width: 820px) {
     .head { display: flex; flex-wrap: wrap; align-content: space-between; column-gap: var(--space-md); padding-top: var(--space-md); padding-bottom: var(--space-sm); }
@@ -270,7 +327,8 @@
     .xp .c2 { margin-top: var(--space-2xl); }
     .about .portrait { height: 40svh; }
     .about h2 { margin-top: var(--space-xl); } .about .txt { margin-top: var(--space-xl); }
-    .hi .grid { display: flex; flex-direction: column; justify-content: flex-end; min-height: 100%; }
+    .hi .grid { display: flex; flex-direction: column; justify-content: center; min-height: 100%; padding: calc(var(--space-lg) + var(--band) + var(--space-lg)) 0; }
+    .hi .links > .display { font-size: 64px; }
     .hi .side { padding-top: var(--space-lg); }
     .hero .meta { display: none; }
     .rail { left: var(--space-lg); } .rail .slot { font-size: 22px; }
@@ -299,6 +357,7 @@
 </nav>
 <main class="track" id="track" tabindex="-1">
   <section class="page hero" data-name="Index" aria-label="Introduction">
+    <div class="gl" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
     <div class="grid">
       <div class="intro"><p>Software Engineering at McGill</p></div>
       <div class="meta lab dim"><span>Software engineering</span><span>McGill University</span><span>Montréal, Québec</span></div>
@@ -317,7 +376,7 @@
     <!-- variant (b): typographic list, no rules. Previews show the proof that exists: a photo, an article, or neither.
          Lines with a public source (article or post) open it in a new tab; only the CCC line has none -->
     <div class="grid top">
-      <h2 class="display">Achievements</h2>
+      <h2 class="display lt"><span class="sr">Achievements</span><span class="lp" aria-hidden="true"><span>AC</span><span>HI</span><span>EV</span><span>EM</span><span>EN</span><span>TS</span></span><span class="one" aria-hidden="true">Achievements</span></h2>
       <ul class="plain">
         <li><div class="row" tabindex="0"><span class="hd rk acc num">75/75</span><span class="hd res">Canadian Computing Competition, perfect score</span><span class="det dim">2026</span></div>
           <figure class="pv txt lab" aria-hidden="true"><figcaption>75 of 75 points<br><span class="dim">Canadian Computing Competition 2026</span></figcaption></figure></li>
@@ -331,6 +390,7 @@
           <figure class="pv lab"><picture><source media="(hover: hover) and (min-width: 821px)" srcset="../material/photos/crc-2026-trophies.jpg"><img src="../material/photos/crc-2026-trophies-grey.jpg" alt="The team with its CRC 2026 trophies" width="1440" height="753" loading="lazy" decoding="async"></picture><figcaption>The team with its 2026 trophies<br><span class="dim">Post, instagram.com</span></figcaption></figure></li>
       </ul>
     </div>
+    <span class="edge lab dim" aria-hidden="true">Montréal, Québec, 2026</span>
   </section>
 
   <section class="page proj" data-name="02 Projects" aria-label="Projects">
@@ -365,6 +425,7 @@
           <p class="dim">A competitive battle agent</p><p class="dim">Planned</p><p class="dim">In progress, nothing built yet</p></li>
       </ol>
     </div>
+    <span class="edge lab dim" aria-hidden="true">Montréal, Québec, 2026</span>
   </section>
 
   <section class="page xp" data-name="03 Experience" aria-label="Experience">
@@ -383,6 +444,8 @@
           <li><p class="hd">Competitor</p><p class="dim">McGill Compete, ICPC NENA</p><span class="lg" aria-hidden="true"><img src="../material/logos/icpc-mark-mono.png" alt="" width="177" height="96" decoding="async"><img class="c" src="../material/logos/icpc-mark.png" alt="" width="177" height="96" loading="lazy" decoding="async"></span></li>
         </ul></div>
     </div>
+    <span class="crop" aria-hidden="true">03</span>
+    <span class="edge lab dim" aria-hidden="true">Montréal, Québec, 2026</span>
   </section>
 
   <section class="page about" data-name="04 About" aria-label="About">
@@ -392,15 +455,17 @@
         <img class="col" src="../material/portrait-devfest-2026-color.jpg" alt="" width="1512" height="1240" loading="lazy" decoding="async">
         <span class="sr">Show the photo in colour</span>
       </button>
-      <h2 class="display top" aria-label="Two habits">Two<br>habits</h2>
+      <h2 class="display top lt"><span class="sr">Two habits</span><span class="lp" aria-hidden="true"><span>TWO</span><span>HAB</span><span>ITS</span></span></h2>
       <div class="txt">
         <p class="lead">I decide fast under pressure, and I build things that run themselves.</p>
         <p>The first came from competitive Pokemon, which is like chess with more variables: bluffing, and working out damage fast on a clock. The second came from Minecraft automation packs like SkyFactory and StoneBlock, where the goal is a machine that keeps working without you.</p>
       </div>
     </div>
+    <span class="edge lab dim" aria-hidden="true">Montréal, Québec, 2026</span>
   </section>
 
   <section class="page hi" data-name="05 Say hi" aria-label="Say hi">
+    <div class="wf" id="wf" aria-hidden="true"><p class="e et"></p><p class="e er"></p><p class="e eb"></p><p class="e el"></p></div>
     <div class="grid">
       <div class="links">
         <button type="button" class="display" id="copy">Email</button>
@@ -410,6 +475,7 @@
       </div>
       <p class="side lab" aria-live="polite"><a class="ulink" id="addr" href="mailto:yahya.hallani.email@gmail.com">yahya.hallani.email@gmail.com</a></p>
     </div>
+    <span class="edge lab dim" aria-hidden="true">Montréal, Québec, 2026</span>
   </section>
 </main>
 
@@ -710,13 +776,30 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { inView = es[0].isIntersecting; reelSync(); }).observe(reel);
     show(0);
 
-    addEventListener('resize', function () { go(page, true); });
+    // Say hi word frame (round 3): each edge holds as many "say hi" as fit with at least a third of a word between them.
+    // The leftover is shared out as equal gaps after every word, the last one included, so the corner where an edge meets
+    // the next one gets the same gap as the words inside an edge. Measured untransformed (offsetWidth), so the rotated
+    // edges work the same
+    var wf = document.getElementById('wf'), FRAME_WORD = 'say hi';
+    function fillFrame() {
+      [].forEach.call(wf.children, function (e) {
+        e.textContent = ''; e.style.gap = e.style.paddingRight = '';
+        if (getComputedStyle(e).display === 'none') return;
+        var w = document.createElement('span'); w.textContent = FRAME_WORD; e.appendChild(w);
+        var ww = w.offsetWidth, gap = ww / 3, n = Math.max(1, Math.floor((e.offsetWidth + gap) / (ww + gap)));
+        for (var i = 1; i < n; i++) e.appendChild(w.cloneNode(true));
+        var g = (e.offsetWidth - n * ww) / n + 'px'; e.style.gap = g; e.style.paddingRight = g;
+      });
+    }
+    fillFrame();
+
+    addEventListener('resize', function () { go(page, true); fillFrame(); });
 
     // the hero word stays hidden until the font is ready (300ms cap) so the fitted word never reflows
     var timeout = new Promise(function (r) { setTimeout(r, 300); });
     var fontReady = document.fonts ? document.fonts.load('700 100px "Instrument Sans"') : Promise.resolve();
-    Promise.race([fontReady, timeout]).then(null, function () {}).then(function () { root.classList.add('fonts-ready'); place(page, true); });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { place(page, true); });
+    Promise.race([fontReady, timeout]).then(null, function () {}).then(function () { root.classList.add('fonts-ready'); place(page, true); fillFrame(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { place(page, true); fillFrame(); });
 
     var start = /^#p(\d)$/.exec(location.hash); go(start ? +start[1] : 0, true);
   })();
