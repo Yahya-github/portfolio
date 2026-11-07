@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Font trial (Phase 1, throwaway)</title>
+<style>
+  /* OFL faces: committed WOFF2 next to their OFL text (docs/reference/fonts/) */
+  @font-face { font-family: "T-InterTight"; src: url("fonts/InterTight-wght.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+  @font-face { font-family: "T-SofiaEC"; src: url("fonts/SofiaSansExtraCondensed-wght.woff2") format("woff2"); font-weight: 1 1000; font-display: block; }
+  @font-face { font-family: "T-Sofia"; src: url("fonts/SofiaSans-wght.woff2") format("woff2"); font-weight: 1 1000; font-display: block; }
+  @font-face { font-family: "T-Schibsted"; src: url("fonts/SchibstedGrotesk-wght.woff2") format("woff2"); font-weight: 400 900; font-display: block; }
+  @font-face { font-family: "T-Hanken"; src: url("fonts/HankenGrotesk-wght.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+  @font-face { font-family: "T-Instrument"; src: url("fonts/InstrumentSans-wdth-wght.woff2") format("woff2"); font-weight: 400 700; font-stretch: 75% 100%; font-display: block; }
+
+  /* Paid faces: never committed (T-1-04). Installed system-wide (local) or placed in the git-ignored fonts-private/ folder. */
+  @font-face { font-family: "T-Sohne"; src: local("Söhne Dreiviertelfett"), local("Soehne Dreiviertelfett"), url("fonts-private/soehne-dreiviertelfett.woff2") format("woff2"); font-weight: 700; font-display: block; }
+  @font-face { font-family: "T-Sohne"; src: local("Söhne Buch"), url("fonts-private/soehne-buch.woff2") format("woff2"); font-weight: 400; font-display: block; }
+  @font-face { font-family: "T-Suisse"; src: local("Suisse Int'l Bold"), url("fonts-private/suisse-intl-bold.woff2") format("woff2"); font-weight: 700; font-display: block; }
+  @font-face { font-family: "T-Suisse"; src: local("Suisse Int'l Regular"), url("fonts-private/suisse-intl-regular.woff2") format("woff2"); font-weight: 400; font-display: block; }
+  @font-face { font-family: "T-NeueHaas"; src: local("Neue Haas Grotesk Display Pro 75 Bold"), url("fonts-private/neue-haas-display-bold.woff2") format("woff2"); font-weight: 700; font-display: block; }
+  @font-face { font-family: "T-NeueHaas"; src: local("Neue Haas Grotesk Text Pro 55 Roman"), url("fonts-private/neue-haas-text-roman.woff2") format("woff2"); font-weight: 400; font-display: block; }
+
+  :root {
+    --color-ground: #0b0b0b;
+    --color-ink: #f0f0f0;
+    --color-dim: #8e8e8e;
+    --color-hair: #2e2e2e;
+    --color-accent: #5fae84;
+    --grid-margin: 24px;
+    --grid-gutter: 24px;
+    --frame-top: 72px;
+    --frame-bottom: 56px;
+    --hero-bottom-gap: 96px;
+    --yahya-track: -0.04em;
+    --display-track: -0.05em;
+    --dw: 700;               /* display weight from the control bar */
+    --chrome: system-ui, sans-serif;  /* page chrome only, never a candidate */
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--color-ground); color: var(--color-ink); }
+  body { margin: 0; font-family: var(--chrome); }
+  a, button, input, label { color: inherit; }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
+  a:hover, button:hover { color: var(--color-accent); }
+
+  .label { font-size: 12px; font-weight: 400; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.02em; }
+  .dim { color: var(--color-dim); }
+
+  /* Control bar */
+  .controls {
+    position: sticky; top: 0; z-index: 10; background: var(--color-ground);
+    border-bottom: 1px solid var(--color-hair);
+    padding: 16px var(--grid-margin); display: flex; flex-wrap: wrap; gap: 8px 32px; align-items: center;
+  }
+  .controls fieldset { border: 0; margin: 0; padding: 0; display: flex; gap: 8px; align-items: center; }
+  .controls legend { float: left; margin-right: 8px; color: var(--color-dim); }
+  .controls input[type="range"] { accent-color: var(--color-accent); width: 160px; }
+  .controls nav { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+  .controls nav a { text-decoration: none; padding: 4px 0; }
+
+  .intro { padding: 48px var(--grid-margin) 32px; max-width: 1200px; }
+  .intro h1 { font-size: 24px; font-weight: 700; line-height: 1.2; letter-spacing: -0.015em; margin: 0 0 16px; }
+  .intro ul { margin: 8px 0 0; padding-left: 16px; font-size: 16px; line-height: 1.5; max-width: 80ch; }
+
+  /* Blocks */
+  .block {
+    --face: var(--chrome); --body: var(--chrome); --maxw: 900; --wdth: 100%;
+    border-top: 1px solid var(--color-hair); padding: 48px var(--grid-margin) 64px;
+  }
+  .block-head { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; margin-bottom: 32px; }
+  .block-head h2 { margin: 0; font-family: var(--chrome); font-size: 24px; font-weight: 700; letter-spacing: -0.015em; }
+  .yahya-type { font-family: var(--face); font-weight: min(var(--dw), var(--maxw)); font-stretch: var(--wdth); letter-spacing: var(--yahya-track); }
+  .display-type { font-family: var(--face); font-weight: min(var(--dw), var(--maxw)); font-stretch: var(--wdth); letter-spacing: var(--display-track); }
+  .body-type { font-family: var(--body); font-weight: 400; }
+  .face-weight { font-weight: min(var(--dw), var(--maxw)); }
+
+  .specimen { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--grid-gutter); align-items: start; }
+  .frames { grid-column: 1 / -1; }
+  .rails { grid-column: span 2; display: flex; gap: 32px; }
+  .rail { display: flex; flex-direction: column; gap: 8px; line-height: 1; }
+  .rail span { display: block; }
+  .rail-30 { font-size: 30px; }
+  .rail-22 { font-size: 22px; }
+  .body-sample { grid-column: span 6; font-size: 16px; line-height: 1.5; max-width: 60ch; margin: 0; }
+  .numerals { grid-column: span 4; display: flex; flex-direction: column; gap: 8px; font-size: 48px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .numerals .n75 { color: var(--color-accent); }
+  .facts { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px 32px; border-top: 1px solid var(--color-hair); padding-top: 16px; font-family: var(--body); }
+  .facts span b { font-weight: 400; color: var(--color-dim); margin-right: 8px; }
+  .note { grid-column: 1 / -1; font-size: 16px; line-height: 1.5; margin: 0; color: var(--color-dim); }
+  .wdth-toggle { display: flex; gap: 8px; align-items: center; border: 0; margin: 0; padding: 0; }
+  .wdth-toggle legend { float: left; margin-right: 8px; }
+
+  .missing-msg { display: none; font-size: 16px; line-height: 1.5; color: var(--color-dim); margin: 0; }
+  .block[data-missing="true"] .specimen { display: none; }
+  .block[data-missing="true"] .missing-msg { display: block; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="controls label" aria-label="Trial controls">
+  <fieldset>
+    <legend>Display weight</legend>
+    <label><input type="radio" name="dw" value="700" checked> 700</label>
+    <label><input type="radio" name="dw" value="800"> 800</label>
+  </fieldset>
+  <fieldset>
+    <legend>YAHYA tracking</legend>
+    <input id="track" type="range" min="-0.06" max="-0.02" step="0.005" value="-0.04" aria-label="YAHYA tracking in em">
+    <output id="track-out" for="track">-0.040em</output>
+  </fieldset>
+  <nav aria-label="Faces">
+    <a href="#f-intertight">1 Inter Tight</a>
+    <a href="#f-sofia">2 Sofia</a>
+    <a href="#f-schibsted">3 Schibsted</a>
+    <a href="#f-hanken">4 Hanken</a>
+    <a href="#f-instrument">5 Instrument</a>
+    <a href="#f-sohne">6 Söhne</a>
+    <a href="#f-suisse">7 Suisse</a>
+    <a href="#f-neuehaas">8 Neue Haas</a>
+  </nav>
+</header>
+
+<main>
+<section class="intro" aria-labelledby="intro-h">
+  <h1 id="intro-h">Font trial: 8 faces on the giant YAHYA</h1>
+  <p class="label dim">Throwaway reference for the Phase 1 font pick (D-01 to D-08). Measured numbers: docs/reference/font-metrics.md. Faces that max out at 700 stay at 700 and print "max 700".</p>
+  <p class="label">Pass / fail criteria</p>
+  <ul>
+    <li>The Y arms and A apexes hold together at giant size with negative tracking (check the actual word).</li>
+    <li>No slanted style is needed or used anywhere (D-05).</li>
+    <li>Tabular figures available: a <code>tnum</code> feature, or figures tabular by default (D-06).</li>
+    <li>A variable file (or 2 static weights) can be self-hosted under the licence.</li>
+    <li>16px body reads comfortably on black.</li>
+    <li>Latin-Extended is not a criterion (D-07).</li>
+  </ul>
+</section>
+
+<!-- 1 -->
+<section class="block" id="f-intertight" data-face="T-InterTight" data-body="T-InterTight" data-maxw="900" style="--face:'T-InterTight';--body:'T-InterTight';--maxw:900" aria-labelledby="h-intertight">
+  <div class="block-head"><h2 id="h-intertight">Inter Tight</h2><span class="label dim weight-out"></span></div>
+  <p class="missing-msg">not installed: put the test files in docs/reference/fonts-private/ (git-ignored) or install them system-wide</p>
+  <div class="specimen">
+    <div class="frames" data-face="T-InterTight"></div>
+    <div class="rails yahya-type" aria-hidden="true">
+      <div class="rail rail-30"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+      <div class="rail rail-22"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+    </div>
+    <p class="body-sample body-type">I decide fast under pressure, and I build things that run themselves. Facturo is a local-first invoicing app for a Quebec trucking company. It turns paper tickets into tax-correct invoices and has more than 700 tests.</p>
+    <div class="numerals body-type face-weight"><span>00 / 05</span><span class="n75">75/75</span></div>
+    <div class="facts label">
+      <span><b>Licence</b>SIL Open Font License 1.1, self-host allowed</span>
+      <span><b>Tabular</b>yes (tnum feature)</span>
+      <span><b>Axes</b>wght 100-900</span>
+      <span><b>--yahya-fit</b><output class="fit-out">measuring</output></span>
+    </div>
+    <p class="note">Anti-vibe flag (Inter by default): it can win only on this trial, with a one-sentence reason in the design doc.</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="block" id="f-sofia" data-face="T-SofiaEC" data-body="T-Sofia" data-maxw="1000" style="--face:'T-SofiaEC';--body:'T-Sofia';--maxw:1000" aria-labelledby="h-sofia">
+  <div class="block-head"><h2 id="h-sofia">Sofia Sans Extra Condensed + Sofia Sans</h2><span class="label dim weight-out"></span></div>
+  <p class="missing-msg">not installed: put the test files in docs/reference/fonts-private/ (git-ignored) or install them system-wide</p>
+  <div class="specimen">
+    <div class="frames" data-face="T-SofiaEC"></div>
+    <div class="rails yahya-type" aria-hidden="true">
+      <div class="rail rail-30"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+      <div class="rail rail-22"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+    </div>
+    <p class="body-sample body-type">I decide fast under pressure, and I build things that run themselves. Facturo is a local-first invoicing app for a Quebec trucking company. It turns paper tickets into tax-correct invoices and has more than 700 tests.</p>
+    <div class="numerals body-type face-weight"><span>00 / 05</span><span class="n75">75/75</span></div>
+    <div class="facts label">
+      <span><b>Licence</b>SIL Open Font License 1.1, self-host allowed</span>
+      <span><b>Tabular</b>yes (tnum feature, both files)</span>
+      <span><b>Axes</b>wght 1-1000 (both files)</span>
+      <span><b>Files</b>two files: Extra Condensed for YAHYA and Display, Sofia Sans for body</span>
+      <span><b>--yahya-fit</b><output class="fit-out">measuring</output></span>
+    </div>
+    <p class="note">Numerals here are set in Sofia Sans (the body file). Two files, one superfamily: the D-06 reading is to be confirmed by Yahya.</p>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="block" id="f-schibsted" data-face="T-Schibsted" data-body="T-Schibsted" data-maxw="900" style="--face:'T-Schibsted';--body:'T-Schibsted';--maxw:900" aria-labelledby="h-schibsted">
+  <div class="block-head"><h2 id="h-schibsted">Schibsted Grotesk</h2><span class="label dim weight-out"></span></div>
+  <p class="missing-msg">not installed: put the test files in docs/reference/fonts-private/ (git-ignored) or install them system-wide</p>
+  <div class="specimen">
+    <div class="frames" data-face="T-Schibsted"></div>
+    <div class="rails yahya-type" aria-hidden="true">
+      <div class="rail rail-30"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+      <div class="rail rail-22"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+    </div>
+    <p class="body-sample body-type">I decide fast under pressure, and I build things that run themselves. Facturo is a local-first invoicing app for a Quebec trucking company. It turns paper tickets into tax-correct invoices and has more than 700 tests.</p>
+    <div class="numerals body-type face-weight"><span>00 / 05</span><span class="n75">75/75</span></div>
+    <div class="facts label">
+      <span><b>Licence</b>SIL Open Font License 1.1, self-host allowed</span>
+      <span><b>Tabular</b>yes (tnum feature)</span>
+      <span><b>Axes</b>wght 400-900</span>
+      <span><b>--yahya-fit</b><output class="fit-out">measuring</output></span>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="block" id="f-hanken" data-face="T-Hanken" data-body="T-Hanken" data-maxw="900" style="--face:'T-Hanken';--body:'T-Hanken';--maxw:900" aria-labelledby="h-hanken">
+  <div class="block-head"><h2 id="h-hanken">Hanken Grotesk</h2><span class="label dim weight-out"></span></div>
+  <p class="missing-msg">not installed: put the test files in docs/reference/fonts-private/ (git-ignored) or install them system-wide</p>
+  <div class="specimen">
+    <div class="frames" data-face="T-Hanken"></div>
+    <div class="rails yahya-type" aria-hidden="true">
+      <div class="rail rail-30"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+      <div class="rail rail-22"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+    </div>
+    <p class="body-sample body-type">I decide fast under pressure, and I build things that run themselves. Facturo is a local-first invoicing app for a Quebec trucking company. It turns paper tickets into tax-correct invoices and has more than 700 tests.</p>
+    <div class="numerals body-type face-weight"><span>00 / 05</span><span class="n75">75/75</span></div>
+    <div class="facts label">
+      <span><b>Licence</b>SIL Open Font License 1.1, self-host allowed</span>
+      <span><b>Tabular</b>tabular by default, no tnum feature</span>
+      <span><b>Axes</b>wght 100-900</span>
+      <span><b>--yahya-fit</b><output class="fit-out">measuring</output></span>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="block" id="f-instrument" data-face="T-Instrument" data-body="T-Instrument" data-maxw="700" style="--face:'T-Instrument';--body:'T-Instrument';--maxw:700" aria-labelledby="h-instrument">
+  <div class="block-head">
+    <h2 id="h-instrument">Instrument Sans</h2><span class="label dim weight-out"></span>
+    <fieldset class="wdth-toggle label">
+      <legend class="dim">wdth (YAHYA and Display only)</legend>
+      <label><input type="radio" name="wdth-instrument" value="100" checked> 100</label>
+      <label><input type="radio" name="wdth-instrument" value="75"> 75</label>
+    </fieldset>
+  </div>
+  <p class="missing-msg">not installed: put the test files in docs/reference/fonts-private/ (git-ignored) or install them system-wide</p>
+  <div class="specimen">
+    <div class="frames" data-face="T-Instrument"></div>
+    <div class="rails yahya-type" aria-hidden="true">
+      <div class="rail rail-30"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+      <div class="rail rail-22"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+    </div>
+    <p class="body-sample body-type">I decide fast under pressure, and I build things that run themselves. Facturo is a local-first invoicing app for a Quebec trucking company. It turns paper tickets into tax-correct invoices and has more than 700 tests.</p>
+    <div class="numerals body-type face-weight"><span>00 / 05</span><span class="n75">75/75</span></div>
+    <div class="facts label">
+      <span><b>Licence</b>SIL Open Font License 1.1, self-host allowed</span>
+      <span><b>Tabular</b>yes (tnum feature)</span>
+      <span><b>Axes</b>wdth 75-100, wght 400-700 (max 700)</span>
+      <span><b>--yahya-fit</b><output class="fit-out">measuring</output></span>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="block" id="f-sohne" data-face="T-Sohne" data-body="T-Sohne" data-maxw="700" data-paid="true" style="--face:'T-Sohne';--body:'T-Sohne';--maxw:700" aria-labelledby="h-sohne">
+  <div class="block-head"><h2 id="h-sohne">Söhne (Klim)</h2><span class="label dim weight-out"></span></div>
+  <p class="missing-msg">not installed: put the test files in docs/reference/fonts-private/ (git-ignored) or install them system-wide</p>
+  <div class="specimen">
+    <div class="frames" data-face="T-Sohne"></div>
+    <div class="rails yahya-type" aria-hidden="true">
+      <div class="rail rail-30"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+      <div class="rail rail-22"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+    </div>
+    <p class="body-sample body-type">I decide fast under pressure, and I build things that run themselves. Facturo is a local-first invoicing app for a Quebec trucking company. It turns paper tickets into tax-correct invoices and has more than 700 tests.</p>
+    <div class="numerals body-type face-weight"><span>00 / 05</span><span class="n75">75/75</span></div>
+    <div class="facts label">
+      <span><b>Licence</b>Paid: web licence must allow self-hosting; price not verified</span>
+      <span><b>Tabular</b>not measured (needs test files)</span>
+      <span><b>Axes</b>not measured; trial loads 2 static weights, 400 and 700 (max 700)</span>
+      <span><b>--yahya-fit</b><output class="fit-out">measuring</output></span>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="block" id="f-suisse" data-face="T-Suisse" data-body="T-Suisse" data-maxw="700" data-paid="true" style="--face:'T-Suisse';--body:'T-Suisse';--maxw:700" aria-labelledby="h-suisse">
+  <div class="block-head"><h2 id="h-suisse">Suisse Int'l (Swiss Typefaces)</h2><span class="label dim weight-out"></span></div>
+  <p class="missing-msg">not installed: put the test files in docs/reference/fonts-private/ (git-ignored) or install them system-wide</p>
+  <div class="specimen">
+    <div class="frames" data-face="T-Suisse"></div>
+    <div class="rails yahya-type" aria-hidden="true">
+      <div class="rail rail-30"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+      <div class="rail rail-22"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+    </div>
+    <p class="body-sample body-type">I decide fast under pressure, and I build things that run themselves. Facturo is a local-first invoicing app for a Quebec trucking company. It turns paper tickets into tax-correct invoices and has more than 700 tests.</p>
+    <div class="numerals body-type face-weight"><span>00 / 05</span><span class="n75">75/75</span></div>
+    <div class="facts label">
+      <span><b>Licence</b>Paid: web licence must allow self-hosting; price not verified</span>
+      <span><b>Tabular</b>not measured (needs test files; the trial charset may be partial)</span>
+      <span><b>Axes</b>not measured; trial loads 2 static weights, 400 and 700 (max 700)</span>
+      <span><b>--yahya-fit</b><output class="fit-out">measuring</output></span>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="block" id="f-neuehaas" data-face="T-NeueHaas" data-body="T-NeueHaas" data-maxw="700" data-paid="true" style="--face:'T-NeueHaas';--body:'T-NeueHaas';--maxw:700" aria-labelledby="h-neuehaas">
+  <div class="block-head"><h2 id="h-neuehaas">Neue Haas Grotesk Display (Monotype)</h2><span class="label dim weight-out"></span></div>
+  <p class="missing-msg">not installed: put the test files in docs/reference/fonts-private/ (git-ignored) or install them system-wide</p>
+  <div class="specimen">
+    <div class="frames" data-face="T-NeueHaas"></div>
+    <div class="rails yahya-type" aria-hidden="true">
+      <div class="rail rail-30"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+      <div class="rail rail-22"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+    </div>
+    <p class="body-sample body-type">I decide fast under pressure, and I build things that run themselves. Facturo is a local-first invoicing app for a Quebec trucking company. It turns paper tickets into tax-correct invoices and has more than 700 tests.</p>
+    <div class="numerals body-type face-weight"><span>00 / 05</span><span class="n75">75/75</span></div>
+    <div class="facts label">
+      <span><b>Licence</b>Paid: web licence must allow self-hosting; price not verified</span>
+      <span><b>Tabular</b>not measured (needs test files)</span>
+      <span><b>Axes</b>not measured; trial loads Display 700 + Text 400 (max 700)</span>
+      <span><b>--yahya-fit</b><output class="fit-out">measuring</output></span>
+    </div>
+  </div>
+</section>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var root = document.documentElement;
+  var blocks = Array.prototype.slice.call(document.querySelectorAll(".block"));
+
+  function displayWeight() {
+    var el = document.querySelector('input[name="dw"]:checked');
+    return el ? Number(el.value) : 700;
+  }
+  function trackEm() { return Number(document.getElementById("track").value); }
+  function weightFor(block) { return Math.min(displayWeight(), Number(block.dataset.maxw)); }
+
+  function updateReadouts() {
+    blocks.forEach(function (b) {
+      var w = weightFor(b);
+      b.querySelector(".weight-out").textContent =
+        "display weight " + w + (w < displayWeight() ? " (max " + b.dataset.maxw + ")" : "");
+    });
+    document.getElementById("track-out").textContent = trackEm().toFixed(3) + "em";
+  }
+
+  function applyControls() {
+    root.style.setProperty("--dw", String(displayWeight()));
+    root.style.setProperty("--yahya-track", trackEm() + "em");
+    updateReadouts();
+  }
+
+  document.querySelectorAll('input[name="dw"]').forEach(function (el) { el.addEventListener("change", applyControls); });
+  document.getElementById("track").addEventListener("input", applyControls);
+  document.querySelectorAll('input[name="wdth-instrument"]').forEach(function (el) {
+    el.addEventListener("change", function () {
+      document.getElementById("f-instrument").style.setProperty("--wdth", el.value + "%");
+    });
+  });
+
+  applyControls();
+})();
+</script>
+</body>
+</html>
