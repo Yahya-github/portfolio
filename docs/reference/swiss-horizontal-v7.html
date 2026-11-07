@@ -239,6 +239,14 @@
   .xp .ruled { margin-top: var(--space-xl); }
   .xp .ruled > li { padding: 12px 0; }
   .xp .ruled .hd { margin-top: var(--space-xs); }
+  /* round 7: Work has five rows (MAME added). Below 880px of height (desktop) the rows close from 12px to 8px, the same
+     rule as the Projects rows; and the two heads keep the Display size unless the free height is too small for it (the
+     Say hi links rule): 660px is the frame (128), the grid's top and bottom gaps (48), the table's top margin (32) and
+     five 8px-padded rows (449), plus 3px. Only near 720px of height does this shrink the heads (68px at 1280x720) */
+  @media (min-width: 821px) and (max-height: 879px) {
+    .xp .ruled > li { padding: 8px 0; }
+    .xp h2.display { font-size: max(64px, min(clamp(64px, 9vw, 168px), calc((100svh - 660px) / 0.88))); }
+  }
   /* organisation marks (Yahya, 2026-11-07): small, flush with the column's right edge, in the dim mono twin; the
      brand colours fade in while the row is hovered (fine pointer) or after a tap on touch. Decorative (alt=""), the
      organisation is named in the text. Like the portrait, the colour is the mark's own and never an accent use */
@@ -500,7 +508,7 @@
         <li><div class="ph"><span class="lab dim num">02.5</span><h3 class="hd">Robot firmware</h3><a class="lab ulink" href="https://agisback.crcrobotics.com/fr/" target="_blank" rel="noopener">Team site</a></div>
           <p class="dim">Firmware for the CRC 2026 robot</p><p class="dim mid">Embedded state machine in C/C++, PID tuning</p><p class="dim">1st place, robot competition, 2026</p></li>
         <li><div class="ph"><span class="lab dim num">02.6</span><h3 class="hd">Showdown AI</h3></div>
-          <p class="dim">A competitive battle agent</p><p class="dim mid">Planned</p><p class="dim">In progress, nothing built yet</p></li>
+          <p class="dim">A competitive battle agent</p><p class="dim mid">An agent that plays ranked Pokémon Showdown battles</p><p class="dim">In progress, nothing built yet</p></li>
       </ol>
     </div>
     <span class="edge lab dim" data-p="2" aria-hidden="true"><span class="mqt"><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span><span>02 Projects</span></span></span>
@@ -510,6 +518,7 @@
     <div class="grid top">
       <div class="c1"><h2 class="display">Work</h2>
         <ul class="ruled">
+          <li><p class="lab dim">Since Nov 2026</p><p class="hd">Developer</p><p class="dim">MAME Tool Rental, McGill Association of Mechanical Engineers</p><span class="lg" aria-hidden="true"><img src="../material/logos/mame-mark-mono.png" alt="" width="76" height="96" decoding="async"><img class="c" src="../material/logos/mame-mark.png" alt="" width="76" height="96" loading="lazy" decoding="async"></span></li>
           <li><p class="lab dim">Since Sep 2026</p><p class="hd">Coding agent evaluator</p><p class="dim">Mercor, contractor</p><span class="lg" aria-hidden="true"><img src="../material/logos/mercor-mark-mono.png" alt="" width="110" height="96" decoding="async"><img class="c" src="../material/logos/mercor-mark.png" alt="" width="110" height="96" loading="lazy" decoding="async"></span></li>
           <li><p class="lab dim">Jun 2026 to Oct 2026</p><p class="hd">Developer</p><p class="dim">Facturo, for a Quebec trucking company</p><span class="lg" aria-hidden="true"><img src="../material/logos/facturo-mark-mono.svg" alt="" width="23" height="24" decoding="async"><img class="c" src="../material/logos/facturo-mark.svg" alt="" width="23" height="24" loading="lazy" decoding="async"></span></li>
           <li><p class="lab dim">Since Feb 2026</p><p class="hd">Problem author</p><p class="dim">CRC 2027, volunteer</p><span class="lg" aria-hidden="true"><img src="../material/logos/crc-mark-mono.svg" alt="" width="22" height="28" decoding="async"><img class="c" src="../material/logos/crc-mark.svg" alt="" width="22" height="28" loading="lazy" decoding="async"></span></li>
