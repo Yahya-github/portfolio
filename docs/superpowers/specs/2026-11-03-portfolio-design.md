@@ -1,6 +1,6 @@
 # Portfolio website: design
 
-Status: DRAFT for Yahya's approval (revision 5: dark Swiss horizontal). Nothing is built. Date: 2026-11-07 (Phase 1 picks recorded).
+Status: DRAFT for Yahya's approval (revision 5: dark Swiss horizontal). Nothing is built. Date: 2026-11-07 (Phase 1 picks recorded; review change round 1 applied).
 Owner: Yahya Hallani. Domain: `yahya-h.dev` (Yahya buys it before the first deploy). Host: Vercel.
 
 Visual contract: `.planning/phases/01-design-gate/01-UI-SPEC.md` holds every token value; this doc records decisions, the trial results and the page compositions. Where they disagree, this doc wins after approval. This revision overrides the `portfolio-design` skill and the stack notes in `CLAUDE.md` wherever they disagree.
@@ -52,11 +52,11 @@ Anti-goals (any of these makes the site a failure even if it technically works):
 Every value lives in `.planning/phases/01-design-gate/01-UI-SPEC.md`; Phases 3 to 6 turn it into `styles/tokens.css` plus CSS Modules. This section restates only what a reader needs to picture the site.
 
 - **Colour:** ground `#0b0b0b` (one flat ground, no second surface, no cards); ink `#f0f0f0` (17.27:1); dim `#8e8e8e` (6.01:1) for labels and secondary lines only; hairline `#2e2e2e` for real structure only; accent `#5fae84` (7.38:1).
-- **The accent is reserved for exactly four things:** (1) the current section's rail letter, always paired with its visible numbered name and `aria-current="page"`; (2) the hover and focus colour of every interactive text; (3) the focus ring, 2px solid with a 4px offset; (4) the `75/75` numeral on Achievements. The cursor that won is drawn in ink, so the fifth slot it held in reserve is gone. Never body text, backgrounds, fills, hairlines, the progress bar, photos, the cursor or the footer counter.
+- **The accent is reserved for exactly four things:** (1) the current section's rail letter, always paired with its visible numbered name and `aria-current="page"`, and derived from the current page alone, so exactly one rail letter is ever green; (2) the hover and focus colour of every interactive text, except the rail letters, which never take the accent on hover or focus (hover shows as the cursor box, focus as an ink ring); (3) the focus ring, 2px solid with a 4px offset (ink on rail letters); (4) the `75/75` numeral on Achievements. The cursor that won is drawn in ink, so the fifth slot it held in reserve is gone. Never body text, backgrounds, fills, hairlines, the progress bar, photos, the cursor or the footer counter.
 - **Grid:** 12 columns, 24px gutter and margin on desktop and tablet, 16px on phones. Nested blocks use `subgrid` so everything lands on the master columns. Every element starts and ends on a column line. Text is flush left, ragged right; nothing is centred.
 - **Type roles:** Label 12px / Body 16px / Heading 24px / Display `clamp(64px, 9vw, 168px)` / Poster for YAHYA only, `calc(var(--grid-width) / var(--yahya-fit))` capped against `100svh` so it fits short screens. Exactly 2 weights ship. No italics anywhere (D-05). Counters and `75/75` use tabular figures.
-- **No ornament:** no icons, no illustrations, no background visuals (D-26, D-29). Rank is set as type.
-- **Photos:** pre-converted greyscale files (not a CSS filter), hard-cropped to column edges, no radius, border, shadow or effect (DSGN-05). One deliberate exception: the About portrait crossfades to a true-colour twin on hover or tap (section 7, 04 About). That colour is the photo's own, never the accent, and it is not an accent use.
+- **No ornament:** no icons, no illustrations, no background visuals (D-26, D-29). Rank is set as type. The real organisation marks on the Experience rows (section 7, 03 Experience) are content, not ornament: they identify where Yahya worked and took part.
+- **Photos:** pre-converted greyscale files (not a CSS filter), hard-cropped to column edges, no radius, border, shadow or effect (DSGN-05). Two deliberate exceptions show their own true colours on hover or tap: the About portrait crossfades to a true-colour twin (section 7, 04 About), and the Experience organisation marks rest in one mono colour and crossfade to their brand colours (section 7, 03 Experience). Those colours are the photo's and the marks' own, never the accent, and they are not accent uses.
 
 ### 4.1 Font
 
@@ -110,7 +110,8 @@ One rule: movement is horizontal, fast and decisive, with no bounce and no overs
 ## 6. Navigation and paging
 
 - **Hero letters:** the five letters of YAHYA are five real links: Y `/achievements/`, A `/projects/`, H `/experience/`, Y `/about/`, A `/say-hi/`. Each has a caption under it, "01 Achievements", "02 Projects", "03 Experience", "04 About", "05 Say hi" (dim number, ink name, Label role).
-- **Rail:** leaving the hero, the same five letters glide and shrink into a vertical rail in the left margin (and glide back on the way home: their hero targets are measured against the track's resting position, never its in-flight position, so paging back mid-slide still lands them; v7 bug found and fixed 2026-11-07): 30px on desktop, 22px on phones, gap 8px (28px under `pointer: coarse`), every hit area at least 44x44px. A rail letter shows its section name on hover and focus. The current letter is in the accent, keeps its numbered name visible, and carries `aria-current="page"`. Every rail letter's accessible name is its section name.
+- **Rail:** leaving the hero, the same five letters glide and shrink into a vertical rail in the left margin (and glide back on the way home: their hero targets are measured against the track's resting position, never its in-flight position, so paging back mid-slide still lands them; v7 bug found and fixed 2026-11-07): 30px on desktop, 22px on phones, gap 8px (28px under `pointer: coarse`), every hit area at least 44x44px. A rail letter shows its section name on hover (the cursor tag) and on keyboard focus. The current letter is in the accent, keeps its numbered name visible, and carries `aria-current="page"`. The accent comes from the current page alone: hover and focus never colour a rail letter, so a pointer resting where a letter lands, or a clicked letter that keeps focus, can never leave a second letter green (v7 bug found by Yahya 2026-11-07). Every rail letter's accessible name is its section name.
+- **Letter hit area:** each letter catches the pointer over its own box only (its advance width by 0.76em) on the Index; in the rail it is the whole rail item (the rail column minus 8px, plus half the gap above and below), so the five items tile the rail. Text is hit-tested against the font's full content area (about 1.2em), which at Poster size covered the screen from the header to the footer, the intro and the captions included (v7 bug found by Yahya 2026-11-07: "the letters hitbox take the whole screen"). The build gives the link no pointer events and lets a box-sized pseudo-element take them.
 - **Header:** fixed, Label role, hairline bottom rule. Cols 1-3 "Yahya Hallani"; cols 4-6 the current section name; cols 10-12 "Resume (PDF)" and "Say hi".
 - **Footer:** fixed. Counter `00 / 05` with tabular figures; a "Next, {Section}" control ("Back to the start" on the last page); a 2px progress bar along the bottom edge.
 - **Input:** one wheel or trackpad gesture moves exactly one page, and momentum is ignored. Keys: arrows, Page Up/Down, Space, Home/End. Phones swipe horizontally, with the 20px left-edge exclusion from Decision 3.
@@ -124,11 +125,11 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 ### 00 Index
 
 - Poster device: Wordmark as image, bottom-anchored
-- Columns (desktop): role line and proof line cols 1-4 at the top; meta labels (Software engineering, McGill University, Montréal, Québec) cols 7-12 at the top, three-up; YAHYA across cols 1-12, its bottom edge 96px above the footer, captions beneath.
+- Columns (desktop): role line cols 1-4 at the top; meta labels (Software engineering, McGill University, Montréal, Québec) cols 7-12 at the top, three-up; YAHYA across cols 1-12, its bottom edge 96px above the footer, captions beneath.
 - Dominant element: the giant YAHYA.
 - Display group: YAHYA (Poster role).
-- Phone portrait intent: YAHYA fitted to the phone width, captions stacked number over name, role and proof lines above.
-- Content: the role line is the plain identity "Software Engineering at McGill". The proof line is one verified fact; its wording comes in Phase 7.
+- Phone portrait intent: YAHYA fitted to the phone width, captions stacked number over name, the role line above.
+- Content: the role line is the plain identity "Software Engineering at McGill". There is no proof line: Yahya dropped the CCC line (2026-11-07, "ccc-line: drop"), and nothing replaces it; the top left holds the role line alone, balanced by the meta labels on the right.
 
 ### 01 Achievements
 
@@ -138,12 +139,14 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 - Proof previews (Yahya, 2026-11-07): hovering a line, or focusing it with the keyboard, shows a small greyscale photo and one Label line in the empty cols 1-2, top-aligned with the line and nudged up so it never leaves the viewport. A line with a public article is a link that opens it in a new tab (`rel="noopener"`):
   - DIRO Hackathon: the diro.umontreal.ca article; photo `photos/diro-hackathon-2026-award-grey.jpg` ("The winners with their certificates").
   - Intercollegiate Video Game Creation Competition: the neomedia.com article, which names Atlantis and the Collège André-Grasset team (the cegepvalleyfield.ca post is a photo post with a 14-word body); photo `photos/game-competition-2026-team-grey.jpg`.
-  - Both Canadian Robotics Competition lines: photo `photos/crc-2026-trophies-grey.jpg`. No article exists, so the lines are not links; they take keyboard focus so the preview can still be seen.
+  - Canadian Robotics Competition, robot competition: photo `photos/club-of-the-year-award-grey.jpg` ("Our school's Club of the Year"), because the team won thanks to the club (Yahya, 2026-11-07).
+  - Canadian Robotics Competition, programming: photo `photos/crc-2026-trophies-grey.jpg` ("The team with its 2026 trophies").
+  - No CRC article exists, so both CRC lines are not links; they take keyboard focus so the preview can still be seen.
   - Canadian Computing Competition 75/75: a one-line description only, no photo and no link (no public proof exists).
   On touch screens (`hover: none`) and phones the thumbnail sits inline under its line, and the article lines stay normal links.
 - Dominant element: the title above the list.
 - Display group: the title "Achievements".
-- Phone portrait intent: the title, then the lines stacked rank above result above detail, each with its thumbnail below (the 75/75 line has none, and the second CRC line does not repeat the same photo).
+- Phone portrait intent: the title, then the lines stacked rank above result above detail, each with its thumbnail below (the 75/75 line has none; the two CRC lines show two different photos).
 - Phone fit: the title "Achievements" at the 64px Display floor fits the 390px frame in Instrument Sans at wdth 75 (290px of 322px), so it stays Display on phones.
 - Content: "Canadian Computing Competition, perfect score" with `75/75` (2026), then the four first places: DIRO Hackathon 2026 (1st of 18 teams from 9 CEGEPs, $2,500 team scholarship); Intercollegiate Video Game Creation Competition 2026 (with Atlantis); Canadian Robotics Competition, robot competition, 1st in 2026 (matches against the other teams' robots); Canadian Robotics Competition, programming, 1st in Programming in 2025 and 2nd in Senior Programming in 2026. The 2026 1st place is the robot competition, not robot construction (Yahya, 2026-11-07). Rank is set as type ("1st", "2nd"), never as medals (D-20).
 
@@ -151,7 +154,7 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 
 - Poster device: Asymmetric split 8/4 with a hard-cropped image
 - Columns (desktop): Facturo across cols 1-8 (a walkthrough of the greyscale screenshots hard-cropped across those columns, its Label controls, name, one Body line each for problem and result, the Label link "Read the deep dive" to `/projects/facturo/`); cols 9-12 hold four compact ruled rows.
-- Walkthrough (Yahya, 2026-11-07: "a cinematic go through of the images not just a static image"): the 10 files `screenshots/facturo-*-grey.png` play in order. Each frame pushes in slowly for about 5 s (scale 1 to 1.06 with a small pan, linear) and crossfades to the next over 900ms; only `transform` and `opacity` animate. The phone screenshot is shown whole, flush left. Frames load lazily, one ahead. It pauses on hover and focus, when Projects is not the current page, when it is scrolled out of view and when the tab is hidden. A visible Pause control (WCAG 2.2.2) plus Previous and Next sit under it in Label, with a counter "01 / 10, Home". Under reduced motion there is no auto-advance: Previous and Next step through the frames, and the switch is instant.
+- Walkthrough (Yahya, 2026-11-07: "a cinematic go through of the images not just a static image"): the 10 files `screenshots/facturo-*-grey.png` play in order. Each frame pushes in slowly for about 5 s (scale 1 to 1.06 with a small pan, linear) and crossfades to the next over 900ms; only `transform` and `opacity` animate. A portrait screenshot (the phone screen) is shown whole and centred in the frame, and its push-in is a plain scale around its centre so it stays centred (Yahya, 2026-11-07: "center the phone image"). Frames load lazily, one ahead. It pauses while the pointer is over the block, while keyboard focus is inside it, when Projects is not the current page, when it is scrolled out of view and when the tab is hidden, and it resumes the same frame as soon as none of these holds. A control clicked with the mouse keeps focus but does not hold the pause; only the Pause control does (v7 bug found by Yahya 2026-11-07: "sometimes it freezes when you pass and remove your cursor"; the hover and focus states shared one flag). One clock drives it, the current frame's push-in, so a step can never advance twice. A visible Pause control (WCAG 2.2.2) plus Previous and Next sit under it in Label, with a counter "01 / 10, Home". Under reduced motion there is no auto-advance: Previous and Next step through the frames, and the switch is instant.
 - Dominant element: the Facturo block.
 - Display group: "Facturo".
 - Phone portrait intent: the Facturo block full width first, the four compact rows stacked below.
@@ -161,6 +164,7 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 
 - Poster device: Ruled two-column table
 - Columns (desktop): Work cols 1-6, Involvement cols 7-12, column heads in Display on one row, rows separated by hairlines: years in Label flush left on their own line, role in Heading, organisation in dim Body. Years and roles flush left (D-13).
+- Organisation marks (Yahya, 2026-11-07): a row whose organisation has a real mark shows it 28px tall, vertically centred in the row, its right edge on the column's right edge (col 6 for Work, col 12 for Involvement). Marks rest in one mono colour, the dim grey `#8e8e8e`, from pre-made mono files (not a CSS filter); hovering the row (fine pointer) or tapping it on touch crossfades to the brand colours over 400ms, instantly under reduced motion. Marks are decorative (empty alt); the text already names the organisation. They stay far smaller than the Display heads. Rows: Mercor, Facturo, CRC 2027 (Work); McGill Robotics, Google Developer Group at McGill, McGill Compete / ICPC (Involvement). Freelance has no mark. Treatment recommended by Claude; Yahya may override. Files: `docs/material/logos/*-mark.*` and `*-mark-mono.*`.
 - Display fit: "Involvement" at Display fits cols 7-12 at 1366 and 1440 in Instrument Sans (489px of 619px at 1366, 516px of 656px at 1440), so Work spans cols 1-6 and Involvement cols 7-12.
 - Dominant element: the ruled table.
 - Display group: the "Work" and "Involvement" head row.
@@ -175,7 +179,7 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 - Dominant element: the portrait.
 - Display group: "Two habits".
 - Phone portrait intent: portrait cropped to the top half, then the title, then the text.
-- Content: a real, recognisable greyscale portrait from `docs/material/portrait-devfest-2026-grey.jpg`, with the Google Developer Group backdrop and the lanyard kept (D-15, D-22). Title "Two habits".
+- Content: a real, recognisable greyscale portrait from `docs/material/portrait-devfest-2026-grey.jpg`, with the Google Developer Group backdrop and the lanyard kept (D-15, D-22). The lanyard text is readable; Yahya accepts it (2026-11-07: it is the Google Developer Group, "it can even be a plus"). Title "Two habits".
 - Crop: kept as is (Yahya, 2026-11-07: "portrait: ok"). The banner-free master (1512x1240) fills cols 1-4 with `object-fit: cover; object-position: 52% 10%`; no tighter pre-crop.
 - Alt text: "Yahya Hallani at DevFest Montreal 2026" (confirmed by Yahya, 2026-11-07).
 - Colour on hover (Yahya, 2026-11-07): greyscale by default; with a fine pointer, hovering crossfades (400ms) to `docs/material/portrait-devfest-2026-color.jpg`, a true-colour twin with the same crop and all metadata stripped. On touch a tap toggles it, and the keyboard toggles it as a button with `aria-pressed`. Under reduced motion the swap is instant. This is the one deliberate exception to "photos are greyscale"; it is the photo's own colour and not an accent use. The text is in Yahya's voice; the draft line "I decide fast under pressure, and I build things that run themselves." is his to rewrite, and the final copy comes in Phase 7.
@@ -223,6 +227,7 @@ Raw, public-safe material lives in `docs/material/` (D-21). Later phases copy op
 | `links.md` (contact, project links, proof links, inventory) | present |
 | `screenshots/` Facturo (10 frames, colour and greyscale) | present |
 | `photos/` DIRO hackathon, game competition, CRC 2026 trophies, Club of the Year, robot CAD thumbnail | present |
+| `logos/` Mercor, Facturo, CRC, McGill Robotics, Google Developer Groups, ICPC (source lockup, colour mark, mono mark) | present |
 | Atlantis screenshots | missing (waiver below) |
 | Robot photo (physical robot) | missing |
 
@@ -251,7 +256,7 @@ Still missing (copied from links.md):
 11. Confirm the Experience role titles "Developer" (Facturo), "Problem author" (CRC 2027) and "Freelance developer". Only "Coding agent evaluator" is Yahya's own wording.
 12. Updating the `portfolio-design` and `portfolio-voice-and-facts` skills and the CLAUDE.md stack section after approval.
 13. Accept the material waivers listed in section 9 (screenshots/photos not supplied).
-14. The Index proof line reads "Perfect score, 75/75, at the 2026 Canadian Computing Competition." Yahya said earlier that CCC should not be the main thing; keep, replace or drop it.
+14. The Index proof line. Settled 2026-11-07: dropped ("ccc-line: drop"); the Index keeps the role line only.
 15. The public resume's project line "1st Place | Sep 2025 - Feb 2026" should name the category (robot competition). Phase 7 copy; the PDF is not edited in Phase 1.
 
 ## 11. Success
@@ -280,3 +285,6 @@ Still missing (copied from links.md):
 - Cursor variants (b) and (c): not chosen (2026-11-07). (b) was a fine 1px accent crosshair; (c) the native cursor plus a context tag over the letters.
 - Static Facturo screenshot on Projects: replaced by the walkthrough (2026-11-07).
 - "Canadian Robotics Competition, robot" (read as robot construction): corrected to the robot competition (2026-11-07).
+- Index proof line "Perfect score, 75/75, at the 2026 Canadian Computing Competition.": dropped by Yahya (2026-11-07).
+- The trophies photo as the preview of the CRC robot competition line: replaced by the Club of the Year photo (2026-11-07).
+- Phone screenshot flush left in the Facturo walkthrough: now centred (2026-11-07).
