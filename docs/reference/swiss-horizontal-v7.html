@@ -91,11 +91,16 @@
   /* the five letters: giant on the Index, a vertical rail on pages 01-05 (FLIP by transform only) */
   .fly { position: fixed; inset: 0; z-index: 6; pointer-events: none; visibility: hidden; }
   .fonts-ready .fly { visibility: visible; }
+  /* hit area = the letter's own box (advance width x 0.76em), nothing more. Text is hit-tested against the font's
+     full content area (ascent + descent, about 1.2em), which at Poster size ran from the header to the footer and
+     covered the intro and the captions (v7 bug, Yahya 2026-11-07). So the link itself takes no pointer events and a
+     ::before that fills its box takes them instead; it scales with the letter into the rail */
   .fly a {
-    position: absolute; left: 0; top: 0; pointer-events: auto; transform-origin: 0 0; color: var(--color-ink);
+    position: absolute; left: 0; top: 0; pointer-events: none; transform-origin: 0 0; color: var(--color-ink);
     font: 700 100px/0.76 var(--font-sans); font-stretch: var(--wdth-display); letter-spacing: var(--yahya-track);
     transition: transform var(--dur-letters) var(--ease-page) calc(var(--i) * var(--stagger)), color var(--dur-ui) var(--ease-ui);
   }
+  .fly a::before { content: ""; position: absolute; inset: 0; pointer-events: auto; }
   .fly a:hover, .fly a:focus-visible, .fly a[aria-current="page"] { color: var(--color-accent); }
   .fly a:active { color: var(--color-accent); transition: transform var(--dur-letters) var(--ease-page); }
   .fly.instant a { transition: none; }
