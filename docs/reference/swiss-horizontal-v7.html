@@ -206,6 +206,17 @@
   .xp .ruled { margin-top: var(--space-xl); }
   .xp .ruled > li { padding: 12px 0; }
   .xp .ruled .hd { margin-top: var(--space-xs); }
+  /* organisation marks (Yahya, 2026-11-07): small, flush with the column's right edge, in the dim mono twin; the
+     brand colours fade in while the row is hovered (fine pointer) or after a tap on touch. Decorative (alt=""), the
+     organisation is named in the text. Like the portrait, the colour is the mark's own and never an accent use */
+  .xp .ruled > li:has(.lg) { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--grid-gutter); align-items: center; }
+  .xp .ruled > li > p { grid-column: 1; }
+  .xp .lg { grid-column: 2; grid-row: 1 / span 3; position: relative; display: block; }
+  .xp .lg img { display: block; height: 28px; width: auto; }
+  .xp .lg .c { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity 400ms var(--ease-ui); }
+  .xp li.col .lg .c { opacity: 1; }
+  @media (hover: hover) and (pointer: fine) { .xp li:hover .lg .c { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .xp .lg .c { transition: none; } }
 
   /* 04 about: photo as column, offset text */
   .about .grid { grid-template-rows: auto 1fr; }
@@ -348,16 +359,16 @@
     <div class="grid top">
       <div class="c1"><h2 class="display">Work</h2>
         <ul class="ruled">
-          <li><p class="lab dim">Since Sep 2026</p><p class="hd">Coding agent evaluator</p><p class="dim">Mercor, contractor</p></li>
-          <li><p class="lab dim">Since Jun 2026</p><p class="hd">Developer</p><p class="dim">Facturo, for a Quebec trucking company</p></li>
-          <li><p class="lab dim">Since Feb 2026</p><p class="hd">Problem author</p><p class="dim">CRC 2027, volunteer</p></li>
+          <li><p class="lab dim">Since Sep 2026</p><p class="hd">Coding agent evaluator</p><p class="dim">Mercor, contractor</p><span class="lg" aria-hidden="true"><img src="../material/logos/mercor-mark-mono.png" alt="" width="110" height="96" decoding="async"><img class="c" src="../material/logos/mercor-mark.png" alt="" width="110" height="96" loading="lazy" decoding="async"></span></li>
+          <li><p class="lab dim">Since Jun 2026</p><p class="hd">Developer</p><p class="dim">Facturo, for a Quebec trucking company</p><span class="lg" aria-hidden="true"><img src="../material/logos/facturo-mark-mono.svg" alt="" width="23" height="24" decoding="async"><img class="c" src="../material/logos/facturo-mark.svg" alt="" width="23" height="24" loading="lazy" decoding="async"></span></li>
+          <li><p class="lab dim">Since Feb 2026</p><p class="hd">Problem author</p><p class="dim">CRC 2027, volunteer</p><span class="lg" aria-hidden="true"><img src="../material/logos/crc-mark-mono.svg" alt="" width="22" height="28" decoding="async"><img class="c" src="../material/logos/crc-mark.svg" alt="" width="22" height="28" loading="lazy" decoding="async"></span></li>
           <li><p class="lab dim">Since 2025</p><p class="hd">Freelance developer</p><p class="dim">12 projects for 9 clients</p></li>
         </ul></div>
       <div class="c2"><h2 class="display">Involvement</h2>
         <ul class="ruled">
-          <li><p class="hd">Software</p><p class="dim">McGill Robotics</p></li>
-          <li><p class="hd">Full-stack</p><p class="dim">Google Developer Group at McGill, subteam project</p></li>
-          <li><p class="hd">Competitor</p><p class="dim">McGill Compete, ICPC NENA</p></li>
+          <li><p class="hd">Software</p><p class="dim">McGill Robotics</p><span class="lg" aria-hidden="true"><img src="../material/logos/mcgill-robotics-mark-mono.png" alt="" width="107" height="96" decoding="async"><img class="c" src="../material/logos/mcgill-robotics-mark.png" alt="" width="107" height="96" loading="lazy" decoding="async"></span></li>
+          <li><p class="hd">Full-stack</p><p class="dim">Google Developer Group at McGill, subteam project</p><span class="lg" aria-hidden="true"><img src="../material/logos/gdg-mark-mono.png" alt="" width="94" height="52" decoding="async"><img class="c" src="../material/logos/gdg-mark.png" alt="" width="94" height="52" loading="lazy" decoding="async"></span></li>
+          <li><p class="hd">Competitor</p><p class="dim">McGill Compete, ICPC NENA</p><span class="lg" aria-hidden="true"><img src="../material/logos/icpc-mark-mono.png" alt="" width="177" height="96" decoding="async"><img class="c" src="../material/logos/icpc-mark.png" alt="" width="177" height="96" loading="lazy" decoding="async"></span></li>
         </ul></div>
     </div>
   </section>
@@ -564,6 +575,12 @@
     // About: greyscale by default; hover (fine pointer) shows the true colours, a click or tap keeps them on or off
     var portrait = document.getElementById('portrait');
     portrait.addEventListener('click', function () { portrait.setAttribute('aria-pressed', String(portrait.getAttribute('aria-pressed') !== 'true')); });
+
+    // Experience: on touch (no hover) a tap on a row with a mark shows its brand colours; a second tap hides them
+    [].slice.call(document.querySelectorAll('.xp .ruled > li')).forEach(function (li) {
+      if (!li.querySelector('.lg')) return;
+      li.addEventListener('pointerup', function (e) { if (e.pointerType === 'touch') li.classList.toggle('col'); });
+    });
 
     // Projects: Facturo walkthrough. Each frame pushes in slowly (transform) while it shows, then crossfades (opacity).
     // One clock: the current frame's push-in animation. Its finish advances the reel; pausing is Animation.pause(), and
