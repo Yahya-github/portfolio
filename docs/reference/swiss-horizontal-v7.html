@@ -210,6 +210,22 @@
   .proj .ph a { margin-left: auto; }
   .proj .rows p { margin-top: var(--space-xs); }
   .proj .rows p + p { margin-top: 0; }
+  /* round 6: five rows fit 1366x768 only as name, problem and result. Below 880px of height (desktop) every row drops its
+     middle (role or how) line and the rows close to 8px, the same rule for all five; at 1440x900 and taller, and on phones, all three lines show */
+  @media (min-width: 821px) and (max-height: 879px) { .proj .rows p.mid { display: none; } .proj .rows > li { padding: 8px 0; } }
+  /* MAME row: its proof preview (the admin overview, greyscale at rest, colour on hover or keyboard focus) sits in the
+     free cols 7-8 beside the Facturo name, its bottom on the lead's last line, so it is always inside the viewport. The
+     Facturo lines stop at col 6 to keep that space clear. Same behaviour as the Achievements previews */
+  .proj .grid { position: relative; }
+  .proj .lead p { max-width: min(60ch, calc((100% - 7 * var(--grid-gutter)) / 8 * 6 + 5 * var(--grid-gutter))); }
+  .proj .pv { top: auto; left: auto; bottom: var(--space-lg); right: calc((100% - 11 * var(--grid-gutter)) / 12 * 4 + 4 * var(--grid-gutter));
+              width: calc((100% - 11 * var(--grid-gutter)) / 12 * 2 + var(--grid-gutter)); transform: none; }
+  .proj .pv img { aspect-ratio: auto; }
+  .proj li:hover .pv, .proj li:has(a:focus-visible) .pv { opacity: 1; }
+  @media (hover: hover) and (min-width: 821px) { .proj.quiet li:hover:not(:has(a:focus-visible)) .pv { opacity: 0; } }
+  .proj .ph .lg { align-self: center; flex: none; }
+  .proj .ph a { white-space: nowrap; }
+  @media (hover: none), (max-width: 820px) { .proj .pv { width: auto; } }   /* phones: the inline grey thumbnail, as on Achievements */
 
   /* 03 experience: ruled two-column table, 6/6 (Involvement fits cols 7-12 at wdth 75) */
   .xp .grid { align-content: start; }
@@ -222,12 +238,13 @@
      organisation is named in the text. Like the portrait, the colour is the mark's own and never an accent use */
   .xp .ruled > li:has(.lg) { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--grid-gutter); align-items: center; }
   .xp .ruled > li > p { grid-column: 1; }
-  .xp .lg { grid-column: 2; grid-row: 1 / span 3; position: relative; display: block; }
-  .xp .lg img { display: block; height: 28px; width: auto; }
-  .xp .lg .c { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity 400ms var(--ease-ui); }
-  .xp li.col .lg .c { opacity: 1; }
-  @media (hover: hover) and (pointer: fine) { .xp li:hover .lg .c { opacity: 1; } }
-  @media (prefers-reduced-motion: reduce) { .xp .lg .c { transition: none; } }
+  .xp .lg { grid-column: 2; grid-row: 1 / span 3; }
+  .lg { position: relative; display: block; }
+  .lg img { display: block; height: 28px; width: auto; }
+  .lg .c { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity 400ms var(--ease-ui); }
+  li.col .lg .c { opacity: 1; }
+  @media (hover: hover) and (pointer: fine) { li:hover > .lg .c, li:hover > .ph .lg .c { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .lg .c { transition: none; } }
 
   /* 04 about: photo as column, offset text */
   .about .grid { grid-template-rows: auto 1fr auto; }
@@ -428,7 +445,7 @@
     <span class="edge lab dim" aria-hidden="true">Montréal, Québec, 2026</span>
   </section>
 
-  <section class="page proj" data-name="02 Projects" aria-label="Projects">
+  <section class="page proj" id="proj" data-name="02 Projects" aria-label="Projects">
     <div class="grid top">
       <div class="lead">
         <div class="reel" id="reel" role="group" aria-roledescription="walkthrough" aria-label="Facturo screens" tabindex="0">
@@ -449,15 +466,18 @@
         <p class="dim">Local-first app with more than 700 tests and verified in-app updates. Public demo with fictional data.</p>
         <a class="lab ulink" href="#facturo">Read the deep dive</a>
       </div>
-      <ol class="rows ruled">
-        <li><div class="ph"><span class="lab dim num">02.2</span><h3 class="hd">Atlantis</h3><a class="lab ulink" href="https://github.com/Yahya-github/atlantis" target="_blank" rel="noopener">Code</a></div>
-          <p class="dim">A 2D game in Godot 4, built with a team</p><p class="dim">Architected 6 gameplay systems</p><p class="dim">1st place, Intercollegiate Video Game Creation Competition 2026</p></li>
-        <li><div class="ph"><span class="lab dim num">02.3</span><h3 class="hd">CRC problems</h3></div>
-          <p class="dim">12 algorithmic problems for CRC 2027</p><p class="dim">Author, volunteer since February 2026</p><p class="dim">Reference solutions and 20+ edge-case tests each, in C++ and Python</p></li>
-        <li><div class="ph"><span class="lab dim num">02.4</span><h3 class="hd">Robot firmware</h3><a class="lab ulink" href="https://agisback.crcrobotics.com/fr/" target="_blank" rel="noopener">Team site</a></div>
-          <p class="dim">Firmware for the CRC 2026 robot</p><p class="dim">Embedded state machine in C/C++, PID tuning</p><p class="dim">1st place, robot competition, 2026</p></li>
-        <li><div class="ph"><span class="lab dim num">02.5</span><h3 class="hd">Showdown AI</h3></div>
-          <p class="dim">A competitive battle agent</p><p class="dim">Planned</p><p class="dim">In progress, nothing built yet</p></li>
+      <ol class="rows ruled" id="prows">
+        <li><div class="ph"><span class="lab dim num">02.2</span><h3 class="hd">MAME Tool Rental</h3><span class="lg" aria-hidden="true"><img src="../material/logos/mame-mark-mono.png" alt="" width="76" height="96" decoding="async"><img class="c" src="../material/logos/mame-mark.png" alt="" width="76" height="96" loading="lazy" decoding="async"></span><a class="lab ulink" href="https://mame-tool-rental.vercel.app/" target="_blank" rel="noopener">Live site</a></div>
+          <p class="dim">Tool and machine rental with an admin dashboard</p><p class="dim mid">FastAPI and Next.js, deployed only after every test passes</p><p class="dim">Built for MAME, in use at MAME</p>
+          <figure class="pv lab"><picture><source media="(hover: hover) and (min-width: 821px)" srcset="../material/screenshots/mame-05-admin-overview.jpg"><img src="../material/screenshots/mame-05-admin-overview-grey.jpg" alt="MAME Tool Rental admin overview with request counts, rentals per week and the most-rented tools, demo data" width="1378" height="868" loading="lazy" decoding="async"></picture><figcaption>Admin overview, demo data<br><span class="dim">McGill Association of Mechanical Engineers</span></figcaption></figure></li>
+        <li><div class="ph"><span class="lab dim num">02.3</span><h3 class="hd">Atlantis</h3><a class="lab ulink" href="https://github.com/Yahya-github/atlantis" target="_blank" rel="noopener">Code</a></div>
+          <p class="dim">A 2D game in Godot 4, built with a team</p><p class="dim mid">Architected 6 gameplay systems</p><p class="dim">1st place, Intercollegiate Video Game Creation Competition 2026</p></li>
+        <li><div class="ph"><span class="lab dim num">02.4</span><h3 class="hd">CRC problems</h3></div>
+          <p class="dim">12 algorithmic problems for CRC 2027</p><p class="dim mid">Author, volunteer since February 2026</p><p class="dim">Reference solutions and 20+ edge-case tests each, in C++ and Python</p></li>
+        <li><div class="ph"><span class="lab dim num">02.5</span><h3 class="hd">Robot firmware</h3><a class="lab ulink" href="https://agisback.crcrobotics.com/fr/" target="_blank" rel="noopener">Team site</a></div>
+          <p class="dim">Firmware for the CRC 2026 robot</p><p class="dim mid">Embedded state machine in C/C++, PID tuning</p><p class="dim">1st place, robot competition, 2026</p></li>
+        <li><div class="ph"><span class="lab dim num">02.6</span><h3 class="hd">Showdown AI</h3></div>
+          <p class="dim">A competitive battle agent</p><p class="dim mid">Planned</p><p class="dim">In progress, nothing built yet</p></li>
       </ol>
     </div>
     <span class="edge lab dim" aria-hidden="true">Montréal, Québec, 2026</span>
@@ -468,7 +488,7 @@
       <div class="c1"><h2 class="display">Work</h2>
         <ul class="ruled">
           <li><p class="lab dim">Since Sep 2026</p><p class="hd">Coding agent evaluator</p><p class="dim">Mercor, contractor</p><span class="lg" aria-hidden="true"><img src="../material/logos/mercor-mark-mono.png" alt="" width="110" height="96" decoding="async"><img class="c" src="../material/logos/mercor-mark.png" alt="" width="110" height="96" loading="lazy" decoding="async"></span></li>
-          <li><p class="lab dim">Since Jun 2026</p><p class="hd">Developer</p><p class="dim">Facturo, for a Quebec trucking company</p><span class="lg" aria-hidden="true"><img src="../material/logos/facturo-mark-mono.svg" alt="" width="23" height="24" decoding="async"><img class="c" src="../material/logos/facturo-mark.svg" alt="" width="23" height="24" loading="lazy" decoding="async"></span></li>
+          <li><p class="lab dim">Jun 2026 to Oct 2026</p><p class="hd">Developer</p><p class="dim">Facturo, for a Quebec trucking company</p><span class="lg" aria-hidden="true"><img src="../material/logos/facturo-mark-mono.svg" alt="" width="23" height="24" decoding="async"><img class="c" src="../material/logos/facturo-mark.svg" alt="" width="23" height="24" loading="lazy" decoding="async"></span></li>
           <li><p class="lab dim">Since Feb 2026</p><p class="hd">Problem author</p><p class="dim">CRC 2027, volunteer</p><span class="lg" aria-hidden="true"><img src="../material/logos/crc-mark-mono.svg" alt="" width="22" height="28" decoding="async"><img class="c" src="../material/logos/crc-mark.svg" alt="" width="22" height="28" loading="lazy" decoding="async"></span></li>
           <li><p class="lab dim">Since 2025</p><p class="hd">Freelance developer</p><p class="dim">12 projects for 9 clients</p></li>
         </ul></div>
@@ -642,12 +662,13 @@
     });
     // a click opens the source in a new tab; when the visitor comes back the browser can keep a stale :hover on the line
     // (the pointer left while this window was in the background). Quiet the hover previews until the pointer moves here again.
-    var ach = document.getElementById('ach');
-    function quiet() { ach.classList.add('quiet'); }
+    // The Projects MAME row (round 6) opens its live site the same way, so both pages share the rule.
+    var quietPages = [document.getElementById('ach'), document.getElementById('proj')];
+    function quiet() { quietPages.forEach(function (el) { el.classList.add('quiet'); }); }
     addEventListener('blur', quiet);
     document.addEventListener('visibilitychange', quiet);
-    ach.addEventListener('pointerleave', function () { ach.classList.remove('quiet'); });
-    addEventListener('pointermove', function (e) { if (e.movementX || e.movementY) ach.classList.remove('quiet'); });
+    quietPages.forEach(function (el) { el.addEventListener('pointerleave', function () { el.classList.remove('quiet'); }); });
+    addEventListener('pointermove', function (e) { if (e.movementX || e.movementY) quietPages.forEach(function (el) { el.classList.remove('quiet'); }); });
 
     // cursor (a): a square that snaps to the hovered letter or link, with a Label tag that never leaves the viewport
     var cur = document.getElementById('cur'), cp = cur.querySelector('.cp'), box = cur.querySelector('.box');
@@ -730,8 +751,8 @@
     var portrait = document.getElementById('portrait');
     portrait.addEventListener('click', function () { portrait.setAttribute('aria-pressed', String(portrait.getAttribute('aria-pressed') !== 'true')); });
 
-    // Experience: on touch (no hover) a tap on a row with a mark shows its brand colours; a second tap hides them
-    [].slice.call(document.querySelectorAll('.xp .ruled > li')).forEach(function (li) {
+    // Experience and the Projects MAME row: on touch (no hover) a tap on a row with a mark shows its brand colours; a second tap hides them
+    [].slice.call(document.querySelectorAll('.xp .ruled > li, .proj .rows > li')).forEach(function (li) {
       if (!li.querySelector('.lg')) return;
       li.addEventListener('pointerup', function (e) { if (e.pointerType === 'touch') li.classList.toggle('col'); });
     });
