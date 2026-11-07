@@ -218,3 +218,91 @@ Follow-up (verbatim, relayed by the orchestrator):
 1. Discuss the design references (item 4); the orchestrator is handling this.
 2. Round-1 question 1 is still open: the Club of the Year caption wording "Our school's Club of the Year", alt "The team on stage with its school's Club of the Year award".
 3. Achievement thumbnails on phones are greyscale (item 6 choice). Say if you want them in colour there too.
+
+## Change round 3 (2026-11-07)
+
+### Yahya's reply (verbatim)
+
+Multi-select answer on the design references (verbatim labels):
+
+> "Word frame on Say hi (Recommended), Letter-pair titles (Recommended), Rotated micro-text + grid lines, Edge-cropped type"
+
+Two open questions answered (verbatim, relayed by the orchestrator):
+
+> "Club caption agreed"
+
+> "Greyscale"
+
+### What was done
+
+| # | Item | Status | Commits |
+|---|------|--------|---------|
+| 1 | Letter-pair titles | Done (Achievements, About) | c78f9f2, c08dd4f |
+| 2 | Word frame on Say hi | Done | c78f9f2, c08dd4f |
+| 3 | Edge-cropped type | Done (Experience) | c78f9f2, c08dd4f |
+| 4 | Rotated micro-text + grid lines | Done (pages 01-05; Index) | c78f9f2, c08dd4f |
+| 5 | Club of the Year caption | Agreed, recorded, no change | c08dd4f |
+| 6 | Phone/touch Achievements thumbnails | Greyscale, recorded as decided, no change | c08dd4f |
+
+**1. Letter-pair titles.**
+- Achievements: AC / HI / EV / EM / EN / TS in capitals, cols 1-2, line height 0.82, sized to fill the page height (at most the Display size): 130px at 1440x900, 120px at 1366x768. The list moves beside it into cols 3-10 (rank 3-4, result 5-7, detail 8-10) and the hover previews move from cols 1-2 to cols 11-12.
+- About: TWO / HAB / ITS, cols 5-8.
+- A first try set one letter per grid column. The pairs then read as two vertical columns ("AHEEET", "CIVMNS"), so each row is set as one word.
+- Accessibility: the heading's name is the full word in visually hidden text ("Achievements", "Two habits"). The rows (and the phone fallback) are `aria-hidden`.
+- Not split: Experience has no "Experience" title (its Display group is Work and Involvement), Projects' Display word is "Facturo", Say hi has no title, and YAHYA is untouched.
+- Phones: About keeps the three rows. Achievements falls back to the one-line title "Achievements" in title case (290px of 322px), so six rows do not push the list a screen down.
+
+**2. Word frame on Say hi.**
+- "say hi" (lowercase) in Display weight and width runs round all four edges, pinwheel-wise like the "universe" poster: top 0, right 90, bottom 180, left 270 degrees, letter tops out.
+- The band is exactly one grid column (89px at 1440, 83px at 1366), so the frame stands on cols 1 and 12.
+- JS fills each edge with as many words as fit and shares the leftover equally, the corner gap included. At 1440 that is 6, 3, 6 and 3 words; at 1366, 6, 2, 6 and 2.
+- The four links start on col 2, centred in the frame's height. They shrink below Display only when the inside is too short: 108px at 1366x768, while 1440x900 keeps the Display size. The address sits at the bottom of cols 9-11, flush left.
+- The frame is `aria-hidden`, has no pointer events and is static (nothing changes under reduced motion).
+- Phone: top and bottom edges only (44px band). With the side edges the inside would be about 250px, narrower than "Resume (PDF)" at 64px.
+- The depth tunnel of fragments was not added (too noisy next to four giant links).
+
+**3. Edge-cropped type.** On Experience, "03" in Display weight and width, set at about 460px (1440) or 280px (1366), sits on the footer line under the Involvement table. The page's right edge cuts through the "3".
+- The page uses `overflow: clip`: scrollLeft and scrollTop stay 0 even when set.
+- No collision: at 1440 the number starts at y 528 (list ends at 488) and x 1116 (Work ends at 736), far from the rail.
+- Hidden on phones.
+- One page only: no other page has a free area that a crop would not collide with.
+
+**4. Rotated micro-text and grid lines.**
+- (a) "Montréal, Québec, 2026" in dim Label is set vertically in the right page margin of pages 01-05, `aria-hidden`. The rail keeps the left margin. Hidden on phones (16px margin).
+- (b) The Index draws its 12 columns as hairlines (`#2e2e2e`): 45% opacity at rest, full while a YAHYA letter is hovered or keyboard-focused (400ms opacity, instant under reduced motion). Phones draw one line per column start.
+- Choice: always on, faint. In the screenshots it shows the grid without competing with the text, and a hover-only grid would go unseen. Body text contrast is unchanged: ink on the brightest line is 11.9:1.
+
+**5 and 6.** The design doc's Achievements composition records the agreed caption and alt, and that the phone/touch thumbnails are greyscale "decided by Yahya", no longer a default.
+
+### Verification
+
+- Device checks (`r3dev.js`, real Playwright input):
+  - Grid lines: 0.45 at rest, 1 on a letter, 0.45 after, at 1440 and 1366.
+  - Previews in cols 11-12, right of the detail column and inside the viewport: x 1213-1415 at 1440, 1151-1341 at 1366.
+  - The title stack ends before the list. Both bottoms are 734 at 1440 and 688 at 1366, above the footer.
+  - The crop cannot be scrolled and touches nothing.
+  - Say hi: all four links and the address sit inside the frame and take the pointer (elementFromPoint) at 1440 and 1366. At 390 the Display links start 2px left of the frame's top band; that is the -0.03em optical pull-in every Display word has, not a defect.
+  - Heading names: "Achievements" and "Two habits", with the visible rows aria-hidden.
+- Regression scripts re-run, all unchanged:
+  - `hit2`: the Index letter hit range is y 264-747; rail items x 24-70, y 92-244.
+  - `green2`: exactly 1 green letter after paging with a focused letter.
+  - `hitreel`: 0 wrong probes at 1440, 1366 and 390. The reel and control boxes are identical to round 2.
+  - `colour`: 21/21 PASS.
+  - `achpv`: 17/17 PASS, including colour previews from their new place and greyscale phone thumbnails.
+  - `reel3`: exactly one advance.
+- All six pages screenshotted and looked at, at 1440x900, 1366x768 and 390x844, plus a reduced-motion pass at 1440:
+  - 0 page errors;
+  - document scrollWidth equals the viewport at every size (no horizontal scroll);
+  - 1366 Achievements now fits the screen (768 of 768; it overflowed by 8px before).
+- v7: the inline script parses. The 01-06 banned patterns all count 0 (Google Fonts, judge, requestAnimationFrame, lerp, spring, italic, weights 200/500/600, medal, em dash).
+- Design doc: 0 em dashes; the Status line still reads DRAFT; no APPROVED line.
+- `check.sh`: 18 PASS and 1 FAIL (SC-1c, not approved, as expected).
+
+### Needs Yahya
+
+1. Grid lines on the Index: always on and faint (current), or only while the pointer is on YAHYA?
+2. The micro-text wording "Montréal, Québec, 2026", and whether it should be in the right margin of every page 01-05.
+3. The frame word in lowercase "say hi" (like "universe"), or "Say hi" / "SAY HI"?
+4. Achievements: the letter-pair stack moved the photo previews to the right (cols 11-12). OK?
+5. Letter-pair titles on two pages only (Achievements, About). Should Experience get a page title ("EX / PE / RI / EN / CE") above or instead of the Work / Involvement heads? It would need about 1.5 screens of height on 1366x768 unless the heads go.
+6. Edge-cropped "03" on Experience only; should other pages get their number too? There is no free area on them today without moving content.
