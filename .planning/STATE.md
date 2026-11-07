@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-11-07T05:41:33.660Z"
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-11-07T05:51:00.196Z"
 last_activity: 2026-11-07
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 8
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-11-06)
 ## Current Position
 
 Phase: 01 (design-gate) — EXECUTING
-Plan: 2 of 8
+Plan: 3 of 8
 Status: Ready to execute
 Last activity: 2026-11-07
 
-Progress: [█░░░░░░░░░] 13%
+Progress: [███░░░░░░░] 25%
 
 ## Performance Metrics
 
@@ -53,6 +53,7 @@ Progress: [█░░░░░░░░░] 13%
 
 *Updated after each plan completion*
 | Phase 01 P01 | 3 min | 2 tasks | 4 files |
+| Phase 01 P02 | 10 min | 3 tasks | 15 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,7 @@ Recent decisions affecting current work:
 - [Phase 1 discuss]: Depth map and background visuals dropped (2026-11-06). Photos are plain greyscale (DSGN-05, now Phase 6). Phase 8 is now Interactive Proof (PROOF-01 Atlantis, PROOF-02 robot model), a parallel track that does not gate launch
 - [Roadmap]: Research phases 4 (pager core) and 5 (input model) merged into one phase for standard granularity
 - [Phase 1 P01]: Portrait master is one full-width banner-free greyscale crop (1512x1240); About framing via object-position 52% 10% in v7
+- [Phase 1 P02]: Font trial numbers in docs/reference/font-metrics.md are HarfBuzz-measured and match live browser measurement within 0.001 em; quote them directly
 
 ### Pending Todos
 
@@ -89,6 +91,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-07T05:41:33.646Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-11-07T05:51:00.181Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None
