@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-03-PLAN.md
-last_updated: "2026-11-07T05:56:20.435Z"
+stopped_at: Completed 01-05-PLAN.md
+last_updated: "2026-11-07T14:32:49.253Z"
 last_activity: 2026-11-07
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 8
-  completed_plans: 3
-  percent: 0
+  completed_plans: 4
+  percent: 50
 ---
 
 # Project State
@@ -30,7 +30,7 @@ Plan: 4 of 8
 Status: Ready to execute
 Last activity: 2026-11-07
 
-Progress: [████░░░░░░] 38%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [████░░░░░░] 38%
 | Phase 01 P01 | 3 min | 2 tasks | 4 files |
 | Phase 01 P02 | 10 min | 3 tasks | 15 files |
 | Phase 01 P03 | 5 min | 2 tasks | 5 files |
+| Phase 01 P05 | 3 min | 3 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,7 @@ Recent decisions affecting current work:
 - [Phase 1 P02]: Font trial numbers in docs/reference/font-metrics.md are HarfBuzz-measured and match live browser measurement within 0.001 em; quote them directly
 - [Phase 1 P03]: Design doc rev 5 draft written; font, Achievements variant and cursor form stay open for plan 07; Experience split 5/7 until the winning face is checked
 - [Phase 1 P03]: Custom cursor is v1 requirement EXP-03 (Phase 5), 1:1 with the pointer
+- [Phase 1 P05]: Font: Hanken Grotesk (OFL), display weight 700, YAHYA tracking -0.035em; confirmed by Yahya 2026-11-07
 
 ### Pending Todos
 
@@ -80,7 +82,7 @@ None yet.
 
 - yahya-h.dev must be bought before Phase 2 (the `.dev` HTTPS setup can take up to 24 h)
 - Phase 1 needs real material from Yahya: photos and screenshots, the resume PDF, links
-- Final font is still open (Inter Tight marked "revisit")
+- Font decided (Hanken Grotesk 700, plan 05); "Achievements" overflows a 390px phone at full width, v7 must handle it
 - Phase 4 needs real devices: Mac trackpad, Magic Mouse, Windows wheel, Linux touchpad, iPhone (Safari and LinkedIn in-app browser), Android
 - The canonical policy for six routes that each contain all content is still to decide (Phase 3/7)
 
@@ -94,6 +96,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-07T05:56:20.420Z
-Stopped at: Completed 01-03-PLAN.md
+Last session: 2026-11-07T14:32:49.240Z
+Stopped at: Completed 01-05-PLAN.md
 Resume file: None
