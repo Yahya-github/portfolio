@@ -272,6 +272,6 @@ Third-party runtime assets: none. Fonts, images and the resume are self-hosted i
 - [x] Dimension 3 Color: PASS
 - [x] Dimension 4 Typography: PASS
 - [x] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
+- [x] Dimension 6 Registry Safety: PASS
 
-**Approval:** pending
+**Approval:** approved 2026-11-06 (gsd-ui-checker, revision 1)
