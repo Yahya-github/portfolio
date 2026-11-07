@@ -9,7 +9,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [ ] **DSGN-02**: All text uses one sans family on a modular type scale and a 12-column grid (final family chosen in the design phase)
 - [ ] **DSGN-03**: Each of the six pages has its own distinct composition on the shared grid (no two pages share the same layout)
 - [ ] **DSGN-04**: Every motion follows one rule: movement on the horizontal axis, fast and decisive, no bounce
-- [ ] **DSGN-05**: Real photos and screenshots of Yahya's work are shown with one plain treatment: greyscale, hard crops on the 12-column grid, no filters or effects (his face stays clearly visible)
+- [ ] **DSGN-05**: Real photos and screenshots of Yahya's work are shown with one plain treatment: greyscale, hard crops on the 12-column grid, no filters or effects (his face stays clearly visible); one exception: the About portrait crossfades to its true colours on hover, tap or keyboard press (instant under reduced motion), never as an accent use
 - [ ] **DSGN-06**: No ornament: no cartoon illustrations, pixel stickers, decorative HUD marks or skill bars
 
 ### Paging (NAV)
@@ -31,7 +31,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 
 ### Content (CONT)
 - [ ] **CONT-01**: Hero shows a role line and one proof line beside the name, readable without any interaction
-- [ ] **CONT-02**: Achievements shows a giant static 75/75 with "Canadian Computing Competition, perfect score", plus the four first places
+- [ ] **CONT-02**: Achievements shows 75/75 with "Canadian Computing Competition, perfect score" in one typographic list with the four first places, at the same weight as the other results
 - [ ] **CONT-03**: Projects presents Facturo as the flagship with the most space; the other four show problem, role, result and links
 - [ ] **CONT-04**: Facturo has a deep-dive page (problem, what was built, result, screenshots, links)
 - [ ] **CONT-05**: Experience shows Work and Involvement
@@ -39,6 +39,8 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [ ] **CONT-07**: Say hi offers email, LinkedIn, GitHub and a Resume (PDF)
 - [ ] **CONT-08**: Resume and contact are reachable from every page
 - [ ] **CONT-09**: All site text lives in typed data files; only verified facts ship
+- [ ] **CONT-10**: Each Achievements line previews its proof on hover and keyboard focus (a small greyscale photo and one line, kept inside the viewport); a line with a public article opens it in a new tab; on touch the thumbnail shows inline under its line; a result with no photo or article shows a description only
+- [ ] **CONT-11**: Projects shows Facturo as a walkthrough of its greyscale screenshots (slow push-in and crossfade, transform and opacity only, frames lazy-loaded) with a visible pause control; it pauses on hover, focus, off-page and offscreen, and becomes a manual previous/next stepper under reduced motion
 
 ### Interactive proof (PROOF)
 - [ ] **PROOF-01**: Visitor can play Atlantis in the browser on its project page (single-thread Godot web export, loaded only on that page, with a screenshot and link fallback if too heavy; asset licences and teammates' consent checked first)
@@ -47,7 +49,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 ### Opening and phones (EXP)
 - [ ] **EXP-01**: First-time visitor sees an opening animation under about 1 second that any click or key skips; content is already loaded underneath; it never repeats
 - [ ] **EXP-02**: Phone visitor gets a designed portrait layout of every page and swipes between them; an optional hint says landscape shows the full posters (never blocking)
-- [ ] **EXP-03**: On devices with a fine pointer, a custom cursor sits exactly on the pointer (1:1, no lag or spring; only its shape changes) and guides navigation; touch devices and forced-colours mode keep the native cursor; under reduced motion shape changes are instant (form picked in Phase 1 from v7 variants a, b, c)
+- [ ] **EXP-03**: On devices with a fine pointer, a custom cursor sits exactly on the pointer (1:1, no lag or spring; only its shape changes) and guides navigation; touch devices and forced-colours mode keep the native cursor; under reduced motion shape changes are instant (form: variant a, a hard-edged ink square that snaps around the hovered letter or link with a Label tag that always stays inside the viewport, picked in Phase 1)
 
 ### Discoverability (SEO)
 - [ ] **SEO-01**: Each page has its own title and description; canonical URLs; Person structured data
@@ -114,6 +116,8 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | CONT-07 | Phase 6 | Pending |
 | CONT-08 | Phase 6 | Pending |
 | CONT-09 | Phase 3 | Pending |
+| CONT-10 | Phase 6 | Pending |
+| CONT-11 | Phase 6 | Pending |
 | EXP-01 | Phase 5 | Pending |
 | EXP-02 | Phase 6 | Pending |
 | EXP-03 | Phase 5 | Pending |
@@ -130,8 +134,8 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | PROOF-02 | Phase 8 | Pending |
 
 **Coverage:**
-- v1 requirements: 42 total
-- Mapped to phases: 42
+- v1 requirements: 44 total (CONT-10 and CONT-11 added 2026-11-07 from Yahya's v7 review, plan 01-07)
+- Mapped to phases: 44
 - Unmapped: 0
 
 Phase 1 (Design Gate) carries no requirement directly; it is the approval gate that enables every later phase.
