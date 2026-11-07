@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-cursor="a">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yahya Hallani, software engineering at McGill</title>
 <style>
-  /* v7 approval sketch (throwaway, plan 01-06). Swiss, horizontal: six full-screen pages side by side.
+  /* v7 approval sketch (throwaway, plans 01-06 and 01-07). Swiss, horizontal: six full-screen pages side by side.
+     Plan 01-07 fixed in Yahya's picks: Achievements (b) with previews, cursor (a), colour-on-hover portrait, Facturo walkthrough.
      One family (Instrument Sans, self-hosted, OFL), a 12-column grid, flush left, black + white + one accent. */
   @font-face {
     font-family: "Instrument Sans";
@@ -52,9 +53,6 @@
   /* frame: header and footer stay put while pages slide underneath */
   .head { position: fixed; top: 0; left: 0; right: 0; z-index: 5; height: var(--frame-top); padding: 0 var(--grid-margin) var(--space-md); align-content: end; align-items: end; border-bottom: 1px solid var(--color-hair); background: var(--color-ground); }
   .head .who { grid-column: 1 / 4; } .head #where { grid-column: 4 / 7; }
-  .head .sk { grid-column: 7 / 10; display: flex; flex-direction: column; gap: var(--space-xs); }
-  .head .sk button { color: var(--color-dim); padding: 0 2px; }
-  .head .sk button[aria-pressed="true"] { color: var(--color-ink); text-decoration: underline; text-underline-offset: 3px; }
   .head .links { grid-column: 10 / 13; display: flex; justify-content: flex-end; gap: var(--space-lg); }
   .foot { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; height: var(--frame-bottom); padding: 0 var(--grid-margin) var(--space-md); align-content: end; align-items: end; pointer-events: none; background: var(--color-ground); }
   .foot > * { pointer-events: auto; }
@@ -113,31 +111,23 @@
   html[data-page="0"] .rail { visibility: hidden; }
   @media (pointer: coarse) { .rail { gap: 28px; } }
 
-  /* cursor layer (sketch: three variants). Position is written 1:1 on pointermove; only shape changes animate */
+  /* cursor (a), chosen 2026-11-07: a 1px ink square that snaps around the hovered letter or link, plus a Label tag.
+     Position is written 1:1 on pointermove; only shape changes animate. The tag is clamped inside the viewport in JS */
   .cur { position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0; }
   .cur.on { opacity: 1; }
   .cur .cp, .cur .box, .cur .btag { position: absolute; left: 0; top: 0; }
-  .cur .cp > * { position: absolute; display: none; }
-  .cur .box { display: none; width: 12px; height: 12px; border: 1px solid var(--color-ink); border-radius: 0; }
+  .cur .cp > * { position: absolute; }
+  .cur .box { width: 12px; height: 12px; border: 1px solid var(--color-ink); border-radius: 0; }
   .cur .dot { left: -1px; top: -1px; width: 2px; height: 2px; background: var(--color-ink); }
-  .cur .btag, .cur .ctag { display: none; white-space: nowrap; padding: 2px var(--space-xs); background: var(--color-ground); color: var(--color-ink); opacity: 0; transition: opacity var(--dur-ui) var(--ease-ui); }
-  .cur .hx { left: -20px; top: 0; width: 40px; height: 1px; background: var(--color-accent); transition: transform var(--dur-ui) var(--ease-ui); }
-  .cur .vx { left: 0; top: -20px; width: 1px; height: 40px; background: var(--color-accent); transition: transform var(--dur-ui) var(--ease-ui); }
-  .cur .ctag { left: 12px; top: 12px; }
-  [data-cursor="a"] .cur .box, [data-cursor="a"] .cur .dot, [data-cursor="a"] .cur .btag { display: block; }
-  [data-cursor="a"] .cur.hot .btag { opacity: 1; }
-  [data-cursor="b"] .cur .hx, [data-cursor="b"] .cur .vx { display: block; }
-  [data-cursor="b"] .cur.hot .hx { transform: scaleX(1.6); }   /* arms 20px -> 32px */
-  [data-cursor="b"] .cur.hot .vx { transform: scaleY(1.6); }
-  [data-cursor="c"] .cur .ctag { display: block; }
-  [data-cursor="c"] .cur.letter .ctag { opacity: 1; }
+  .cur .btag { white-space: nowrap; padding: 2px var(--space-xs); background: var(--color-ground); color: var(--color-ink); opacity: 0; transition: opacity var(--dur-ui) var(--ease-ui); }
+  .cur.hot .btag:not(:empty) { opacity: 1; }
   @media (hover: hover) and (pointer: fine) and (forced-colors: none) {
-    html[data-cursor="a"], html[data-cursor="a"] *, html[data-cursor="b"], html[data-cursor="b"] * { cursor: none; }
+    html, html * { cursor: none; }
   }
   @media (hover: none), (pointer: coarse) { .cur { display: none; } }
   @media (forced-colors: active) { .cur { display: none; } }
 
-  /* shared: ruled lists (only Achievements a, Projects rows, Experience) and page content offset */
+  /* shared: ruled lists (only the Projects rows and Experience) and page content offset */
   .ruled { list-style: none; padding: 0; border-top: 1px solid var(--color-hair); }
   .ruled > li { border-bottom: 1px solid var(--color-hair); }
   .plain { list-style: none; padding: 0; }
@@ -145,26 +135,46 @@
   .top { padding-top: var(--space-lg); }
   .ulink { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 
-  /* 01 achievements: (a) dominant numeral 7/5, (b) typographic list without rules */
-  .ach .v { display: none; height: 100%; align-content: start; }
-  .ach[data-variant="a"] .va, .ach[data-variant="b"] .vb { display: grid; }
-  .va .score { grid-column: 1 / 8; padding-top: calc((100svh - var(--frame-top) - var(--frame-bottom)) * 0.32); }
-  .va .score .display { margin-top: var(--space-md); }
-  .va .wins { grid-column: 8 / 13; }
-  .va .wins h2 { margin-bottom: var(--space-xl); }
-  .va .ruled > li { display: grid; grid-template-columns: 1fr auto; column-gap: var(--space-md); padding: 12px 0; }
-  .va .ruled .rk { text-align: right; }
-  .va .ruled p { grid-column: 1 / -1; margin-top: var(--space-xs); }
-  .vb h2 { grid-column: 1 / -1; }
-  .vb .plain { grid-column: 3 / 13; display: grid; grid-template-columns: subgrid; row-gap: var(--space-lg); margin-top: var(--space-2xl); }
-  .vb .plain > li { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: baseline; }
-  .vb .rk { grid-column: 1 / 3; } .vb .res { grid-column: 3 / 7; } .vb .det { grid-column: 7 / 11; }
+  /* 01 achievements, variant (b) chosen 2026-11-07: typographic list without rules. Each line previews its proof
+     (greyscale photo plus one line) in the empty cols 1-2 on hover and focus; lines with an article open it */
+  .ach .grid { align-content: start; }
+  .ach h2 { grid-column: 1 / -1; }
+  .ach .plain { grid-column: 3 / 13; display: grid; grid-template-columns: subgrid; row-gap: var(--space-lg); margin-top: var(--space-2xl); }
+  .ach .plain > li { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; position: relative; }
+  .ach .row { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: baseline; }
+  .ach .rk { grid-column: 1 / 3; } .ach .res { grid-column: 3 / 7; } .ach .det { grid-column: 7 / 11; }
+  .ach a.row:hover .res, .ach a.row:focus-visible .res { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+  .ach .row[tabindex]:focus-visible { outline-offset: 8px; }
+  .ach .src { margin-top: var(--space-xs); }
+  /* preview: two columns wide (cols 1-2 of the page grid), top on the line, nudged up in JS if it would leave the viewport */
+  .pv { position: absolute; top: 0; right: calc(100% + var(--grid-gutter)); width: calc((100% - 9 * var(--grid-gutter)) / 10 * 2 + var(--grid-gutter));
+        pointer-events: none; opacity: 0; transition: opacity var(--dur-ui) var(--ease-ui); transform: translate3d(0, var(--pv-y, 0px), 0); }
+  .pv img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+  .pv figcaption { margin-top: var(--space-sm); }
+  .ach li:hover .pv, .ach li:focus-within .pv { opacity: 1; }
+  @media (hover: none), (max-width: 820px) {   /* no hover: the thumbnail sits inline under its line */
+    .pv { position: static; width: auto; margin-top: var(--space-sm); grid-column: 3 / 11; opacity: 1; transform: none; }
+    .pv img { width: min(160px, 40vw); }
+    .pv.txt, .pv.dup { display: none; }   /* a text-only preview, or the same photo twice in a row, would only repeat */
+    .ach { overflow-y: auto; }
+  }
+
+  /* 02 projects: Facturo walkthrough, 10 greyscale frames, slow push-in plus crossfade (transform and opacity only) */
+  .reel { position: relative; flex: 1 1 auto; min-height: 120px; height: 0; overflow: hidden; background: var(--color-ground); }
+  .reel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 0 0; opacity: 0; transform-origin: 0 0;
+              transition: opacity 900ms var(--ease-ui); }
+  .reel img.tall { object-fit: contain; }   /* the 390px phone screen stays whole, flush left */
+  .reel img.on { opacity: 1; }
+  .ctl { display: flex; align-items: baseline; gap: var(--space-lg); margin-top: var(--space-sm); }
+  .proj .lead .ctl { align-self: stretch; margin-top: var(--space-sm); }
+  .ctl .cnt { margin-left: auto; }
+  .ctl button { min-height: 24px; }
+  @media (prefers-reduced-motion: reduce) { .reel img { transition: none; } .ctl #rp { display: none; } }
 
   /* 02 projects: asymmetric split 8/4 with a hard-cropped image */
   .proj .grid { grid-template-rows: 100%; }
   .proj .lead { grid-column: 1 / 9; display: flex; flex-direction: column; min-height: 0; padding-bottom: var(--space-lg); }
-  .proj .shot { flex: 1 1 auto; min-height: 120px; width: 100%; height: 0; object-fit: cover; object-position: 0 0; display: block; }
-  .proj .lead h2 { margin-top: var(--space-xl); }
+  .proj .lead h2 { margin-top: var(--space-lg); }
   .proj .lead p { margin-top: var(--space-sm); max-width: 60ch; }
   .proj .lead .lab { margin-top: var(--space-md); align-self: flex-start; }
   .proj .rows { grid-column: 9 / 13; align-self: start; }
@@ -183,7 +193,14 @@
 
   /* 04 about: photo as column, offset text */
   .about .grid { grid-template-rows: auto 1fr; }
-  .about .portrait { grid-column: 1 / 5; grid-row: 1 / 3; width: 100%; height: 100%; min-height: 0; object-fit: cover; object-position: 52% 10%; display: block; }
+  /* the portrait is greyscale; hover (fine pointer) or a tap/press crossfades to the true-colour file. A deliberate exception, not an accent use */
+  .about .portrait { grid-column: 1 / 5; grid-row: 1 / 3; position: relative; width: 100%; height: 100%; min-height: 0; display: block; overflow: hidden; }
+  .about .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 52% 10%; display: block; }
+  .about .portrait .col { opacity: 0; transition: opacity 400ms var(--ease-ui); }
+  .about .portrait[aria-pressed="true"] .col { opacity: 1; }
+  @media (hover: hover) and (pointer: fine) { .about .portrait:hover .col { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .about .portrait .col { transition: none; } }
+  .about .portrait:focus-visible { outline-offset: -2px; }
   .about h2 { grid-column: 5 / 13; grid-row: 1; }
   .about .txt { grid-column: 8 / 13; grid-row: 2; align-self: end; max-width: 60ch; padding-bottom: var(--space-lg); }
   .about .txt .lead { font: 400 24px/1.35 var(--font-sans); letter-spacing: -0.015em; }
@@ -198,22 +215,19 @@
 
   @media (max-width: 820px) {
     .head { display: flex; flex-wrap: wrap; align-content: space-between; column-gap: var(--space-md); padding-top: var(--space-md); padding-bottom: var(--space-sm); }
-    .head .who { order: 1; } .head .links { order: 2; margin-left: auto; } .head .sk { order: 3; width: 100%; }
-    .head #where, .head .sk .note { display: none; }
+    .head .who { order: 1; } .head .links { order: 2; margin-left: auto; }
+    .head #where { display: none; }
     .foot .nx { grid-column: 6 / 13; }
     .word .cap { display: none; }
     .capsm { display: block; margin-top: var(--space-xl); }
     .capsm a { display: flex; align-items: center; gap: var(--space-sm); min-height: 44px; width: max-content; }
-    .vb .rk { display: block; }
+    .ach .row, .ach .plain > li { display: block; }
     .hi .links, .hi .side { align-self: stretch; }
     .page { overflow-y: auto; }
-    .page > .grid, .ach[data-variant] .v { display: block; height: auto; }
-    .ach[data-variant="a"] .vb, .ach[data-variant="b"] .va { display: none; }
-    .va .score { padding-top: var(--space-lg); }
-    .va .wins { margin-top: var(--space-2xl); }
-    .vb .plain { display: block; } .vb .plain > li { display: block; margin-top: var(--space-lg); }
-    .vb .det { display: block; margin-top: var(--space-xs); }
-    .proj .lead { padding-bottom: 0; } .proj .shot { height: 200px; flex: none; }
+    .page > .grid { display: block; height: auto; }
+    .ach .plain { display: block; } .ach .plain > li { margin-top: var(--space-lg); }
+    .ach .rk, .ach .det { display: block; } .ach .det { margin-top: var(--space-xs); }
+    .proj .lead { padding-bottom: 0; } .reel { height: 220px; flex: none; }
     .proj .rows { margin-top: var(--space-2xl); }
     .xp .c2 { margin-top: var(--space-2xl); }
     .about .portrait { height: 40svh; }
@@ -231,11 +245,6 @@
 
 <header class="head grid lab">
   <span class="who">Yahya Hallani</span><span class="dim" id="where">Index</span>
-  <div class="sk dim" aria-label="Sketch toggles">
-    <span>Achievements: <button type="button" data-variant-set="a" aria-pressed="true">a</button> / <button type="button" data-variant-set="b" aria-pressed="false">b</button>
-      &nbsp; Cursor: <button type="button" data-cursor-set="a" aria-pressed="true">a</button> / <button type="button" data-cursor-set="b" aria-pressed="false">b</button> / <button type="button" data-cursor-set="c" aria-pressed="false">c</button></span>
-    <span class="note">Sketch only: toggles are not part of the site</span>
-  </div>
   <nav class="links" aria-label="Contact"><a href="../material/resume-public.pdf">Resume (PDF)</a><a href="#p5" data-go="5">Say hi</a></nav>
 </header>
 
@@ -266,32 +275,21 @@
     </h1>
   </section>
 
-  <section class="page ach" id="ach" data-name="01 Achievements" data-variant="a" aria-label="Achievements">
-    <!-- variant (a): dominant numeral, extreme scale contrast -->
-    <div class="grid v va">
-      <div class="score">
-        <p class="lab">Canadian Computing Competition, perfect score</p>
-        <p class="display acc num" aria-label="75 out of 75">75/75</p>
-      </div>
-      <div class="wins top">
-        <h2 class="hd">Achievements</h2>
-        <ul class="ruled">
-          <li><span class="hd">DIRO Hackathon, Université de Montréal</span><span class="hd rk">1st</span><p class="dim">1st of 18 teams from 9 CEGEPs, $2,500 team scholarship, 2026</p></li>
-          <li><span class="hd">Intercollegiate Video Game Creation Competition</span><span class="hd rk">1st</span><p class="dim">With Atlantis, a 2D game in Godot 4, 2026</p></li>
-          <li><span class="hd">Canadian Robotics Competition, robot</span><span class="hd rk">1st</span><p class="dim">2026</p></li>
-          <li><span class="hd">Canadian Robotics Competition, programming</span><span class="hd rk">1st, 2nd</span><p class="dim">1st in 2025, 2nd in 2026</p></li>
-        </ul>
-      </div>
-    </div>
-    <!-- variant (b): typographic list, no rules -->
-    <div class="grid v vb top">
+  <section class="page ach" id="ach" data-name="01 Achievements" aria-label="Achievements">
+    <!-- variant (b): typographic list, no rules. Previews show the proof that exists: a photo, an article, or neither -->
+    <div class="grid top">
       <h2 class="display">Achievements</h2>
       <ul class="plain">
-        <li><span class="hd rk acc num">75/75</span><span class="hd res">Canadian Computing Competition, perfect score</span><span class="det dim">2026</span></li>
-        <li><span class="hd rk">1st</span><span class="hd res">DIRO Hackathon, Université de Montréal</span><span class="det dim">1st of 18 teams from 9 CEGEPs, $2,500 team scholarship, 2026</span></li>
-        <li><span class="hd rk">1st</span><span class="hd res">Intercollegiate Video Game Creation Competition</span><span class="det dim">With Atlantis, a 2D game in Godot 4, 2026</span></li>
-        <li><span class="hd rk">1st</span><span class="hd res">Canadian Robotics Competition, robot</span><span class="det dim">2026</span></li>
-        <li><span class="hd rk">1st, 2nd</span><span class="hd res">Canadian Robotics Competition, programming</span><span class="det dim">1st in 2025, 2nd in 2026</span></li>
+        <li><div class="row" tabindex="0"><span class="hd rk acc num">75/75</span><span class="hd res">Canadian Computing Competition, perfect score</span><span class="det dim">2026</span></div>
+          <figure class="pv txt lab" aria-hidden="true"><figcaption>75 of 75 points<br><span class="dim">Canadian Computing Competition 2026</span></figcaption></figure></li>
+        <li><a class="row" href="https://diro.umontreal.ca/departement/nouvelles/nouvelle/news/detail/News/une-participation-remarquable-au-hackathon-2026-du-diro/" target="_blank" rel="noopener" data-tag="Read the article"><span class="hd rk">1st</span><span class="hd res">DIRO Hackathon, Université de Montréal</span><span class="det dim">1st of 18 teams from 9 CEGEPs, $2,500 team scholarship, 2026</span></a>
+          <figure class="pv lab"><img src="../material/photos/diro-hackathon-2026-award-grey.jpg" alt="The winning team with their certificates at the DIRO Hackathon 2026" width="800" height="450" loading="lazy" decoding="async"><figcaption>The winners with their certificates<br><span class="dim">Article, diro.umontreal.ca</span></figcaption></figure></li>
+        <li><a class="row" href="https://www.neomedia.com/vaudreuil-soulanges/actualites/education/657299/l-intercollegial-de-creation-de-jeux-video-au-cegep-de-valleyfield" target="_blank" rel="noopener" data-tag="Read the article"><span class="hd rk">1st</span><span class="hd res">Intercollegiate Video Game Creation Competition</span><span class="det dim">With Atlantis, a 2D game in Godot 4, 2026</span></a>
+          <figure class="pv lab"><img src="../material/photos/game-competition-2026-team-grey.jpg" alt="The Atlantis team at the intercollegiate competition, Cégep de Valleyfield" width="1920" height="1246" loading="lazy" decoding="async"><figcaption>The Atlantis team at Cégep de Valleyfield<br><span class="dim">Article, neomedia.com</span></figcaption></figure></li>
+        <li><div class="row" tabindex="0"><span class="hd rk">1st</span><span class="hd res">Canadian Robotics Competition, robot competition</span><span class="det dim">Matches against the other teams' robots, 2026</span></div>
+          <figure class="pv lab"><img src="../material/photos/crc-2026-trophies-grey.jpg" alt="The team with its CRC 2026 trophies" width="1440" height="753" loading="lazy" decoding="async"><figcaption>The team with its 2026 trophies<br><span class="dim">Photo, CRC 2026</span></figcaption></figure></li>
+        <li><div class="row" tabindex="0"><span class="hd rk">1st, 2nd</span><span class="hd res">Canadian Robotics Competition, programming</span><span class="det dim">1st in Programming in 2025, 2nd in Senior Programming in 2026</span></div>
+          <figure class="pv dup lab" aria-hidden="true"><img src="../material/photos/crc-2026-trophies-grey.jpg" alt="" width="1440" height="753" loading="lazy" decoding="async"><figcaption>The team with its 2026 trophies<br><span class="dim">Photo, CRC 2026</span></figcaption></figure></li>
       </ul>
     </div>
   </section>
@@ -299,7 +297,19 @@
   <section class="page proj" data-name="02 Projects" aria-label="Projects">
     <div class="grid top">
       <div class="lead">
-        <img class="shot" src="../material/screenshots/facturo-01-accueil-grey.png" alt="Facturo home screen: the dashboard of the Demo Transport Inc. workspace, with fictional clients and invoices" width="1440" height="900">
+        <div class="reel" id="reel" role="group" aria-roledescription="walkthrough" aria-label="Facturo screens">
+          <img src="../material/screenshots/facturo-01-accueil-grey.png" alt="Facturo home screen: the dashboard of the Demo Transport Inc. workspace, with fictional clients and invoices" data-name="Home" width="1440" height="900" decoding="async">
+          <img src="../material/screenshots/facturo-02-historique-grey.png" alt="Facturo invoice history, fictional data" data-name="History" width="1440" height="900" decoding="async" aria-hidden="true">
+          <img data-src="../material/screenshots/facturo-03-nouvelle-facture-grey.png" alt="Facturo new invoice form, fictional data" data-name="New invoice" width="1440" height="900" decoding="async" aria-hidden="true">
+          <img data-src="../material/screenshots/facturo-04-paiements-grey.png" alt="Facturo payments screen, fictional data" data-name="Payments" width="1440" height="900" decoding="async" aria-hidden="true">
+          <img data-src="../material/screenshots/facturo-05-parametres-grey.png" alt="Facturo settings screen" data-name="Settings" width="1440" height="900" decoding="async" aria-hidden="true">
+          <img data-src="../material/screenshots/facturo-06-palette-grey.png" alt="Facturo command palette" data-name="Command palette" width="1440" height="900" decoding="async" aria-hidden="true">
+          <img data-src="../material/screenshots/facturo-07-accueil-sombre-grey.png" alt="Facturo home screen in the dark theme, fictional data" data-name="Home, dark theme" width="1440" height="900" decoding="async" aria-hidden="true">
+          <img data-src="../material/screenshots/facturo-08-menu-reduit-grey.png" alt="Facturo with the sidebar collapsed, fictional data" data-name="Collapsed sidebar" width="1440" height="900" decoding="async" aria-hidden="true">
+          <img class="tall" data-src="../material/screenshots/facturo-09-mobile-grey.png" alt="Facturo on a 390px phone screen, fictional data" data-name="Phone" width="390" height="844" decoding="async" aria-hidden="true">
+          <img data-src="../material/screenshots/facturo-10-clients-grey.png" alt="Facturo client list, fictional clients" data-name="Clients" width="1440" height="900" decoding="async" aria-hidden="true">
+        </div>
+        <div class="ctl lab"><button type="button" id="rp" aria-pressed="false">Pause</button><button type="button" id="rprev">Previous</button><button type="button" id="rnext">Next</button><span class="cnt dim num" id="rcnt" aria-live="off">01 / 10, Home</span></div>
         <h2 class="display">Facturo</h2>
         <p>Paper tickets from a Quebec trucking company, turned into tax-correct invoices.</p>
         <p class="dim">Local-first app with more than 700 tests and verified in-app updates. Public demo with fictional data.</p>
@@ -311,7 +321,7 @@
         <li><div class="ph"><span class="lab dim num">02.3</span><h3 class="hd">CRC problems</h3></div>
           <p class="dim">12 algorithmic problems for CRC 2027</p><p class="dim">Author, volunteer since February 2026</p><p class="dim">Reference solutions and 20+ edge-case tests each, in C++ and Python</p></li>
         <li><div class="ph"><span class="lab dim num">02.4</span><h3 class="hd">Robot firmware</h3><a class="lab ulink" href="https://agisback.crcrobotics.com/fr/" target="_blank" rel="noopener">Team site</a></div>
-          <p class="dim">Firmware for the CRC 2026 robot</p><p class="dim">Embedded state machine in C/C++, PID tuning</p><p class="dim">1st place, robot, 2026</p></li>
+          <p class="dim">Firmware for the CRC 2026 robot</p><p class="dim">Embedded state machine in C/C++, PID tuning</p><p class="dim">1st place, robot competition, 2026</p></li>
         <li><div class="ph"><span class="lab dim num">02.5</span><h3 class="hd">Showdown AI</h3></div>
           <p class="dim">A competitive battle agent</p><p class="dim">Planned</p><p class="dim">In progress, nothing built yet</p></li>
       </ol>
@@ -338,7 +348,11 @@
 
   <section class="page about" data-name="04 About" aria-label="About">
     <div class="grid">
-      <img class="portrait" src="../material/portrait-devfest-2026-grey.jpg" alt="Yahya Hallani at DevFest Montreal 2026" width="1512" height="1240">
+      <button type="button" class="portrait" id="portrait" aria-pressed="false" data-tag="Colour">
+        <img src="../material/portrait-devfest-2026-grey.jpg" alt="Yahya Hallani at DevFest Montreal 2026" width="1512" height="1240">
+        <img class="col" src="../material/portrait-devfest-2026-color.jpg" alt="" width="1512" height="1240" loading="lazy" decoding="async">
+        <span class="sr">Show the photo in colour</span>
+      </button>
       <h2 class="display top" aria-label="Two habits">Two<br>habits</h2>
       <div class="txt">
         <p class="lead">I decide fast under pressure, and I build things that run themselves.</p>
@@ -363,7 +377,7 @@
 <footer class="foot grid lab"><span class="pg num" id="pg">00 / 05</span><button class="nx" id="nx">Next, Achievements</button><i class="bar" id="bar"></i></footer>
 
 <div class="cur" id="cur" aria-hidden="true">
-  <div class="cp"><i class="dot"></i><i class="hx"></i><i class="vx"></i><span class="ctag lab"></span></div>
+  <div class="cp"><i class="dot"></i></div>
   <i class="box"></i><span class="btag lab"></span>
 </div>
 
@@ -381,16 +395,21 @@
     var N = pages.length, page = 0, locked = false, acc = 0, lastWheel = 0, quietUntil = 0;
     var names = pages.map(function (p) { return p.dataset.name; });
 
-    // letters: laid out at Poster size, scaled down by transform into the rail (never animate font-size)
+    // letters: laid out at Poster size, scaled down by transform into the rail (never animate font-size).
+    // The hero placeholders live inside the sliding track, so their on-screen box is wherever the track is right now
+    // (mid-transition, or still on the old page when go(0) runs). Measure them against the track and add the track's
+    // resting offset for page 0, which is 0. Without this the letters flew to the old page's offset (off screen) on the way back.
     function place(n, instant) {
       fly.classList.toggle('instant', !!instant || reduce);
       var heroFs = parseFloat(getComputedStyle(word).fontSize);
       var railFs = parseFloat(getComputedStyle(slots[0]).fontSize);
+      var trackX = track.getBoundingClientRect().left;
       letters.forEach(function (a, i) {
         a.style.fontSize = heroFs + 'px';
         var r = (n === 0 ? placeholders[i] : slots[i]).getBoundingClientRect();
+        var x = n === 0 ? r.left - trackX : r.left;
         var k = n === 0 ? 1 : railFs / heroFs;
-        a.style.transform = 'translate3d(' + r.left + 'px,' + r.top + 'px,0) scale(' + k + ')';
+        a.style.transform = 'translate3d(' + x + 'px,' + r.top + 'px,0) scale(' + k + ')';
       });
       if (instant) { void fly.offsetWidth; fly.classList.remove('instant'); }
     }
@@ -412,6 +431,7 @@
       nx.textContent = n < N - 1 ? 'Next, ' + names[n + 1].replace(/^\d+ /, '') : 'Back to the start';
       if (!instant) live.textContent = names[n].replace(/^\d+ /, '') + ', page ' + (n + 1) + ' of ' + N;
       if (history.replaceState) history.replaceState(null, '', n ? '#p' + n : location.pathname + location.search);
+      reelSync();
       setTimeout(function () { locked = false; quietUntil = performance.now() + 180; layoutBox(); }, instant ? 50 : DUR_PAGE + 50);
     }
 
@@ -431,8 +451,6 @@
       if (k === 'ArrowRight' || k === 'ArrowDown' || k === 'PageDown' || (k === ' ' && !e.shiftKey)) { e.preventDefault(); go(page + 1); }
       else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp' || (k === ' ' && e.shiftKey)) { e.preventDefault(); go(page - 1); }
       else if (k === 'Home') { e.preventDefault(); go(0); } else if (k === 'End') { e.preventDefault(); go(N - 1); }
-      else if (k === 'v' || k === 'V') setVariant(ach.dataset.variant === 'a' ? 'b' : 'a');
-      else if (k === 'c' || k === 'C') setCursor(CURSORS[(CURSORS.indexOf(root.dataset.cursor) + 1) % CURSORS.length]);
     });
 
     // swipe: starts within 20px of the left edge belong to the system back gesture; vertical swipes page only when the page does not scroll
@@ -455,42 +473,45 @@
       e.preventDefault(); pages[page].setAttribute('tabindex', '-1'); pages[page].focus();
     });
 
-    // rail names: shown on focus; on hover only with cursor (b), since (a) and (c) already show a tag
+    // rail names: shown on keyboard focus (the cursor tag already names a hovered letter)
     letters.forEach(function (a, i) {
       a.addEventListener('focus', function () { if (page) railNames[i].classList.add('show'); });
       a.addEventListener('blur', function () { railNames[i].classList.remove('show'); });
-      a.addEventListener('pointerenter', function () { if (page && root.dataset.cursor === 'b') railNames[i].classList.add('show'); });
-      a.addEventListener('pointerleave', function () { if (document.activeElement !== a) railNames[i].classList.remove('show'); });
     });
 
-    // sketch toggle: Achievements variant (a) / (b), header buttons or key V
-    var ach = document.getElementById('ach');
-    var variantBtns = [].slice.call(document.querySelectorAll('[data-variant-set]'));
-    function setVariant(v) {
-      ach.dataset.variant = v;
-      variantBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.variantSet === v)); });
-    }
-    variantBtns.forEach(function (b) { b.addEventListener('click', function () { setVariant(b.dataset.variantSet); }); });
+    // Achievements previews: keep the photo and its line inside the viewport (nudge up above the footer if needed)
+    [].slice.call(document.querySelectorAll('.ach .plain > li')).forEach(function (li) {
+      var pv = li.querySelector('.pv');
+      function fit() {
+        if (getComputedStyle(pv).position !== 'absolute') return;
+        pv.style.setProperty('--pv-y', '0px');
+        var r = pv.getBoundingClientRect(), limit = innerHeight - 56 - 8;   /* footer height plus a hair of air */
+        if (r.bottom > limit) pv.style.setProperty('--pv-y', Math.max(72 + 8 - r.top, limit - r.bottom) + 'px');
+      }
+      li.addEventListener('pointerenter', fit); li.addEventListener('focusin', fit);
+    });
 
-    // sketch toggle: cursor (a) square snap, (b) accent crosshair, (c) native plus context tag; header buttons or key C
-    var CURSORS = ['a', 'b', 'c'];
+    // cursor (a): a square that snaps to the hovered letter or link, with a Label tag that never leaves the viewport
     var cur = document.getElementById('cur'), cp = cur.querySelector('.cp'), box = cur.querySelector('.box');
-    var btag = cur.querySelector('.btag'), ctag = cur.querySelector('.ctag');
-    var cursorBtns = [].slice.call(document.querySelectorAll('[data-cursor-set]'));
-    var target = null, px = -100, py = -100;
-    function setCursor(v) {
-      root.dataset.cursor = v;
-      cursorBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.cursorSet === v)); });
-      layoutBox();
-    }
-    cursorBtns.forEach(function (b) { b.addEventListener('click', function () { setCursor(b.dataset.cursorSet); }); });
+    var btag = cur.querySelector('.btag');
+    var target = null, px = -100, py = -100, EDGE_PAD = 8;
     function tagOf(el) { return el.dataset.tag || el.getAttribute('aria-label') || el.textContent.replace(/\s+/g, ' ').trim(); }
+    // tag placement: right of the box, else above it (right-aligned), else below, else left; first one fully inside
+    // the viewport wins, and the result is clamped on all four edges either way
+    function tagPos(r) {
+      var w = btag.offsetWidth, h = btag.offsetHeight, G = 4 + 8;
+      var spots = [[r.right + G, r.top - 4], [r.right + 4 - w, r.top - G - h], [r.right + 4 - w, r.bottom + G], [r.left - G - w, r.top - 4]];
+      var fits = function (c) { return c[0] >= EDGE_PAD && c[1] >= EDGE_PAD && c[0] + w <= innerWidth - EDGE_PAD && c[1] + h <= innerHeight - EDGE_PAD; };
+      var c = spots.filter(fits)[0] || spots[0];
+      return [Math.max(EDGE_PAD, Math.min(c[0], innerWidth - EDGE_PAD - w)), Math.max(EDGE_PAD, Math.min(c[1], innerHeight - EDGE_PAD - h))];
+    }
     function layoutBox() {
-      if (root.dataset.cursor === 'a' && target) {
+      if (target) {
         var r = target.getBoundingClientRect();
         box.style.width = (r.width + 8) + 'px'; box.style.height = (r.height + 8) + 'px';
         box.style.transform = 'translate3d(' + (r.left - 4) + 'px,' + (r.top - 4) + 'px,0)';
-        btag.style.transform = 'translate3d(' + (r.right + 4 + 8) + 'px,' + (r.top - 4) + 'px,0)';
+        var t = tagPos(r);
+        btag.style.transform = 'translate3d(' + t[0] + 'px,' + t[1] + 'px,0)';
       } else {
         box.style.width = '12px'; box.style.height = '12px';
         box.style.transform = 'translate3d(' + (px - 6) + 'px,' + (py - 6) + 'px,0)';
@@ -507,11 +528,8 @@
       var t = e.target.closest ? e.target.closest('a, button') : null;
       if (t === target) return;
       target = t;
-      var isLetter = !!(t && t.parentNode === fly), txt = t ? tagOf(t) : '';
       cur.classList.toggle('hot', !!t);
-      cur.classList.toggle('letter', isLetter);
-      btag.textContent = txt;
-      ctag.textContent = isLetter ? txt : '';
+      btag.textContent = t ? tagOf(t) : '';
       layoutBox();
     });
     document.documentElement.addEventListener('pointerleave', function () { cur.classList.remove('on'); });
@@ -529,6 +547,49 @@
         addr.textContent = "Copy didn't work. The address is " + ADDRESS + ', select it to copy.';
       });
     });
+
+    // About: greyscale by default; hover (fine pointer) shows the true colours, a click or tap keeps them on or off
+    var portrait = document.getElementById('portrait');
+    portrait.addEventListener('click', function () { portrait.setAttribute('aria-pressed', String(portrait.getAttribute('aria-pressed') !== 'true')); });
+
+    // Projects: Facturo walkthrough. Each frame pushes in slowly (transform) while it shows, then crossfades (opacity).
+    // Pauses on hover and focus, on the Pause control, off the Projects page, when scrolled out of view or the tab is hidden.
+    // Under reduced motion there is no auto-advance: Previous and Next step through the frames.
+    var reel = document.getElementById('reel'), frames = [].slice.call(reel.querySelectorAll('img'));
+    var rp = document.getElementById('rp'), rcnt = document.getElementById('rcnt');
+    var FRAME_MS = 5200, PUSH = ['scale(1.06) translate(-1.5%, -1%)', 'scale(1.06) translate(0, -1.5%)', 'scale(1.06) translate(-1%, 0)'];
+    var fi = 0, anim = null, userPaused = false, hovering = false, inView = true, PROJ = 2;
+    function load(i) { var f = frames[i]; if (f && f.dataset.src) { f.src = f.dataset.src; f.removeAttribute('data-src'); } return f; }
+    function running() { return !reduce && !userPaused && !hovering && inView && page === PROJ && !document.hidden; }
+    function show(i) {
+      i = (i + frames.length) % frames.length;
+      var next = load(i); load(i + 1);
+      var ready = next.decode ? next.decode().then(null, function () {}) : Promise.resolve();
+      ready.then(function () {
+        var prev = frames[fi];
+        if (prev !== next) { prev.classList.remove('on'); prev.setAttribute('aria-hidden', 'true'); }
+        fi = i; next.classList.add('on'); next.removeAttribute('aria-hidden');
+        rcnt.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(frames.length).padStart(2, '0') + ', ' + next.dataset.name;
+        var old = anim;   /* the outgoing frame keeps its push-in while it fades, then resets */
+        if (old) setTimeout(function () { old.cancel(); }, 1000);
+        if (reduce) { anim = null; return; }
+        anim = next.animate([{ transform: 'none' }, { transform: PUSH[i % PUSH.length] }], { duration: FRAME_MS, easing: 'linear', fill: 'forwards' });
+        anim.onfinish = function () { rcnt.setAttribute('aria-live', 'off'); show(fi + 1); };
+        reelSync();
+      });
+    }
+    function reelSync() { if (!anim) return; if (running()) { if (anim.playState === 'paused') anim.play(); } else if (anim.playState === 'running') anim.pause(); }
+    rp.addEventListener('click', function () { userPaused = !userPaused; rp.setAttribute('aria-pressed', String(userPaused)); rp.textContent = userPaused ? 'Play' : 'Pause'; reelSync(); });
+    document.getElementById('rprev').addEventListener('click', function () { rcnt.setAttribute('aria-live', 'polite'); show(fi - 1); });
+    document.getElementById('rnext').addEventListener('click', function () { rcnt.setAttribute('aria-live', 'polite'); show(fi + 1); });
+    var lead = reel.parentNode;
+    lead.addEventListener('pointerenter', function () { hovering = true; reelSync(); });
+    lead.addEventListener('pointerleave', function () { hovering = lead.contains(document.activeElement); reelSync(); });
+    lead.addEventListener('focusin', function () { hovering = true; reelSync(); });
+    lead.addEventListener('focusout', function (e) { hovering = lead.contains(e.relatedTarget) || lead.matches(':hover'); reelSync(); });
+    document.addEventListener('visibilitychange', reelSync);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { inView = es[0].isIntersecting; reelSync(); }).observe(reel);
+    show(0);
 
     addEventListener('resize', function () { go(page, true); });
 
