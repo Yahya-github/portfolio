@@ -15,6 +15,7 @@ Collected 2026-11-07 (plan 01-04). Every URL below was fetched once on 2026-11-0
 | Project | Link | GitHub policy | Checked |
 |---------|------|---------------|---------|
 | Facturo demo (fictional data) | https://github.com/Yahya-github/facturo-demo | Public demo repo (sanitized snapshot of a private client project) | 200 |
+| MAME Tool Rental (tool and machine rental with an admin dashboard, for the McGill Association of Mechanical Engineers; built for MAME, in use at MAME) | Live: https://mame-tool-rental.vercel.app/ (added 2026-11-07, change round 6; the site currently shows a "Demo: extended lab hours" banner and demo student data) | Repo `Yahya-github/mame-tool-rental` is private (no repo link on the site) | 200 |
 | Atlantis (Godot 4 game, fork of `plastikup/atlantis`) | https://github.com/Yahya-github/atlantis | Public | 200 |
 | CRC 2026 robot (control firmware) | CAD: https://cad.onshape.com/documents/abedb5644d206f1966ceab07/w/16e1ac37475a79f8f8a83c91/e/fa98af52c3491c90afc18920 | Code is private (no repo link on the site). The Onshape document opens by link without login (anonymous access, not listed publicly). | 200 |
 | AG robotics team site | https://agisback.crcrobotics.com/fr/ | n/a | 200 |
@@ -23,6 +24,8 @@ Collected 2026-11-07 (plan 01-04). Every URL below was fetched once on 2026-11-0
 | Showdown AI | none | In progress, nothing built yet | n/a |
 
 Facturo deep dive route on the site: /projects/facturo/
+
+MAME Tool Rental proof: the live site (its footer reads "Built by Yahya Hallani for the McGill Association of Mechanical Engineers."). Facts from the private repo (read with gh, 2026-11-07): FastAPI and SQLite backend on Render, Next.js frontend on Vercel; GitHub Actions deploys only after every test passes, then runs a smoke test; 22 API pytest files, 47 web Vitest files and Playwright end-to-end specs for the main flows; 63 commits from 2026-11-05 to 2026-11-07. Status (Yahya, 2026-11-07): "Built for MAME, in use at MAME."
 
 ## Proof links (competitions)
 
@@ -78,6 +81,22 @@ The LinkedIn profile URL answers 999 to scripted requests (LinkedIn's bot wall).
 | screenshots/facturo-09-mobile-grey.png | Greyscale derivative | same | Greyscale, stripped |
 | screenshots/facturo-10-clients.png | Facturo clients | README `10-clients.webp` | Converted to PNG, stripped |
 | screenshots/facturo-10-clients-grey.png | Greyscale derivative | same | Greyscale, stripped |
+| screenshots/mame-01-home.jpg | MAME Tool Rental home (student side) | Live site https://mame-tool-rental.vercel.app/, captured 2026-11-07 (signed in as admin for 05-08), fictional demo data | JPEG kept, all metadata stripped (ICC included) |
+| screenshots/mame-01-home-grey.jpg | Greyscale derivative | same | Greyscale, stripped |
+| screenshots/mame-02-rent-tools.jpg | Rent tools form | Live site https://mame-tool-rental.vercel.app/, captured 2026-11-07 (signed in as admin for 05-08), fictional demo data | JPEG kept, all metadata stripped (ICC included) |
+| screenshots/mame-02-rent-tools-grey.jpg | Greyscale derivative | same | Greyscale, stripped |
+| screenshots/mame-03-book-machine.jpg | Book machine time (Tormach CNC, Tormach Lathe), drawings attached | Live site https://mame-tool-rental.vercel.app/, captured 2026-11-07 (signed in as admin for 05-08), fictional demo data | JPEG kept, all metadata stripped (ICC included) |
+| screenshots/mame-03-book-machine-grey.jpg | Greyscale derivative | same | Greyscale, stripped |
+| screenshots/mame-04-track.jpg | Track a request (reference code and email) | Live site https://mame-tool-rental.vercel.app/, captured 2026-11-07 (signed in as admin for 05-08), fictional demo data | JPEG kept, all metadata stripped (ICC included) |
+| screenshots/mame-04-track-grey.jpg | Greyscale derivative | same | Greyscale, stripped |
+| screenshots/mame-05-admin-overview.jpg | Admin overview: KPI cards, rentals per week, purpose breakdown, most-rented tools, machine usage (the Projects preview) | Live site https://mame-tool-rental.vercel.app/, captured 2026-11-07 (signed in as admin for 05-08), fictional demo data | JPEG kept, all metadata stripped (ICC included) |
+| screenshots/mame-05-admin-overview-grey.jpg | Greyscale derivative | same | Greyscale, stripped |
+| screenshots/mame-06-admin-tool-rentals.jpg | Admin tool rentals | Live site https://mame-tool-rental.vercel.app/, captured 2026-11-07 (signed in as admin for 05-08), fictional demo data | JPEG kept, all metadata stripped (ICC included) |
+| screenshots/mame-06-admin-tool-rentals-grey.jpg | Greyscale derivative | same | Greyscale, stripped |
+| screenshots/mame-07-admin-machine-bookings.jpg | Admin machine bookings | Live site https://mame-tool-rental.vercel.app/, captured 2026-11-07 (signed in as admin for 05-08), fictional demo data | JPEG kept, all metadata stripped (ICC included) |
+| screenshots/mame-07-admin-machine-bookings-grey.jpg | Greyscale derivative | same | Greyscale, stripped |
+| screenshots/mame-08-admin-catalog.jpg | Admin catalogue | Live site https://mame-tool-rental.vercel.app/, captured 2026-11-07 (signed in as admin for 05-08), fictional demo data | JPEG kept, all metadata stripped (ICC included) |
+| screenshots/mame-08-admin-catalog-grey.jpg | Greyscale derivative | same | Greyscale, stripped |
 | logos/mcgill-robotics.png | McGill Robotics lockup (source) | Image pasted by Yahya, 2026-11-07 (plan 01-08) | Dark ground made transparent, trimmed, max 1200px, stripped |
 | logos/mcgill-robotics-mark.png | McGill Robotics robot-arm "M" mark, brand colours (white) | same | Cropped from the lockup, 96px tall, stripped |
 | logos/mcgill-robotics-mark-mono.png | Mono twin of the mark | same | Single colour #8e8e8e (dim), same alpha |
@@ -90,6 +109,9 @@ The LinkedIn profile URL answers 999 to scripted requests (LinkedIn's bot wall).
 | logos/mercor.png | Mercor lockup (source) | Image pasted by Yahya, 2026-11-07 (plan 01-08) | Trimmed, max 1200px, stripped |
 | logos/mercor-mark.png | Mercor "M" ribbon mark, brand colours | same | Cropped from the lockup, 96px tall, stripped |
 | logos/mercor-mark-mono.png | Mono twin of the mark | same | Single colour #8e8e8e, same alpha |
+| logos/mame.png | MAME lockup (source: blueprint "M", MAME wordmark and shield) | Logo file supplied for change round 6 (2026-11-07) | Trimmed, max 1200px, stripped |
+| logos/mame-mark.png | MAME shield mark, brand red with the white "M" | same | Cropped from the source (the shield only), 96px tall, stripped |
+| logos/mame-mark-mono.png | Mono twin of the mark | same | Single colour #8e8e8e; alpha scaled by the red, so the white "M" and details are knocked out and the shield keeps its detail |
 | logos/crc-mark.svg | Canadian Robotics Competition gear-and-bolt mark, brand colours | https://robo-crc.ca/crc-mark-poly.svg (fetched 2026-11-07, 200) | Inspected: no script, link, import, url() or event attribute; viewBox tightened to the artwork, layer id removed |
 | logos/crc-mark-mono.svg | Mono twin of the mark | same | Every fill and stroke set to #8e8e8e, a 3-unit stroke closes the polygon seams |
 | logos/facturo.svg | Facturo lockup (source) | https://github.com/Yahya-github/facturo-demo, `facturo/web/static/img/logo.svg` (raw.githubusercontent.com, 2026-11-07, 200) | Unchanged copy; inspected, no script or external reference |
@@ -99,6 +121,7 @@ The LinkedIn profile URL answers 999 to scripted requests (LinkedIn's bot wall).
 Notes:
 - The four event photos are group photos that include teammates. They are already public through the articles and the LinkedIn post listed above.
 - Logos (plan 01-08, Yahya asked for them next to the Experience entries): only the marks are shown on the site, small, in the mono twin; the brand colours fade in on hover. The full lockups are kept as sources. Organisation logos are used to identify the organisations Yahya worked or took part with, not as endorsements.
+- MAME Tool Rental screenshots: demo data only (fictional students and requests). The colour originals are shown only in the hover preview; at rest and on phones the grey twin shows. The MAME mark is shown on the Projects row only (there is no MAME entry on Experience).
 - Facturo screenshots: every one was checked by eye. They show the "Demo Transport Inc." workspace with the seeded fictional clients; the repo README states that all data in it is fictional. No real client data.
 
 ## Still missing
