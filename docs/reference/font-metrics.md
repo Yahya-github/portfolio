@@ -330,3 +330,17 @@ Display-word fit at weight 700, wdth 75, tracking -0.05em:
 | "75/75" cols 1-7 (tabular-nums) | 1366 | 253px / 726px | yes |
 
 Consequence: "Involvement" fits cols 7-12 at both 1366 and 1440, so the Experience page uses the 6/6 split (Work cols 1-6, Involvement cols 7-12).
+
+### Correction found in the v7 render (plan 01-06)
+
+Rendering v7 in Chrome at 1440x900 showed the last A of YAHYA running about 21px past the right grid edge. The cause is in the formula, not the measurement. `advance + 5 x tracking` (2.155) is the CSS box width, but CSS adds letter-spacing after the last A as well, and that trailing -0.045em is not ink. The A's ink therefore overshoots the box end by 0.045em minus its right bearing (0.012em).
+
+Ink-accurate constant, measured with HarfBuzz at wdth 75 / 700 / -0.045em: Y left bearing 0.008em; ink right edge of the last A at **2.188em** from the word start. v7 uses **`--yahya-fit: 2.188`**, so the A's ink ends on the grid edge.
+
+| Viewport | Poster size at 2.188 | Bound |
+|---|---|---|
+| 1440x900 | 636px | width-bound |
+| 1366x768 | 589px | height-bound (unchanged) |
+| 390x844 | 164px | width-bound |
+
+A second render detail: the five hero letters are separate elements (five links plus the FLIP), so the browser cannot apply kerning between them. Without kerning YAHYA measures 2.506em instead of 2.380em. The font only kerns the Y-A pair here (-0.063em on each Y), so v7 puts that value back as `margin-right: -0.063em` on both Y's. Plan 07 should record `--yahya-fit` 2.188 and this kerning rule.

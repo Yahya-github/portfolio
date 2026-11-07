@@ -22,7 +22,7 @@
     --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px; --space-xl: 32px; --space-2xl: 48px; --space-3xl: 64px;
     --grid-margin: 24px; --grid-gutter: 24px; --rail-col: 56px;
     --frame-top: 72px; --frame-bottom: 56px; --hero-bottom-gap: 96px;
-    --yahya-fit: 2.155; --yahya-track: -0.045em; --display-track: -0.05em;
+    --yahya-fit: 2.188;   /* ink-accurate: font-metrics.md "Winner", correction found in the v7 render */ --yahya-track: -0.045em; --display-track: -0.05em;
     --dur-page: 600ms; --dur-letters: 600ms; --dur-ui: 150ms;
     --ease-page: cubic-bezier(0.77, 0, 0.18, 1); --ease-ui: cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -56,7 +56,7 @@
   .head .sk button { color: var(--color-dim); padding: 0 2px; }
   .head .sk button[aria-pressed="true"] { color: var(--color-ink); text-decoration: underline; text-underline-offset: 3px; }
   .head .links { grid-column: 10 / 13; display: flex; justify-content: flex-end; gap: var(--space-lg); }
-  .foot { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; height: var(--frame-bottom); padding: 0 var(--grid-margin) var(--space-md); align-content: end; align-items: end; pointer-events: none; }
+  .foot { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; height: var(--frame-bottom); padding: 0 var(--grid-margin) var(--space-md); align-content: end; align-items: end; pointer-events: none; background: var(--color-ground); }
   .foot > * { pointer-events: auto; }
   .foot .pg { grid-column: 1 / 4; } .foot .nx { grid-column: 10 / 13; justify-self: end; text-align: right; }
   .bar { position: absolute; left: 0; bottom: 0; height: 2px; background: var(--color-ink); width: calc(100% / 6); transition: transform var(--dur-page) var(--ease-page); }
@@ -66,19 +66,76 @@
   .page:not(.hero) { padding-left: calc(var(--grid-margin) + var(--rail-col)); }
   .page > .grid { height: 100%; }
 
-  /* 0 hero (v6 behaviour, rebuilt in Task 3) */
-  .hero .intro { grid-column: 1 / 5; align-self: start; padding-top: var(--space-lg); max-width: 34ch; }
-  .hero .meta { grid-column: 7 / 13; align-self: start; padding-top: var(--space-lg); display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); column-gap: var(--grid-gutter); }
-  .word { position: absolute; left: var(--grid-margin); right: var(--grid-margin); bottom: calc(var(--frame-bottom) + var(--hero-bottom-gap)); display: flex; justify-content: flex-start; font: 700 300px/.76 var(--font-sans); font-stretch: var(--wdth-display); letter-spacing: var(--yahya-track); white-space: nowrap; }
+  /* skip link and screen-reader-only live region */
+  .skip { position: fixed; left: var(--grid-margin); top: var(--space-md); z-index: 30; padding: var(--space-xs) var(--space-sm); background: var(--color-ground); color: var(--color-ink); opacity: 0; pointer-events: none; }
+  .skip:focus, .skip:focus-visible { opacity: 1; pointer-events: auto; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  /* 00 index: wordmark as image, bottom-anchored. Poster size = grid width / --yahya-fit, capped by the height budget */
+  .hero .grid { align-content: start; }
+  .hero .intro { grid-column: 1 / 5; padding-top: var(--space-lg); max-width: 60ch; }
+  .hero .meta { grid-column: 7 / 13; padding-top: var(--space-lg); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--grid-gutter); }
+  .word {
+    position: absolute; left: var(--grid-margin); bottom: calc(var(--frame-bottom) + var(--hero-bottom-gap));
+    display: flex; white-space: nowrap;
+    font: 700 100px/0.76 var(--font-sans); font-stretch: var(--wdth-display); letter-spacing: var(--yahya-track);
+    font-size: min(calc((100vw - 2 * var(--grid-margin)) / var(--yahya-fit)), calc((100svh - 72px - 56px - 96px - 96px) / 0.76));
+  }
+  .word { visibility: hidden; } .fonts-ready .word { visibility: visible; }
   .word .L { position: relative; display: inline-block; }
-  .word .L b { display: block; font-weight: inherit; visibility: hidden; }
-  .fly { position: fixed; inset: 0; z-index: 6; pointer-events: none; }
-  .fly button { position: absolute; left: 0; top: 0; pointer-events: auto; font: 700 100px/.76 var(--font-sans); font-stretch: var(--wdth-display); letter-spacing: var(--yahya-track); color: var(--color-ink); transform-origin: 0 0; transition: transform var(--dur-letters) var(--ease-page), color var(--dur-ui) var(--ease-ui); }
-  .fly button:hover, .fly button[aria-current="true"] { color: var(--color-accent); }
-  .fly.instant button { transition: none; }
-  .rail { position: fixed; left: var(--grid-margin); top: var(--frame-top); display: flex; flex-direction: column; gap: var(--space-sm); font: 700 30px/.76 var(--font-sans); font-stretch: var(--wdth-display); letter-spacing: var(--yahya-track); visibility: hidden; pointer-events: none; }
-  .word .cap { position: absolute; left: 0; top: calc(100% + 18px); white-space: nowrap; }
-  .word .cap span { color: var(--color-dim); margin-right: var(--space-sm); }
+  .word .L.kern { margin-right: -0.063em; }   /* YA kern pair at wdth 75 / 700 (HarfBuzz); split letters lose it, which made the word 2.506em instead of 2.380em */
+  .word .L b { display: block; font-weight: inherit; visibility: hidden; }   /* placeholders: the real letters live in .fly */
+  .word .cap { position: absolute; left: 0; top: calc(100% + var(--space-md)); white-space: nowrap; letter-spacing: 0.02em; }
+  .word .cap span { color: var(--color-dim); margin-right: var(--space-xs); }
+  .capsm { display: none; }
+  .capsm span { color: var(--color-dim); }
+
+  /* the five letters: giant on the Index, a vertical rail on pages 01-05 (FLIP by transform only) */
+  .fly { position: fixed; inset: 0; z-index: 6; pointer-events: none; visibility: hidden; }
+  .fonts-ready .fly { visibility: visible; }
+  .fly a {
+    position: absolute; left: 0; top: 0; pointer-events: auto; transform-origin: 0 0; color: var(--color-ink);
+    font: 700 100px/0.76 var(--font-sans); font-stretch: var(--wdth-display); letter-spacing: var(--yahya-track);
+    transition: transform var(--dur-letters) var(--ease-page) calc(var(--i) * var(--stagger)), color var(--dur-ui) var(--ease-ui);
+  }
+  .fly a:hover, .fly a:focus-visible, .fly a[aria-current="page"] { color: var(--color-accent); }
+  .fly a:active { color: var(--color-accent); transition: transform var(--dur-letters) var(--ease-page); }
+  .fly.instant a { transition: none; }
+  :root { --stagger: 30ms; }
+  @media (prefers-reduced-motion: reduce) { :root { --stagger: 0ms; } }
+  .rail { position: fixed; left: var(--grid-margin); top: calc(var(--frame-top) + var(--space-lg)); z-index: 4; display: flex; flex-direction: column; gap: var(--space-sm); pointer-events: none; }
+  .rail .ri { position: relative; display: flex; }
+  .rail .slot { font: 700 30px/0.76 var(--font-sans); font-stretch: var(--wdth-display); letter-spacing: var(--yahya-track); visibility: hidden; }
+  .rail .nm { position: absolute; left: calc(100% + var(--space-sm)); top: 50%; transform: translateY(-50%); white-space: nowrap; padding: var(--space-xs) var(--space-sm); background: var(--color-ground); opacity: 0; transition: opacity var(--dur-ui) var(--ease-ui); }
+  .rail .nm span, .rail .now span { color: var(--color-dim); }
+  .rail .nm.show { opacity: 1; }
+  .rail .now { margin-top: var(--space-md); writing-mode: vertical-rl; white-space: nowrap; }   /* current section name, permanent, inside the rail column */
+  html[data-page="0"] .rail { visibility: hidden; }
+  @media (pointer: coarse) { .rail { gap: 28px; } }
+
+  /* cursor layer (sketch: three variants). Position is written 1:1 on pointermove; only shape changes animate */
+  .cur { position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0; }
+  .cur.on { opacity: 1; }
+  .cur .cp, .cur .box, .cur .btag { position: absolute; left: 0; top: 0; }
+  .cur .cp > * { position: absolute; display: none; }
+  .cur .box { display: none; width: 12px; height: 12px; border: 1px solid var(--color-ink); border-radius: 0; }
+  .cur .dot { left: -1px; top: -1px; width: 2px; height: 2px; background: var(--color-ink); }
+  .cur .btag, .cur .ctag { display: none; white-space: nowrap; padding: 2px var(--space-xs); background: var(--color-ground); color: var(--color-ink); opacity: 0; transition: opacity var(--dur-ui) var(--ease-ui); }
+  .cur .hx { left: -20px; top: 0; width: 40px; height: 1px; background: var(--color-accent); transition: transform var(--dur-ui) var(--ease-ui); }
+  .cur .vx { left: 0; top: -20px; width: 1px; height: 40px; background: var(--color-accent); transition: transform var(--dur-ui) var(--ease-ui); }
+  .cur .ctag { left: 12px; top: 12px; }
+  [data-cursor="a"] .cur .box, [data-cursor="a"] .cur .dot, [data-cursor="a"] .cur .btag { display: block; }
+  [data-cursor="a"] .cur.hot .btag { opacity: 1; }
+  [data-cursor="b"] .cur .hx, [data-cursor="b"] .cur .vx { display: block; }
+  [data-cursor="b"] .cur.hot .hx { transform: scaleX(1.6); }   /* arms 20px -> 32px */
+  [data-cursor="b"] .cur.hot .vx { transform: scaleY(1.6); }
+  [data-cursor="c"] .cur .ctag { display: block; }
+  [data-cursor="c"] .cur.letter .ctag { opacity: 1; }
+  @media (hover: hover) and (pointer: fine) and (forced-colors: none) {
+    html[data-cursor="a"], html[data-cursor="a"] *, html[data-cursor="b"], html[data-cursor="b"] * { cursor: none; }
+  }
+  @media (hover: none), (pointer: coarse) { .cur { display: none; } }
+  @media (forced-colors: active) { .cur { display: none; } }
 
   /* shared: ruled lists (only Achievements a, Projects rows, Experience) and page content offset */
   .ruled { list-style: none; padding: 0; border-top: 1px solid var(--color-hair); }
@@ -140,7 +197,15 @@
   .hi #addr { text-transform: none; }   /* the address keeps its real case so it can be read and selected */
 
   @media (max-width: 820px) {
+    .head { display: flex; flex-wrap: wrap; align-content: space-between; column-gap: var(--space-md); padding-top: var(--space-md); padding-bottom: var(--space-sm); }
+    .head .who { order: 1; } .head .links { order: 2; margin-left: auto; } .head .sk { order: 3; width: 100%; }
     .head #where, .head .sk .note { display: none; }
+    .foot .nx { grid-column: 6 / 13; }
+    .word .cap { display: none; }
+    .capsm { display: block; margin-top: var(--space-xl); }
+    .capsm a { display: flex; align-items: center; gap: var(--space-sm); min-height: 44px; width: max-content; }
+    .vb .rk { display: block; }
+    .hi .links, .hi .side { align-self: stretch; }
     .page { overflow-y: auto; }
     .page > .grid, .ach[data-variant] .v { display: block; height: auto; }
     .ach[data-variant="a"] .vb, .ach[data-variant="b"] .va { display: none; }
@@ -155,13 +220,14 @@
     .about h2 { margin-top: var(--space-xl); } .about .txt { margin-top: var(--space-xl); }
     .hi .grid { display: flex; flex-direction: column; justify-content: flex-end; min-height: 100%; }
     .hi .side { padding-top: var(--space-lg); }
-    .word .cap span { display: block; }
     .hero .meta { display: none; }
-    .rail { font-size: 22px; left: var(--space-lg); }
+    .rail { left: var(--space-lg); } .rail .slot { font-size: 22px; }
   }
 </style>
 </head>
 <body>
+<a class="skip lab" href="#track" id="skip">Skip to content</a>
+<p class="sr" id="live" aria-live="polite"></p>
 
 <header class="head grid lab">
   <span class="who">Yahya Hallani</span><span class="dim" id="where">Index</span>
@@ -173,22 +239,30 @@
   <nav class="links" aria-label="Contact"><a href="../material/resume-public.pdf">Resume (PDF)</a><a href="#p5" data-go="5">Say hi</a></nav>
 </header>
 
-<div class="rail" id="rail" aria-hidden="true"><span>Y</span><span>A</span><span>H</span><span>Y</span><span>A</span></div>
+<div class="rail lab" id="rail" aria-hidden="true">
+  <div class="ri"><span class="slot">Y</span><span class="nm"><span>01</span> Achievements</span></div>
+  <div class="ri"><span class="slot">A</span><span class="nm"><span>02</span> Projects</span></div>
+  <div class="ri"><span class="slot">H</span><span class="nm"><span>03</span> Experience</span></div>
+  <div class="ri"><span class="slot">Y</span><span class="nm"><span>04</span> About</span></div>
+  <div class="ri"><span class="slot">A</span><span class="nm"><span>05</span> Say hi</span></div>
+  <span class="now" id="now"></span>
+</div>
 <nav class="fly" id="fly" aria-label="Sections">
-  <button data-go="1" aria-label="Achievements">Y</button><button data-go="2" aria-label="Projects">A</button><button data-go="3" aria-label="Experience">H</button><button data-go="4" aria-label="About">Y</button><button data-go="5" aria-label="Say hi">A</button>
+  <a href="#p1" data-go="1" aria-label="Achievements" data-tag="01 Achievements" style="--i:0">Y</a><a href="#p2" data-go="2" aria-label="Projects" data-tag="02 Projects" style="--i:1">A</a><a href="#p3" data-go="3" aria-label="Experience" data-tag="03 Experience" style="--i:2">H</a><a href="#p4" data-go="4" aria-label="About" data-tag="04 About" style="--i:3">Y</a><a href="#p5" data-go="5" aria-label="Say hi" data-tag="05 Say hi" style="--i:4">A</a>
 </nav>
-<main class="track" id="track">
+<main class="track" id="track" tabindex="-1">
   <section class="page hero" data-name="Index" aria-label="Introduction">
     <div class="grid">
-      <p class="intro">I decide fast under pressure, and I build things that run themselves.</p>
+      <div class="intro"><p>Software Engineering at McGill</p><p>Perfect score, 75/75, at the 2026 Canadian Computing Competition.</p></div>
       <div class="meta lab dim"><span>Software engineering</span><span>McGill University</span><span>Montréal, Québec</span></div>
+      <nav class="capsm lab" aria-label="Sections"><a href="#p1" data-go="1"><span>01</span> Achievements</a><a href="#p2" data-go="2"><span>02</span> Projects</a><a href="#p3" data-go="3"><span>03</span> Experience</a><a href="#p4" data-go="4"><span>04</span> About</a><a href="#p5" data-go="5"><span>05</span> Say hi</a></nav>
     </div>
     <h1 class="word" id="word" aria-label="Yahya Hallani">
-      <span class="L"><b>Y</b><button class="cap lab" data-go="1"><span>01</span>Achievements</button></span>
-      <span class="L"><b>A</b><button class="cap lab" data-go="2"><span>02</span>Projects</button></span>
-      <span class="L"><b>H</b><button class="cap lab" data-go="3"><span>03</span>Experience</button></span>
-      <span class="L"><b>Y</b><button class="cap lab" data-go="4"><span>04</span>About</button></span>
-      <span class="L"><b>A</b><button class="cap lab" data-go="5"><span>05</span>Say hi</button></span>
+      <span class="L kern"><b aria-hidden="true">Y</b><a class="cap lab" href="#p1" data-go="1"><span>01</span> Achievements</a></span>
+      <span class="L"><b aria-hidden="true">A</b><a class="cap lab" href="#p2" data-go="2"><span>02</span> Projects</a></span>
+      <span class="L"><b aria-hidden="true">H</b><a class="cap lab" href="#p3" data-go="3"><span>03</span> Experience</a></span>
+      <span class="L kern"><b aria-hidden="true">Y</b><a class="cap lab" href="#p4" data-go="4"><span>04</span> About</a></span>
+      <span class="L"><b aria-hidden="true">A</b><a class="cap lab" href="#p5" data-go="5"><span>05</span> Say hi</a></span>
     </h1>
   </section>
 
@@ -288,75 +362,106 @@
 
 <footer class="foot grid lab"><span class="pg num" id="pg">00 / 05</span><button class="nx" id="nx">Next, Achievements</button><i class="bar" id="bar"></i></footer>
 
+<div class="cur" id="cur" aria-hidden="true">
+  <div class="cp"><i class="dot"></i><i class="hx"></i><i class="vx"></i><span class="ctag lab"></span></div>
+  <i class="box"></i><span class="btag lab"></span>
+</div>
+
 <script>
   (function () {
+    var root = document.documentElement;
     var track = document.getElementById('track'), pages = [].slice.call(document.querySelectorAll('.page'));
-    var fly = document.getElementById('fly'), flies = [].slice.call(fly.querySelectorAll('button'));
-    var slots = [].slice.call(document.querySelectorAll('#rail span'));
+    var fly = document.getElementById('fly'), letters = [].slice.call(fly.querySelectorAll('a'));
+    var slots = [].slice.call(document.querySelectorAll('#rail .slot')), railNames = [].slice.call(document.querySelectorAll('#rail .nm'));
+    var now = document.getElementById('now'), live = document.getElementById('live');
     var pg = document.getElementById('pg'), nx = document.getElementById('nx'), bar = document.getElementById('bar'), where = document.getElementById('where');
-    var word = document.getElementById('word');
+    var word = document.getElementById('word'), placeholders = [].slice.call(word.querySelectorAll('.L b'));
     var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var DUR_PAGE = reduce ? 0 : 600;
     var N = pages.length, page = 0, locked = false, acc = 0, lastWheel = 0, quietUntil = 0;
     var names = pages.map(function (p) { return p.dataset.name; });
-    var Ls = [].slice.call(word.querySelectorAll('.L b'));
-    var heroFs = 100;
+
+    // letters: laid out at Poster size, scaled down by transform into the rail (never animate font-size)
     function place(n, instant) {
       fly.classList.toggle('instant', !!instant || reduce);
-      var railFs = parseFloat(getComputedStyle(document.getElementById('rail')).fontSize);
-      flies.forEach(function (b, i) {
-        b.style.fontSize = heroFs + 'px';
-        var r = (n === 0 ? Ls[i] : slots[i]).getBoundingClientRect();
+      var heroFs = parseFloat(getComputedStyle(word).fontSize);
+      var railFs = parseFloat(getComputedStyle(slots[0]).fontSize);
+      letters.forEach(function (a, i) {
+        a.style.fontSize = heroFs + 'px';
+        var r = (n === 0 ? placeholders[i] : slots[i]).getBoundingClientRect();
         var k = n === 0 ? 1 : railFs / heroFs;
-        b.style.transform = 'translate3d(' + r.left + 'px,' + r.top + 'px,0) scale(' + k + ')';
+        a.style.transform = 'translate3d(' + r.left + 'px,' + r.top + 'px,0) scale(' + k + ')';
       });
-      if (instant) { fly.offsetWidth; fly.classList.remove('instant'); }
+      if (instant) { void fly.offsetWidth; fly.classList.remove('instant'); }
     }
-    function fit() {
-      word.style.fontSize = '100px';
-      var a = Ls[0].getBoundingClientRect(), z = Ls[Ls.length - 1].getBoundingClientRect(), w = z.right - a.left;
-      if (w > 0) { var fs = Math.floor(100 * word.clientWidth / w * .995); word.style.fontSize = fs + 'px'; heroFs = fs; }
-    }
+
     function go(n, instant) {
       n = Math.max(0, Math.min(N - 1, n));
       if (n === page && !instant) return;
       page = n; locked = true;
+      root.dataset.page = String(n);
       track.style.transition = instant || reduce ? 'none' : '';
       track.style.transform = 'translate3d(' + (-n * 100) + 'vw,0,0)';
       bar.style.transform = 'translateX(' + (n * 100) + '%)';
       pages.forEach(function (p, i) { if (i === n) p.removeAttribute('inert'); else p.setAttribute('inert', ''); });
-      flies.forEach(function (b, i) { b.setAttribute('aria-current', i + 1 === n ? 'true' : 'false'); });
+      letters.forEach(function (a, i) { if (i + 1 === n) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+      now.innerHTML = n ? '<span>' + names[n].slice(0, 2) + '</span> ' + names[n].slice(3) : '';
       place(n, instant);
       pg.textContent = String(n).padStart(2, '0') + ' / ' + String(N - 1).padStart(2, '0');
       where.textContent = names[n];
       nx.textContent = n < N - 1 ? 'Next, ' + names[n + 1].replace(/^\d+ /, '') : 'Back to the start';
+      if (!instant) live.textContent = names[n].replace(/^\d+ /, '') + ', page ' + (n + 1) + ' of ' + N;
       if (history.replaceState) history.replaceState(null, '', n ? '#p' + n : location.pathname + location.search);
-      setTimeout(function () { locked = false; quietUntil = performance.now() + 180; }, reduce || instant ? 50 : 650);
+      setTimeout(function () { locked = false; quietUntil = performance.now() + 180; layoutBox(); }, instant ? 50 : DUR_PAGE + 50);
     }
+
+    // one wheel gesture = one page; trackpad inertia after a flip is ignored until it goes quiet
     addEventListener('wheel', function (e) {
       e.preventDefault();
-      var now = performance.now();
+      var t = performance.now();
       var d = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-      if (locked || now < quietUntil) { if (now - lastWheel < 180) quietUntil = now + 180; lastWheel = now; acc = 0; return; }
-      lastWheel = now; acc += d;
+      if (locked || t < quietUntil) { if (t - lastWheel < 180) quietUntil = t + 180; lastWheel = t; acc = 0; return; }
+      lastWheel = t; acc += d;
       if (Math.abs(acc) > 45) { go(page + (acc > 0 ? 1 : -1)); acc = 0; }
     }, { passive: false });
+
     addEventListener('keydown', function (e) {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
       var k = e.key;
       if (k === 'ArrowRight' || k === 'ArrowDown' || k === 'PageDown' || (k === ' ' && !e.shiftKey)) { e.preventDefault(); go(page + 1); }
       else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp' || (k === ' ' && e.shiftKey)) { e.preventDefault(); go(page - 1); }
       else if (k === 'Home') { e.preventDefault(); go(0); } else if (k === 'End') { e.preventDefault(); go(N - 1); }
+      else if (k === 'v' || k === 'V') setVariant(ach.dataset.variant === 'a' ? 'b' : 'a');
+      else if (k === 'c' || k === 'C') setCursor(CURSORS[(CURSORS.indexOf(root.dataset.cursor) + 1) % CURSORS.length]);
     });
-    var tx = 0, ty = 0;
-    addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+
+    // swipe: starts within 20px of the left edge belong to the system back gesture; vertical swipes page only when the page does not scroll
+    var EDGE = 20, tx = 0, ty = 0, edge = false;
+    addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; ty = e.touches[0].clientY; edge = tx < EDGE; }, { passive: true });
     addEventListener('touchend', function (e) {
+      if (edge) return;
       var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
       if (Math.max(Math.abs(dx), Math.abs(dy)) < 50) return;
-      var fwd = Math.abs(dx) > Math.abs(dy) ? dx < 0 : dy < 0; go(page + (fwd ? 1 : -1));
+      var horizontal = Math.abs(dx) > Math.abs(dy), p = pages[page];
+      if (!horizontal && p.scrollHeight > p.clientHeight + 1) return;
+      var fwd = horizontal ? dx < 0 : dy < 0; go(page + (fwd ? 1 : -1));
     }, { passive: true });
+
     document.addEventListener('click', function (e) {
       var b = e.target.closest('[data-go]'); if (b) { e.preventDefault(); go(+b.dataset.go); }
     });
     nx.addEventListener('click', function () { go(page < N - 1 ? page + 1 : 0); });
+    document.getElementById('skip').addEventListener('click', function (e) {
+      e.preventDefault(); pages[page].setAttribute('tabindex', '-1'); pages[page].focus();
+    });
+
+    // rail names: shown on focus; on hover only with cursor (b), since (a) and (c) already show a tag
+    letters.forEach(function (a, i) {
+      a.addEventListener('focus', function () { if (page) railNames[i].classList.add('show'); });
+      a.addEventListener('blur', function () { railNames[i].classList.remove('show'); });
+      a.addEventListener('pointerenter', function () { if (page && root.dataset.cursor === 'b') railNames[i].classList.add('show'); });
+      a.addEventListener('pointerleave', function () { if (document.activeElement !== a) railNames[i].classList.remove('show'); });
+    });
 
     // sketch toggle: Achievements variant (a) / (b), header buttons or key V
     var ach = document.getElementById('ach');
@@ -366,10 +471,50 @@
       variantBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.variantSet === v)); });
     }
     variantBtns.forEach(function (b) { b.addEventListener('click', function () { setVariant(b.dataset.variantSet); }); });
-    addEventListener('keydown', function (e) {
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
-      if (e.key === 'v' || e.key === 'V') setVariant(ach.dataset.variant === 'a' ? 'b' : 'a');
+
+    // sketch toggle: cursor (a) square snap, (b) accent crosshair, (c) native plus context tag; header buttons or key C
+    var CURSORS = ['a', 'b', 'c'];
+    var cur = document.getElementById('cur'), cp = cur.querySelector('.cp'), box = cur.querySelector('.box');
+    var btag = cur.querySelector('.btag'), ctag = cur.querySelector('.ctag');
+    var cursorBtns = [].slice.call(document.querySelectorAll('[data-cursor-set]'));
+    var target = null, px = -100, py = -100;
+    function setCursor(v) {
+      root.dataset.cursor = v;
+      cursorBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.cursorSet === v)); });
+      layoutBox();
+    }
+    cursorBtns.forEach(function (b) { b.addEventListener('click', function () { setCursor(b.dataset.cursorSet); }); });
+    function tagOf(el) { return el.dataset.tag || el.getAttribute('aria-label') || el.textContent.replace(/\s+/g, ' ').trim(); }
+    function layoutBox() {
+      if (root.dataset.cursor === 'a' && target) {
+        var r = target.getBoundingClientRect();
+        box.style.width = (r.width + 8) + 'px'; box.style.height = (r.height + 8) + 'px';
+        box.style.transform = 'translate3d(' + (r.left - 4) + 'px,' + (r.top - 4) + 'px,0)';
+        btag.style.transform = 'translate3d(' + (r.right + 4 + 8) + 'px,' + (r.top - 4) + 'px,0)';
+      } else {
+        box.style.width = '12px'; box.style.height = '12px';
+        box.style.transform = 'translate3d(' + (px - 6) + 'px,' + (py - 6) + 'px,0)';
+      }
+    }
+    addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;
+      px = e.clientX; py = e.clientY;
+      cp.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+      cur.classList.add('on');
+      layoutBox();
+    }, { passive: true });
+    document.addEventListener('pointerover', function (e) {
+      var t = e.target.closest ? e.target.closest('a, button') : null;
+      if (t === target) return;
+      target = t;
+      var isLetter = !!(t && t.parentNode === fly), txt = t ? tagOf(t) : '';
+      cur.classList.toggle('hot', !!t);
+      cur.classList.toggle('letter', isLetter);
+      btag.textContent = txt;
+      ctag.textContent = isLetter ? txt : '';
+      layoutBox();
     });
+    document.documentElement.addEventListener('pointerleave', function () { cur.classList.remove('on'); });
 
     // Say hi: Email copies the address; the mailto link stays on the address label
     var ADDRESS = 'yahya.hallani.email@gmail.com';
@@ -385,11 +530,17 @@
       });
     });
 
-    addEventListener('resize', function () { fit(); go(page, true); });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { fit(); place(page, true); });
-    fit();
+    addEventListener('resize', function () { go(page, true); });
+
+    // the hero word stays hidden until the font is ready (300ms cap) so the fitted word never reflows
+    var timeout = new Promise(function (r) { setTimeout(r, 300); });
+    var fontReady = document.fonts ? document.fonts.load('700 100px "Instrument Sans"') : Promise.resolve();
+    Promise.race([fontReady, timeout]).then(null, function () {}).then(function () { root.classList.add('fonts-ready'); place(page, true); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { place(page, true); });
+
     var start = /^#p(\d)$/.exec(location.hash); go(start ? +start[1] : 0, true);
   })();
 </script>
 </body>
 </html>
+
