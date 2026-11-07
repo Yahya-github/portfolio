@@ -515,6 +515,15 @@ His answers to the round-5 questions (verbatim, relayed by the orchestrator mid-
 
 Meaning, as the orchestrator relayed it: (1) the spiral speed stays at 2.5s per step; (2) the words vanish at the centre, no still core word; (3) the About quarter rings stay at 22%; (4) "dw" (don't worry): keep the MAME live-site link as is. No code change was needed for these; they are recorded as settled in the design doc (section 4.2 items 2 and 5, section 10 items 18 to 20).
 
+His answers to the round-3 questions (verbatim labels, relayed by the orchestrator later in the round):
+
+> Grid lines: "Always faint (Recommended)"
+> Experience title: "No, keep Work / Involvement (Recommended)"
+> Edge crop: "Experience only (Recommended)"
+> Micro-text: "scrolling animation of the section name repeating"
+
+The lowercase "say hi" and the Achievements previews in cols 11-12 were not re-asked and stay as defaults. The first three keep what is built; the micro-text is a change (item 8).
+
 Facts used for MAME come only from the orchestrator's check of the private repo `Yahya-github/mame-tool-rental` (gh) and the live site, and from Yahya's words above.
 
 ### What was done
@@ -528,6 +537,8 @@ Facts used for MAME come only from the orchestrator's check of the private repo 
 | 5 | MAME mark on the Projects row | Done | a0b7629, 67836ba |
 | 6 | Round-5 answers recorded | Done | 4876643 |
 | 7 | REQUIREMENTS (CONT-03, CONT-12, DSGN-05) and PROJECT.md project list | Updated | bfd9f9d |
+| 8 | Micro-text: the section name, repeating and scrolling; one global Pause motion in the footer | Done | 799fcb2, see the docs commit |
+| 9 | Round-3 answers recorded (grid lines, Experience title, crop kept) | Done | see the docs commit |
 
 **1. Projects row.**
 - MAME Tool Rental is the first compact row (02.2; the others move to 02.3 to 02.6), because it is shipped and in use.
@@ -547,6 +558,13 @@ Facts used for MAME come only from the orchestrator's check of the private repo 
 - `logos/mame.png` (source lockup, trimmed), `mame-mark.png` (the shield, 96px, brand red with its white "M"), `mame-mark-mono.png` (#8e8e8e, alpha scaled by the red so the white details are knocked out and the shield keeps its detail, like the ICPC mono mark).
 - The mark sits after the name on the Projects row, 28px, mono at rest and red on row hover or a tap on touch. Never an accent use. Experience has no MAME entry, so no mark there.
 
+**8. Scrolling section names and the global Pause motion.**
+- The vertical "Montréal, Québec, 2026" in the right margin of pages 01-05 is replaced by that page's own section name ("01 Achievements" to "05 Say hi"), Label, dim, same place and size, repeated with a 24px gap and scrolling up as a seamless loop at 30px/s.
+- How: each margin holds one strip of two identical halves (16 names each) that moves by `translateY(-50%)` in a linear infinite CSS animation, so the end of the loop lands exactly on its start. Transform only, one promoted layer per strip, no script per frame; script only sets each strip's duration from its measured half once per layout (load, fonts ready, resize), so the speed is the same 30px/s on every page (durations 43s to 73s at 1440).
+- The window runs from 24px under the header to 24px above the footer and clips there. On Experience it stops 24px above the cropped "03" (the crop's height is the same clamp as its font size, so the two always agree).
+- It runs only on the current page, while the tab is visible and motion is on; the other four strips are paused. Under reduced motion it stands still and only the first name shows. `aria-hidden`, no pointer events, hidden on phones as before.
+- WCAG 2.2.2: the Say hi "Pause motion" button moved to the footer (cols 4-6, on the footer's baseline, 24px target) and became the one control for both continuous decorations: it stops the margin names and the spiral together and relabels to "Play motion". It shows on pages 01-05 on desktop, on Say hi only on phones (the only thing moving there), never on the Index (nothing there moves on its own) and not under reduced motion. Nothing is stored. The Facturo walkthrough keeps its own Pause. Say hi's address line now holds only the address (cols 1-3).
+
 ### Verification
 
 - `pv6.js` (new): ALL PASS at 1440x900, 1366x768, 1280x720 and 1920x1080, plus the 390 phone.
@@ -555,8 +573,16 @@ Facts used for MAME come only from the orchestrator's check of the private repo 
   - Phone: inline grey thumbnail, 156px wide.
   - Experience reads "Jun 2026 to Oct 2026" for Facturo, the three others "Since", and no MAME entry.
   - Document scrollWidth equals the viewport everywhere; 0 page errors.
+- `mq6.js` (new): ALL PASS at 1440x900, 1366x768, 1920x1080 and 1280x720, reduced motion at 1440, and the 390 phone.
+  - Each page 01-05 scrolls its own name at 30.0px/s (measured from the strip, and 20-45px moved in 1s of real time); the other four strips are paused.
+  - One half of each strip is longer than its window, so no gap ever shows.
+  - The window is clear of every text box on the page, the images, the rail, the cropped "03" (its 0.72 line box) and the footer; document scrollWidth equals the viewport.
+  - Pause motion on Projects stops the strip and relabels; paging to Say hi keeps both the spiral and the strip stopped; keyboard Enter resumes both.
+  - Index: the control is hidden. Reduced motion: no animation, one name, control hidden. Phones: margin hidden, the control only on Say hi, in the footer clear of the counter and Next, and a tap pauses the spiral.
+  - The footer counter, the control and Next share one text baseline (883.4 at 1440x900, 827.4 at 390).
+- `perf5.js` on Say hi, now with the spiral and the margin strip both running: 60.0 fps, 95th-percentile frame 16.7ms, max 16.8ms, 0.000s layout, 0.058s style recalc over 3s; paused 0.001s of main-thread work. `r3dev` and `con5` still pass with the control in the footer (the control's background is the ground, 17.3:1).
 - Regression scripts (port 8794), all unchanged: `hit2` (Index hit range y 264-747, rail as before), `green2` (exactly 1 green letter), `hitreel` (same boxes and probes), `colour` ALL PASS, `achpv` ALL PASS, `reel3` (exactly one advance), `cur5` ALL PASS (its Projects-row case now snaps on "Live site"), `perf5` ALL PASS, `con5` (worst accent 7.38:1, PASS), `r3dev` ALL PASS, `ab5` (0 errors, scrollWidth equals the viewport).
-- Screenshots looked at, in `/tmp/claude-1000/-home-atlas-dev-mine-portfolio/b665a55a-f583-43bd-8a8f-9e449fcf2104/scratchpad/shots6/`: contact sheets `sheet-desktop.png` and `sheet-phone.png`; `r6-proj-*` and `r6-xp-*` at 1440x900, 1366x768 and 390x844 (with hover); `before-*` for comparison; `mame-mono.png`.
+- Screenshots looked at, in `/tmp/claude-1000/-home-atlas-dev-mine-portfolio/b665a55a-f583-43bd-8a8f-9e449fcf2104/scratchpad/shots6/`: contact sheets `sheet-desktop.png` and `sheet-phone.png`; the margin names `mq-proj-1440.png`, `mq-proj-1920.png`, `mq-xp-1440.png` (with `mq-xp-crop.png`), `mq-rm-proj-1440.png` (reduced motion) and the phone footer `mq-hi-390.png`; `r6-proj-*` and `r6-xp-*` at 1440x900, 1366x768 and 390x844 (with hover); `before-*` for comparison; `mame-mono.png`.
 - v7: the inline script parses; the 01-06 banned patterns all count 0.
 - Design doc: 0 em dashes, Status still DRAFT, no APPROVED line.
 - `check.sh`: 18 PASS and 1 FAIL (SC-1c, not approved, as expected).
@@ -567,4 +593,4 @@ Facts used for MAME come only from the orchestrator's check of the private repo 
 2. Projects at laptop heights: below 880px every row hides its middle line (for example "Architected 6 gameplay systems"). Keep this, or drop a row (Showdown AI, "nothing built yet") so all three lines show everywhere?
 3. The MAME live site still shows the "Demo: extended lab hours" banner and demo student data. The link stays (your "dw"); remove the banner on your side when it suits you.
 4. `resume-public.pdf` may still list Facturo as current (Phase 7 copy).
-5. The round-3 defaults (grid lines, micro-text wording, "say hi" case, preview columns, Experience title, crop on one page) still stand until you say otherwise.
+5. The scrolling section names: is 30px/s the right speed, and should the strip fade at its two ends instead of being cut hard (it is cut, like the rest of the grid)? Judge from `mq-proj-1440.png`, `mq-xp-1440.png` and the live page.
