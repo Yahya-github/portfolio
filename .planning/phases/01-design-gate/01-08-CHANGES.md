@@ -304,5 +304,5 @@ Two open questions answered (verbatim, relayed by the orchestrator):
 2. The micro-text wording "Montréal, Québec, 2026", and whether it should be in the right margin of every page 01-05.
 3. The frame word in lowercase "say hi" (like "universe"), or "Say hi" / "SAY HI"?
 4. Achievements: the letter-pair stack moved the photo previews to the right (cols 11-12). OK?
-5. Letter-pair titles on two pages only (Achievements, About). Should Experience get a page title ("EX / PE / RI / EN / CE") above or instead of the Work / Involvement heads? It would need about 1.5 screens of height on 1366x768 unless the heads go.
+5. Letter-pair titles on two pages only (Achievements, About). Should Experience get a page title ("EX / PE / RI / EN / CE") above or instead of the Work / Involvement heads? Experience fills 1366x768 today, so a stacked title only fits if the Work / Involvement heads go or shrink.
 6. Edge-cropped "03" on Experience only; should other pages get their number too? There is no free area on them today without moving content.
