@@ -85,10 +85,10 @@ Plans:
 ### Phase 5: Letter Navigation and Motion
 **Goal**: The signature experience works: the name is the map, every motion follows one horizontal rule, and visitors always know where they are and that the site moves sideways
 **Depends on**: Phase 4
-**Requirements**: LTR-03, LTR-04, LTR-05, LTR-06, NAV-05, NAV-06, DSGN-04, EXP-01, A11Y-04
+**Requirements**: LTR-03, LTR-04, LTR-05, LTR-06, NAV-05, NAV-06, DSGN-04, EXP-01, EXP-03, A11Y-04
 **Success Criteria** (what must be TRUE):
   1. Leaving the hero, the five letters glide and shrink into a vertical rail on the left; returning to the hero grows them back, and fast repeated paging or a window resize mid-flight never leaves letters stranded
-  2. Hovering or focusing a rail letter reveals its section name; the current section's letter shows the accent colour plus a non-colour cue; on phones the rail sits inset from the left edge
+  2. Hovering or focusing a rail letter reveals its section name; the current section's letter shows the accent colour plus a non-colour cue; on phones the rail sits inset from the left edge With a mouse or trackpad, the custom cursor sits exactly on the pointer and changes shape over letters and links; touch devices keep the native cursor.
   3. The footer shows a 00 / 05 counter, a "Next" control and a progress bar that track the current page; a first-time visitor sees a quiet hint that the site moves sideways
   4. A first-time visitor sees an opening animation under about 1 second, with content already loaded underneath; any click or key skips it, and it never plays again
   5. Every motion moves on the horizontal axis, fast with no bounce; with reduced motion enabled every animation (opening, paging, letters, hint) becomes an instant change

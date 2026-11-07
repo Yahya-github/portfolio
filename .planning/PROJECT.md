@@ -21,7 +21,8 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 - [ ] Page switching by wheel/trackpad (one gesture = one page, inertia ignored), arrow keys, Page Up/Down, Space, Home/End, and swipe
 - [ ] Hero: giant YAHYA spanning the page; each letter is a clickable link to its section (Y Achievements, A Projects, H Experience, Y About, A Say hi), with numbered captions
 - [ ] Leaving the hero, the five letters shrink and glide into a vertical rail on the left that stays as the navigation, current section in the accent colour
-- [ ] Achievements: the 75-test "judge" animation ending on 75/75 (Canadian Computing Competition perfect score), plus the four first places
+- [ ] Achievements: a static typographic 75/75 (Canadian Computing Competition perfect score), plus the four first places (layout variant chosen in Phase 1)
+- [ ] Custom cursor that sits exactly on the pointer (EXP-03), form chosen in Phase 1
 - [ ] Projects: Facturo, Atlantis, CRC problems, robot firmware, Showdown AI
 - [ ] Experience: Work and Involvement lists
 - [ ] About ("Two habits") and Say hi (email, LinkedIn, GitHub)
@@ -49,10 +50,10 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 
 ## Context
 
-- Design was explored as throwaway HTML sketches in a brainstorming preview (light paper versions v1–v44, then dark Swiss hero v1–v3, then horizontal pages v4–v6). Current reference: `swiss-horizontal-v6.html` (scratchpad preview, not in this repo yet).
+- Design was explored as throwaway HTML sketches in a brainstorming preview (light paper versions v1–v44, then dark Swiss hero v1–v3, then horizontal pages v4–v6). Current reference: `docs/reference/swiss-horizontal-v6.html` (committed); v7 and the font trial live next to it.
 - References he chose: Swiss posters ("Minimal+" grid, "POLYMER 50"), depth maps (greyscale portrait renders, point-cloud terrain, contour sphere, x-ray flowers), ianwilson.dev (dithered L-system tree), elenagonci.com (single-family restraint).
 - Swiss principles adopted from printmag.com and mew.design articles: grid, asymmetry, one sans family with few weights, hierarchy by size and weight, black + white + one accent, more space between groups than within, no decoration, photography over illustration.
-- Design doc `docs/superpowers/specs/2026-11-03-portfolio-design.md` is a DRAFT describing the older light design; it must be updated and approved before building.
+- Design doc `docs/superpowers/specs/2026-11-03-portfolio-design.md` is rewritten as revision 5 (dark Swiss horizontal) and awaits Yahya's approval.
 - Skills available: portfolio-design, portfolio-voice-and-facts, anti-vibe-design, Hallmark (audit only), Taste skill (review only).
 
 ## Constraints
@@ -94,6 +95,7 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 | No background visuals; wow = YAHYA letter nav + craft + real interactive proof | Depth map, nature simulations and procedural terrain were all tried and rejected as borrowed, not his; showing "cracked" visually reads as forced; the record proves it | — Pending |
 | Photos plain greyscale, hard grid crops | Recruiters should see his face and the real work | — Pending |
 | Green = nature (as grandeur) and code, private inspiration only | He is inspired by both but nature must not become a visible theme | — Pending |
+| Custom cursor stays in v1, 1:1 with the pointer, no bubble | His call 2026-11-06 (D-18); form picked from three v7 variants | — Pending |
 
 ## Evolution
 

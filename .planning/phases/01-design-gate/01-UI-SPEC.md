@@ -61,7 +61,7 @@ Trial page layout, one block per face, all on the `#0b0b0b` ground:
 Pass/fail criteria (D-03 to D-07), recorded in the doc for the winner:
 - The Y arms and A apexes hold together at giant size with negative tracking (PITFALLS: check the actual word).
 - No italic is needed or used anywhere (D-05).
-- A true tabular-figure feature exists (`tnum`); otherwise the face fails, because counters may not use a monospace (D-06).
+- Tabular figures are available (a `tnum` feature, or figures tabular by default, as in Hanken Grotesk); otherwise the face fails, because counters may not use a monospace (D-06).
 - A variable file (or 2 static weights) can be self-hosted under the licence.
 - Body at 16px reads comfortably on black.
 - Latin-Extended is not a criterion (D-07).
