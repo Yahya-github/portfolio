@@ -75,9 +75,27 @@ The LinkedIn profile URL answers 999 to scripted requests (LinkedIn's bot wall).
 | screenshots/facturo-09-mobile-grey.png | Greyscale derivative | same | Greyscale, stripped |
 | screenshots/facturo-10-clients.png | Facturo clients | README `10-clients.webp` | Converted to PNG, stripped |
 | screenshots/facturo-10-clients-grey.png | Greyscale derivative | same | Greyscale, stripped |
+| logos/mcgill-robotics.png | McGill Robotics lockup (source) | Image pasted by Yahya, 2026-11-07 (plan 01-08) | Dark ground made transparent, trimmed, max 1200px, stripped |
+| logos/mcgill-robotics-mark.png | McGill Robotics robot-arm "M" mark, brand colours (white) | same | Cropped from the lockup, 96px tall, stripped |
+| logos/mcgill-robotics-mark-mono.png | Mono twin of the mark | same | Single colour #8e8e8e (dim), same alpha |
+| logos/gdg.png | Google Developer Groups lockup (source) | Image pasted by Yahya, 2026-11-07 (plan 01-08) | White ground made transparent, trimmed, stripped |
+| logos/gdg-mark.png | GDG chevron mark, brand colours | same | Cropped from the source; alpha from colour saturation, so the white ground, the grey edge fringe and the black outline drop out on the dark ground; stripped |
+| logos/gdg-mark-mono.png | Mono twin of the mark | same | Single colour #8e8e8e, same alpha |
+| logos/icpc.png | ICPC lockup (source) | Image pasted by Yahya, 2026-11-07 (plan 01-08) | Trimmed, max 1200px, stripped |
+| logos/icpc-mark.png | ICPC three-square mark (cloud, bulb, balloon), brand colours | same | Cropped from the lockup above the "icpc.foundation" line, 96px tall, stripped |
+| logos/icpc-mark-mono.png | Mono twin of the mark | same | Single colour #8e8e8e; the white line drawings are knocked out so the squares keep their detail |
+| logos/mercor.png | Mercor lockup (source) | Image pasted by Yahya, 2026-11-07 (plan 01-08) | Trimmed, max 1200px, stripped |
+| logos/mercor-mark.png | Mercor "M" ribbon mark, brand colours | same | Cropped from the lockup, 96px tall, stripped |
+| logos/mercor-mark-mono.png | Mono twin of the mark | same | Single colour #8e8e8e, same alpha |
+| logos/crc-mark.svg | Canadian Robotics Competition gear-and-bolt mark, brand colours | https://robo-crc.ca/crc-mark-poly.svg (fetched 2026-11-07, 200) | Inspected: no script, link, import, url() or event attribute; viewBox tightened to the artwork, layer id removed |
+| logos/crc-mark-mono.svg | Mono twin of the mark | same | Every fill and stroke set to #8e8e8e, a 3-unit stroke closes the polygon seams |
+| logos/facturo.svg | Facturo lockup (source) | https://github.com/Yahya-github/facturo-demo, `facturo/web/static/img/logo.svg` (raw.githubusercontent.com, 2026-11-07, 200) | Unchanged copy; inspected, no script or external reference |
+| logos/facturo-mark.svg | Facturo "F" mark, brand colours | same repo, `favicon.svg` geometry | The repo's dark-scheme colours fixed in (#4ea672 F, #d4a853 fold and dot), no media query, no text |
+| logos/facturo-mark-mono.svg | Mono twin of the mark | same | Single colour #8e8e8e; the fold is cut out with a mask so the mark keeps its corner |
 
 Notes:
 - The four event photos are group photos that include teammates. They are already public through the articles and the LinkedIn post listed above.
+- Logos (plan 01-08, Yahya asked for them next to the Experience entries): only the marks are shown on the site, small, in the mono twin; the brand colours fade in on hover. The full lockups are kept as sources. Organisation logos are used to identify the organisations Yahya worked or took part with, not as endorsements.
 - Facturo screenshots: every one was checked by eye. They show the "Demo Transport Inc." workspace with the seeded fictional clients; the repo README states that all data in it is fictional. No real client data.
 
 ## Still missing
