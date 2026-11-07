@@ -593,7 +593,9 @@
     function go(n, instant) {
       n = Math.max(0, Math.min(N - 1, n));
       if (n === page && !instant) return;
-      page = n; locked = true;
+      var from = page; page = n; locked = true;
+      /* cursor (round 5): let go of the snapped letter or link before it moves; rail letters stay put between pages 01-05 */
+      var seq = ++pageSeq; release(!instant && from !== 0 && n !== 0);
       root.dataset.page = String(n);
       track.style.transition = instant || reduce ? 'none' : '';
       track.style.transform = 'translate3d(' + (-n * 100) + 'vw,0,0)';
@@ -609,7 +611,7 @@
       if (history.replaceState) history.replaceState(null, '', n ? '#p' + n : location.pathname + location.search);
       if (n !== PROJ) { overReel = onFrame = onCtl = touchHold = false; }
       reelSync();
-      setTimeout(function () { locked = false; quietUntil = performance.now() + 180; layoutBox(); }, instant ? 50 : DUR_PAGE + 50);
+      setTimeout(function () { locked = false; quietUntil = performance.now() + 180; if (seq === pageSeq) resnap(); else layoutBox(); }, instant ? 50 : DUR_PAGE + 50);
     }
 
     // one wheel gesture = one page; trackpad inertia after a flip is ignored until it goes quiet
@@ -705,13 +707,33 @@
       cur.classList.add('on');
       layoutBox();
     }, { passive: true });
-    document.addEventListener('pointerover', function (e) {
-      var t = e.target.closest ? e.target.closest('a, button') : null;
-      if (t === target) return;
+    function setTarget(t) {
       target = t;
       cur.classList.toggle('hot', !!t);
       btag.textContent = t ? tagOf(t) : '';
       layoutBox();
+    }
+    // paging (round 5 fix, Yahya: "when you hover a letter and press an arrow to go to the next page during the
+    // transition the square stays still like a glitch"). The snap follows pointerover only, and a key, the wheel or a
+    // click moves the letters and pages without moving the pointer, so the box stayed on the old rect over empty space.
+    // Now a page change releases the snap at once (the box goes back to the small square at the still pointer, the tag
+    // hides) and ignores pointerover while things glide; when the page has landed it re-snaps to whatever is under the
+    // pointer (elementFromPoint), or to nothing. No per-frame work: one release, one hit test at the end.
+    var paging = false, pageSeq = 0;
+    function release(railStays) {
+      paging = true;
+      if (target && !(railStays && fly.contains(target))) setTarget(null);
+    }
+    function resnap() {
+      paging = false;
+      var el = px >= 0 && py >= 0 ? document.elementFromPoint(px, py) : null;
+      var t = el && el.closest ? el.closest('a, button') : null;
+      if (t === target) layoutBox(); else setTarget(t);
+    }
+    document.addEventListener('pointerover', function (e) {
+      if (paging) return;
+      var t = e.target.closest ? e.target.closest('a, button') : null;
+      if (t !== target) setTarget(t);
     });
     document.documentElement.addEventListener('pointerleave', function () { cur.classList.remove('on'); });
 
