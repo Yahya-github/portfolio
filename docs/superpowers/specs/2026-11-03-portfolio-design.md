@@ -47,6 +47,16 @@ Anti-goals (any of these makes the site a failure even if it technically works):
 | Decision 6 | Domain | Accepted, 2026-11-06 | Buy yahya-h.dev before the first deploy. On Vercel the basePath risk disappears; the domain is still bought first. |
 | Host | Vercel | Accepted, 2026-11-06 | Yahya's choice: real headers, no basePath stage. |
 
+### 3.1 References
+
+Design inspiration and a grid guide sent by Yahya on 2026-11-07 (change round 2), recorded verbatim. Pending discussion with Yahya: nothing in this doc or v7 is changed by them yet.
+
+- https://www.behance.net/gallery/192265061/Swiss-Typography-Wallpaper-Pack/modules/1087550045
+- https://www.behance.net/gallery/239485669/Modern-Swiss-Typography-Poster-System-Exploratio
+- https://www.behance.net/gallery/221014645/50-Swiss-Style-Posters/modules/1260764327
+- [Image #11] (an image pasted by Yahya in the review chat; not saved to the repo)
+- Grid guide: https://swissgrid.posterhouse.org/
+
 ## 4. Visual system
 
 Every value lives in `.planning/phases/01-design-gate/01-UI-SPEC.md`; Phases 3 to 6 turn it into `styles/tokens.css` plus CSS Modules. This section restates only what a reader needs to picture the site.
@@ -165,7 +175,7 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 
 - Poster device: Ruled two-column table
 - Columns (desktop): Work cols 1-6, Involvement cols 7-12, column heads in Display on one row, rows separated by hairlines: years in Label flush left on their own line, role in Heading, organisation in dim Body. Years and roles flush left (D-13).
-- Organisation marks (Yahya, 2026-11-07): a row whose organisation has a real mark shows it 28px tall, vertically centred in the row, its right edge on the column's right edge (col 6 for Work, col 12 for Involvement). Marks rest in one mono colour, the dim grey `#8e8e8e`, from pre-made mono files (not a CSS filter); hovering the row (fine pointer) or tapping it on touch crossfades to the brand colours over 400ms, instantly under reduced motion. Marks are decorative (empty alt); the text already names the organisation. They stay far smaller than the Display heads. Rows: Mercor, Facturo, CRC 2027 (Work); McGill Robotics, Google Developer Group at McGill, McGill Compete / ICPC (Involvement). Freelance has no mark. Treatment recommended by Claude; Yahya may override. Files: `docs/material/logos/*-mark.*` and `*-mark-mono.*`.
+- Organisation marks (Yahya, 2026-11-07): a row whose organisation has a real mark shows it 28px tall, vertically centred in the row, its right edge on the column's right edge (col 6 for Work, col 12 for Involvement). Marks rest in one mono colour, the dim grey `#8e8e8e`, from pre-made mono files (not a CSS filter); hovering the row (fine pointer) or tapping it on touch crossfades to the brand colours over 400ms, instantly under reduced motion. Marks are decorative (empty alt); the text already names the organisation. They stay far smaller than the Display heads. Rows: Mercor, Facturo, CRC 2027 (Work); McGill Robotics, Google Developer Group at McGill, McGill Compete / ICPC (Involvement). Freelance has no mark. Treatment recommended by Claude in round 1; Yahya did not answer the round-1 questions, so these defaults stand (change round 2, 2026-11-07): marks dim grey with colour on hover or tap; the Facturo mark keeps its brand green (`#4ea672`) on hover, which is the mark's own colour and content, not the accent; the ICPC three-square mark stays on the McGill Compete / ICPC NENA row; the generic Google Developer Groups chevron stays on the GDG row. Yahya may still override. Files: `docs/material/logos/*-mark.*` and `*-mark-mono.*`.
 - Display fit: "Involvement" at Display fits cols 7-12 at 1366 and 1440 in Instrument Sans (489px of 619px at 1366, 516px of 656px at 1440), so Work spans cols 1-6 and Involvement cols 7-12.
 - Dominant element: the ruled table.
 - Display group: the "Work" and "Involvement" head row.
