@@ -36,7 +36,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 8 plans
 Plans:
 - [x] 01-01-PLAN.md — Wave 0: commit v6, .gitignore font/secret guard, check.sh, greyscale portrait master
-- [ ] 01-02-PLAN.md — Font trial: OFL WOFF2 files, measured font-metrics.md, side-by-side font-trial.html
+- [x] 01-02-PLAN.md — Font trial: OFL WOFF2 files, measured font-metrics.md, side-by-side font-trial.html
 - [ ] 01-03-PLAN.md — Design doc rewritten as revision 5 draft; EXP-03 cursor requirement and project/UI-SPEC edits
 - [ ] 01-04-PLAN.md — Material intake: redacted resume re-export, screenshots/photos, links.md (Yahya action)
 - [ ] 01-05-PLAN.md — Font pick checkpoint with Yahya (round 2 only if needed, max 2 rounds)
@@ -138,7 +138,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Design Gate | 1/8 | In Progress|  |
+| 1. Design Gate | 2/8 | In Progress|  |
 | 2. Live Deploy Spike | 0/TBD | Not started | - |
 | 3. Static Design System and Pages | 0/TBD | Not started | - |
 | 4. Horizontal Pager and Input | 0/TBD | Not started | - |
