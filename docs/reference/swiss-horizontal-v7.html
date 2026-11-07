@@ -100,7 +100,7 @@
     font: 700 100px/0.76 var(--font-sans); font-stretch: var(--wdth-display); letter-spacing: var(--yahya-track);
     transition: transform var(--dur-letters) var(--ease-page) calc(var(--i) * var(--stagger)), color var(--dur-ui) var(--ease-ui);
   }
-  .fly a::before { content: ""; position: absolute; inset: 0; pointer-events: auto; }
+  .fly a::before { content: ""; position: absolute; inset: var(--hit-t, 0) var(--hit-r, 0) var(--hit-t, 0) 0; pointer-events: auto; }   /* in the rail, place() grows it to the rail item: the rail column's width and half the gap above and below */
   /* accent on a rail letter = the current section only, derived from the page index (aria-current, set in go()).
      Hover and focus never colour a rail letter: a stale :hover (pointer resting where a letter lands, sticky touch
      hover) or a stale :focus-visible (a clicked letter keeps focus, a later key press makes it "visible") left two
@@ -414,7 +414,7 @@
     var track = document.getElementById('track'), pages = [].slice.call(document.querySelectorAll('.page'));
     var fly = document.getElementById('fly'), letters = [].slice.call(fly.querySelectorAll('a'));
     var slots = [].slice.call(document.querySelectorAll('#rail .slot'));
-    var now = document.getElementById('now'), live = document.getElementById('live');
+    var rail = document.getElementById('rail'), now = document.getElementById('now'), live = document.getElementById('live');
     var pg = document.getElementById('pg'), nx = document.getElementById('nx'), bar = document.getElementById('bar'), where = document.getElementById('where');
     var word = document.getElementById('word'), placeholders = [].slice.call(word.querySelectorAll('.L b'));
     var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -431,12 +431,16 @@
       var heroFs = parseFloat(getComputedStyle(word).fontSize);
       var railFs = parseFloat(getComputedStyle(slots[0]).fontSize);
       var trackX = track.getBoundingClientRect().left;
+      var railGap = parseFloat(getComputedStyle(rail).rowGap) || 0, railCol = parseFloat(getComputedStyle(root).getPropertyValue('--rail-col')) || 0;
       letters.forEach(function (a, i) {
         a.style.fontSize = heroFs + 'px';
         var r = (n === 0 ? placeholders[i] : slots[i]).getBoundingClientRect();
         var x = n === 0 ? r.left - trackX : r.left;
         var k = n === 0 ? 1 : railFs / heroFs;
         a.style.transform = 'translate3d(' + x + 'px,' + r.top + 'px,0) scale(' + k + ')';
+        // hit area: the letter box on the Index; in the rail, the whole rail item (pre-scale px, so divide by k)
+        a.style.setProperty('--hit-t', n === 0 ? '0px' : -(railGap / 2) / k + 'px');
+        a.style.setProperty('--hit-r', n === 0 ? '0px' : -Math.max(0, railCol - 8 - r.width) / k + 'px');
       });
       if (instant) { void fly.offsetWidth; fly.classList.remove('instant'); }
     }
