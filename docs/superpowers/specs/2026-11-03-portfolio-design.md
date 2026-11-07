@@ -1,6 +1,6 @@
 # Portfolio website: design
 
-Status: DRAFT for Yahya's approval (revision 5: dark Swiss horizontal). Nothing is built. Date: 2026-11-07 (Phase 1 picks recorded; review change round 1 applied).
+Status: DRAFT for Yahya's approval (revision 5: dark Swiss horizontal). Nothing is built. Date: 2026-11-07 (Phase 1 picks recorded; review change rounds 1 and 2 applied).
 Owner: Yahya Hallani. Domain: `yahya-h.dev` (Yahya buys it before the first deploy). Host: Vercel.
 
 Visual contract: `.planning/phases/01-design-gate/01-UI-SPEC.md` holds every token value; this doc records decisions, the trial results and the page compositions. Where they disagree, this doc wins after approval. This revision overrides the `portfolio-design` skill and the stack notes in `CLAUDE.md` wherever they disagree.
@@ -136,14 +136,14 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 - Poster device: Typographic list, no rules
 - Chosen: variant (b), by Yahya, 2026-11-07, in v7 (D-11). CONT-02 is rewritten to match.
 - Columns (desktop): the title "Achievements" in Display across cols 1-12 at the top, then five unruled lines in cols 3-12 on a subgrid (rank cols 3-4, result cols 5-8 in Heading, detail cols 9-12 in dim Body). The first line is "75/75, Canadian Computing Competition, perfect score", with the numeral in the accent and at the same weight as the other ranks.
-- Proof previews (Yahya, 2026-11-07): hovering a line, or focusing it with the keyboard, shows a small greyscale photo and one Label line in the empty cols 1-2, top-aligned with the line and nudged up so it never leaves the viewport. A line with a public article is a link that opens it in a new tab (`rel="noopener"`):
+- Proof previews (Yahya, 2026-11-07): hovering a line, or focusing it with the keyboard, shows a small greyscale photo and one Label line in the empty cols 1-2, top-aligned with the line and nudged up so it never leaves the viewport. A line with a public source (an article or a post) is a link that opens it in a new tab (`rel="noopener"`):
   - DIRO Hackathon: the diro.umontreal.ca article; photo `photos/diro-hackathon-2026-award-grey.jpg` ("The winners with their certificates").
   - Intercollegiate Video Game Creation Competition: the neomedia.com article, which names Atlantis and the Collège André-Grasset team (the cegepvalleyfield.ca post is a photo post with a 14-word body); photo `photos/game-competition-2026-team-grey.jpg`.
-  - Canadian Robotics Competition, robot competition: photo `photos/club-of-the-year-award-grey.jpg` ("Our school's Club of the Year"), because the team won thanks to the club (Yahya, 2026-11-07).
-  - Canadian Robotics Competition, programming: photo `photos/crc-2026-trophies-grey.jpg` ("The team with its 2026 trophies").
-  - No CRC article exists, so both CRC lines are not links; they take keyboard focus so the preview can still be seen.
-  - Canadian Computing Competition 75/75: a one-line description only, no photo and no link (no public proof exists).
-  On touch screens (`hover: none`) and phones the thumbnail sits inline under its line, and the article lines stay normal links.
+  - Canadian Robotics Competition, robot competition: the Instagram post https://www.instagram.com/p/DYPS2bGOAQy/ (Yahya, 2026-11-07); photo `photos/club-of-the-year-award-grey.jpg` ("Our school's Club of the Year"), because the team won thanks to the club (Yahya, 2026-11-07).
+  - Canadian Robotics Competition, programming: the Instagram post https://www.instagram.com/p/DWmZr18kTA3/ (Yahya, 2026-11-07); photo `photos/crc-2026-trophies-grey.jpg` ("The team with its 2026 trophies").
+  - The two CRC lines are links to those posts, like the article lines; their tag reads "See the post" and the preview's source line reads "Post, instagram.com". No CRC article exists; the posts are the proof.
+  - Canadian Computing Competition 75/75: a one-line description only, no photo and no link (no public proof exists). It is the only line that is not a link; it takes keyboard focus so its preview can still be seen.
+  On touch screens (`hover: none`) and phones the thumbnail sits inline under its line, and the linked lines stay normal links.
 - Dominant element: the title above the list.
 - Display group: the title "Achievements".
 - Phone portrait intent: the title, then the lines stacked rank above result above detail, each with its thumbnail below (the 75/75 line has none; the two CRC lines show two different photos).
@@ -213,7 +213,7 @@ The custom cursor stays in v1 (D-18). Its job is to feel crafted and to guide na
 Form: (a) a hard-edged 1px square outline in ink that snaps around the hovered letter or link (its box plus 4px) and shows the section or link name as a Label tag, with a 2px ink dot on the pointer, chosen by Yahya 2026-11-07 in v7 (D-19).
 
 - The tag never leaves the viewport: it sits right of the box; if that does not fit, above it (right-aligned), then below, then left; the result is clamped 8px inside all four edges (v7 bug found by Yahya 2026-11-07: "team website" ran off the screen).
-- Links whose text is long name their action instead (the Achievements article lines read "Read the article").
+- Links whose text is long name their action instead (the Achievements article lines read "Read the article", the two CRC post lines "See the post").
 
 ## 9. Material
 
@@ -235,7 +235,7 @@ Still missing (copied from links.md):
 
 - Atlantis screenshots: to capture (2-3 greyscale gameplay screenshots from the Godot project; Godot is not installed on this machine, so none were captured in plan 01-04). A short muted loop clip later.
 - Robot: no photo of the physical robot; a higher-resolution CAD capture (the Onshape thumbnail is 600x340) is to capture; robot CAD file itself (Phase 8).
-- CRC 2026: no article link (photos only).
+- CRC 2026: no article link; the two Instagram posts (Yahya, 2026-11-07) are the proof links.
 - CCC 2026: no public proof link.
 - Higher-resolution original portrait: none yet.
 
@@ -288,3 +288,4 @@ Still missing (copied from links.md):
 - Index proof line "Perfect score, 75/75, at the 2026 Canadian Computing Competition.": dropped by Yahya (2026-11-07).
 - The trophies photo as the preview of the CRC robot competition line: replaced by the Club of the Year photo (2026-11-07).
 - Phone screenshot flush left in the Facturo walkthrough: now centred (2026-11-07).
+- The two CRC Achievements lines as focusable non-links: they now link to Yahya's Instagram posts (2026-11-07, change round 2).
