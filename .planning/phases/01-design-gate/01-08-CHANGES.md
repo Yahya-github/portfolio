@@ -390,3 +390,111 @@ Image #12 (pasted in chat, not saved to the repo): two "universe" posters. Top: 
 2. Say hi: is the spiral speed right (one ring step every 2.5s, 35s from edge to centre) and faint enough (frame 22%, rings 20%)?
 3. The frame word at the body width (wdth 100) for a bigger tunnel, or the Display width (wdth 75) like the other Display words? The tunnel shrinks from 45% to 30% of the side.
 4. The round-3 defaults above (grid lines, micro-text wording, "say hi" case, preview columns, Experience title, crop on one page) still stand until you say otherwise.
+
+## Change round 5 (2026-11-07)
+
+### Yahya's reply (verbatim)
+
+> "1. b 2. ok 3. Spiral with the words in the center. A true spiral not only fading in so it starts overscreen before"
+
+The questions were: 1) About shape a / b / c (recommended: b, dimmed to about 20%); 2) the spiral's speed and faintness; 3) the frame word at the body or the Display width. Answer 3 is a change to the spiral itself instead.
+
+Added mid-round (verbatim, relayed by the orchestrator):
+
+> "Add also another fix when you hover a letter and press an arrow to go to the next page during the transition the square stays still like a glitch"
+
+> "No for the bug it's not cursor-square it's the square around the letter that stays fixed"
+
+### What was done
+
+| # | Item | Status | Commits |
+|---|------|--------|---------|
+| 1 | About shape (b), dimmed; (a), (c) and the toggle removed | Done | 47427cc, bd82c51 |
+| 2 | Spiral speed and faintness | Kept (step 2.5s, 22% fading to 0) | 47427cc, bd82c51 |
+| 3 | Say hi: a true spiral of the words, entering from off-screen | Done | 47427cc, bd82c51 |
+| 4 | Round-3 defaults | Unchanged, still "defaults pending Yahya" | none |
+| 5 | Square stuck over a letter while paging | Fixed | c999ce7, bd82c51 |
+
+**1. About shape.**
+- (b) quarter rings, as Yahya picked.
+- Dimmed to the Say hi spiral's faintness: the shape layer is ink at 22% opacity, not solid white. The dimming was the orchestrator's recommendation; Yahya may still ask for it brighter.
+- Candidates (a) half disc and (c) Y fragment, their CSS and markup, the header sketch toggle "About shape: a / b / c" and its script are removed. The header has no sketch toggles left.
+- The geometry is unchanged (`ab5.js`): at 1440 the visible rings are [986,72,1415,501] with the stack ending at x 962 and the text starting at y 643; at 1366 they are [974,72,1341,439] (stack ends at x 913, text starts at y 487). The shape is hidden on phones.
+
+**3. Say hi spiral** (replaces the round-4 square and its fading ring slices).
+- **Form:** ONE logarithmic spiral path turning clockwise into a centre in the free right part of the page; each turn is 0.45 the size of the one outside it. "say hi" (lowercase, bold, wdth 100) is set on the path with SVG `textPath`, 4.5 words per turn, letter tops out, so it reads "say hi say hi ..." round into the centre, each word smaller than the last. The outermost word is about 176px at 1440x900.
+- **Approach (compositor only):** a log spiral maps onto itself under rotate(a) plus scale(0.45^(a/360)) about its centre.
+  - Every word is the same small inline SVG (`<use>` of one word on the path), sized to the word's measured ink (getBBox plus 2 units), with its `transform-origin` on the spiral's centre.
+  - All 22 words run the same keyframes: 80 degrees and a scale of 0.837 per step, 2.5s per step, 22 steps = 55s, two keyframe stops per step. Each word is offset by -2.5s.
+  - Every 2.5s each word glides to the next word's place, shrinking as it winds in, and the loop is seamless.
+  - Transform and opacity only. No per-frame script.
+  - Offset-path was not needed (and so no Safari fallback question): rotate plus scale moves a word exactly along a log spiral and keeps it tangent.
+- **Starts overscreen:** the step-0 position lies wholly past the page's right edge. With only that word shown, it draws 0 pixels on screen at 1280, 1366, 1440, 1920 and 390. The outer turn also runs under the footer. No word fades in at a fixed ring.
+- **Static frame:** dropped. Both were screenshotted (`variants.png`). With the round-4 square kept over the spiral, its four big words collide with the turns and read as clutter; without it, the moving outer turn is the frame.
+- **Width (Q3, unanswered):** wdth 100 kept. At wdth 75 (`variants.png`, right) the shorter word leaves wide gaps along the path, so the line stops reading as one spiral.
+- **Place:**
+  - Desktop: a layer from half a gutter left of col 7 to the page's right edge, full page height, with `overflow: clip` (it can never scroll).
+  - The spiral is sized from that width (`--u`) so its outer band stays clear of the layer's left line.
+  - The links stay in cols 1-6 on plain ground. The address moves to cols 1-3 and "Pause motion" to cols 4-6 on the same Label line, out of the spiral's area.
+- **Phone 390:** a band under the links and the address, from the content's left edge to the page's right edge. 14 words instead of 22: the same path and step, with keyframes `sp14` (35s) so they fade out sooner. Pause motion sits under it.
+- **Kept:** ink at 22% fading to 0 at the centre, no accent, `aria-hidden`, no pointer events. It runs only while Say hi is current and the tab is visible. Pause motion / Play motion (WCAG 2.2.2), nothing stored. Under reduced motion the words stand still along the spiral and the control is hidden. The rotated micro-text stays in the right margin and paints above the spiral.
+
+**5. The square that stays behind while paging.**
+- **Identified:** the cursor (a) snap box, `#cur .box`, with its tag `.btag`.
+- **How:** with the pointer on the A of YAHYA, ArrowRight was pressed with real Playwright input and a screenshot taken 250ms in, on the round-4 build. The same was done with each candidate disabled: the cursor (`.cur`), the letter's `::before` hit area and every outline.
+  - The 1px square and its "02 PROJECTS" tag stayed on the A's old place in every run except with `.cur` hidden.
+  - Hiding `::before` also removed it, but only because the letter can then never be hovered (`::before` is its only hit area; it paints nothing).
+  - No outline is involved: a hovered letter has no focus.
+  - Screenshots: `sq-old-vs-new.png` and `sq-old-*`.
+- **Root cause:** the snap followed `pointerover` only, and `layoutBox()` read the snapped element's rect. A key, the wheel or a click moves the letters and the page without moving the pointer, so no event updated the box. It stayed on the old rect until the next pointer move.
+- **Fix (no per-frame work):**
+  - A page change releases the snap at once: the box goes back to the small square at the still pointer and the tag hides.
+  - `pointerover` is ignored while the page glides.
+  - When the page has landed (the existing end-of-transition timeout; only the latest page change counts), one `elementFromPoint` at the last pointer position re-snaps to what is under it, or to nothing.
+  - Rail letters keep the snap between pages 01-05, because they do not move.
+
+### Verification
+
+- `sp5px.js` (pixels, new). A whole loop was sampled every 0.625s (88 moments on desktop, 56 on phones) at 1280x720, 1366x768, 1440x900, 1920x1080 and 390x844, with the link text hidden.
+  - No word pixel touches the layer's inner left line (max grey 11 = the ground), so no word is ever cut there.
+  - On phones none touches the band's bottom either.
+  - The step-0 word draws nothing on screen at any size.
+- `sp5.js` (boxes, new): no word box overlaps a link, the address or the control over the whole loop at all five sizes. Document scrollWidth equals the viewport everywhere, and there are 0 errors.
+- `perf5.js` (`perf4` adapted to the words), headless Chrome at 1440x900: 8/8 PASS.
+  - While running: 60.0 fps, 95th-percentile frame 16.8ms, max 16.8ms. Over 3.0s there was 0 layout, 0.05s of style recalc and 0.16s of main-thread task time; the task time includes the measuring loop.
+  - Paused: 0.000s of main-thread work over 3s. 22 word layers are promoted.
+  - Behaviour: paused on About, runs on Say hi. Pause holds and relabels to "Play motion"; keyboard Enter resumes. A hidden tab pauses it and a visible one resumes it. A reload runs again. Under reduced motion it is static and the button is hidden.
+- `con5.js` (link contrast, text hidden, brightest pixel in each box at t, t+6s and t+12s, at 1440, 1366 and 390; on phones each element is scrolled into view, because unscrolled the fixed footer covers the control): every box has background 11, so ink is 17.3:1 and the accent 7.4:1 (worst 7.38:1). PASS.
+- `r3dev.js` (Say hi block adapted to the spiral): ALL PASS.
+  - One word on the path, 22 copies (14 on phones), the layer clipped, `aria-hidden` and with no pointer events.
+  - The four links, the address and the control are clear of the layer and take the pointer at 1440, 1366 and 390.
+- `ab5.js`: the About shape is ink at 0.22, no toggles or other candidates remain, the shape is clear of the stack, the text and the portrait, and it is hidden on phones.
+- `cur5.js` (new, real input, 1440 and 1366): 49 PASS.
+  - Scenarios: a hovered Index letter with ArrowRight and with the wheel; a rail letter with ArrowRight, ArrowLeft, Home and a click on another letter; a Say hi link with ArrowLeft; a Projects row with ArrowRight.
+  - During the glide the box is the free 12px square at the pointer (on rail-to-rail paging it stays on the rail letter, which does not move).
+  - After landing, it snaps to whatever `elementFromPoint` finds, or to nothing.
+  - The same script run on the round-4 build fails, showing the stranded 291x492 box over the old A.
+- Regression scripts, all unchanged:
+  - `hit2`: Index hit range y 264-747; rail items as before.
+  - `green2`: exactly 1 green letter.
+  - `hitreel`: the same boxes and probes as round 4.
+  - `colour`: ALL PASS.
+  - `achpv`: ALL PASS.
+  - `reel3`: exactly one advance.
+- Screenshots looked at, in `/tmp/claude-1000/-home-atlas-dev-mine-portfolio/b665a55a-f583-43bd-8a8f-9e449fcf2104/scratchpad/shots5/`:
+  - contact sheets `sheet-desktop.png` and `sheet-phone.png`;
+  - the motion sequence `seq-1440.png` (8 frames over 10s);
+  - the variants `variants.png`;
+  - the square bug `sq-old-vs-new.png`.
+  - Say hi is shown at t0, +5s, +12s and +20s; t0, +5s and +20s look the same because they fall on whole 2.5s steps and the spiral is self-similar one step later.
+  - 0 page errors; document scrollWidth equals the viewport at every size.
+- v7: the inline script parses. The 01-06 banned patterns all count 0 (Google Fonts, judge, requestAnimationFrame, lerp, spring, italic, weights 200/500/600, medal, em dash).
+- Design doc: 0 em dashes, Status still DRAFT, no APPROVED line.
+- `check.sh`: 18 PASS and 1 FAIL (SC-1c, not approved, as expected).
+
+### Needs Yahya
+
+1. The spiral's speed. It keeps the round-4 step (2.5s), but a step now carries a word a whole word-length along the path, about 80 degrees per 2.5s. The outer words, near the page edges, move noticeably faster than the round-4 rings did; the inner ones are slow. Judge from the sequence `seq-1440.png`; slower (for example 4s per step) is one number.
+2. "the words in the center": the words now wind into the centre and vanish there. The poster also has one small still word at the very centre. Add a small static "say hi" at the core?
+3. The About rings at 22% (recommended), or brighter?
+4. The round-3 defaults (grid lines, micro-text wording, "say hi" case, preview columns, Experience title, crop on one page) still stand until you say otherwise.
