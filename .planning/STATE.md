@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-04-PLAN.md
-last_updated: "2026-11-07T15:14:01.743Z"
+stopped_at: Completed 01-06-PLAN.md
+last_updated: "2026-11-07T15:30:52.228Z"
 last_activity: 2026-11-07
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 8
-  completed_plans: 5
-  percent: 63
+  completed_plans: 6
+  percent: 75
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-11-06)
 ## Current Position
 
 Phase: 01 (design-gate) — EXECUTING
-Plan: 6 of 8
+Plan: 7 of 8
 Status: Ready to execute
 Last activity: 2026-11-07
 
-Progress: [██████░░░░] 63%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
@@ -57,6 +57,7 @@ Progress: [██████░░░░] 63%
 | Phase 01 P03 | 5 min | 2 tasks | 5 files |
 | Phase 01 P05 | 3 min | 3 tasks | 1 files |
 | Phase 01 P04 | 12 min | 3 tasks | 33 files |
+| Phase 01 P06 | 13 min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,8 @@ Recent decisions affecting current work:
 - [Phase 1 P05]: Font: Instrument Sans (OFL), display weight 700, wdth 75 for YAHYA and Display words (body wdth 100), YAHYA tracking -0.045em, Display tracking -0.05em; confirmed by Yahya 2026-11-07 (replaces Hanken Grotesk)
 - [Phase 1 P04]: Public resume re-rendered read-only from JobOps resume JSON (ultra-compact Typst); no phone, no contest-platform bullet, Author Yahya Hallani
 - [Phase 1 P04]: AG logo not used; Atlantis = 2-3 greyscale screenshots + repo link; CCC 75/75 a regular line (Claude recommendations; Yahya may override at 01-07)
+- [Phase 1 P06]: Instrument Sans --yahya-fit is 2.188 (ink-accurate; 2.155 counted the trailing letter-spacing), and split hero letters restore the YA kern pair (-0.063em) by hand
+- [Phase 1 P06]: v7: Experience 6/6 split; current rail name set vertically in the rail column; phone Index uses a stacked section list instead of per-letter captions
 
 ### Pending Todos
 
@@ -99,6 +102,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-07T15:14:01.727Z
-Stopped at: Completed 01-04-PLAN.md
+Last session: 2026-11-07T15:30:52.209Z
+Stopped at: Completed 01-06-PLAN.md
 Resume file: None
