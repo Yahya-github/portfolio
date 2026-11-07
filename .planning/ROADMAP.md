@@ -62,7 +62,7 @@ Plans:
 **Requirements**: DSGN-01, DSGN-02, DSGN-06, CONT-01, CONT-09, LTR-01, LTR-02, A11Y-02, A11Y-03, A11Y-05
 **Success Criteria** (what must be TRUE):
   1. Visitor sees a black ground, white type in one sans family on a modular scale and the 12-column grid, with the green accent used only for emphasis, and no ornament anywhere
-  2. The hero shows YAHYA across the page with a numbered caption under each letter, plus a role line and one proof line that can be read with no interaction; the giant letters do not shift when the font loads
+  2. The hero shows YAHYA across the page with a numbered caption under each letter, plus a role line that can be read with no interaction; the giant letters do not shift when the font loads
   3. With JavaScript disabled, all page text is present and clicking any letter (Y Achievements, A Projects, H Experience, Y About, A Say hi) reaches that page's own route
   4. A keyboard user's first Tab reveals a skip link, and every control shows a visible focus state
   5. An automated contrast check passes WCAG AA for every text token on the dark ground (no grey text darker than #8a8a8a), and all site text comes from typed data files
@@ -98,14 +98,14 @@ Plans:
 ### Phase 6: Page Compositions and Content
 **Goal**: Each of the six pages carries its own composition and real content, so a recruiter can see the record, the projects and how to reach Yahya on any screen, desktop or phone
 **Depends on**: Phase 5
-**Requirements**: DSGN-03, CONT-02, CONT-03, CONT-04, CONT-05, CONT-07, CONT-08, CONT-10, CONT-11, EXP-02
+**Requirements**: DSGN-03, CONT-02, CONT-03, CONT-04, CONT-05, CONT-07, CONT-08, CONT-10, CONT-11, CONT-12, EXP-02
 **Success Criteria** (what must be TRUE):
   1. Achievements shows 75/75 with "Canadian Computing Competition, perfect score" and the four first places as one typographic list, readable at once
   2. Projects gives Facturo the most space and links to a Facturo deep-dive page (problem, what was built, result, screenshots, links); Atlantis, CRC problems, robot firmware and Showdown AI each show problem, role, result and links
   3. Experience shows Work and Involvement; Say hi offers email, LinkedIn, GitHub and Resume (PDF); the resume and contact can be reached from every page
   4. No two of the six pages share a layout, side by side, each matching its approved composition from Phase 1
   5. On a phone in portrait every page has a designed layout and swipes to the next; an optional, never-blocking hint says landscape shows the full posters
-  6. Hovering or focusing an Achievements line shows its proof photo and one line inside the viewport, and the DIRO and game-competition lines open their articles; Facturo plays as a pausable walkthrough of its screenshots (a stepper under reduced motion); the About portrait shows its true colours on hover or tap
+  6. Hovering or focusing an Achievements line shows its proof photo and one line inside the viewport, and the DIRO and game-competition lines open their articles; Facturo plays as a pausable walkthrough of its screenshots that always resumes after hover (a stepper under reduced motion); the About portrait and the Experience organisation marks show their true colours on hover or tap
 **Plans**: TBD
 **UI hint**: yes
 
