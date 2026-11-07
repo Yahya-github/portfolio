@@ -463,7 +463,7 @@
       nx.textContent = n < N - 1 ? 'Next, ' + names[n + 1].replace(/^\d+ /, '') : 'Back to the start';
       if (!instant) live.textContent = names[n].replace(/^\d+ /, '') + ', page ' + (n + 1) + ' of ' + N;
       if (history.replaceState) history.replaceState(null, '', n ? '#p' + n : location.pathname + location.search);
-      if (n !== PROJ) pointerIn = false;
+      if (n !== PROJ) { overReel = onFrame = onCtl = false; }
       reelSync();
       setTimeout(function () { locked = false; quietUntil = performance.now() + 180; layoutBox(); }, instant ? 50 : DUR_PAGE + 50);
     }
@@ -591,22 +591,39 @@
     // One clock: the current frame's push-in animation. Its finish advances the reel; pausing is Animation.pause(), and
     // resuming continues the same frame from where it stopped. running() is the single source of truth and reelSync()
     // applies it; every input only updates its own flag (or nothing) and calls reelSync().
-    // Pauses while the pointer is over the block, while keyboard focus (focus-visible) is inside it, on the Pause control,
+    // Pauses while the pointer is over the visible frame or a control, while keyboard focus (focus-visible) is on the frame
+    // or a control, on the Pause control,
     // off the Projects page, when scrolled out of view and when the tab is hidden. Under reduced motion there is no
     // auto-advance: Previous and Next step through the frames.
     // v7 bug (Yahya 2026-11-07, "sometimes it freezes when you pass and remove your cursor"): hover and focus shared one
     // flag, and pointerleave set it to "focus is inside". A mouse click on Pause, Play, Previous or Next leaves focus on
     // that button, so after the pointer left the reel stayed paused for good. Hover and keyboard focus are now separate,
     // and a mouse-focused button does not hold the pause.
+    // v7 bug (Yahya 2026-11-07, round 2, "the hitbox of the showcase is too big that's why it was stopping for no reason"):
+    // the hover listeners sat on .lead, the whole cols 1-8 block (frame, controls, heading, two paragraphs, link and its
+    // bottom padding), 882x748px at 1440 against a 882x426px frame. Hover is now tested against the visible frame only
+    // (the reel box; for a portrait frame the picture inside it, which is centred and narrower) plus the three buttons.
     var reel = document.getElementById('reel'), frames = [].slice.call(reel.querySelectorAll('img')), lead = reel.parentNode;
     var rp = document.getElementById('rp'), rcnt = document.getElementById('rcnt');
     var FRAME_MS = 5200, PUSH = ['scale(1.06) translate(-1.5%, -1%)', 'scale(1.06) translate(0, -1.5%)', 'scale(1.06) translate(-1%, 0)'];
-    var fi = 0, anim = null, seq = 0, userPaused = false, pointerIn = false, inView = true, PROJ = 2;
+    var fi = 0, anim = null, seq = 0, userPaused = false, inView = true, PROJ = 2;
+    var ctlBtns = [rp, document.getElementById('rprev'), document.getElementById('rnext')];
+    var overReel = false, px = 0, py = 0, onFrame = false, onCtl = false;
     // portrait frames (the phone screen) are shown whole and centred, and push in around their centre
     frames.forEach(function (f) { if (+f.getAttribute('height') > +f.getAttribute('width')) f.classList.add('tall'); });
     function load(i) { var f = frames[i]; if (f && f.dataset.src) { f.src = f.dataset.src; f.removeAttribute('data-src'); } return f; }
-    function keyFocusIn() { var a = document.activeElement; return !!a && lead.contains(a) && a.matches(':focus-visible'); }
-    function running() { return !reduce && !userPaused && !pointerIn && !keyFocusIn() && inView && page === PROJ && !document.hidden; }
+    function keyFocusIn() { var a = document.activeElement; return !!a && (a === reel || ctlBtns.indexOf(a) >= 0) && a.matches(':focus-visible'); }
+    function running() { return !reduce && !userPaused && !onFrame && !onCtl && !keyFocusIn() && inView && page === PROJ && !document.hidden; }
+    // the visible frame: the reel box, or for a portrait frame (object-fit: contain) its picture at the current push-in scale
+    function frameBox() {
+      var r = reel.getBoundingClientRect(), f = frames[fi];
+      if (!f.classList.contains('tall')) return r;
+      var iw = +f.getAttribute('width'), ih = +f.getAttribute('height'), k = Math.min(r.width / iw, r.height / ih);
+      var t = getComputedStyle(f).transform, sc = t && t !== 'none' ? new DOMMatrixReadOnly(t).a : 1, w = iw * k * sc, h = ih * k * sc;
+      return { left: Math.max(r.left, r.left + (r.width - w) / 2), right: Math.min(r.right, r.left + (r.width + w) / 2),
+               top: Math.max(r.top, r.top + (r.height - h) / 2), bottom: Math.min(r.bottom, r.top + (r.height + h) / 2) };
+    }
+    function hit() { var b = overReel && frameBox(); onFrame = !!b && px >= b.left && px < b.right && py >= b.top && py < b.bottom; }
     function reelSync() {
       if (!anim) return;
       if (running()) { if (anim.playState === 'paused') anim.play(); }
@@ -624,6 +641,7 @@
         rcnt.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(frames.length).padStart(2, '0') + ', ' + next.dataset.name;
         var old = anim;   /* the outgoing frame keeps its push-in while it fades, then resets; it can no longer advance the reel */
         if (old) { old.onfinish = null; setTimeout(function () { old.cancel(); }, 1000); }
+        hit();   /* the new frame may be a different shape under a still pointer */
         if (reduce) { anim = null; return; }
         var push = next.classList.contains('tall') ? 'scale(1.06)' : PUSH[i % PUSH.length];
         anim = next.animate([{ transform: 'none' }, { transform: push }], { duration: FRAME_MS, easing: 'linear', fill: 'forwards' });
@@ -634,8 +652,13 @@
     rp.addEventListener('click', function () { userPaused = !userPaused; rp.setAttribute('aria-pressed', String(userPaused)); rp.textContent = userPaused ? 'Play' : 'Pause'; reelSync(); });
     document.getElementById('rprev').addEventListener('click', function () { rcnt.setAttribute('aria-live', 'polite'); show(fi - 1); });
     document.getElementById('rnext').addEventListener('click', function () { rcnt.setAttribute('aria-live', 'polite'); show(fi + 1); });
-    lead.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') { pointerIn = true; reelSync(); } });
-    lead.addEventListener('pointerleave', function () { pointerIn = false; reelSync(); });
+    function reelPointer(e) { if (e.pointerType === 'touch') return; overReel = true; px = e.clientX; py = e.clientY; hit(); reelSync(); }
+    reel.addEventListener('pointerenter', reelPointer); reel.addEventListener('pointermove', reelPointer);
+    reel.addEventListener('pointerleave', function () { overReel = false; onFrame = false; reelSync(); });
+    ctlBtns.forEach(function (b) {
+      b.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') { onCtl = true; reelSync(); } });
+      b.addEventListener('pointerleave', function () { onCtl = false; reelSync(); });
+    });
     lead.addEventListener('focusin', reelSync);
     lead.addEventListener('focusout', function () { setTimeout(reelSync, 0); });   /* activeElement settles after focusout */
     addEventListener('keydown', function () { setTimeout(reelSync, 0); });   /* a key press can make a mouse-focused button focus-visible */
