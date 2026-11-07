@@ -9,7 +9,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [ ] **DSGN-02**: All text uses one sans family on a modular type scale and a 12-column grid (final family chosen in the design phase)
 - [ ] **DSGN-03**: Each of the six pages has its own distinct composition on the shared grid (no two pages share the same layout)
 - [ ] **DSGN-04**: Every motion follows one rule: movement on the horizontal axis, fast and decisive, no bounce
-- [ ] **DSGN-05**: Real photos and screenshots of Yahya's work are shown with one plain treatment: greyscale, hard crops on the 12-column grid, no filters or effects (his face stays clearly visible); exceptions that show their own true colours on hover or tap (instant under reduced motion), never as an accent use: the About portrait (also on keyboard press) the organisation marks on Experience (mono by default) the Facturo walkthrough frames (colour while the visitor holds it paused) and the Achievements hover and focus previews (inline phone thumbnails stay greyscale)
+- [ ] **DSGN-05**: Real photos and screenshots of Yahya's work are shown with one plain treatment: greyscale, hard crops on the 12-column grid, no filters or effects (his face stays clearly visible); exceptions that show their own true colours on hover or tap (instant under reduced motion), never as an accent use: the About portrait (also on keyboard press) the organisation marks on Experience (mono by default) the Facturo walkthrough frames (colour while the visitor holds it paused) and the Achievements and Projects (MAME) hover and focus previews (inline phone thumbnails stay greyscale)
 - [ ] **DSGN-06**: No ornament: no cartoon illustrations, pixel stickers, decorative HUD marks or skill bars (the real organisation marks on Experience identify where Yahya worked and took part; they are content, not ornament)
 
 ### Paging (NAV)
@@ -32,7 +32,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 ### Content (CONT)
 - [ ] **CONT-01**: Hero shows a role line beside the name, readable without any interaction (the proof line was dropped by Yahya, 2026-11-07)
 - [ ] **CONT-02**: Achievements shows 75/75 with "Canadian Computing Competition, perfect score" in one typographic list with the four first places, at the same weight as the other results
-- [ ] **CONT-03**: Projects presents Facturo as the flagship with the most space; the other four show problem, role, result and links
+- [ ] **CONT-03**: Projects presents Facturo as the flagship with the most space; the other five (MAME Tool Rental first, then Atlantis, CRC problems, Robot firmware, Showdown AI) show problem, role, result and links; the MAME row previews its admin overview screenshot on hover and keyboard focus
 - [ ] **CONT-04**: Facturo has a deep-dive page (problem, what was built, result, screenshots, links)
 - [ ] **CONT-05**: Experience shows Work and Involvement
 - [ ] **CONT-06**: About is written in Yahya's own voice (personality lives here)
@@ -41,7 +41,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [ ] **CONT-09**: All site text lives in typed data files; only verified facts ship
 - [ ] **CONT-10**: Each Achievements line previews its proof on hover and keyboard focus only, never held by a mouse click (a small photo in its colours and one line, kept inside the viewport); a line with a public source (an article or a post) opens it in a new tab; on touch the thumbnail shows inline under its line, in greyscale; a result with no photo or public source shows a description only
 - [ ] **CONT-11**: Projects shows Facturo as a walkthrough of its greyscale screenshots (slow push-in and crossfade, transform and opacity only, frames lazy-loaded) with a visible pause control; it pauses on hover and keyboard focus (over the visible frame and its controls only), off-page and offscreen and always resumes once none of these holds (a mouse-clicked control does not hold it), while the visitor holds it paused (hover, keyboard focus, or a tap on touch) the current frame shows its colour original, portrait screenshots are shown whole and centred, and it becomes a manual previous/next stepper under reduced motion
-- [ ] **CONT-12**: Experience rows show the real mark of their organisation (Mercor, Facturo, CRC, McGill Robotics, Google Developer Groups, ICPC) small and flush with the column edge, in one mono colour by default, with its true colours on row hover or tap; marks are decorative (the text names the organisation) and only attach to entries that exist
+- [ ] **CONT-12**: Experience rows show the real mark of their organisation (Mercor, Facturo, CRC, McGill Robotics, Google Developer Groups, ICPC) small and flush with the column edge, in one mono colour by default, with its true colours on row hover or tap; marks are decorative (the text names the organisation) and only attach to entries that exist; the MAME mark follows the same rule on its Projects row; an ended role shows its date range, never "since"
 
 ### Interactive proof (PROOF)
 - [ ] **PROOF-01**: Visitor can play Atlantis in the browser on its project page (single-thread Godot web export, loaded only on that page, with a screenshot and link fallback if too heavy; asset licences and teammates' consent checked first)
