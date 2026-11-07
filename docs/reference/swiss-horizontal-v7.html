@@ -171,7 +171,7 @@
   @media (hover: none), (max-width: 820px) {   /* no hover: the thumbnail sits inline under its line */
     .pv { position: static; width: auto; margin-top: var(--space-sm); grid-column: 3 / 11; opacity: 1; transform: none; }
     .pv img { width: min(160px, 40vw); }
-    .pv.txt, .pv.dup { display: none; }   /* a text-only preview, or the same photo twice in a row, would only repeat */
+    .pv.txt { display: none; }   /* a text-only preview would only repeat the line */
     .ach { overflow-y: auto; }
   }
 
@@ -278,7 +278,7 @@
 <main class="track" id="track" tabindex="-1">
   <section class="page hero" data-name="Index" aria-label="Introduction">
     <div class="grid">
-      <div class="intro"><p>Software Engineering at McGill</p><p>Perfect score, 75/75, at the 2026 Canadian Computing Competition.</p></div>
+      <div class="intro"><p>Software Engineering at McGill</p></div>
       <div class="meta lab dim"><span>Software engineering</span><span>McGill University</span><span>Montréal, Québec</span></div>
       <nav class="capsm lab" aria-label="Sections"><a href="#p1" data-go="1"><span>01</span> Achievements</a><a href="#p2" data-go="2"><span>02</span> Projects</a><a href="#p3" data-go="3"><span>03</span> Experience</a><a href="#p4" data-go="4"><span>04</span> About</a><a href="#p5" data-go="5"><span>05</span> Say hi</a></nav>
     </div>
@@ -303,9 +303,9 @@
         <li><a class="row" href="https://www.neomedia.com/vaudreuil-soulanges/actualites/education/657299/l-intercollegial-de-creation-de-jeux-video-au-cegep-de-valleyfield" target="_blank" rel="noopener" data-tag="Read the article"><span class="hd rk">1st</span><span class="hd res">Intercollegiate Video Game Creation Competition</span><span class="det dim">With Atlantis, a 2D game in Godot 4, 2026</span></a>
           <figure class="pv lab"><img src="../material/photos/game-competition-2026-team-grey.jpg" alt="The Atlantis team at the intercollegiate competition, Cégep de Valleyfield" width="1920" height="1246" loading="lazy" decoding="async"><figcaption>The Atlantis team at Cégep de Valleyfield<br><span class="dim">Article, neomedia.com</span></figcaption></figure></li>
         <li><div class="row" tabindex="0"><span class="hd rk">1st</span><span class="hd res">Canadian Robotics Competition, robot competition</span><span class="det dim">Matches against the other teams' robots, 2026</span></div>
-          <figure class="pv lab"><img src="../material/photos/crc-2026-trophies-grey.jpg" alt="The team with its CRC 2026 trophies" width="1440" height="753" loading="lazy" decoding="async"><figcaption>The team with its 2026 trophies<br><span class="dim">Photo, CRC 2026</span></figcaption></figure></li>
+          <figure class="pv lab"><img src="../material/photos/club-of-the-year-award-grey.jpg" alt="The team on stage with its school's Club of the Year award" width="2324" height="1574" loading="lazy" decoding="async"><figcaption>Our school's Club of the Year<br><span class="dim">Photo, Collège André-Grasset</span></figcaption></figure></li>
         <li><div class="row" tabindex="0"><span class="hd rk">1st, 2nd</span><span class="hd res">Canadian Robotics Competition, programming</span><span class="det dim">1st in Programming in 2025, 2nd in Senior Programming in 2026</span></div>
-          <figure class="pv dup lab" aria-hidden="true"><img src="../material/photos/crc-2026-trophies-grey.jpg" alt="" width="1440" height="753" loading="lazy" decoding="async"><figcaption>The team with its 2026 trophies<br><span class="dim">Photo, CRC 2026</span></figcaption></figure></li>
+          <figure class="pv lab"><img src="../material/photos/crc-2026-trophies-grey.jpg" alt="The team with its CRC 2026 trophies" width="1440" height="753" loading="lazy" decoding="async"><figcaption>The team with its 2026 trophies<br><span class="dim">Photo, CRC 2026</span></figcaption></figure></li>
       </ul>
     </div>
   </section>
