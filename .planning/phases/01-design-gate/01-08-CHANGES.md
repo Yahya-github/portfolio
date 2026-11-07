@@ -537,8 +537,8 @@ Facts used for MAME come only from the orchestrator's check of the private repo 
 | 5 | MAME mark on the Projects row | Done | a0b7629, 67836ba |
 | 6 | Round-5 answers recorded | Done | 4876643 |
 | 7 | REQUIREMENTS (CONT-03, CONT-12, DSGN-05) and PROJECT.md project list | Updated | bfd9f9d |
-| 8 | Micro-text: the section name, repeating and scrolling; one global Pause motion in the footer | Done | 799fcb2, see the docs commit |
-| 9 | Round-3 answers recorded (grid lines, Experience title, crop kept) | Done | see the docs commit |
+| 8 | Micro-text: the section name, repeating and scrolling; one global Pause motion in the footer | Done | 799fcb2, 5d2844b |
+| 9 | Round-3 answers recorded (grid lines, Experience title, crop kept) | Done | 5d2844b |
 
 **1. Projects row.**
 - MAME Tool Rental is the first compact row (02.2; the others move to 02.3 to 02.6), because it is shipped and in use.
