@@ -23,7 +23,7 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 - [ ] Leaving the hero, the five letters shrink and glide into a vertical rail on the left that stays as the navigation, current section in the accent colour
 - [ ] Achievements: a static typographic 75/75 (Canadian Computing Competition perfect score), plus the four first places (layout variant chosen in Phase 1)
 - [ ] Custom cursor that sits exactly on the pointer (EXP-03), form chosen in Phase 1
-- [ ] Projects: Facturo, Atlantis, CRC problems, robot firmware, Showdown AI
+- [ ] Projects: Facturo, MAME Tool Rental, Atlantis, CRC problems, robot firmware, Showdown AI
 - [ ] Experience: Work and Involvement lists
 - [ ] About ("Two habits") and Say hi (email, LinkedIn, GitHub)
 - [ ] Footer pager (00 / 05), "Next" control, progress bar
