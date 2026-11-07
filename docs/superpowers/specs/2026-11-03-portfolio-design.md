@@ -1,6 +1,6 @@
 # Portfolio website: design
 
-Status: DRAFT for Yahya's approval (revision 5: dark Swiss horizontal). Nothing is built. Date: 2026-11-07 (Phase 1 picks recorded; review change rounds 1 and 2 applied).
+Status: DRAFT for Yahya's approval (revision 5: dark Swiss horizontal). Nothing is built. Date: 2026-11-07 (Phase 1 picks recorded; review change rounds 1, 2 and 3 applied).
 Owner: Yahya Hallani. Domain: `yahya-h.dev` (Yahya buys it before the first deploy). Host: Vercel.
 
 Visual contract: `.planning/phases/01-design-gate/01-UI-SPEC.md` holds every token value; this doc records decisions, the trial results and the page compositions. Where they disagree, this doc wins after approval. This revision overrides the `portfolio-design` skill and the stack notes in `CLAUDE.md` wherever they disagree.
@@ -49,13 +49,21 @@ Anti-goals (any of these makes the site a failure even if it technically works):
 
 ### 3.1 References
 
-Design inspiration and a grid guide sent by Yahya on 2026-11-07 (change round 2), recorded verbatim. Pending discussion with Yahya: nothing in this doc or v7 is changed by them yet.
+Design inspiration and a grid guide sent by Yahya on 2026-11-07 (change round 2), recorded verbatim. In change round 3 (2026-11-07) Yahya picked four devices from them (his multi-select answer, verbatim labels: "Word frame on Say hi (Recommended), Letter-pair titles (Recommended), Rotated micro-text + grid lines, Edge-cropped type"); section 4.2 defines them and section 7 places them.
 
 - https://www.behance.net/gallery/192265061/Swiss-Typography-Wallpaper-Pack/modules/1087550045
 - https://www.behance.net/gallery/239485669/Modern-Swiss-Typography-Poster-System-Exploratio
 - https://www.behance.net/gallery/221014645/50-Swiss-Style-Posters/modules/1260764327
 - [Image #11] (an image pasted by Yahya in the review chat; not saved to the repo)
 - Grid guide: https://swissgrid.posterhouse.org/
+
+What each reference gave the site:
+
+- Modern Swiss Typography, Poster System Exploration: the letter-pair stacks (MO/DE/RN, TY/PO/GR/AP/HY) became the letter-pair titles; its vertical "typography" micro-text became the rotated micro-text.
+- 50 Swiss Style Posters: FRAMEWORK rotated along both edges, and letters cut by the poster edge, became the edge-cropped type.
+- Swiss Typography Wallpaper Pack: the fine grid lines visible behind the type became the Index grid lines.
+- Image #11, the "universe" poster: one word repeated round all four edges, each edge rotated a quarter turn further, became the Say hi word frame. Its depth tunnel of fragments was not taken (see section 4.2).
+- swissgrid.posterhouse.org: the site keeps the strict Zürich grid. The Basel looseness enters only through the one cropped number on Experience, and the grid itself becomes visible on the Index.
 
 ## 4. Visual system
 
@@ -65,7 +73,7 @@ Every value lives in `.planning/phases/01-design-gate/01-UI-SPEC.md`; Phases 3 t
 - **The accent is reserved for exactly four things:** (1) the current section's rail letter, always paired with its visible numbered name and `aria-current="page"`, and derived from the current page alone, so exactly one rail letter is ever green; (2) the hover and focus colour of every interactive text, except the rail letters, which never take the accent on hover or focus (hover shows as the cursor box, focus as an ink ring); (3) the focus ring, 2px solid with a 4px offset (ink on rail letters); (4) the `75/75` numeral on Achievements. The cursor that won is drawn in ink, so the fifth slot it held in reserve is gone. Never body text, backgrounds, fills, hairlines, the progress bar, photos, the cursor or the footer counter.
 - **Grid:** 12 columns, 24px gutter and margin on desktop and tablet, 16px on phones. Nested blocks use `subgrid` so everything lands on the master columns. Every element starts and ends on a column line. Text is flush left, ragged right; nothing is centred.
 - **Type roles:** Label 12px / Body 16px / Heading 24px / Display `clamp(64px, 9vw, 168px)` / Poster for YAHYA only, `calc(var(--grid-width) / var(--yahya-fit))` capped against `100svh` so it fits short screens. Exactly 2 weights ship. No italics anywhere (D-05). Counters and `75/75` use tabular figures.
-- **No ornament:** no icons, no illustrations, no background visuals (D-26, D-29). Rank is set as type. The real organisation marks on the Experience rows (section 7, 03 Experience) are content, not ornament: they identify where Yahya worked and took part.
+- **No ornament:** no icons, no illustrations, no background visuals (D-26, D-29). Rank is set as type. The real organisation marks on the Experience rows (section 7, 03 Experience) are content, not ornament: they identify where Yahya worked and took part. The four round-3 devices (section 4.2) are made of the site's own type and grid only, never of pictures or shapes, and they are the only decorative elements; each is `aria-hidden` where it repeats text.
 - **Photos:** pre-converted greyscale files (not a CSS filter), hard-cropped to column edges, no radius, border, shadow or effect (DSGN-05). Four deliberate exceptions show their own true colours on interaction: the About portrait crossfades to a true-colour twin (section 7, 04 About), the Experience organisation marks rest in one mono colour and crossfade to their brand colours (section 7, 03 Experience), the Facturo walkthrough crossfades its current screenshot to the colour original while it is paused for the visitor (section 7, 02 Projects), and the Achievements proof previews, which only appear on hover or keyboard focus, show the colour photo (section 7, 01 Achievements). Anything on screen at rest stays greyscale. Those colours are the photos', the marks' and the screenshots' own, never the accent, and they are not accent uses. Facturo's brand green inside its screenshots is content, not the accent.
 
 ### 4.1 Font
@@ -99,6 +107,17 @@ Criteria the trial used (D-03 to D-07):
 - At most 2 rounds; round 2 uses 3 new faces picked from feedback (D-08). Round 2 did not run.
 
 Also tried: Inter Tight, Sofia Sans Extra Condensed with Sofia Sans, Schibsted Grotesk, Hanken Grotesk (confirmed first, then replaced by Instrument Sans the same day), and trial files of Söhne and Suisse Int'l (never committed); see docs/reference/font-trial.html.
+
+### 4.2 Typographic devices (change round 3)
+
+Chosen by Yahya on 2026-11-07 from his references (section 3.1). None of them adds a colour: they use ink, dim and the hairline grey, and the accent stays reserved for its four uses. Only the grid lines move, by opacity.
+
+1. **Letter-pair titles.** A page title is set in capitals and broken into rows of two or three letters, each row one tight word, flush left on the title's first column line, line height 0.82 (the MO/DE/RN stacks). Used on Achievements (AC / HI / EV / EM / EN / TS, cols 1-2) and About (TWO / HAB / ITS, cols 5-8). A first try put each letter in its own grid column; the pairs then read as two vertical columns of letters instead of pairs, so the letters of a row stay together. The heading's accessible name is the full word in visually hidden text; the visible rows are `aria-hidden`. Experience has no "Experience" title (its Display group is the Work and Involvement head row) and Projects' Display word is the project name "Facturo", so neither is split; YAHYA on the Index is never split. Phones: About keeps TWO / HAB / ITS (it fits); Achievements falls back to the one-line title "Achievements" in title case at the 64px floor (290px of 322px), because six rows on a scrolling phone page push the list a screen down.
+2. **Word frame (Say hi).** "say hi", lowercase, Display weight and width, repeated round all four edges of the page's content area like the "universe" poster: top at 0 degrees, right at 90, bottom at 180, left at 270, so the letter tops face out, each edge starting where the previous one ends (a pinwheel). The band is exactly one grid column thick, so the frame stands on cols 1 and 12 and on two rows of the same thickness. Each edge holds as many words as fit with at least a third of a word between them, and the leftover is shared out equally, the gap at the corner included. The frame is `aria-hidden` and takes no pointer events; the links are normal links inside it. It is static, so reduced motion changes nothing. Phones (390): the side edges would leave about 250px inside, narrower than "Resume (PDF)" at the 64px floor (about 284px), so phones keep the top and bottom edges only, with a 44px band. The poster's depth tunnel of fragments was not added: next to four giant links it turned the page into noise, and it would be the only non-type shape on the site.
+3. **Edge-cropped type (Basel tension).** On Experience only, the page number "03" in Display weight and width, sized to the free height under the Involvement table (set at about 460px at 1440x900, digits about 330px tall; about 280px at 1366x768), sits on the footer line in cols 9-12 and is cut by the page's right edge through the "3", which stays readable. The page clips it with `overflow: clip` (not `hidden`, which focus could still scroll), so there is never horizontal scroll. It never touches YAHYA, a link, body text or the rail (it sits at the opposite edge). Hidden on phones, where the page scrolls. One page, not two: the other pages have no free area big enough that a crop would not collide with content or a preview.
+4. **Rotated micro-text and grid lines.**
+   - (a) Pages 01-05 carry one Label line, "Montréal, Québec, 2026", in dim, set vertically (reading top to bottom) in the right page margin, top-aligned under the header. The left margin is the rail's, and the rail's own vertical section name stays as it was. It is `aria-hidden` (the header and the Index already say it). Hidden on phones, where the margin is 16px.
+   - (b) The Index draws its 12 columns as 1px hairlines (both edges of every column, in the hairline grey `#2e2e2e`) behind the type, at 45% opacity at rest (about `#191919` on the ground). They come up to full hairline grey over 400ms while the pointer is on a YAHYA letter or a letter has keyboard focus, and go back after (instant under reduced motion). Choice: always on, faint, rather than only on hover. In the screenshots the faint lines show the strict grid the whole site stands on without competing with any text, and hidden lines would be missed by most visitors. Body text contrast is unchanged: the lines sit behind the text, and ink on the brightest line is still 11.9:1. Phones draw one line per column start instead of two per gutter. Yahya can switch this to hover-only.
 
 ## 5. Motion
 
@@ -138,6 +157,7 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 - Columns (desktop): role line cols 1-4 at the top; meta labels (Software engineering, McGill University, Montréal, Québec) cols 7-12 at the top, three-up; YAHYA across cols 1-12, its bottom edge 96px above the footer, captions beneath.
 - Dominant element: the giant YAHYA.
 - Display group: YAHYA (Poster role).
+- Grid lines (round 3, section 4.2): the 12 columns drawn as faint hairlines behind the type, brighter while a YAHYA letter is hovered or focused.
 - Phone portrait intent: YAHYA fitted to the phone width, captions stacked number over name, the role line above.
 - Content: the role line is the plain identity "Software Engineering at McGill". There is no proof line: Yahya dropped the CCC line (2026-11-07, "ccc-line: drop"), and nothing replaces it; the top left holds the role line alone, balanced by the meta labels on the right.
 
@@ -145,19 +165,19 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 
 - Poster device: Typographic list, no rules
 - Chosen: variant (b), by Yahya, 2026-11-07, in v7 (D-11). CONT-02 is rewritten to match.
-- Columns (desktop): the title "Achievements" in Display across cols 1-12 at the top, then five unruled lines in cols 3-12 on a subgrid (rank cols 3-4, result cols 5-8 in Heading, detail cols 9-12 in dim Body). The first line is "75/75, Canadian Computing Competition, perfect score", with the numeral in the accent and at the same weight as the other ranks.
-- Proof previews (Yahya, 2026-11-07): hovering a line, or focusing it with the keyboard, shows a small photo in its own colours and one Label line in the empty cols 1-2, top-aligned with the line and nudged up so it never leaves the viewport. A line with a public source (an article or a post) is a link that opens it in a new tab (`rel="noopener"`):
+- Columns (desktop, change round 3): the title is a letter-pair stack, AC / HI / EV / EM / EN / TS, in Display weight and width in cols 1-2, sized to fill the page height (6 rows at line height 0.82, at most the Display size). The five unruled lines sit beside it in cols 3-10 on a subgrid, top-aligned with the title (rank cols 3-4, result cols 5-7 in Heading, detail cols 8-10 in dim Body). The first line is "75/75, Canadian Computing Competition, perfect score", with the numeral in the accent and at the same weight as the other ranks.
+- Proof previews (Yahya, 2026-11-07): hovering a line, or focusing it with the keyboard, shows a small photo in its own colours and one Label line in the empty cols 11-12 (cols 1-2 until round 3, which gave them to the title), top-aligned with the line and nudged up so it never leaves the viewport. A line with a public source (an article or a post) is a link that opens it in a new tab (`rel="noopener"`):
   - DIRO Hackathon: the diro.umontreal.ca article; photo `photos/diro-hackathon-2026-award-grey.jpg` ("The winners with their certificates").
   - Intercollegiate Video Game Creation Competition: the neomedia.com article, which names Atlantis and the Collège André-Grasset team (the cegepvalleyfield.ca post is a photo post with a 14-word body); photo `photos/game-competition-2026-team-grey.jpg`.
-  - Canadian Robotics Competition, robot competition: the Instagram post https://www.instagram.com/p/DYPS2bGOAQy/ (Yahya, 2026-11-07); photo `photos/club-of-the-year-award-grey.jpg` ("Our school's Club of the Year"), because the team won thanks to the club (Yahya, 2026-11-07).
+  - Canadian Robotics Competition, robot competition: the Instagram post https://www.instagram.com/p/DYPS2bGOAQy/ (Yahya, 2026-11-07); photo `photos/club-of-the-year-award-grey.jpg` ("Our school's Club of the Year", source line "Post, instagram.com", alt "The team on stage with its school's Club of the Year award"), because the team won thanks to the club (Yahya, 2026-11-07). The caption and alt wording are agreed (Yahya, 2026-11-07, change round 3: "Club caption agreed").
   - Canadian Robotics Competition, programming: the Instagram post https://www.instagram.com/p/DWmZr18kTA3/ (Yahya, 2026-11-07); photo `photos/crc-2026-trophies-grey.jpg` ("The team with its 2026 trophies").
   - The two CRC lines are links to those posts, like the article lines; their tag reads "See the post" and the preview's source line reads "Post, instagram.com". No CRC article exists; the posts are the proof.
   - Canadian Computing Competition 75/75: a one-line description only, no photo and no link (no public proof exists). It is the only line that is not a link; it takes keyboard focus so its preview can still be seen.
-  Colour (Yahya, 2026-11-07, round 2: "photo preview with color preferably"): the hover and focus preview loads the colour original (`photos/<name>.jpg`, the file without `-grey`, metadata-stripped) through a `<picture>` source for hover-capable screens wider than 820px, so only one file is fetched. On touch screens (`hover: none`) and phones the thumbnail sits inline under its line in greyscale: it is on screen at rest, with no hover moment, so it keeps the photo rule. The linked lines stay normal links.
+  Colour (Yahya, 2026-11-07, round 2: "photo preview with color preferably"): the hover and focus preview loads the colour original (`photos/<name>.jpg`, the file without `-grey`, metadata-stripped) through a `<picture>` source for hover-capable screens wider than 820px, so only one file is fetched. On touch screens (`hover: none`) and phones the thumbnail sits inline under its line in greyscale: it is on screen at rest, with no hover moment, so it keeps the photo rule. Decided by Yahya (2026-11-07, change round 3: "Greyscale"), no longer a default. The linked lines stay normal links.
   Showing (v7 bug found by Yahya 2026-11-07, round 2: "clicking doesn't make the photo stay"): the preview shows on hover or keyboard focus (`:focus-visible`) only. It used `:focus-within`, and a line clicked with the mouse keeps focus while its source opens in a new tab, so the photo stayed on screen after coming back and moving away (the same cause as the round-1 walkthrough freeze). When the window loses focus the hover previews also go quiet until the pointer really moves again, so a stale hover on return does not bring the photo back.
-- Dominant element: the title above the list.
+- Dominant element: the title stack beside the list.
 - Display group: the title "Achievements".
-- Phone portrait intent: the title, then the lines stacked rank above result above detail, each with its thumbnail below (the 75/75 line has none; the two CRC lines show two different photos).
+- Phone portrait intent: the title on one line ("Achievements", title case; the letter-pair stack is desktop only), then the lines stacked rank above result above detail, each with its thumbnail below (the 75/75 line has none; the two CRC lines show two different photos).
 - Phone fit: the title "Achievements" at the 64px Display floor fits the 390px frame in Instrument Sans at wdth 75 (290px of 322px), so it stays Display on phones.
 - Content: "Canadian Computing Competition, perfect score" with `75/75` (2026), then the four first places: DIRO Hackathon 2026 (1st of 18 teams from 9 CEGEPs, $2,500 team scholarship); Intercollegiate Video Game Creation Competition 2026 (with Atlantis); Canadian Robotics Competition, robot competition, 1st in 2026 (matches against the other teams' robots); Canadian Robotics Competition, programming, 1st in Programming in 2025 and 2nd in Senior Programming in 2026. The 2026 1st place is the robot competition, not robot construction (Yahya, 2026-11-07). Rank is set as type ("1st", "2nd"), never as medals (D-20).
 
@@ -176,6 +196,7 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 - Poster device: Ruled two-column table
 - Columns (desktop): Work cols 1-6, Involvement cols 7-12, column heads in Display on one row, rows separated by hairlines: years in Label flush left on their own line, role in Heading, organisation in dim Body. Years and roles flush left (D-13).
 - Organisation marks (Yahya, 2026-11-07): a row whose organisation has a real mark shows it 28px tall, vertically centred in the row, its right edge on the column's right edge (col 6 for Work, col 12 for Involvement). Marks rest in one mono colour, the dim grey `#8e8e8e`, from pre-made mono files (not a CSS filter); hovering the row (fine pointer) or tapping it on touch crossfades to the brand colours over 400ms, instantly under reduced motion. Marks are decorative (empty alt); the text already names the organisation. They stay far smaller than the Display heads. Rows: Mercor, Facturo, CRC 2027 (Work); McGill Robotics, Google Developer Group at McGill, McGill Compete / ICPC (Involvement). Freelance has no mark. Treatment recommended by Claude in round 1; Yahya did not answer the round-1 questions, so these defaults stand (change round 2, 2026-11-07): marks dim grey with colour on hover or tap; the Facturo mark keeps its brand green (`#4ea672`) on hover, which is the mark's own colour and content, not the accent; the ICPC three-square mark stays on the McGill Compete / ICPC NENA row; the generic Google Developer Groups chevron stays on the GDG row. Yahya may still override. Files: `docs/material/logos/*-mark.*` and `*-mark-mono.*`.
+- Edge-cropped number (round 3, section 4.2): "03", sized to the free height under the Involvement table, sits on the footer line in cols 9-12 and is cut by the page's right edge. It is decorative (`aria-hidden`) and hidden on phones.
 - Display fit: "Involvement" at Display fits cols 7-12 at 1366 and 1440 in Instrument Sans (489px of 619px at 1366, 516px of 656px at 1440), so Work spans cols 1-6 and Involvement cols 7-12.
 - Dominant element: the ruled table.
 - Display group: the "Work" and "Involvement" head row.
@@ -186,10 +207,10 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 ### 04 About
 
 - Poster device: Photo as column, offset text
-- Columns (desktop): portrait cols 1-4, full height between the header and footer; "Two habits" in Display cols 5-12 at the top; text cols 8-12, bottom-aligned, lead paragraph in Heading at weight 400, the rest in Body.
+- Columns (desktop): portrait cols 1-4, full height between the header and footer; the title as a letter-group stack TWO / HAB / ITS (round 3, section 4.2) in Display, cols 5-8, at the top; text cols 8-12, bottom-aligned, lead paragraph in Heading at weight 400, the rest in Body.
 - Dominant element: the portrait.
-- Display group: "Two habits".
-- Phone portrait intent: portrait cropped to the top half, then the title, then the text.
+- Display group: "Two habits" (visible as TWO / HAB / ITS; its accessible name is "Two habits").
+- Phone portrait intent: portrait cropped to the top half, then the title (the same three rows), then the text.
 - Content: a real, recognisable greyscale portrait from `docs/material/portrait-devfest-2026-grey.jpg`, with the Google Developer Group backdrop and the lanyard kept (D-15, D-22). The lanyard text is readable; Yahya accepts it (2026-11-07: it is the Google Developer Group, "it can even be a plus"). Title "Two habits".
 - Crop: kept as is (Yahya, 2026-11-07: "portrait: ok"). The banner-free master (1512x1240) fills cols 1-4 with `object-fit: cover; object-position: 52% 10%`; no tighter pre-crop.
 - Alt text: "Yahya Hallani at DevFest Montreal 2026" (confirmed by Yahya, 2026-11-07).
@@ -197,19 +218,19 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 
 ### 05 Say hi
 
-- Poster device: Type as interface, stacked giant links
-- Columns (desktop): four Display lines in cols 1-9, bottom-anchored; cols 10-12 at the bottom hold the email address as a Label plus the copy status line.
-- Dominant element: the four lines.
-- Display group: the four lines.
-- Phone portrait intent: the four lines at phone Display size, full width.
+- Poster device: Word frame around stacked giant links (change round 3)
+- Columns (desktop): the "say hi" word frame (section 4.2) runs round the content area, 24px inside the header and footer, one grid column thick, so it stands on cols 1 and 12. Inside it, the four Display lines start on col 2 and are centred in the frame's height; their size is the Display size, or less if the frame's inside is too short for four lines (at 1366x768 they are 108px). The email address as a Label plus the copy status line sit inside the frame at the bottom of cols 9-11, flush left.
+- Dominant element: the four lines inside the frame.
+- Display group: the four lines. The frame is Display weight too but is decoration, `aria-hidden`.
+- Phone portrait intent: the frame's top and bottom edges only, the four lines at the 64px Display floor between them, full width, then the address.
 - Content: Email, LinkedIn, GitHub, Resume (PDF) (D-14). Clicking Email copies the address and the status reads "Copied {address}"; if copying fails it reads "Copy didn't work. The address is {address}, select it to copy." The `mailto:` href stays on the line, so visitors without JavaScript can still write.
 
 Composition rules:
 
-- Hairlines appear only on the Projects compact rows and Experience. Index, Achievements, About and Say hi have none.
-- The rail appears on pages 01-05 only, not on Index.
-- Every element starts and ends on a column line.
-- Everything is flush left; no centred text.
+- Hairlines appear only on the Projects compact rows and Experience. Index, Achievements, About and Say hi have none. The Index grid lines (section 4.2) are the one exception: they draw the grid itself, faintly, not rules between content.
+- The rail appears on pages 01-05 only, not on Index. The rotated micro-text uses the right margin, never the rail's column.
+- Every element starts and ends on a column line. The edge-cropped "03" starts on one and runs off the page edge on purpose.
+- Everything is flush left; no centred text. The Say hi frame's side edges are rotated, not centred, and the links inside it stay flush left on col 2.
 
 ## 8. Cursor
 
@@ -303,3 +324,7 @@ Still missing (copied from links.md):
 - The Facturo walkthrough as greyscale only: its frames now show their colour while paused for the visitor (2026-11-07, change round 2).
 - Greyscale Achievements hover previews: now the colour photos; inline phone thumbnails stay greyscale (2026-11-07, change round 2).
 - The two CRC Achievements lines as focusable non-links: they now link to Yahya's Instagram posts (2026-11-07, change round 2).
+- The Achievements title as one Display word across cols 1-12 above the list, and the list in cols 3-12 with its previews in cols 1-2: now the AC / HI / EV / EM / EN / TS stack in cols 1-2, the list in cols 3-10 and the previews in cols 11-12 (2026-11-07, change round 3).
+- "Two / habits" on two lines in cols 5-12: now TWO / HAB / ITS in cols 5-8 (2026-11-07, change round 3).
+- Say hi as four bottom-anchored lines in cols 1-9 with the address in cols 10-12: now inside the "say hi" word frame (2026-11-07, change round 3).
+- One letter per grid column for the letter-pair titles (tried in round 3): the pairs read as two vertical columns, so each row is set as one word (2026-11-07).
