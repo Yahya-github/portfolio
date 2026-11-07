@@ -14,6 +14,8 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 
 (None yet — ship to validate)
 
+Phase 1 (Design Gate) complete 2026-11-07: design doc revision 5 approved by Yahya; font, layouts, cursor, material and copy facts decided. Requirements stay Active until built.
+
 ### Active
 
 - [ ] Dark Swiss design system: black ground, white type, one green accent, one sans family (Instrument Sans), 12-column grid, flush-left text, no ornament
@@ -21,8 +23,8 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 - [ ] Page switching by wheel/trackpad (one gesture = one page, inertia ignored), arrow keys, Page Up/Down, Space, Home/End, and swipe
 - [ ] Hero: giant YAHYA spanning the page; each letter is a clickable link to its section (Y Achievements, A Projects, H Experience, Y About, A Say hi), with numbered captions
 - [ ] Leaving the hero, the five letters shrink and glide into a vertical rail on the left that stays as the navigation, current section in the accent colour
-- [ ] Achievements: a static typographic 75/75 (Canadian Computing Competition perfect score), plus the four first places (layout variant chosen in Phase 1)
-- [ ] Custom cursor that sits exactly on the pointer (EXP-03), form chosen in Phase 1
+- [ ] Achievements: variant (b), letter-pair title with five equal lines (CCC 75/75 included, not dominant) and hover photo previews linking to public sources (chosen in Phase 1)
+- [ ] Custom cursor that sits exactly on the pointer (EXP-03), form (a) square outline that snaps to the hovered item (chosen in Phase 1)
 - [ ] Projects: Facturo, MAME Tool Rental, Atlantis, CRC problems, robot firmware, Showdown AI
 - [ ] Experience: Work and Involvement lists
 - [ ] About ("Two habits") and Say hi (email, LinkedIn, GitHub)
@@ -118,4 +120,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-11-06 after research decisions*
+*Last updated: 2026-11-07 after Phase 1 (Design Gate) completion*
