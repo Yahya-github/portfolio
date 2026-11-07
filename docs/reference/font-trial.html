@@ -91,6 +91,22 @@
   .wdth-toggle { display: flex; gap: 8px; align-items: center; border: 0; margin: 0; padding: 0; }
   .wdth-toggle legend { float: left; margin-right: 8px; }
 
+  /* Scaled viewport frames (1440x900, 1366x768, 390x844), filled by the script */
+  .frames { display: grid; grid-template-columns: 1440fr 1366fr 780fr; gap: var(--grid-gutter); align-items: start; margin-bottom: 16px; }
+  .frame-cell { min-width: 0; }
+  .frame-box { position: relative; overflow: hidden; outline: 1px solid var(--color-hair); }
+  .frame { position: absolute; top: 0; left: 0; transform-origin: 0 0; background: var(--color-ground); overflow: hidden; --m: 24px; }
+  .frame.phone { --m: 16px; }
+  .f-top { position: absolute; top: 0; left: var(--m); right: var(--m); height: var(--frame-top); display: flex; align-items: center; border-bottom: 1px solid var(--color-hair); font-family: var(--body); }
+  .f-role { position: absolute; top: calc(var(--frame-top) + 16px); left: var(--m); margin: 0; font-family: var(--body); font-size: 16px; line-height: 1.5; font-weight: 400; }
+  .f-word { position: absolute; left: var(--m); bottom: calc(var(--frame-bottom) + var(--hero-bottom-gap)); margin: 0; line-height: 0.76; white-space: nowrap; }
+  .f-cap { position: absolute; font-family: var(--body); white-space: nowrap; }
+  .f-cap .num { color: var(--color-dim); margin-right: 4px; }
+  .f-foot { position: absolute; bottom: 0; left: var(--m); right: var(--m); height: var(--frame-bottom); display: flex; align-items: center; border-top: 1px solid var(--color-hair); font-family: var(--body); font-variant-numeric: tabular-nums; }
+  .frame-meta { margin-top: 8px; }
+  .checks { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px 32px; font-family: var(--body); }
+  .checks .bad { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-dim); }
+
   .missing-msg { display: none; font-size: 16px; line-height: 1.5; color: var(--color-dim); margin: 0; }
   .block[data-missing="true"] .specimen { display: none; }
   .block[data-missing="true"] .missing-msg { display: block; }
@@ -323,12 +339,162 @@
   var root = document.documentElement;
   var blocks = Array.prototype.slice.call(document.querySelectorAll(".block"));
 
+  // Frames and layout constants (01-UI-SPEC grid, same formulas as metrics.py)
+  var FRAMES = [
+    { w: 1440, h: 900, phone: false },
+    { w: 1366, h: 768, phone: false },
+    { w: 390, h: 844, phone: true }
+  ];
+  var FRAME_TOP = 72, FRAME_BOTTOM = 56, HERO_GAP = 96, ROLE_BLOCK = 96, POSTER_LH = 0.76;
+  var DISPLAY_TRACK = -0.05;
+  var CAPTIONS = [["01", "Achievements"], ["02", "Projects"], ["03", "Experience"], ["04", "About"], ["05", "Say hi"]];
+
   function displayWeight() {
     var el = document.querySelector('input[name="dw"]:checked');
     return el ? Number(el.value) : 700;
   }
   function trackEm() { return Number(document.getElementById("track").value); }
   function weightFor(block) { return Math.min(displayWeight(), Number(block.dataset.maxw)); }
+  function wdthFor(block) { return block.style.getPropertyValue("--wdth") || "100%"; }
+
+  function displaySize(w) { return Math.max(64, Math.min(168, w * 0.09)); }
+  function heroGrid(w, phone) { return w - 2 * (phone ? 16 : 24); }
+  function contentGrid(w, phone) { return phone ? w - (16 + 36) - 16 : w - 24 - (24 + 56); }
+  function span(w, phone, first, last) {
+    var g = phone ? 16 : 24, c = (contentGrid(w, phone) - 11 * g) / 12, n = last - first + 1;
+    return n * c + (n - 1) * g;
+  }
+  function heightBudget(h) { return h - FRAME_TOP - FRAME_BOTTOM - HERO_GAP - ROLE_BLOCK; }
+
+  // Pattern 2: measure a word in the real face with the current weight, tracking and wdth
+  function measure(block, text, sizePx, trackEmValue) {
+    var probe = document.createElement("span");
+    probe.textContent = text;
+    probe.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap;line-height:1;left:-9999px;top:0;" +
+      "font-family:\"" + block.dataset.face + "\";font-weight:" + weightFor(block) + ";font-size:" + sizePx + "px;" +
+      "font-stretch:" + wdthFor(block) + ";letter-spacing:" + trackEmValue + "em";
+    document.body.appendChild(probe);
+    var width = probe.getBoundingClientRect().width;
+    probe.remove();
+    return width;
+  }
+
+  // Missing-face detection: a rejected load and an empty result both count as missing.
+  function loadOk(spec) {
+    var p;
+    try { p = document.fonts.load(spec, "YAHYA 0123456789"); } catch (e) { return Promise.resolve(false); }
+    return p.then(function (list) {
+      return list.length > 0 && list.some(function (f) { return f.status === "loaded"; });
+    }).catch(function () { return false; });
+  }
+  async function available(block) {
+    try {
+      var display = await loadOk("700 100px \"" + block.dataset.face + "\"");
+      var body = await loadOk("400 16px \"" + block.dataset.body + "\"");
+      return display && body;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  function buildFrames(block) {
+    var host = block.querySelector(".frames");
+    host.textContent = "";
+    FRAMES.forEach(function (f) {
+      var cell = el("div", "frame-cell"), box = el("div", "frame-box");
+      var frame = el("div", "frame" + (f.phone ? " phone" : ""));
+      frame.style.width = f.w + "px";
+      frame.style.height = f.h + "px";
+      var top = el("div", "f-top label", "Yahya Hallani");
+      var role = el("p", "f-role", "Software Engineering at McGill");
+      var word = el("p", "f-word yahya-type", "YAHYA");
+      word.setAttribute("aria-hidden", "true");
+      var caps = CAPTIONS.map(function (c) {
+        var cap = el("span", "f-cap label");
+        cap.appendChild(el("span", "num", c[0]));
+        // 390 frame: letters are too close for full names, so the number alone sits under each letter
+        if (!f.phone) cap.appendChild(document.createTextNode(c[1]));
+        frame.appendChild(cap);
+        return cap;
+      });
+      var foot = el("div", "f-foot label", "00 / 05");
+      frame.appendChild(top); frame.appendChild(role); frame.appendChild(word); frame.appendChild(foot);
+      box.appendChild(frame);
+      var meta = el("p", "frame-meta label dim");
+      cell.appendChild(box); cell.appendChild(meta);
+      host.appendChild(cell);
+      new ResizeObserver(function () { scaleFrame(cell, box, frame, f); }).observe(cell);
+      cell._parts = { f: f, frame: frame, word: word, caps: caps, meta: meta, box: box };
+    });
+    var checks = el("div", "checks label");
+    host.insertAdjacentElement("afterend", checks);
+  }
+
+  function scaleFrame(cell, box, frame, f) {
+    var k = cell.clientWidth / f.w;
+    frame.style.transform = "scale(" + k + ")";
+    box.style.height = (f.h * k) + "px";
+    frame._k = k;
+  }
+
+  // Captions sit under each letter: read each glyph's box with a Range (the word stays one
+  // text node so kerning is kept), then convert to unscaled frame coordinates.
+  function placeCaptions(p) {
+    var k = p.frame._k || 1, frameRect = p.frame.getBoundingClientRect(), text = p.word.firstChild;
+    var wordRect = p.word.getBoundingClientRect();
+    p.caps.forEach(function (cap, i) {
+      var r = document.createRange();
+      r.setStart(text, i); r.setEnd(text, i + 1);
+      var rect = r.getBoundingClientRect();
+      cap.style.left = ((rect.left - frameRect.left) / k) + "px";
+      cap.style.top = ((wordRect.bottom - frameRect.top) / k + 8) + "px";
+    });
+  }
+
+  function renderBlock(block) {
+    if (block.dataset.missing === "true" || !block._ready) return;
+    var fit = measure(block, "YAHYA", 100, trackEm()) / 100;   // --yahya-fit in em
+    block.querySelector(".fit-out").textContent = fit.toFixed(3) + " (live, weight " + weightFor(block) +
+      ", tracking " + trackEm().toFixed(3) + "em, wdth " + wdthFor(block) + ")";
+
+    Array.prototype.forEach.call(block.querySelectorAll(".frame-cell"), function (cell) {
+      var p = cell._parts, f = p.f;
+      var gh = heroGrid(f.w, f.phone), hb = heightBudget(f.h);
+      var byW = gh / fit, byH = hb / POSTER_LH;
+      var size = Math.min(byW, byH), bound = byW <= byH ? "width-bound" : "height-bound";
+      p.word.style.fontSize = size + "px";
+      placeCaptions(p);
+      p.meta.textContent = f.w + "x" + f.h + ": Poster " + size.toFixed(0) + "px, " + bound +
+        " (Gh/fit " + byW.toFixed(0) + "px, Hb/0.76 " + byH.toFixed(0) + "px)" +
+        (f.phone ? "; captions show numbers only" : "");
+    });
+
+    // Fit checks (UI-SPEC item 6), Display role: display weight, -0.05em
+    var rows = [
+      ["Achievements", 390, true, 1, 12, "phone full width"],
+      ["Involvement", 1366, false, 7, 12, "cols 7-12"],
+      ["Involvement", 1440, false, 7, 12, "cols 7-12"]
+    ];
+    var checks = block.querySelector(".checks");
+    checks.textContent = "";
+    rows.forEach(function (r) {
+      var size = displaySize(r[1]), width = measure(block, r[0], size, DISPLAY_TRACK);
+      var avail = span(r[1], r[2], r[3], r[4]), ok = width <= avail;
+      var item = el("span", ok ? "" : "bad",
+        "“" + r[0] + "” " + size.toFixed(2) + "px at " + r[1] + " " + r[5] + ": " +
+        width.toFixed(0) + "px / " + avail.toFixed(0) + "px, " + (ok ? "fits" : "overflows"));
+      checks.appendChild(item);
+    });
+  }
+
+  function renderAll() { blocks.forEach(renderBlock); }
 
   function updateReadouts() {
     blocks.forEach(function (b) {
@@ -339,17 +505,45 @@
     document.getElementById("track-out").textContent = trackEm().toFixed(3) + "em";
   }
 
+  var pending = false;
   function applyControls() {
     root.style.setProperty("--dw", String(displayWeight()));
     root.style.setProperty("--yahya-track", trackEm() + "em");
     updateReadouts();
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(function () {
+      pending = false;
+      // 800 needs its own load for variable faces before measuring
+      Promise.all(blocks.map(function (b) {
+        return b._ready ? loadOk(weightFor(b) + " 100px \"" + b.dataset.face + "\"") : null;
+      })).then(renderAll);
+    });
   }
 
-  document.querySelectorAll('input[name="dw"]').forEach(function (el) { el.addEventListener("change", applyControls); });
+  document.querySelectorAll('input[name="dw"]').forEach(function (n) { n.addEventListener("change", applyControls); });
   document.getElementById("track").addEventListener("input", applyControls);
-  document.querySelectorAll('input[name="wdth-instrument"]').forEach(function (el) {
-    el.addEventListener("change", function () {
-      document.getElementById("f-instrument").style.setProperty("--wdth", el.value + "%");
+  document.querySelectorAll('input[name="wdth-instrument"]').forEach(function (n) {
+    n.addEventListener("change", function () {
+      document.getElementById("f-instrument").style.setProperty("--wdth", n.value + "%");
+      applyControls();
+    });
+  });
+  window.addEventListener("resize", function () { requestAnimationFrame(renderAll); });
+
+  blocks.forEach(function (block) {
+    buildFrames(block);
+    available(block).then(function (ok) {
+      if (!ok) {
+        block.dataset.missing = "true";   // never judge a fallback face under the candidate's name
+        block.querySelector(".fit-out").textContent = "not installed";
+        return;
+      }
+      block.dataset.missing = "false";
+      block._ready = true;
+      requestAnimationFrame(function () { renderBlock(block); });
+    }).catch(function () {
+      block.dataset.missing = "true";
     });
   });
 
