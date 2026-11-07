@@ -58,6 +58,7 @@ Task IDs are filled in by the planner; rows map to roadmap success criteria (SC-
 | SC-4c | 4 | T-1-02 | Images greyscale, no GPS | exiftool/magick | `exiftool -q -if '$GPSLatitude' -p '$FileName' -r docs/material` prints nothing; `magick identify -format '%[colorspace]\n' docs/material/portrait*.jpg` = `Gray` | ❌ | ⬜ pending |
 | SC-4d | 4 | — | N/A | grep | `grep -q 'linkedin.com/in/' docs/material/links.md && grep -q 'github.com/Yahya-github' docs/material/links.md && grep -q '@' docs/material/links.md` | ❌ | ⬜ pending |
 | SC-4e | 4 | T-1-01, T-1-05 | No private Downloads files in git | git | `git ls-files \| grep -Ei 'passport\|transcript\|client_secret\|ICPCId' && echo FAIL \|\| echo ok` | ✅ | ⬜ pending |
+| SC-4f | 4 | T-1-11 | Only confirmed-safe material, or an explicit waiver | ls/grep | `for k in facturo robot atlantis; do ls docs/material/screenshots/$k-* docs/material/photos/$k-* >/dev/null 2>&1 \|\| grep -Eqi "^- Waiver: $k" docs/material/links.md \|\| echo "no $k"; done` prints nothing (waivers quote Yahya and are listed in the 01-08 approval brief) | ❌ | ⬜ pending |
 | SC-5a | 5 | — | N/A | git | `git ls-files --error-unmatch docs/reference/swiss-horizontal-v6.html` | ❌ | ⬜ pending |
 | SC-5b | 5 | — | N/A | grep | `for n in 1 2 3 4 5 6; do grep -Eq "Decision $n.*(Accepted\|Overruled)" $D \|\| echo "D$n missing"; done; grep -q Vercel $D` | ❌ | ⬜ pending |
 | REQ-edits | — | — | N/A | grep | `grep -Eqi '^- \[ \] \*\*[A-Z]+-[0-9]+\*\*:.*cursor' .planning/REQUIREMENTS.md && ! grep -Eq '^- Contact form, custom cursor' .planning/REQUIREMENTS.md` | ❌ | ⬜ pending |
@@ -72,15 +73,15 @@ Task IDs are filled in by the planner; rows map to roadmap success criteria (SC-
 |-------|-----------------|---------------|
 | SC-1a, SC-1b, SC-3a, SC-3b, SC-3c, SC-5b | 01-03 Task 1 | 01-07 Task 2, 01-08 Task 1 |
 | SC-1c | 01-08 Task 3 (only after Yahya's explicit approval) | 01-08 Task 3 |
-| SC-2a, SC-2c | 01-02 Tasks 1-2 | 01-05 Tasks 2-3, 01-07 Task 2 |
+| SC-2a, SC-2c | 01-02 Tasks 1-3 | 01-05 Tasks 2-3, 01-07 Task 2 |
 | SC-2b | 01-07 Task 2 | 01-08 Task 1 |
-| SC-3d | 01-06 Tasks 2-3 | 01-07 Task 2 |
+| SC-3d | 01-06 Tasks 1-3 | 01-07 Task 2 |
 | SC-4a, SC-4c (portrait) | 01-01 Task 2 + 01-04 Tasks 2-3 | 01-08 Task 1 |
-| SC-4b, SC-4d | 01-04 Tasks 2-3 | 01-08 Task 1 |
+| SC-4b, SC-4d, SC-4f | 01-04 Tasks 2-3 (SC-4f waivers also copied into doc §9 by 01-07 Task 2) | 01-08 Task 1 |
 | SC-4e, SC-5a | 01-01 Task 1 | every wave |
 | REQ-edits | 01-03 Task 2 | 01-07 Task 3 |
 
-Wave 0 items: `.gitignore`, v6 commit and `check.sh` are all 01-01 Task 1.
+Wave 0 items: `.gitignore`, v6 commit and `check.sh` (19 rows) are all 01-01 Task 1. Wave 1 plans 01-02 and 01-04 run beside 01-01, so their verify commands are self-contained and do not call check.sh. `metrics.py` (01-02 Task 1) is committed planning tooling, reused by 01-05 and 01-06.
 
 ---
 

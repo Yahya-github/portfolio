@@ -372,14 +372,14 @@ print("tnum" in feats or tabular_default, axes)
 | A5 | Neue Haas Grotesk web licence is a page-view tier on MyFonts, price unknown | Fonts table | Only matters if Yahya favours it |
 | A6 | Instrument Sans is common on 2024-25 startup sites (anti-vibe risk) | Alternatives | Taste call for Yahya |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Paid font prices and which paid face (if any) enters the trial.** Pricing pages render client-side and could not be read. Recommendation: the trial plan includes a human-action step where Yahya (or a browser session) reads the Söhne, Suisse Int'l and Neue Haas web prices for a <10k pageview tier and downloads the test fonts with his account. Paid blocks show "not installed" until then. Don't block the OFL comparison on this.
-2. **Where are the Facturo screenshots and the robot/Atlantis images?** Unknown. Use a human-action task: Yahya lists the paths.
-3. **Public resume and contest platform bullet** (see Resume checks). Yahya decides.
-4. **Is `yahya.hallani.email@gmail.com` the address for the site?** It comes from the resume, so it is very likely. Confirm in links.md review.
-5. **Update the user-level skills after approval?** They sit outside the repo. Ask Yahya.
-6. **CLAUDE.md stack section is stale (GitHub Pages).** CLAUDE.md is GSD-generated. Recommend regenerating it after approval rather than hand-editing it in this phase.
+1. **Paid font prices and which paid face (if any) enters the trial.** Pricing pages render client-side and could not be read. Recommendation: the trial plan includes a human-action step where Yahya (or a browser session) reads the Söhne, Suisse Int'l and Neue Haas web prices for a <10k pageview tier and downloads the test fonts with his account. Paid blocks show "not installed" until then. Don't block the OFL comparison on this. RESOLVED: handled in plan 01-05 (Task 1 checkpoint: Yahya installs test fonts and reads prices; otherwise "price not verified").
+2. **Where are the Facturo screenshots and the robot/Atlantis images?** Unknown. Use a human-action task: Yahya lists the paths. RESOLVED: plan 01-04 Task 1 (human-action: Yahya lists exact paths).
+3. **Public resume and contest platform bullet** (see Resume checks). Yahya decides. RESOLVED: plan 01-04 Task 1 (Yahya decides removed/kept; recorded in links.md).
+4. **Is `yahya.hallani.email@gmail.com` the address for the site?** It comes from the resume, so it is very likely. Confirm in links.md review. RESOLVED: plan 01-04 Task 1 (Yahya confirms the public email).
+5. **Update the user-level skills after approval?** They sit outside the repo. Ask Yahya. RESOLVED: plan 01-08 Task 2 (Yahya says yes/no; recorded as a STATE.md todo, not done in Phase 1).
+6. **CLAUDE.md stack section is stale (GitHub Pages).** CLAUDE.md is GSD-generated. Recommend regenerating it after approval rather than hand-editing it in this phase. RESOLVED: plan 01-08 Task 2 (Yahya says yes/no; recorded as a STATE.md todo).
 
 ## Environment Availability
 
