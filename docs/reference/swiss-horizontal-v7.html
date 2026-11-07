@@ -101,8 +101,16 @@
     transition: transform var(--dur-letters) var(--ease-page) calc(var(--i) * var(--stagger)), color var(--dur-ui) var(--ease-ui);
   }
   .fly a::before { content: ""; position: absolute; inset: 0; pointer-events: auto; }
-  .fly a:hover, .fly a:focus-visible, .fly a[aria-current="page"] { color: var(--color-accent); }
-  .fly a:active { color: var(--color-accent); transition: transform var(--dur-letters) var(--ease-page); }
+  /* accent on a rail letter = the current section only, derived from the page index (aria-current, set in go()).
+     Hover and focus never colour a rail letter: a stale :hover (pointer resting where a letter lands, sticky touch
+     hover) or a stale :focus-visible (a clicked letter keeps focus, a later key press makes it "visible") left two
+     letters green (v7 bug, Yahya 2026-11-07). On the rail, hover shows as the cursor box and focus as an ink ring.
+     On the Index no letter is current, so hover and focus there keep the usual interactive accent */
+  .fly a[aria-current="page"] { color: var(--color-accent); }
+  html[data-page="0"] .fly a:focus-visible, html[data-page="0"] .fly a:active { color: var(--color-accent); }
+  @media (hover: hover) and (pointer: fine) { html[data-page="0"] .fly a:hover { color: var(--color-accent); } }
+  html:not([data-page="0"]) .fly a:focus-visible { outline-color: var(--color-ink); }
+  .fly a:active { transition: transform var(--dur-letters) var(--ease-page); }
   .fly.instant a { transition: none; }
   :root { --stagger: 30ms; }
   @media (prefers-reduced-motion: reduce) { :root { --stagger: 0ms; } }
@@ -111,7 +119,10 @@
   .rail .slot { font: 700 30px/0.76 var(--font-sans); font-stretch: var(--wdth-display); letter-spacing: var(--yahya-track); visibility: hidden; }
   .rail .nm { position: absolute; left: calc(100% + var(--space-sm)); top: 50%; transform: translateY(-50%); white-space: nowrap; padding: var(--space-xs) var(--space-sm); background: var(--color-ground); opacity: 0; transition: opacity var(--dur-ui) var(--ease-ui); }
   .rail .nm span, .rail .now span { color: var(--color-dim); }
-  .rail .nm.show { opacity: 1; }
+  /* a rail name shows while its letter has keyboard focus (focus-visible), derived in CSS so it can never go stale */
+  body:has(#fly a:nth-child(1):focus-visible) .rail .ri:nth-child(1) .nm, body:has(#fly a:nth-child(2):focus-visible) .rail .ri:nth-child(2) .nm,
+  body:has(#fly a:nth-child(3):focus-visible) .rail .ri:nth-child(3) .nm, body:has(#fly a:nth-child(4):focus-visible) .rail .ri:nth-child(4) .nm,
+  body:has(#fly a:nth-child(5):focus-visible) .rail .ri:nth-child(5) .nm { opacity: 1; }
   .rail .now { margin-top: var(--space-md); writing-mode: vertical-rl; white-space: nowrap; }   /* current section name, permanent, inside the rail column */
   html[data-page="0"] .rail { visibility: hidden; }
   @media (pointer: coarse) { .rail { gap: 28px; } }
@@ -391,7 +402,7 @@
     var root = document.documentElement;
     var track = document.getElementById('track'), pages = [].slice.call(document.querySelectorAll('.page'));
     var fly = document.getElementById('fly'), letters = [].slice.call(fly.querySelectorAll('a'));
-    var slots = [].slice.call(document.querySelectorAll('#rail .slot')), railNames = [].slice.call(document.querySelectorAll('#rail .nm'));
+    var slots = [].slice.call(document.querySelectorAll('#rail .slot'));
     var now = document.getElementById('now'), live = document.getElementById('live');
     var pg = document.getElementById('pg'), nx = document.getElementById('nx'), bar = document.getElementById('bar'), where = document.getElementById('where');
     var word = document.getElementById('word'), placeholders = [].slice.call(word.querySelectorAll('.L b'));
@@ -478,11 +489,7 @@
       e.preventDefault(); pages[page].setAttribute('tabindex', '-1'); pages[page].focus();
     });
 
-    // rail names: shown on keyboard focus (the cursor tag already names a hovered letter)
-    letters.forEach(function (a, i) {
-      a.addEventListener('focus', function () { if (page) railNames[i].classList.add('show'); });
-      a.addEventListener('blur', function () { railNames[i].classList.remove('show'); });
-    });
+    // rail names show on keyboard focus through CSS :has(:focus-visible); the cursor tag names a hovered letter
 
     // Achievements previews: keep the photo and its line inside the viewport (nudge up above the footer if needed)
     [].slice.call(document.querySelectorAll('.ach .plain > li')).forEach(function (li) {
