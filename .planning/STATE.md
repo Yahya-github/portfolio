@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-stopped_at: Phase 1 UI-SPEC approved
-last_updated: "2026-11-07T03:41:21.400Z"
-last_activity: 2026-11-06 — Roadmap created (8 phases, 39/39 v1 requirements mapped)
+status: executing
+stopped_at: Completed 01-01-PLAN.md
+last_updated: "2026-11-07T05:41:33.660Z"
+last_activity: 2026-11-07
 progress:
   total_phases: 8
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 8
+  completed_plans: 1
   percent: 0
 ---
 
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-06)
 
 **Core value:** The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA letters that are the navigation, pages that switch horizontally) that a recruiter remembers.
-**Current focus:** Phase 1 - Design Gate
+**Current focus:** Phase 01 — design-gate
 
 ## Current Position
 
-Phase: 1 of 8 (Design Gate)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-11-06 — Roadmap created (8 phases, 39/39 v1 requirements mapped)
+Phase: 01 (design-gate) — EXECUTING
+Plan: 2 of 8
+Status: Ready to execute
+Last activity: 2026-11-07
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█░░░░░░░░░] 13%
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: -
 
 *Updated after each plan completion*
+| Phase 01 P01 | 3 min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -64,6 +65,7 @@ Recent decisions affecting current work:
 - [Roadmap]: Phase 1 is a design gate; no product code until the updated design doc is approved
 - [Phase 1 discuss]: Depth map and background visuals dropped (2026-11-06). Photos are plain greyscale (DSGN-05, now Phase 6). Phase 8 is now Interactive Proof (PROOF-01 Atlantis, PROOF-02 robot model), a parallel track that does not gate launch
 - [Roadmap]: Research phases 4 (pager core) and 5 (input model) merged into one phase for standard granularity
+- [Phase 1 P01]: Portrait master is one full-width banner-free greyscale crop (1512x1240); About framing via object-position 52% 10% in v7
 
 ### Pending Todos
 
@@ -87,6 +89,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-07T03:41:21.385Z
-Stopped at: Phase 1 UI-SPEC approved
-Resume file: .planning/phases/01-design-gate/01-UI-SPEC.md
+Last session: 2026-11-07T05:41:33.646Z
+Stopped at: Completed 01-01-PLAN.md
+Resume file: None
