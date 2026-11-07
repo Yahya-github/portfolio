@@ -1,6 +1,6 @@
 # Portfolio website: design
 
-Status: DRAFT for Yahya's approval (revision 5: dark Swiss horizontal). Nothing is built. Date: 2026-11-07 (Phase 1 picks recorded; review change rounds 1, 2 and 3 applied).
+Status: DRAFT for Yahya's approval (revision 5: dark Swiss horizontal). Nothing is built. Date: 2026-11-07 (Phase 1 picks recorded; review change rounds 1, 2, 3 and 4 applied).
 Owner: Yahya Hallani. Domain: `yahya-h.dev` (Yahya buys it before the first deploy). Host: Vercel.
 
 Visual contract: `.planning/phases/01-design-gate/01-UI-SPEC.md` holds every token value; this doc records decisions, the trial results and the page compositions. Where they disagree, this doc wins after approval. This revision overrides the `portfolio-design` skill and the stack notes in `CLAUDE.md` wherever they disagree.
@@ -49,12 +49,13 @@ Anti-goals (any of these makes the site a failure even if it technically works):
 
 ### 3.1 References
 
-Design inspiration and a grid guide sent by Yahya on 2026-11-07 (change round 2), recorded verbatim. In change round 3 (2026-11-07) Yahya picked four devices from them (his multi-select answer, verbatim labels: "Word frame on Say hi (Recommended), Letter-pair titles (Recommended), Rotated micro-text + grid lines, Edge-cropped type"); section 4.2 defines them and section 7 places them.
+Design inspiration and a grid guide sent by Yahya on 2026-11-07 (change round 2), recorded verbatim. In change round 3 (2026-11-07) Yahya picked four devices from them (his multi-select answer, verbatim labels: "Word frame on Say hi (Recommended), Letter-pair titles (Recommended), Rotated micro-text + grid lines, Edge-cropped type"); section 4.2 defines them and section 7 places them. In change round 4 (2026-11-07) Yahya sent a second poster for Say hi and asked for a shape on About (his reply, verbatim: "For the hi frame, I was thinking of a frame like this [Image #12] and like an animation rotating in a spiral (lighter and fainter to not be too distracting). For the about me page maybe but a design shape to fill the top right space").
 
 - https://www.behance.net/gallery/192265061/Swiss-Typography-Wallpaper-Pack/modules/1087550045
 - https://www.behance.net/gallery/239485669/Modern-Swiss-Typography-Poster-System-Exploratio
 - https://www.behance.net/gallery/221014645/50-Swiss-Style-Posters/modules/1260764327
 - [Image #11] (an image pasted by Yahya in the review chat; not saved to the repo)
+- [Image #12] (pasted by Yahya in change round 4; not saved to the repo): two "universe" posters. Top: one large word per edge forming a square, the edges meeting pinwheel-wise at the corners, and inside it rings of letter fragments shrinking toward a small centred word, a tunnel. Bottom: the same rings turned a little more at each step, so the tunnel becomes a spiral.
 - Grid guide: https://swissgrid.posterhouse.org/
 
 What each reference gave the site:
@@ -62,7 +63,7 @@ What each reference gave the site:
 - Modern Swiss Typography, Poster System Exploration: the letter-pair stacks (MO/DE/RN, TY/PO/GR/AP/HY) became the letter-pair titles; its vertical "typography" micro-text became the rotated micro-text.
 - 50 Swiss Style Posters: FRAMEWORK rotated along both edges, and letters cut by the poster edge, became the edge-cropped type.
 - Swiss Typography Wallpaper Pack: the fine grid lines visible behind the type became the Index grid lines.
-- Image #11, the "universe" poster: one word repeated round all four edges, each edge rotated a quarter turn further, became the Say hi word frame. Its depth tunnel of fragments was not taken (see section 4.2).
+- Image #11, the "universe" poster: one word round all four edges, each edge rotated a quarter turn further, became the Say hi word frame in round 3 (as a word repeated along each edge). Image #12 replaced that in round 4: one "say hi" per edge of a square, and the tunnel of fragments twisted into a slowly turning spiral (section 4.2, item 2).
 - swissgrid.posterhouse.org: the site keeps the strict Zürich grid. The Basel looseness enters only through the one cropped number on Experience, and the grid itself becomes visible on the Index.
 
 ## 4. Visual system
@@ -73,7 +74,7 @@ Every value lives in `.planning/phases/01-design-gate/01-UI-SPEC.md`; Phases 3 t
 - **The accent is reserved for exactly four things:** (1) the current section's rail letter, always paired with its visible numbered name and `aria-current="page"`, and derived from the current page alone, so exactly one rail letter is ever green; (2) the hover and focus colour of every interactive text, except the rail letters, which never take the accent on hover or focus (hover shows as the cursor box, focus as an ink ring); (3) the focus ring, 2px solid with a 4px offset (ink on rail letters); (4) the `75/75` numeral on Achievements. The cursor that won is drawn in ink, so the fifth slot it held in reserve is gone. Never body text, backgrounds, fills, hairlines, the progress bar, photos, the cursor or the footer counter.
 - **Grid:** 12 columns, 24px gutter and margin on desktop and tablet, 16px on phones. Nested blocks use `subgrid` so everything lands on the master columns. Every element starts and ends on a column line. Text is flush left, ragged right; nothing is centred.
 - **Type roles:** Label 12px / Body 16px / Heading 24px / Display `clamp(64px, 9vw, 168px)` / Poster for YAHYA only, `calc(var(--grid-width) / var(--yahya-fit))` capped against `100svh` so it fits short screens. Exactly 2 weights ship. No italics anywhere (D-05). Counters and `75/75` use tabular figures.
-- **No ornament:** no icons, no illustrations, no background visuals (D-26, D-29). Rank is set as type. The real organisation marks on the Experience rows (section 7, 03 Experience) are content, not ornament: they identify where Yahya worked and took part. The four round-3 devices (section 4.2) are made of the site's own type and grid only, never of pictures or shapes, and they are the only decorative elements; each is `aria-hidden` where it repeats text.
+- **No ornament:** no icons, no illustrations, no background visuals (D-26, D-29). Rank is set as type. The real organisation marks on the Experience rows (section 7, 03 Experience) are content, not ornament: they identify where Yahya worked and took part. The typographic devices (section 4.2) are made of the site's own type and grid, never of pictures, and they are the only decorative elements; each is `aria-hidden`. Round 4 adds the one geometric shape, in ink, on About (section 4.2, item 5; which of three is open for Yahya).
 - **Photos:** pre-converted greyscale files (not a CSS filter), hard-cropped to column edges, no radius, border, shadow or effect (DSGN-05). Four deliberate exceptions show their own true colours on interaction: the About portrait crossfades to a true-colour twin (section 7, 04 About), the Experience organisation marks rest in one mono colour and crossfade to their brand colours (section 7, 03 Experience), the Facturo walkthrough crossfades its current screenshot to the colour original while it is paused for the visitor (section 7, 02 Projects), and the Achievements proof previews, which only appear on hover or keyboard focus, show the colour photo (section 7, 01 Achievements). Anything on screen at rest stays greyscale. Those colours are the photos', the marks' and the screenshots' own, never the accent, and they are not accent uses. Facturo's brand green inside its screenshots is content, not the accent.
 
 ### 4.1 Font
@@ -108,16 +109,31 @@ Criteria the trial used (D-03 to D-07):
 
 Also tried: Inter Tight, Sofia Sans Extra Condensed with Sofia Sans, Schibsted Grotesk, Hanken Grotesk (confirmed first, then replaced by Instrument Sans the same day), and trial files of Söhne and Suisse Int'l (never committed); see docs/reference/font-trial.html.
 
-### 4.2 Typographic devices (change round 3)
+### 4.2 Typographic devices (change rounds 3 and 4)
 
-Chosen by Yahya on 2026-11-07 from his references (section 3.1). None of them adds a colour: they use ink, dim and the hairline grey, and the accent stays reserved for its four uses. Only the grid lines move, by opacity.
+Chosen by Yahya on 2026-11-07 from his references (section 3.1). None of them adds a colour: they use ink, dim and the hairline grey, and the accent stays reserved for its four uses. Two of them move: the grid lines, by opacity, and the Say hi vortex (round 4, item 2), by transform and opacity.
 
 1. **Letter-pair titles.** A page title is set in capitals and broken into rows of two or three letters, each row one tight word, flush left on the title's first column line, line height 0.82 (the MO/DE/RN stacks). Used on Achievements (AC / HI / EV / EM / EN / TS, cols 1-2) and About (TWO / HAB / ITS, cols 5-8). A first try put each letter in its own grid column; the pairs then read as two vertical columns of letters instead of pairs, so the letters of a row stay together. The heading's accessible name is the full word in visually hidden text; the visible rows are `aria-hidden`. Experience has no "Experience" title (its Display group is the Work and Involvement head row) and Projects' Display word is the project name "Facturo", so neither is split; YAHYA on the Index is never split. Phones: About keeps TWO / HAB / ITS (it fits); Achievements falls back to the one-line title "Achievements" in title case at the 64px floor (290px of 322px), because six rows on a scrolling phone page push the list a screen down.
-2. **Word frame (Say hi).** "say hi", lowercase, Display weight and width, repeated round all four edges of the page's content area like the "universe" poster: top at 0 degrees, right at 90, bottom at 180, left at 270, so the letter tops face out, each edge starting where the previous one ends (a pinwheel). The band is exactly one grid column thick, so the frame stands on cols 1 and 12 and on two rows of the same thickness. Each edge holds as many words as fit with at least a third of a word between them, and the leftover is shared out equally, the gap at the corner included. The frame is `aria-hidden` and takes no pointer events; the links are normal links inside it. It is static, so reduced motion changes nothing. Phones (390): the side edges would leave about 250px inside, narrower than "Resume (PDF)" at the 64px floor (about 284px), so phones keep the top and bottom edges only, with a 44px band. The poster's depth tunnel of fragments was not added: next to four giant links it turned the page into noise, and it would be the only non-type shape on the site.
+2. **Say hi square and vortex (change round 4, from Image #12).** Replaces the round-3 frame of many small repeated words.
+   - **Frame:** ONE "say hi" per edge of a square, lowercase, bold (700) at the body width (wdth 100, tracking -0.03em): top at 0 degrees, right at 90, bottom at 180, left at 270, letter tops facing out, each word running from its corner to the next edge's band, so the four meet pinwheel-wise like the poster. The font size is the side divided by 3.423: the word's advance (2.483em) plus its band (0.94em, ascender to descender) is exactly the side. The body width, not the Display width, because at wdth 75 the short word made the band 35% of the side and left a tunnel only 30% wide; at wdth 100 the tunnel is 45% of the side.
+   - **Place:** desktop, the square is six columns wide (cols 7-12, 654px at 1440x900), or less when the content height is shorter (552px at 1366x768, then right-aligned on col 12's edge), top-aligned with the four links, which go back to cols 1-6 with nothing behind them. Phones (390): the square is the full content width (322px) under the links and the address.
+   - **Tunnel:** 14 rings inside the frame (7 on phones). Each ring is a copy of the four words cut to a thin slice through the x-height (0.50em to 0.70em in from the outer edge), so stems read as small squares and bowls as arcs, the poster's fragments. Each step toward the centre is 0.8 of the last (0.64 on phones) and turned 6.5 degrees further (13 on phones), so the rings make a spiral that has turned about 90 degrees by the centre.
+   - **Motion:** the rings flow slowly inward along the spiral. Every ring runs the same CSS keyframes (one step every 2.5s, 35s from the frame's inner edge to the centre), offset by -2.5s per ring, so the loop is seamless: a ring fades in at the frame's inner edge and fades out at the centre. Transform and opacity only, on the compositor; no script runs per frame (measured in headless Chrome at 1440x900: 60 fps, 95th-percentile frame 16.8ms, no layout, about 0.03s of style work per 3s).
+   - **Faint:** the frame words are ink at 22% opacity and the rings at 20%, falling to 0 at the centre. The links, the address and the motion control never overlap the square; measured on the rendered page with the link text hidden, the background behind every link is the ground (`#0b0b0b`) at every animation moment, so ink stays 17.3:1 and the accent hover 7.4:1.
+   - **When it runs:** only while Say hi is the current page and the tab is visible. A Label button under the square, "Pause motion" / "Play motion", stops and restarts it (WCAG 2.2.2); nothing is stored, so every load starts running. Under reduced motion it never runs and the button is hidden: the paused rings are the static twisted frame of the bottom poster.
+   - The square is `aria-hidden`, takes no pointer events and uses no accent.
 3. **Edge-cropped type (Basel tension).** On Experience only, the page number "03" in Display weight and width, sized to the free height under the Involvement table (set at about 460px at 1440x900, digits about 330px tall; about 280px at 1366x768), sits on the footer line in cols 9-12 and is cut by the page's right edge through the "3", which stays readable. The page clips it with `overflow: clip` (not `hidden`, which focus could still scroll), so there is never horizontal scroll. It never touches YAHYA, a link, body text or the rail (it sits at the opposite edge). Hidden on phones, where the page scrolls. One page, not two: the other pages have no free area big enough that a crop would not collide with content or a preview.
 4. **Rotated micro-text and grid lines.**
    - (a) Pages 01-05 carry one Label line, "Montréal, Québec, 2026", in dim, set vertically (reading top to bottom) in the right page margin, top-aligned under the header. The left margin is the rail's, and the rail's own vertical section name stays as it was. It is `aria-hidden` (the header and the Index already say it). Hidden on phones, where the margin is 16px.
    - (b) The Index draws its 12 columns as 1px hairlines (both edges of every column, in the hairline grey `#2e2e2e`) behind the type, at 45% opacity at rest (about `#191919` on the ground). They come up to full hairline grey over 400ms while the pointer is on a YAHYA letter or a letter has keyboard focus, and go back after (instant under reduced motion). Choice: always on, faint, rather than only on hover. In the screenshots the faint lines show the strict grid the whole site stands on without competing with any text, and hidden lines would be missed by most visitors. Body text contrast is unchanged: the lines sit behind the text, and ink on the brightest line is still 11.9:1. Phones draw one line per column start instead of two per gutter. Yahya can switch this to hover-only.
+
+5. **About shape (change round 4, open: Yahya picks).** One geometric shape in ink fills About's empty top right: cols 9-12, from the header line down to 48px above the text, cut by the grid's right edge (not the page edge, because the right margin carries the rotated micro-text). It never touches the portrait, the TWO / HAB / ITS stack or the text. `aria-hidden`, no pointer events, hidden on phones (the page is a single column there and has no empty corner). Three candidates sit behind a sketch-only header toggle ("About shape: a / b / c, Sketch only, not part of the site"), keyboard reachable as buttons with `aria-pressed`:
+   - (a) a disc, its centre on the box's right edge, as tall as the box allows, so the grid edge cuts it in half;
+   - (b) quarter rings round the top-right corner, each 0.8 of the last and 16.5% thick, the Say hi tunnel's slices flattened into arcs;
+   - (c) a fragment of a giant Y in Display weight and width (the YAHYA face), the crotch and both arms cut by the box.
+   All three are solid ink as built; Yahya may also want them dimmer.
+
+Defaults pending Yahya (round-3 questions he has not answered yet; as built, he may still override): the Index grid lines are always on and faint, brighter on a YAHYA letter; the micro-text reads "Montréal, Québec, 2026" in the right margin of pages 01-05; the Say hi word is lowercase "say hi"; the Achievements previews sit in cols 11-12; Experience has no letter-pair title; the edge-cropped number is on Experience only.
 
 ## 5. Motion
 
@@ -135,6 +151,7 @@ One rule: movement is horizontal, fast and decisive, with no bounce and no overs
 - Banned: any curve with a control point above 1, springs, parallax, vertical slide-ins.
 - Everything is interruptible: new input retargets the animation, it never queues.
 - Reduced motion: every duration becomes 0ms. Page changes, the letter move, the opening, the hint and cursor shape changes are instant, and paging still works.
+- One exception to "horizontal, fast and decisive" (change round 4, Yahya): the Say hi vortex turns slowly and continuously, as atmosphere, while Say hi is on screen (section 4.2, item 2). It is linear, has no bounce, animates transform and opacity only, can be paused, and does not run under reduced motion.
 
 ## 6. Navigation and paging
 
@@ -210,6 +227,7 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 - Columns (desktop): portrait cols 1-4, full height between the header and footer; the title as a letter-group stack TWO / HAB / ITS (round 3, section 4.2) in Display, cols 5-8, at the top; text cols 8-12, bottom-aligned, lead paragraph in Heading at weight 400, the rest in Body.
 - Dominant element: the portrait.
 - Display group: "Two habits" (visible as TWO / HAB / ITS; its accessible name is "Two habits").
+- Shape (change round 4, open: Yahya picks a, b or c): one ink shape in cols 9-12 above the text (section 4.2, item 5).
 - Phone portrait intent: portrait cropped to the top half, then the title (the same three rows), then the text.
 - Content: a real, recognisable greyscale portrait from `docs/material/portrait-devfest-2026-grey.jpg`, with the Google Developer Group backdrop and the lanyard kept (D-15, D-22). The lanyard text is readable; Yahya accepts it (2026-11-07: it is the Google Developer Group, "it can even be a plus"). Title "Two habits".
 - Crop: kept as is (Yahya, 2026-11-07: "portrait: ok"). The banner-free master (1512x1240) fills cols 1-4 with `object-fit: cover; object-position: 52% 10%`; no tighter pre-crop.
@@ -218,11 +236,11 @@ Each page borrows one Swiss layout idea so no two layouts match (DSGN-03, D-10).
 
 ### 05 Say hi
 
-- Poster device: Word frame around stacked giant links (change round 3)
-- Columns (desktop): the "say hi" word frame (section 4.2) runs round the content area, 24px inside the header and footer, one grid column thick, so it stands on cols 1 and 12. Inside it, the four Display lines start on col 2 and are centred in the frame's height; their size is the Display size, or less if the frame's inside is too short for four lines (at 1366x768 they are 108px). The email address as a Label plus the copy status line sit inside the frame at the bottom of cols 9-11, flush left.
-- Dominant element: the four lines inside the frame.
-- Display group: the four lines. The frame is Display weight too but is decoration, `aria-hidden`.
-- Phone portrait intent: the frame's top and bottom edges only, the four lines at the 64px Display floor between them, full width, then the address.
+- Poster device: Spiral word square beside stacked giant links (change round 4)
+- Columns (desktop): the four Display lines in cols 1-6, top-aligned; the "say hi" square with its vortex (section 4.2, item 2) in cols 7-12, the same top line, six columns wide or as tall as the page allows (654px at 1440x900, 552px at 1366x768). Under them on one Label line: the email address and the copy status in cols 1-6, and "Pause motion" under the square. The links are the Display size (168px at 1440, 123px at 1366), shrunk only if the square's height or the six columns are too small for them.
+- Dominant element: the four lines.
+- Display group: the four lines. The square is bold type too but is decoration, faint and `aria-hidden`.
+- Phone portrait intent: the four lines at the 64px Display floor, the address, then the square (full content width, 7 rings) and its Pause motion button.
 - Content: Email, LinkedIn, GitHub, Resume (PDF) (D-14). Clicking Email copies the address and the status reads "Copied {address}"; if copying fails it reads "Copy didn't work. The address is {address}, select it to copy." The `mailto:` href stays on the line, so visitors without JavaScript can still write.
 
 Composition rules:
@@ -230,7 +248,7 @@ Composition rules:
 - Hairlines appear only on the Projects compact rows and Experience. Index, Achievements, About and Say hi have none. The Index grid lines (section 4.2) are the one exception: they draw the grid itself, faintly, not rules between content.
 - The rail appears on pages 01-05 only, not on Index. The rotated micro-text uses the right margin, never the rail's column.
 - Every element starts and ends on a column line. The edge-cropped "03" starts on one and runs off the page edge on purpose.
-- Everything is flush left; no centred text. The Say hi frame's side edges are rotated, not centred, and the links inside it stay flush left on col 2.
+- Everything is flush left; no centred text. The Say hi square's side edges are rotated, not centred, and the links beside it stay flush left on col 1.
 
 ## 8. Cursor
 
@@ -290,6 +308,8 @@ Still missing (copied from links.md):
 13. Accept the material waivers listed in section 9 (screenshots/photos not supplied).
 14. The Index proof line. Settled 2026-11-07: dropped ("ccc-line: drop"); the Index keeps the role line only.
 15. The public resume's project line "1st Place | Sep 2025 - Feb 2026" should name the category (robot competition). Phase 7 copy; the PDF is not edited in Phase 1.
+16. The About shape: (a) half disc, (b) quarter rings or (c) Y fragment (section 4.2, item 5), and whether it stays solid ink.
+17. The round-3 defaults listed at the end of section 4.2.
 
 ## 11. Success
 
@@ -327,4 +347,5 @@ Still missing (copied from links.md):
 - The Achievements title as one Display word across cols 1-12 above the list, and the list in cols 3-12 with its previews in cols 1-2: now the AC / HI / EV / EM / EN / TS stack in cols 1-2, the list in cols 3-10 and the previews in cols 11-12 (2026-11-07, change round 3).
 - "Two / habits" on two lines in cols 5-12: now TWO / HAB / ITS in cols 5-8 (2026-11-07, change round 3).
 - Say hi as four bottom-anchored lines in cols 1-9 with the address in cols 10-12: now inside the "say hi" word frame (2026-11-07, change round 3).
+- The round-3 Say hi word frame, "say hi" repeated along all four edges of the content area with the links inside it on col 2: replaced by one word per edge of a square with the spiral vortex (2026-11-07, change round 4).
 - One letter per grid column for the letter-pair titles (tried in round 3): the pairs read as two vertical columns, so each row is set as one word (2026-11-07).
