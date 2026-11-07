@@ -594,3 +594,44 @@ Facts used for MAME come only from the orchestrator's check of the private repo 
 3. The MAME live site still shows the "Demo: extended lab hours" banner and demo student data. The link stays (your "dw"); remove the banner on your side when it suits you.
 4. `resume-public.pdf` may still list Facturo as current (Phase 7 copy).
 5. The scrolling section names: is 30px/s the right speed, and should the strip fade at its two ends instead of being cut hard (it is cut, like the rest of the grid)? Judge from `mq-proj-1440.png`, `mq-xp-1440.png` and the live page.
+
+## Change round 7 (final, 2026-11-07)
+
+### Yahya's messages (verbatim)
+
+> "approved; showdown: replace the planned by a quick description, keep the in progress; mame-experience: Developper Nov 2026; skills: yes; claude-md: yes"
+
+Asked by the orchestrator for the Showdown line (options shown), he picked the option "Plays Pokémon Showdown", whose text is:
+
+> "An agent that plays ranked Pokémon Showdown battles"
+
+The approval is conditional on these two edits; they were applied and verified before the approval line was written (01-08 Task 3).
+
+### What was done
+
+| # | Item | Status | Commits |
+|---|------|--------|---------|
+| 1 | Projects: Showdown AI middle line "Planned" replaced by "An agent that plays ranked Pokémon Showdown battles"; "A competitive battle agent" and "In progress, nothing built yet" kept | Done | 8098aae |
+| 2 | Experience Work: MAME row "Developer" (Yahya's "Developper" spelled correctly), "MAME Tool Rental, McGill Association of Mechanical Engineers", "Since Nov 2026", first (newest), with the MAME mark | Done | 8098aae |
+| 3 | Experience height budget at short heights | Done | 8098aae |
+| 4 | Design doc section 7 (02 Projects content, 03 Experience), section 10 items 3, 21 and 22 settled; links.md (Showdown description, MAME Experience role); REQUIREMENTS CONT-12 (MAME mark, newest-first Work) | Done | 8098aae |
+
+**1. Showdown AI.** The new line fits one line in cols 9-12 at 1440 and wider; below 880px of height it is hidden by the existing short-height rule like every middle line; on phones it wraps to two lines. The Projects budget is unchanged: rows end 794 of 820 (1440x900), 634 of 688 (1366x768), 634 of 640 (1280x720), 746 of 1000 (1920x1080).
+
+**2 and 3. MAME on Experience.**
+- Rows run newest first, so MAME (Nov 2026) leads Work, above Mercor (Sep 2026). The org line is one line at every desktop size and two on phones. The mark uses the same files as the Projects row (`mame-mark-mono.png` at rest, `mame-mark.png` on row hover or tap).
+- Five Work rows ran past the 24px gap above the footer: 724 of 688 at 1366x768 (36px over) and 717 of 640 at 1280x720 (77px over). The consistent tightening, the same as Projects: below 880px of viewport height (desktop only) every Experience row closes from 12px to 8px. That fixes 1366x768 (684 of 688). For 1280x720 the Work and Involvement heads also keep the Display size unless the free height is too small for it, the rule the Say hi links already follow: `max(64px, min(Display, (100svh - 660px) / 0.88))` (660px = the frame 128, the grid's top and bottom gaps 48, the table's top margin 32, five 8px-padded rows 449, plus 3). At 1366x768 the heads stay at the full 123px; at 1280x720 they become 68px and Work ends 636 of 640. 1440x900 and 1920x1080 are unchanged (730 of 820, 764 of 1000).
+- The cropped "03" (cols 9-12, under Involvement) is unchanged and clear of every text box and mark at all four desktop sizes; the scrolling "03 Experience" margin strip still clears content, the rail, the crop and the footer.
+
+### Verification
+
+- `xp7.js` (new, round 7): ALL PASS at 1440x900, 1366x768, 1280x720, 1920x1080 and the 390 phone: MAME first with its mark, org line on one line on desktop, Work ends at or above the footer gap, crop clear, mark mono at rest and colour on hover, Showdown line text, Projects rows inside the budget, scrollWidth equals the viewport, 0 page errors.
+- `pv7.js` (pv6 with the Experience expectations updated: MAME first, Facturo "Jun 2026 to Oct 2026", four "Since" rows, MAME row with its mark): ALL PASS.
+- `mq6.js`: ALL PASS. Unchanged regression scripts (port 8794): `hit2` (Index hit range y 264-747, rail as before), `green2` (exactly 1 green letter), `hitreel` (same boxes and probes), `colour` ALL PASS, `achpv` ALL PASS, `reel3` (exactly one advance), `cur5` ALL PASS, `perf5` ALL PASS, `con5` (worst accent 7.38:1, PASS), `r3dev` ALL PASS, `ab5` (0 errors, scrollWidth equals the viewport).
+- Screenshots looked at, in `/tmp/claude-1000/-home-atlas-dev-mine-portfolio/b665a55a-f583-43bd-8a8f-9e449fcf2104/scratchpad/shots7/`: `r7-proj-*` and `r7-xp-*` at 1440x900, 1366x768, 1280x720 and 1920x1080, the phone `r7-xp-390-work.png` and `r7-proj-390-rows.png`.
+- v7: the inline script parses; the 01-06 banned patterns all count 0. Design doc: 0 em dashes.
+- `check.sh` before the approval line: 18 PASS and 1 FAIL (SC-1c, not yet approved, as expected).
+
+### Follow-ups (Yahya: "skills: yes; claude-md: yes")
+
+Recorded as todos, not done in this plan: (a) update `~/.claude/skills/portfolio-design` and `portfolio-voice-and-facts` to the approved dark Swiss design; (b) regenerate the stale stack section in `CLAUDE.md` for Vercel.
