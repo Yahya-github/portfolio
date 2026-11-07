@@ -306,3 +306,87 @@ Two open questions answered (verbatim, relayed by the orchestrator):
 4. Achievements: the letter-pair stack moved the photo previews to the right (cols 11-12). OK?
 5. Letter-pair titles on two pages only (Achievements, About). Should Experience get a page title ("EX / PE / RI / EN / CE") above or instead of the Work / Involvement heads? Experience fills 1366x768 today, so a stacked title only fits if the Work / Involvement heads go or shrink.
 6. Edge-cropped "03" on Experience only; should other pages get their number too? There is no free area on them today without moving content.
+
+## Change round 4 (2026-11-07)
+
+### Yahya's reply (verbatim)
+
+> "For the hi frame, I was thinking of a frame like this [Image #12] and like an animation rotating in a spiral (lighter and fainter to not be too distracting). For the about me page maybe but a design shape to fill the top right space"
+
+Image #12 (pasted in chat, not saved to the repo): two "universe" posters. Top: one large word per edge forming a square, the edges meeting pinwheel-wise, and rings of letter fragments shrinking toward a small centred word (a tunnel). Bottom: the same rings turned a little more at each step, so the tunnel becomes a spiral.
+
+### What was done
+
+| # | Item | Status | Commits |
+|---|------|--------|---------|
+| 1 | Say hi square and spiral vortex | Done | 852e289, 35d5597 |
+| 2 | About top-right shape, three candidates | Built behind a sketch toggle; open, Yahya picks | 852e289, 35d5597 |
+| 3 | Round-3 choices not yet answered | Kept as built, recorded as "defaults pending Yahya" | 35d5597 |
+
+**1. Say hi square and vortex** (replaces the round-3 frame of repeated small words).
+
+- **Frame:** one "say hi" per edge of a square, pinwheel corners as in the poster (top 0, right 90, bottom 180, left 270 degrees, letter tops out). The font size is the side / 3.423, so the word plus its band fills each edge exactly.
+- **Why a square and not the round-3 band:** one word per edge cannot fill both the long and the short edges of the landscape content area. On the 1290px top edge the word would need a font size of about 750px.
+- **Grid:** the square is six columns wide (cols 7-12, 654px at 1440x900), or as tall as the page allows (552px at 1366x768, right-aligned on col 12's edge). It is top-aligned with the links, which go back to cols 1-6 at the Display size (168px at 1440, 123px at 1366). The address goes under the links and "Pause motion" under the square, on one Label line.
+- **Width:** bold at the body width (wdth 100), not Display wdth 75. At wdth 75 the short word made the band 35% of the side and the tunnel only 30% wide. That was tried and screenshotted (first pass); at wdth 100 the tunnel is 45% of the side, closer to the poster.
+- **Tunnel:** 14 rings (8-14 asked). Each ring is a copy of the four words cut by a `clip-path` (evenodd polygon) to a slice through the x-height, 0.50em to 0.70em in from the outer edge, so stems become squares and bowls become arcs, as in the poster. Each ring is 0.8 the size of the one outside it and turned 6.5 degrees further, so the twist reaches about 90 degrees at the centre.
+- **Animation (approach):** CSS keyframes only. Every ring runs the same `@keyframes vx` (15 stops: scale and rotate per step, plus opacity), lasting 35s and linear, with `animation-delay: calc(var(--i) * -2.5s)`. The rings therefore flow inward along the spiral one step every 2.5s, and the loop is seamless: a ring fades in at the frame's inner edge and out at the centre.
+  - Chosen over canvas because it animates transform and opacity only, which run on the compositor. No script runs per frame (`requestAnimationFrame` is banned in v7 anyway), and pausing is just `animation-play-state`.
+  - Under reduced motion, the paused negative delays leave every ring at its own step, which is exactly the static twisted frame of the bottom poster.
+- **Perf (`perf4.js`, headless Chrome 1440x900, running):** 60.0 fps, 95th-percentile frame 16.8ms, max 16.8ms. Over 3.0s there was 0 layout and 0.03s of style recalc; the 0.11s of main-thread task time includes the measuring loop. Paused: 0.000s of main-thread work over 3s. 14 ring layers are promoted (`will-change: transform, opacity`).
+- **Lighter and fainter:** the frame is ink at 22%, the rings at 20% falling to 0 at the centre. No accent.
+- **Link contrast (`con4.js`):** link, address and control text was made transparent, then the brightest pixel inside each box was taken as the effective background, at three animation moments (t, t+6s, t+12s) at 1440, 1366 and 390. Every box measured background 11 (the ground `#0b0b0b`), so ink is 17.3:1 and the accent hover 7.4:1 (worst 7.38:1). The square never sits behind a link, so no mask was needed.
+- **When it runs:** only on Say hi (`html[data-page="5"]`) with the tab visible (a `tab-hidden` class set on `visibilitychange`).
+  - "Pause motion" / "Play motion" is a Label button under the square (WCAG 2.2.2), reachable from the keyboard. Nothing is stored, so a reload runs again.
+  - Reduced motion: never runs, and the button is hidden.
+  - The square is `aria-hidden` and has `pointer-events: none`.
+- **Phone 390:** the square is the full content width (322px), under the links and the address. It has 7 rings (`vx7`: 0.64 per step, 13 degrees, 17.5s) and the Pause motion button under it. All four links and the address are clear of it and take the pointer.
+
+**2. About top-right shape.** Three candidates are behind a temporary header toggle, "About shape: a / b / c" with "Sketch only, not part of the site". The toggles are buttons with `aria-pressed`, like the earlier v7 sketch toggles (Achievements, cursor). Hidden on phones.
+
+- **Box:** cols 9-12, from the header line down to 48px above the text (`grid-template-rows: auto 1fr auto`, with the text moved to row 3). Measured clear of the TWO / HAB / ITS stack, the portrait and the text at 1440 and 1366.
+- **Crop:** the shapes are cut by the grid's right edge, not the page edge, because the right margin carries the rotated micro-text "Montréal, Québec, 2026". A shape running to the page edge would cross it.
+  - (a) Half disc: a disc centred on the box's right edge, as tall as the box.
+  - (b) Quarter rings round the top-right corner: each 0.8 of the last and 16.5% thick, the Say hi tunnel slices flattened into arcs.
+  - (c) A Y fragment: a giant Y in Display weight and width (the YAHYA face), 2.2 times the box height. The crotch and both arms show, cut by the box. A first pass at 1.25x showed the whole Y and read as a sixth letter, so it was enlarged.
+- All three are solid ink, `aria-hidden`, with no pointer events. The doc records them as "open: Yahya picks".
+
+**3. Defaults pending Yahya** (round-3 questions, kept as built):
+- grid lines faint always, brighter on a YAHYA letter;
+- micro-text "Montréal, Québec, 2026";
+- lowercase "say hi";
+- previews in cols 11-12;
+- Experience not stacked;
+- the crop on Experience only.
+
+### Verification
+
+- `r3dev.js` (adjusted for the new frame): ALL PASS. The Say hi block now checks:
+  - one "say hi" per edge;
+  - the square inside the viewport, `aria-hidden`, with no pointer events;
+  - the four links, the address and the control clear of the square and taking the pointer (elementFromPoint) at 1440, 1366 and 390.
+  - Squares measured: 1440 [759,96,1415,752] (font 192px); 1366 [789,96,1341,648] (font 161px); 390 [51,393,373,715] (7 rings).
+- `perf4.js`: 8/8 PASS. On About it is paused and does not advance. On Say hi it runs. Pause holds and relabels to "Play motion". Keyboard Enter resumes. Tab hidden pauses and visible resumes. A reload runs again. Under reduced motion it is static and the button is hidden.
+- `con4.js`: link contrast as above, PASS.
+- Regression scripts, all unchanged:
+  - `hit2`: Index hit range y 264-747; rail items the same as in round 3.
+  - `green2`: exactly 1 green letter.
+  - `hitreel`: reel and control boxes identical to round 3; all probes as before.
+  - `colour`: 21/21 PASS.
+  - `achpv`: 17/17 PASS.
+  - `reel3`: exactly one advance.
+- Screenshots looked at, in `/tmp/claude-1000/-home-atlas-dev-mine-portfolio/b665a55a-f583-43bd-8a8f-9e449fcf2104/scratchpad/shots4/`:
+  - contact sheets `sheet-desktop.png` and `sheet-phone.png`;
+  - Say hi at t0, t+9s and t+18s at 1440, at 1366, at 390, and under reduced motion at 1440 and 390;
+  - About a, b and c at 1440 and 1366, and at 390 (shape hidden).
+  - 0 page errors; document scrollWidth equals the viewport at every size.
+- v7: the inline script parses. The 01-06 banned patterns all count 0 (Google Fonts, judge, requestAnimationFrame, lerp, spring, italic, weights 200/500/600, medal, em dash).
+- Design doc: 0 em dashes, Status still DRAFT, no APPROVED line; six distinct Poster device lines.
+- `check.sh`: 18 PASS and 1 FAIL (SC-1c, not approved, as expected).
+
+### Needs Yahya
+
+1. About shape: (a) half disc, (b) quarter rings or (c) Y fragment? Solid ink as built, or dimmer?
+2. Say hi: is the spiral speed right (one ring step every 2.5s, 35s from edge to centre) and faint enough (frame 22%, rings 20%)?
+3. The frame word at the body width (wdth 100) for a bigger tunnel, or the Display width (wdth 75) like the other Display words? The tunnel shrinks from 45% to 30% of the side.
+4. The round-3 defaults above (grid lines, micro-text wording, "say hi" case, preview columns, Experience title, crop on one page) still stand until you say otherwise.
