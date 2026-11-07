@@ -66,6 +66,24 @@ Task IDs are filled in by the planner; rows map to roadmap success criteria (SC-
 
 ---
 
+## Plan Mapping (filled by planner)
+
+| Check | Turned green by | Re-checked by |
+|-------|-----------------|---------------|
+| SC-1a, SC-1b, SC-3a, SC-3b, SC-3c, SC-5b | 01-03 Task 1 | 01-07 Task 2, 01-08 Task 1 |
+| SC-1c | 01-08 Task 3 (only after Yahya's explicit approval) | 01-08 Task 3 |
+| SC-2a, SC-2c | 01-02 Tasks 1-2 | 01-05 Tasks 2-3, 01-07 Task 2 |
+| SC-2b | 01-07 Task 2 | 01-08 Task 1 |
+| SC-3d | 01-06 Tasks 2-3 | 01-07 Task 2 |
+| SC-4a, SC-4c (portrait) | 01-01 Task 2 + 01-04 Tasks 2-3 | 01-08 Task 1 |
+| SC-4b, SC-4d | 01-04 Tasks 2-3 | 01-08 Task 1 |
+| SC-4e, SC-5a | 01-01 Task 1 | every wave |
+| REQ-edits | 01-03 Task 2 | 01-07 Task 3 |
+
+Wave 0 items: `.gitignore`, v6 commit and `check.sh` are all 01-01 Task 1.
+
+---
+
 ## Wave 0 Requirements
 
 - [ ] `.gitignore` containing `docs/reference/fonts-private/` (before any paid test font touches the repo)
