@@ -33,8 +33,11 @@ Facturo deep dive route on the site: /projects/facturo/
 | DIRO hackathon 2026 | https://diro.umontreal.ca/departement/nouvelles/nouvelle/news/detail/News/une-participation-remarquable-au-hackathon-2026-du-diro/ | 200 |
 | DIRO hackathon 2026 | https://www.addiroum.org/nouvelles/hackathon-du-diro-edition-2026 | 200 |
 | DIRO hackathon 2026 (LinkedIn post) | https://lnkd.in/p/gTbbxFTJ | 200 after 1 redirect to a linkedin.com/posts/ URL |
-| CRC 2026 | Photos only (trophies, Club of the Year); no article link supplied | n/a |
+| CRC 2026, robot competition (Club of the Year photo) | https://www.instagram.com/p/DYPS2bGOAQy/ (supplied by Yahya, 2026-11-07, change round 2) | 200, no redirect (plain request; Instagram serves its login-gated shell to scripts, so the post content itself was not read) |
+| CRC programming (trophies photo) | https://www.instagram.com/p/DWmZr18kTA3/ (supplied by Yahya as `...?img_index=1`; the query only picks the first image of the post and is dropped) | 200, no redirect (same note) |
 | CCC 2026 perfect score 75/75 | No public proof link; resume line only | n/a |
+
+Instagram blocks scripted reads of post content; a 200, 302, 429 or a login redirect from a script is normal for Instagram and not a broken link. The two posts open in a browser.
 
 The LinkedIn profile URL answers 999 to scripted requests (LinkedIn's bot wall). That is normal for LinkedIn and not a broken link; it opens in a browser.
 
@@ -102,7 +105,7 @@ Notes:
 
 - Atlantis screenshots: to capture (2-3 greyscale gameplay screenshots from the Godot project; Godot is not installed on this machine, so none were captured in plan 01-04). A short muted loop clip later.
 - Robot: no photo of the physical robot; a higher-resolution CAD capture (the Onshape thumbnail is 600x340) is to capture; robot CAD file itself (Phase 8).
-- CRC 2026: no article link (photos only).
+- CRC 2026: no article link; the two Instagram posts above are the proof links.
 - CCC 2026: no public proof link.
 - Higher-resolution original portrait: none yet.
 - Waiver: atlantis material not supplied in Phase 1 (Yahya replied "atlantis: there's the Godot game on the repo, so you tell me if we do screenshots or something else", 2026-11-07); to be accepted at the design approval (01-08)
