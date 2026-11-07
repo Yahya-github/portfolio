@@ -89,7 +89,8 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None yet.
+- Update ~/.claude/skills/portfolio-design and portfolio-voice-and-facts to match design doc rev 5 (approved 2026-11-07) (`.planning/todos/pending/2026-11-07-update-portfolio-skills-to-design-rev-5.md`)
+- Regenerate the CLAUDE.md stack section for Vercel (GitHub Pages notes are stale) (`.planning/todos/pending/2026-11-07-regenerate-claude-md-stack-for-vercel.md`)
 
 ### Blockers/Concerns
 
