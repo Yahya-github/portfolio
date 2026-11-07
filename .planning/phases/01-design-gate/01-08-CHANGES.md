@@ -498,3 +498,73 @@ Added mid-round (verbatim, relayed by the orchestrator):
 2. "the words in the center": the words now wind into the centre and vanish there. The poster also has one small still word at the very centre. Add a small static "say hi" at the core?
 3. The About rings at 22% (recommended), or brighter?
 4. The round-3 defaults (grid lines, micro-text wording, "say hi" case, preview columns, Experience title, crop on one page) still stand until you say otherwise.
+
+## Change round 6 (2026-11-07)
+
+### Yahya's messages (verbatim)
+
+> "Oh yes btw I built another project for MAME the McGill Association of Mechanical Engineers [Image #13]: https://mame-tool-rental.vercel.app/. Tool and machine rental with admin dashboard"
+
+> "Built for MAME, in use at MAME."
+
+> "I stopped being a dev for facturo in october 2026"
+
+His answers to the round-5 questions (verbatim, relayed by the orchestrator mid-round):
+
+> "1. keep 2. vanish is good 3. keep 4. dw"
+
+Meaning, as the orchestrator relayed it: (1) the spiral speed stays at 2.5s per step; (2) the words vanish at the centre, no still core word; (3) the About quarter rings stay at 22%; (4) "dw" (don't worry): keep the MAME live-site link as is. No code change was needed for these; they are recorded as settled in the design doc (section 4.2 items 2 and 5, section 10 items 18 to 20).
+
+Facts used for MAME come only from the orchestrator's check of the private repo `Yahya-github/mame-tool-rental` (gh) and the live site, and from Yahya's words above.
+
+### What was done
+
+| # | Item | Status | Commits |
+|---|------|--------|---------|
+| 1 | Projects: MAME Tool Rental row with live link and hover preview | Done | 67836ba, 4876643 |
+| 2 | Experience: MAME entry | Not added (no entry exists; see Needs Yahya) | none |
+| 3 | Facturo: past role, Jun 2026 to Oct 2026 | Done | 67836ba, 4876643 |
+| 4 | links.md: MAME live URL, private repo, screenshots, logo | Done | 4876643 |
+| 5 | MAME mark on the Projects row | Done | a0b7629, 67836ba |
+| 6 | Round-5 answers recorded | Done | 4876643 |
+| 7 | REQUIREMENTS (CONT-03, CONT-12, DSGN-05) and PROJECT.md project list | Updated | bfd9f9d |
+
+**1. Projects row.**
+- MAME Tool Rental is the first compact row (02.2; the others move to 02.3 to 02.6), because it is shipped and in use.
+- Lines: "Tool and machine rental with an admin dashboard" (Yahya's words); "FastAPI and Next.js, deployed only after every test passes"; "Built for MAME, in use at MAME" (Yahya's words). Link "Live site" to https://mame-tool-rental.vercel.app/ in the existing Label link style. The repo is private, so no code link.
+- Preview: the admin overview (`mame-05-admin-overview-grey.jpg`, colour twin on hover), with the caption "Admin overview, demo data / McGill Association of Mechanical Engineers".
+  - Place: two columns wide in cols 7-8, its bottom on the lead's last line beside the Facturo name. The rows fill cols 9-12, so there is no empty column next to the row as on Achievements; this is the only free area that never covers the walkthrough. To keep it clear, the two Facturo lines now stop at col 6 (they rewrap by at most a word).
+  - Behaviour: the same as the Achievements previews. It shows on row hover and on keyboard focus of "Live site", in colour; after a mouse click on the link it stays hidden until the pointer moves again (the `quiet` rule now covers both pages). On phones it is an inline greyscale thumbnail under the row.
+- Height budget: five rows of three lines ran about 100px past the footer at 1366x768. The consistent tightening: below 880px of viewport height (desktop only), every row drops its middle line (role or how) and the rows close from 12px to 8px. At 1440x900 and taller, and on phones, all three lines show. Rows end at 794 of 820 (1440x900), 634 of 688 (1366x768) and 634 of 640 (1280x720, which already ended on the footer line before this round).
+
+**3. Facturo.**
+- Experience Work row: "Since Jun 2026" becomes "Jun 2026 to Oct 2026". Rule recorded in the design doc: a current role reads "Since Mon YYYY", an ended one "Mon YYYY to Mon YYYY", never "since". The row keeps its place (start-date order).
+- Design doc section 7 (03 Experience) updated. The Projects copy ("Paper tickets from a Quebec trucking company...") never said current, so it is unchanged. PROJECT.md did not describe Facturo as current.
+- Not edited: `resume-public.pdf` may still describe Facturo as current. That is Phase 7 copy; the PDF is not edited in Phase 1. The retired v6 reference and the old plan files keep their history.
+
+**4 and 5. Material and mark.**
+- `screenshots/mame-01-home` to `mame-08-admin-catalog` (`.jpg`, all metadata and the ICC profile stripped) plus `-grey` twins. Demo data only.
+- `logos/mame.png` (source lockup, trimmed), `mame-mark.png` (the shield, 96px, brand red with its white "M"), `mame-mark-mono.png` (#8e8e8e, alpha scaled by the red so the white details are knocked out and the shield keeps its detail, like the ICPC mono mark).
+- The mark sits after the name on the Projects row, 28px, mono at rest and red on row hover or a tap on touch. Never an accent use. Experience has no MAME entry, so no mark there.
+
+### Verification
+
+- `pv6.js` (new): ALL PASS at 1440x900, 1366x768, 1280x720 and 1920x1080, plus the 390 phone.
+  - At rest the preview is hidden and the mark is mono. On hover the preview shows the colour file and the mark its colour; the preview stays inside the viewport and no text box of the Facturo lines, link or controls, and not the walkthrough, overlaps it.
+  - Keyboard: Tab onto "Live site" shows it; Tab on hides it. After a click on the link and coming back, it is quiet.
+  - Phone: inline grey thumbnail, 156px wide.
+  - Experience reads "Jun 2026 to Oct 2026" for Facturo, the three others "Since", and no MAME entry.
+  - Document scrollWidth equals the viewport everywhere; 0 page errors.
+- Regression scripts (port 8794), all unchanged: `hit2` (Index hit range y 264-747, rail as before), `green2` (exactly 1 green letter), `hitreel` (same boxes and probes), `colour` ALL PASS, `achpv` ALL PASS, `reel3` (exactly one advance), `cur5` ALL PASS (its Projects-row case now snaps on "Live site"), `perf5` ALL PASS, `con5` (worst accent 7.38:1, PASS), `r3dev` ALL PASS, `ab5` (0 errors, scrollWidth equals the viewport).
+- Screenshots looked at, in `/tmp/claude-1000/-home-atlas-dev-mine-portfolio/b665a55a-f583-43bd-8a8f-9e449fcf2104/scratchpad/shots6/`: contact sheets `sheet-desktop.png` and `sheet-phone.png`; `r6-proj-*` and `r6-xp-*` at 1440x900, 1366x768 and 390x844 (with hover); `before-*` for comparison; `mame-mono.png`.
+- v7: the inline script parses; the 01-06 banned patterns all count 0.
+- Design doc: 0 em dashes, Status still DRAFT, no APPROVED line.
+- `check.sh`: 18 PASS and 1 FAIL (SC-1c, not approved, as expected).
+
+### Needs Yahya
+
+1. Should MAME also appear on Experience (Work or Involvement), and with what role title? Nothing was invented; if yes, the mark goes on that row too.
+2. Projects at laptop heights: below 880px every row hides its middle line (for example "Architected 6 gameplay systems"). Keep this, or drop a row (Showdown AI, "nothing built yet") so all three lines show everywhere?
+3. The MAME live site still shows the "Demo: extended lab hours" banner and demo student data. The link stays (your "dw"); remove the banner on your side when it suits you.
+4. `resume-public.pdf` may still list Facturo as current (Phase 7 copy).
+5. The round-3 defaults (grid lines, micro-text wording, "say hi" case, preview columns, Experience title, crop on one page) still stand until you say otherwise.
