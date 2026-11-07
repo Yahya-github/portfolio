@@ -88,7 +88,7 @@ Plans:
 **Requirements**: LTR-03, LTR-04, LTR-05, LTR-06, NAV-05, NAV-06, DSGN-04, EXP-01, EXP-03, A11Y-04
 **Success Criteria** (what must be TRUE):
   1. Leaving the hero, the five letters glide and shrink into a vertical rail on the left; returning to the hero grows them back, and fast repeated paging or a window resize mid-flight never leaves letters stranded
-  2. Hovering or focusing a rail letter reveals its section name; the current section's letter shows the accent colour plus a non-colour cue; on phones the rail sits inset from the left edge With a mouse or trackpad, the custom cursor sits exactly on the pointer and changes shape over letters and links; touch devices keep the native cursor.
+  2. Hovering or focusing a rail letter reveals its section name; the current section's letter shows the accent colour plus a non-colour cue; on phones the rail sits inset from the left edge. With a mouse or trackpad, the custom cursor (form a, an ink square that snaps to letters and links) sits exactly on the pointer, and its label tag never runs past a screen edge; touch devices keep the native cursor.
   3. The footer shows a 00 / 05 counter, a "Next" control and a progress bar that track the current page; a first-time visitor sees a quiet hint that the site moves sideways
   4. A first-time visitor sees an opening animation under about 1 second, with content already loaded underneath; any click or key skips it, and it never plays again
   5. Every motion moves on the horizontal axis, fast with no bounce; with reduced motion enabled every animation (opening, paging, letters, hint) becomes an instant change
@@ -98,13 +98,14 @@ Plans:
 ### Phase 6: Page Compositions and Content
 **Goal**: Each of the six pages carries its own composition and real content, so a recruiter can see the record, the projects and how to reach Yahya on any screen, desktop or phone
 **Depends on**: Phase 5
-**Requirements**: DSGN-03, CONT-02, CONT-03, CONT-04, CONT-05, CONT-07, CONT-08, EXP-02
+**Requirements**: DSGN-03, CONT-02, CONT-03, CONT-04, CONT-05, CONT-07, CONT-08, CONT-10, CONT-11, EXP-02
 **Success Criteria** (what must be TRUE):
-  1. Achievements shows a giant static 75/75 with "Canadian Computing Competition, perfect score" and the four first places, readable at once
+  1. Achievements shows 75/75 with "Canadian Computing Competition, perfect score" and the four first places as one typographic list, readable at once
   2. Projects gives Facturo the most space and links to a Facturo deep-dive page (problem, what was built, result, screenshots, links); Atlantis, CRC problems, robot firmware and Showdown AI each show problem, role, result and links
   3. Experience shows Work and Involvement; Say hi offers email, LinkedIn, GitHub and Resume (PDF); the resume and contact can be reached from every page
   4. No two of the six pages share a layout, side by side, each matching its approved composition from Phase 1
   5. On a phone in portrait every page has a designed layout and swipes to the next; an optional, never-blocking hint says landscape shows the full posters
+  6. Hovering or focusing an Achievements line shows its proof photo and one line inside the viewport, and the DIRO and game-competition lines open their articles; Facturo plays as a pausable walkthrough of its screenshots (a stepper under reduced motion); the About portrait shows its true colours on hover or tap
 **Plans**: TBD
 **UI hint**: yes
 

@@ -16,7 +16,7 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 
 ### Active
 
-- [ ] Dark Swiss design system: black ground, white type, one green accent, one sans family (currently Inter Tight), 12-column grid, flush-left text, no ornament
+- [ ] Dark Swiss design system: black ground, white type, one green accent, one sans family (Instrument Sans), 12-column grid, flush-left text, no ornament
 - [ ] Six full-screen pages switched horizontally: Index (hero), Achievements, Projects, Experience, About, Say hi
 - [ ] Page switching by wheel/trackpad (one gesture = one page, inertia ignored), arrow keys, Page Up/Down, Space, Home/End, and swipe
 - [ ] Hero: giant YAHYA spanning the page; each letter is a clickable link to its section (Y Achievements, A Projects, H Experience, Y About, A Say hi), with numbered captions
@@ -72,7 +72,7 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 | Dark Swiss direction (black, white, one green accent) | He chose a full switch from the light paper design on 2026-11-05 | — Pending |
 | Horizontal page switching | His idea: "you switch pages with horizontal motions" | — Pending |
 | YAHYA letters are the nav, shrink to a left rail | His request; the "name is the map" idea carried over from the light design | — Pending |
-| Inter Tight as the single family | Swiss grotesque feel, free, variable | ⚠️ Revisit (final font still open) |
+| Instrument Sans as the single family | Chosen by Yahya after the Phase 1 side-by-side trial on the giant YAHYA (2026-11-07); SIL Open Font License 1.1, self-hosted; 700 at wdth 75 for display, wdth 100 for body | — Pending |
 | Remove Icons8 illustrations | "Remove those cartoonish assets" | ✓ Good |
 | Design before copy | "getting the design is the most important" | — Pending |
 | Real URLs per page, Back steps through pages | Shareable links, per-page metadata, no load flash (research Decision 1) | — Pending |
@@ -95,7 +95,10 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 | No background visuals; wow = YAHYA letter nav + craft + real interactive proof | Depth map, nature simulations and procedural terrain were all tried and rejected as borrowed, not his; showing "cracked" visually reads as forced; the record proves it | — Pending |
 | Photos plain greyscale, hard grid crops | Recruiters should see his face and the real work | — Pending |
 | Green = nature (as grandeur) and code, private inspiration only | He is inspired by both but nature must not become a visible theme | — Pending |
-| Custom cursor stays in v1, 1:1 with the pointer, no bubble | His call 2026-11-06 (D-18); form picked from three v7 variants | — Pending |
+| Custom cursor stays in v1, 1:1 with the pointer, no bubble | His call 2026-11-06 (D-18); form picked from three v7 variants; form (a) picked in v7 | — Pending |
+| Achievements layout variant (b) | Picked in v7 (2026-11-07), D-11; typographic list with proof previews (photo plus one line, article links) | — Pending |
+| Facturo shown as a screenshot walkthrough | Yahya in v7 (2026-11-07): "a cinematic go through of the images not just a static image" | — Pending |
+| About portrait shows true colours on hover | Yahya in v7 (2026-11-07); the one exception to greyscale photos, not an accent use | — Pending |
 
 ## Evolution
 
