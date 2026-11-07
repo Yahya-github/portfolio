@@ -73,7 +73,7 @@ Recent decisions affecting current work:
 - [Phase 1 P02]: Font trial numbers in docs/reference/font-metrics.md are HarfBuzz-measured and match live browser measurement within 0.001 em; quote them directly
 - [Phase 1 P03]: Design doc rev 5 draft written; font, Achievements variant and cursor form stay open for plan 07; Experience split 5/7 until the winning face is checked
 - [Phase 1 P03]: Custom cursor is v1 requirement EXP-03 (Phase 5), 1:1 with the pointer
-- [Phase 1 P05]: Font: Hanken Grotesk (OFL), display weight 700, YAHYA tracking -0.035em; confirmed by Yahya 2026-11-07
+- [Phase 1 P05]: Font: Instrument Sans (OFL), display weight 700, wdth 75 for YAHYA and Display words (body wdth 100), YAHYA tracking -0.045em, Display tracking -0.05em; confirmed by Yahya 2026-11-07 (replaces Hanken Grotesk)
 - [Phase 1 P04]: Public resume re-rendered read-only from JobOps resume JSON (ultra-compact Typst); no phone, no contest-platform bullet, Author Yahya Hallani
 - [Phase 1 P04]: AG logo not used; Atlantis = 2-3 greyscale screenshots + repo link; CCC 75/75 a regular line (Claude recommendations; Yahya may override at 01-07)
 
@@ -85,7 +85,7 @@ None yet.
 
 - yahya-h.dev must be bought before Phase 2 (the `.dev` HTTPS setup can take up to 24 h)
 - Material collected (plan 04); still missing: Atlantis screenshots (to capture), higher-res robot CAD capture, physical robot photo (see docs/material/links.md)
-- Font decided (Hanken Grotesk 700, plan 05); "Achievements" overflows a 390px phone at full width, v7 must handle it
+- Font decided (Instrument Sans 700, wdth 75 display, plan 05); every Display word fits incl. "Achievements" on a 390px phone; poster is height-bound at 1366x768
 - Phase 4 needs real devices: Mac trackpad, Magic Mouse, Windows wheel, Linux touchpad, iPhone (Safari and LinkedIn in-app browser), Android
 - The canonical policy for six routes that each contain all content is still to decide (Phase 3/7)
 
