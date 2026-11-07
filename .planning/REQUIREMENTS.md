@@ -47,6 +47,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 ### Opening and phones (EXP)
 - [ ] **EXP-01**: First-time visitor sees an opening animation under about 1 second that any click or key skips; content is already loaded underneath; it never repeats
 - [ ] **EXP-02**: Phone visitor gets a designed portrait layout of every page and swipes between them; an optional hint says landscape shows the full posters (never blocking)
+- [ ] **EXP-03**: On devices with a fine pointer, a custom cursor sits exactly on the pointer (1:1, no lag or spring; only its shape changes) and guides navigation; touch devices and forced-colours mode keep the native cursor; under reduced motion shape changes are instant (form picked in Phase 1 from v7 variants a, b, c)
 
 ### Discoverability (SEO)
 - [ ] **SEO-01**: Each page has its own title and description; canonical URLs; Person structured data
@@ -76,7 +77,8 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - "Rotate your phone" gate — recruiters open links on phones (often in LinkedIn's in-app browser, rotation locked) and would leave
 - Long or repeating intro — recruiters decide in seconds
 - Depth-map treatment and generative background visuals (simulations, terrain) — tried 2026-11-06; borrowed aesthetics that do not come from Yahya. The wow comes from the letter navigation, craft and real interactive proof
-- Contact form, custom cursor, sound, light/dark toggle — research anti-features
+- Contact form, sound, light/dark toggle — research anti-features (custom cursor moved into v1 as EXP-03 on 2026-11-06, D-18)
+- Viscous bubble cursor and the Sableye pink/green hint — dropped 2026-11-06 (D-18)
 - Blog, CMS, backend — static portfolio
 - Invented metrics, testimonials or logos — only real facts
 
@@ -114,6 +116,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | CONT-09 | Phase 3 | Pending |
 | EXP-01 | Phase 5 | Pending |
 | EXP-02 | Phase 6 | Pending |
+| EXP-03 | Phase 5 | Pending |
 | SEO-01 | Phase 7 | Pending |
 | SEO-02 | Phase 7 | Pending |
 | A11Y-01 | Phase 4 | Pending |
@@ -127,8 +130,8 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | PROOF-02 | Phase 8 | Pending |
 
 **Coverage:**
-- v1 requirements: 41 total
-- Mapped to phases: 41
+- v1 requirements: 42 total
+- Mapped to phases: 42
 - Unmapped: 0
 
 Phase 1 (Design Gate) carries no requirement directly; it is the approval gate that enables every later phase.
