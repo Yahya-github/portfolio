@@ -165,10 +165,15 @@
   /* preview: two columns wide (cols 1-2 of the page grid), top on the line, nudged up in JS if it would leave the viewport */
   .pv { position: absolute; top: 0; right: calc(100% + var(--grid-gutter)); width: calc((100% - 9 * var(--grid-gutter)) / 10 * 2 + var(--grid-gutter));
         pointer-events: none; opacity: 0; transition: opacity var(--dur-ui) var(--ease-ui); transform: translate3d(0, var(--pv-y, 0px), 0); }
+  .pv picture { display: block; }
   .pv img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
   .pv figcaption { margin-top: var(--space-sm); }
-  .ach li:hover .pv, .ach li:focus-within .pv { opacity: 1; }
-  @media (hover: none), (max-width: 820px) {   /* no hover: the thumbnail sits inline under its line */
+  /* hover or keyboard focus only: a link clicked with the mouse keeps focus (and opens a new tab), and :focus-within held
+     the preview on screen after coming back (Yahya, 2026-11-07, round 2: "clicking doesn't make the photo stay").
+     .quiet (set in JS when the window loses focus) drops a stale :hover until the pointer really moves again */
+  .ach li:hover .pv, .ach li:has(.row:focus-visible) .pv { opacity: 1; }
+  @media (hover: hover) and (min-width: 821px) { .ach.quiet li:hover:not(:has(.row:focus-visible)) .pv { opacity: 0; } }
+  @media (hover: none), (max-width: 820px) {   /* no hover: the thumbnail sits inline under its line, in greyscale (always on screen, so it keeps the photo rule) */
     .pv { position: static; width: auto; margin-top: var(--space-sm); grid-column: 3 / 11; opacity: 1; transform: none; }
     .pv img { width: min(160px, 40vw); }
     .pv.txt { display: none; }   /* a text-only preview would only repeat the line */
@@ -317,13 +322,13 @@
         <li><div class="row" tabindex="0"><span class="hd rk acc num">75/75</span><span class="hd res">Canadian Computing Competition, perfect score</span><span class="det dim">2026</span></div>
           <figure class="pv txt lab" aria-hidden="true"><figcaption>75 of 75 points<br><span class="dim">Canadian Computing Competition 2026</span></figcaption></figure></li>
         <li><a class="row" href="https://diro.umontreal.ca/departement/nouvelles/nouvelle/news/detail/News/une-participation-remarquable-au-hackathon-2026-du-diro/" target="_blank" rel="noopener" data-tag="Read the article"><span class="hd rk">1st</span><span class="hd res">DIRO Hackathon, Université de Montréal</span><span class="det dim">1st of 18 teams from 9 CEGEPs, $2,500 team scholarship, 2026</span></a>
-          <figure class="pv lab"><img src="../material/photos/diro-hackathon-2026-award-grey.jpg" alt="The winning team with their certificates at the DIRO Hackathon 2026" width="800" height="450" loading="lazy" decoding="async"><figcaption>The winners with their certificates<br><span class="dim">Article, diro.umontreal.ca</span></figcaption></figure></li>
+          <figure class="pv lab"><picture><source media="(hover: hover) and (min-width: 821px)" srcset="../material/photos/diro-hackathon-2026-award.jpg"><img src="../material/photos/diro-hackathon-2026-award-grey.jpg" alt="The winning team with their certificates at the DIRO Hackathon 2026" width="800" height="450" loading="lazy" decoding="async"></picture><figcaption>The winners with their certificates<br><span class="dim">Article, diro.umontreal.ca</span></figcaption></figure></li>
         <li><a class="row" href="https://www.neomedia.com/vaudreuil-soulanges/actualites/education/657299/l-intercollegial-de-creation-de-jeux-video-au-cegep-de-valleyfield" target="_blank" rel="noopener" data-tag="Read the article"><span class="hd rk">1st</span><span class="hd res">Intercollegiate Video Game Creation Competition</span><span class="det dim">With Atlantis, a 2D game in Godot 4, 2026</span></a>
-          <figure class="pv lab"><img src="../material/photos/game-competition-2026-team-grey.jpg" alt="The Atlantis team at the intercollegiate competition, Cégep de Valleyfield" width="1920" height="1246" loading="lazy" decoding="async"><figcaption>The Atlantis team at Cégep de Valleyfield<br><span class="dim">Article, neomedia.com</span></figcaption></figure></li>
+          <figure class="pv lab"><picture><source media="(hover: hover) and (min-width: 821px)" srcset="../material/photos/game-competition-2026-team.jpg"><img src="../material/photos/game-competition-2026-team-grey.jpg" alt="The Atlantis team at the intercollegiate competition, Cégep de Valleyfield" width="1920" height="1246" loading="lazy" decoding="async"></picture><figcaption>The Atlantis team at Cégep de Valleyfield<br><span class="dim">Article, neomedia.com</span></figcaption></figure></li>
         <li><a class="row" href="https://www.instagram.com/p/DYPS2bGOAQy/" target="_blank" rel="noopener" data-tag="See the post"><span class="hd rk">1st</span><span class="hd res">Canadian Robotics Competition, robot competition</span><span class="det dim">Matches against the other teams' robots, 2026</span></a>
-          <figure class="pv lab"><img src="../material/photos/club-of-the-year-award-grey.jpg" alt="The team on stage with its school's Club of the Year award" width="2324" height="1574" loading="lazy" decoding="async"><figcaption>Our school's Club of the Year<br><span class="dim">Post, instagram.com</span></figcaption></figure></li>
+          <figure class="pv lab"><picture><source media="(hover: hover) and (min-width: 821px)" srcset="../material/photos/club-of-the-year-award.jpg"><img src="../material/photos/club-of-the-year-award-grey.jpg" alt="The team on stage with its school's Club of the Year award" width="2324" height="1574" loading="lazy" decoding="async"></picture><figcaption>Our school's Club of the Year<br><span class="dim">Post, instagram.com</span></figcaption></figure></li>
         <li><a class="row" href="https://www.instagram.com/p/DWmZr18kTA3/" target="_blank" rel="noopener" data-tag="See the post"><span class="hd rk">1st, 2nd</span><span class="hd res">Canadian Robotics Competition, programming</span><span class="det dim">1st in Programming in 2025, 2nd in Senior Programming in 2026</span></a>
-          <figure class="pv lab"><img src="../material/photos/crc-2026-trophies-grey.jpg" alt="The team with its CRC 2026 trophies" width="1440" height="753" loading="lazy" decoding="async"><figcaption>The team with its 2026 trophies<br><span class="dim">Post, instagram.com</span></figcaption></figure></li>
+          <figure class="pv lab"><picture><source media="(hover: hover) and (min-width: 821px)" srcset="../material/photos/crc-2026-trophies.jpg"><img src="../material/photos/crc-2026-trophies-grey.jpg" alt="The team with its CRC 2026 trophies" width="1440" height="753" loading="lazy" decoding="async"></picture><figcaption>The team with its 2026 trophies<br><span class="dim">Post, instagram.com</span></figcaption></figure></li>
       </ul>
     </div>
   </section>
@@ -525,6 +530,14 @@
       }
       li.addEventListener('pointerenter', fit); li.addEventListener('focusin', fit);
     });
+    // a click opens the source in a new tab; when the visitor comes back the browser can keep a stale :hover on the line
+    // (the pointer left while this window was in the background). Quiet the hover previews until the pointer moves here again.
+    var ach = document.getElementById('ach');
+    function quiet() { ach.classList.add('quiet'); }
+    addEventListener('blur', quiet);
+    document.addEventListener('visibilitychange', quiet);
+    ach.addEventListener('pointerleave', function () { ach.classList.remove('quiet'); });
+    addEventListener('pointermove', function (e) { if (e.movementX || e.movementY) ach.classList.remove('quiet'); });
 
     // cursor (a): a square that snaps to the hovered letter or link, with a Label tag that never leaves the viewport
     var cur = document.getElementById('cur'), cp = cur.querySelector('.cp'), box = cur.querySelector('.box');
