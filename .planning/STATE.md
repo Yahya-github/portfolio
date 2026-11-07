@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-06-PLAN.md
-last_updated: "2026-11-07T15:30:52.228Z"
+stopped_at: Completed 01-07-PLAN.md
+last_updated: "2026-11-07T16:01:53.607Z"
 last_activity: 2026-11-07
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 8
-  completed_plans: 6
-  percent: 75
+  completed_plans: 7
+  percent: 0
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-11-06)
 ## Current Position
 
 Phase: 01 (design-gate) — EXECUTING
-Plan: 7 of 8
+Plan: 8 of 8
 Status: Ready to execute
 Last activity: 2026-11-07
 
-Progress: [████████░░] 75%
+Progress: [█████████░] 88%
 
 ## Performance Metrics
 
@@ -58,6 +58,7 @@ Progress: [████████░░] 75%
 | Phase 01 P05 | 3 min | 3 tasks | 1 files |
 | Phase 01 P04 | 12 min | 3 tasks | 33 files |
 | Phase 01 P06 | 13 min | 3 tasks | 2 files |
+| Phase 01 P07 | 30 min | 3 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -79,6 +80,12 @@ Recent decisions affecting current work:
 - [Phase 1 P04]: AG logo not used; Atlantis = 2-3 greyscale screenshots + repo link; CCC 75/75 a regular line (Claude recommendations; Yahya may override at 01-07)
 - [Phase 1 P06]: Instrument Sans --yahya-fit is 2.188 (ink-accurate; 2.155 counted the trailing letter-spacing), and split hero letters restore the YA kern pair (-0.063em) by hand
 - [Phase 1 P06]: v7: Experience 6/6 split; current rail name set vertically in the rail column; phone Index uses a stacked section list instead of per-letter captions
+- [Phase 1 P07]: Achievements is variant (b), a typographic list with hover/focus proof previews (photo plus one line) and article links for DIRO and the game competition; CONT-02 rewritten, CONT-10 added
+- [Phase 1 P07]: Cursor is variant (a), an ink square snapping to letters and links; its Label tag is clamped inside the viewport; accent has four uses
+- [Phase 1 P07]: About portrait crossfades to a true-colour twin on hover/tap: the one exception to greyscale photos, not an accent use
+- [Phase 1 P07]: Facturo is a 10-frame screenshot walkthrough (transform/opacity, pausable, stepper under reduced motion); CONT-11 added
+- [Phase 1 P07]: CRC wording: 1st robot competition 2026, 1st Programming 2025, 2nd Senior Programming 2026
+- [Phase 1 P07]: Hero FLIP targets are measured relative to the sliding track, fixing letters vanishing when paging back to the Index
 
 ### Pending Todos
 
@@ -102,6 +109,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-07T15:30:52.209Z
-Stopped at: Completed 01-06-PLAN.md
+Last session: 2026-11-07T16:01:53.591Z
+Stopped at: Completed 01-07-PLAN.md
 Resume file: None
