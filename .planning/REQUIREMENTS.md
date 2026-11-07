@@ -9,8 +9,8 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [ ] **DSGN-02**: All text uses one sans family on a modular type scale and a 12-column grid (final family chosen in the design phase)
 - [ ] **DSGN-03**: Each of the six pages has its own distinct composition on the shared grid (no two pages share the same layout)
 - [ ] **DSGN-04**: Every motion follows one rule: movement on the horizontal axis, fast and decisive, no bounce
-- [ ] **DSGN-05**: Real photos and screenshots of Yahya's work are shown with one plain treatment: greyscale, hard crops on the 12-column grid, no filters or effects (his face stays clearly visible); one exception: the About portrait crossfades to its true colours on hover, tap or keyboard press (instant under reduced motion), never as an accent use
-- [ ] **DSGN-06**: No ornament: no cartoon illustrations, pixel stickers, decorative HUD marks or skill bars
+- [ ] **DSGN-05**: Real photos and screenshots of Yahya's work are shown with one plain treatment: greyscale, hard crops on the 12-column grid, no filters or effects (his face stays clearly visible); exceptions that show their own true colours on hover or tap (instant under reduced motion), never as an accent use: the About portrait (also on keyboard press) and the organisation marks on Experience (mono by default)
+- [ ] **DSGN-06**: No ornament: no cartoon illustrations, pixel stickers, decorative HUD marks or skill bars (the real organisation marks on Experience identify where Yahya worked and took part; they are content, not ornament)
 
 ### Paging (NAV)
 - [ ] **NAV-01**: Visitor moves one page per wheel or trackpad gesture; trackpad momentum never skips a page
@@ -26,11 +26,11 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [ ] **LTR-02**: Each hero letter has a numbered caption naming its section
 - [ ] **LTR-03**: Leaving the hero, the letters glide and shrink into a vertical rail on the left; returning to the hero grows them back
 - [ ] **LTR-04**: Rail letters reveal their section name on hover and keyboard focus
-- [ ] **LTR-05**: The current section's letter is marked by the accent colour plus a non-colour cue
+- [ ] **LTR-05**: The current section's letter is marked by the accent colour plus a non-colour cue; only that letter is ever in the accent (derived from the current page, never from hover or focus), and each letter's hit area is its own box
 - [ ] **LTR-06**: On phones the rail sits inset from the left edge so it does not compete with the system back swipe
 
 ### Content (CONT)
-- [ ] **CONT-01**: Hero shows a role line and one proof line beside the name, readable without any interaction
+- [ ] **CONT-01**: Hero shows a role line beside the name, readable without any interaction (the proof line was dropped by Yahya, 2026-11-07)
 - [ ] **CONT-02**: Achievements shows 75/75 with "Canadian Computing Competition, perfect score" in one typographic list with the four first places, at the same weight as the other results
 - [ ] **CONT-03**: Projects presents Facturo as the flagship with the most space; the other four show problem, role, result and links
 - [ ] **CONT-04**: Facturo has a deep-dive page (problem, what was built, result, screenshots, links)
@@ -40,7 +40,8 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [ ] **CONT-08**: Resume and contact are reachable from every page
 - [ ] **CONT-09**: All site text lives in typed data files; only verified facts ship
 - [ ] **CONT-10**: Each Achievements line previews its proof on hover and keyboard focus (a small greyscale photo and one line, kept inside the viewport); a line with a public article opens it in a new tab; on touch the thumbnail shows inline under its line; a result with no photo or article shows a description only
-- [ ] **CONT-11**: Projects shows Facturo as a walkthrough of its greyscale screenshots (slow push-in and crossfade, transform and opacity only, frames lazy-loaded) with a visible pause control; it pauses on hover, focus, off-page and offscreen, and becomes a manual previous/next stepper under reduced motion
+- [ ] **CONT-11**: Projects shows Facturo as a walkthrough of its greyscale screenshots (slow push-in and crossfade, transform and opacity only, frames lazy-loaded) with a visible pause control; it pauses on hover, keyboard focus, off-page and offscreen and always resumes once none of these holds (a mouse-clicked control does not hold it), portrait screenshots are shown whole and centred, and it becomes a manual previous/next stepper under reduced motion
+- [ ] **CONT-12**: Experience rows show the real mark of their organisation (Mercor, Facturo, CRC, McGill Robotics, Google Developer Groups, ICPC) small and flush with the column edge, in one mono colour by default, with its true colours on row hover or tap; marks are decorative (the text names the organisation) and only attach to entries that exist
 
 ### Interactive proof (PROOF)
 - [ ] **PROOF-01**: Visitor can play Atlantis in the browser on its project page (single-thread Godot web export, loaded only on that page, with a screenshot and link fallback if too heavy; asset licences and teammates' consent checked first)
@@ -118,6 +119,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | CONT-09 | Phase 3 | Pending |
 | CONT-10 | Phase 6 | Pending |
 | CONT-11 | Phase 6 | Pending |
+| CONT-12 | Phase 6 | Pending |
 | EXP-01 | Phase 5 | Pending |
 | EXP-02 | Phase 6 | Pending |
 | EXP-03 | Phase 5 | Pending |
@@ -134,8 +136,8 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | PROOF-02 | Phase 8 | Pending |
 
 **Coverage:**
-- v1 requirements: 44 total (CONT-10 and CONT-11 added 2026-11-07 from Yahya's v7 review, plan 01-07)
-- Mapped to phases: 44
+- v1 requirements: 45 total (CONT-10 and CONT-11 added 2026-11-07 from Yahya's v7 review, plan 01-07; CONT-12 added 2026-11-07 from his 01-08 change list)
+- Mapped to phases: 45
 - Unmapped: 0
 
 Phase 1 (Design Gate) carries no requirement directly; it is the approval gate that enables every later phase.

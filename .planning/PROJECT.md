@@ -31,7 +31,7 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 - [ ] Interactive proof: playable Atlantis in the browser and a rotatable 3D model of the robot
 - [ ] Accessible: keyboard navigation, focus states, inactive pages inert, reduced-motion versions of every animation, works without the pointer
 - [ ] Works on phones (swipe paging, letter rail scaled down)
-- [ ] Hero shows a role line and one proof line beside the giant YAHYA, readable with no interaction
+- [ ] Hero shows a role line beside the giant YAHYA, readable with no interaction (proof line dropped by Yahya, 2026-11-07)
 - [ ] Resume PDF (self-hosted) on Say hi and reachable from every page
 - [ ] Contact visible from every page
 - [ ] Each page has its own real URL (/achievements/ etc.); Back steps through visited pages
