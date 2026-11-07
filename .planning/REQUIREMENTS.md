@@ -9,7 +9,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [ ] **DSGN-02**: All text uses one sans family on a modular type scale and a 12-column grid (final family chosen in the design phase)
 - [ ] **DSGN-03**: Each of the six pages has its own distinct composition on the shared grid (no two pages share the same layout)
 - [ ] **DSGN-04**: Every motion follows one rule: movement on the horizontal axis, fast and decisive, no bounce
-- [ ] **DSGN-05**: Real photos and screenshots of Yahya's work are shown with one consistent depth-map visual treatment
+- [ ] **DSGN-05**: Real photos and screenshots of Yahya's work are shown with one plain treatment: greyscale, hard crops on the 12-column grid, no filters or effects (his face stays clearly visible)
 - [ ] **DSGN-06**: No ornament: no cartoon illustrations, pixel stickers, decorative HUD marks or skill bars
 
 ### Paging (NAV)
@@ -39,6 +39,10 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [ ] **CONT-07**: Say hi offers email, LinkedIn, GitHub and a Resume (PDF)
 - [ ] **CONT-08**: Resume and contact are reachable from every page
 - [ ] **CONT-09**: All site text lives in typed data files; only verified facts ship
+
+### Interactive proof (PROOF)
+- [ ] **PROOF-01**: Visitor can play Atlantis in the browser on its project page (single-thread Godot web export, loaded only on that page, with a screenshot and link fallback if too heavy; asset licences and teammates' consent checked first)
+- [ ] **PROOF-02**: Visitor can rotate a 3D model of the real CRC robot on the robot project (from Yahya's CAD file; lazy-loaded, static image first, page works without it)
 
 ### Opening and phones (EXP)
 - [ ] **EXP-01**: First-time visitor sees an opening animation under about 1 second that any click or key skips; content is already loaded underneath; it never repeats
@@ -71,6 +75,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - Pixel stickers (furnace, Poké Ball peel) and Icons8 illustrations — clash with the dark Swiss style
 - "Rotate your phone" gate — recruiters open links on phones (often in LinkedIn's in-app browser, rotation locked) and would leave
 - Long or repeating intro — recruiters decide in seconds
+- Depth-map treatment and generative background visuals (simulations, terrain) — tried 2026-11-06; borrowed aesthetics that do not come from Yahya. The wow comes from the letter navigation, craft and real interactive proof
 - Contact form, custom cursor, sound, light/dark toggle — research anti-features
 - Blog, CMS, backend — static portfolio
 - Invented metrics, testimonials or logos — only real facts
@@ -83,7 +88,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | DSGN-02 | Phase 3 | Pending |
 | DSGN-03 | Phase 6 | Pending |
 | DSGN-04 | Phase 5 | Pending |
-| DSGN-05 | Phase 8 | Pending |
+| DSGN-05 | Phase 6 | Pending |
 | DSGN-06 | Phase 3 | Pending |
 | NAV-01 | Phase 4 | Pending |
 | NAV-02 | Phase 4 | Pending |
@@ -118,10 +123,12 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | A11Y-05 | Phase 3 | Pending |
 | DEP-01 | Phase 2 | Pending |
 | DEP-02 | Phase 2 | Pending |
+| PROOF-01 | Phase 8 | Pending |
+| PROOF-02 | Phase 8 | Pending |
 
 **Coverage:**
-- v1 requirements: 39 total
-- Mapped to phases: 39
+- v1 requirements: 41 total
+- Mapped to phases: 41
 - Unmapped: 0
 
 Phase 1 (Design Gate) carries no requirement directly; it is the approval gate that enables every later phase.

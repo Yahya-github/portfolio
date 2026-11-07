@@ -2,7 +2,7 @@
 
 ## Overview
 
-The site goes from an approved design to a live dark Swiss portfolio on Vercel at yahya-h.dev. Phase 1 is a design gate: no product code until Yahya approves the updated design doc, the final font, each page's composition and the real material (photos, screenshots, resume, links). After that, a live deploy spike proves the hosting. Then come a static, server-rendered version of all six pages that works without JavaScript, the horizontal pager with its input model tuned on real hardware, the signature letters-to-rail navigation and its motion, the six page compositions with their content, and finally his own copy, sharing metadata and launch checks. The depth-map photo treatment is its own track. It can start once the static pages exist and the photos arrive, and it does not block the launch.
+The site goes from an approved design to a live dark Swiss portfolio on Vercel at yahya-h.dev. Phase 1 is a design gate: no product code until Yahya approves the updated design doc, the final font, each page's composition and the real material (photos, screenshots, resume, links). After that, a live deploy spike proves the hosting. Then come a static, server-rendered version of all six pages that works without JavaScript, the horizontal pager with its input model tuned on real hardware, the signature letters-to-rail navigation and its motion, the six page compositions with their content, and finally his own copy, sharing metadata and launch checks. Interactive proof (playable Atlantis, rotatable robot model) is its own track. It can start once the static pages exist, and it does not block the launch.
 
 ## Phases
 
@@ -19,7 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 5: Letter Navigation and Motion** - Letters glide from the hero into the left rail, footer pager, first-visit hint, opening animation and reduced-motion versions
 - [ ] **Phase 6: Page Compositions and Content** - Each page gets its distinct composition: 75/75, Facturo flagship plus deep dive, Experience, Say hi with resume, phone portrait layouts
 - [ ] **Phase 7: Copy, Sharing and Launch** - Yahya's final copy, per-page SEO metadata, LinkedIn share card, favicon, 404 and launch verification
-- [ ] **Phase 8: Depth-Map Treatment** - Real photos and screenshots rendered with one consistent depth-map treatment (parallel track, does not gate launch)
+- [ ] **Phase 8: Interactive Proof** - Playable Atlantis in the browser and a rotatable 3D model of the robot (parallel track, does not gate launch)
 
 ## Phase Details
 
@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. `docs/superpowers/specs/2026-11-03-portfolio-design.md` describes the dark Swiss horizontal design (not the retired light paper design), and Yahya has marked it approved
   2. The final sans family is chosen after a side-by-side trial on the giant "YAHYA" and recorded in the doc, with its self-hosting licence confirmed
   3. Each of the six pages (Index, Achievements, Projects, Experience, About, Say hi) has a written, distinct composition on the 12-column grid; no two share a layout
-  4. Real material is in the repo or a listed location: photos and screenshots for the depth-map treatment, the resume PDF (without private details he does not want public), and email, LinkedIn, GitHub and project links
+  4. Real material is in the repo or a listed location: photos and screenshots, the resume PDF (without private details he does not want public), and email, LinkedIn, GitHub and project links
   5. The v6 sketch is saved under `docs/reference/`, and research Decisions 1-6 (URL model, WAAPI FLIP, rail inset, inner scroll, resume, domain) are recorded as accepted or overruled, with Vercel as the host
 **Plans**: TBD
 **UI hint**: yes
@@ -111,21 +111,21 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: TBD
 **UI hint**: yes
 
-### Phase 8: Depth-Map Treatment
-**Goal**: Real photos and screenshots of Yahya's work all share one deliberate depth-map look, and it adds proof without slowing the site
-**Depends on**: Phase 3 and the photos collected in Phase 1 (parallel track; can run alongside Phases 4-7 and land before or just after launch; v1 is complete only when it ships)
-**Requirements**: DSGN-05
+### Phase 8: Interactive Proof
+**Goal**: Visitors can touch Yahya's real work on the site itself: play Atlantis and rotate the real robot, without slowing any other page
+**Depends on**: Phase 3 (parallel track; can run alongside Phases 4-7 and land before or just after launch; v1 is complete only when it ships). Robot model needs Yahya's CAD file
+**Requirements**: PROOF-01, PROOF-02
 **Success Criteria** (what must be TRUE):
-  1. A production spike turns a real photo into a depth map offline (monocular depth estimation), and the pipeline can be re-run on new images
-  2. Every real photo and screenshot on the site (portrait on About, project screenshots, robot photo) appears with the same depth-map treatment in its approved placement
-  3. Pages with depth-map images still show a static image instantly; any interactive enhancement loads lazily, respects reduced motion, and has no visible effect on first paint
+  1. Atlantis runs in the browser on its project page as a single-thread Godot web export, loaded only there; its asset licences and teammates' consent are confirmed before publishing; if too heavy, screenshots plus a link replace it
+  2. The robot project shows a rotatable 3D model built from the real CAD file, lazy-loaded with a static image first; the page works fully without it
+  3. Neither piece adds JavaScript or requests to any other page; both respect reduced motion and keyboard use
 **Plans**: TBD
 **UI hint**: yes
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 can start any time after Phase 3, once the photos exist, and runs alongside the rest; it does not gate the Phase 7 launch.
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 can start any time after Phase 3 and runs alongside the rest; it does not gate the Phase 7 launch.
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -136,10 +136,10 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 5. Letter Navigation and Motion | 0/TBD | Not started | - |
 | 6. Page Compositions and Content | 0/TBD | Not started | - |
 | 7. Copy, Sharing and Launch | 0/TBD | Not started | - |
-| 8. Depth-Map Treatment | 0/TBD | Not started | - |
+| 8. Interactive Proof | 0/TBD | Not started | - |
 
 ## Research Flags
 
 - Phase 4: needs real hardware (trackpads, wheels, iPhone Safari and LinkedIn in-app browser, Android) to tune the gesture model.
 - Phase 5: needs a spike on FLIP interruption and resize (native WAAPI; switch to GSAP Flip only if bugs cost more than a day).
-- Phase 8: depth-map production pipeline, the shader (if any) and placement need research.
+- Phase 8: Godot single-thread web export size and loading, and the CAD-to-web model pipeline (format, size, viewer) need research.

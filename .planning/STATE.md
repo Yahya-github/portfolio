@@ -62,7 +62,7 @@ Recent decisions affecting current work:
 
 - [Roadmap]: Hosting is Vercel (not GitHub Pages); yahya-h.dev is bought before the first deploy, so there is no basePath stage
 - [Roadmap]: Phase 1 is a design gate; no product code until the updated design doc is approved
-- [Roadmap]: Depth-map treatment (DSGN-05) is a parallel track (Phase 8) after Phase 3; it does not gate the Phase 7 launch, but v1 is complete only when it ships
+- [Phase 1 discuss]: Depth map and background visuals dropped (2026-11-06). Photos are plain greyscale (DSGN-05, now Phase 6). Phase 8 is now Interactive Proof (PROOF-01 Atlantis, PROOF-02 robot model), a parallel track that does not gate launch
 - [Roadmap]: Research phases 4 (pager core) and 5 (input model) merged into one phase for standard granularity
 
 ### Pending Todos

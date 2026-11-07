@@ -35,7 +35,7 @@ No product code. This phase delivers:
 - **D-12:** Projects: Facturo spans about 8 columns. The other four (Atlantis, CRC problems, robot firmware, Showdown AI) stack in the remaining 4 columns as compact rows (problem, role, result, links). The Facturo deep dive stays a separate route.
 - **D-13:** Experience: a ruled two-column table, with Work on the left and Involvement on the right. Hairline rules, years and roles flush left.
 - **D-14:** Say hi: three giant type lines for Email (copies the address on click), LinkedIn and GitHub, plus Resume as a fourth line.
-- **D-15:** About: text in Yahya's voice plus an image slot for a **real, recognisable portrait**, because recruiters should see his face. The depth map is a layer on top, not a replacement: the face must stay readable. This refines DSGN-05; the Phase 8 treatment must keep the portrait recognisable.
+- **D-15:** About: text in Yahya's voice plus an image slot for a **real, recognisable portrait**, because recruiters should see his face. Plain greyscale, no effect (see D-26).
 - **D-16:** Desktop compositions are approved now. Each page gets only a one-line note on its phone portrait intent; full phone layouts come in Phase 6.
 
 ### Old doc leftovers (rewrite = revision 5, in place)
@@ -50,6 +50,12 @@ No product code. This phase delivers:
 - **D-23:** Public resume PDF: freelance date fixed to "2025 – Present" and the phone number removed. Yahya edits it in JobOps Resume Studio and re-exports it.
 - **D-24:** Yahya already has the resume, Facturo screenshots, robot and Atlantis images, and his email, LinkedIn and GitHub URLs. They only need to be moved into `docs/material/`. He may add more (see Specific Ideas).
 - **D-25:** Approval: the doc header changes to `Status: APPROVED by Yahya, <date>` in a commit. The gate passes on that commit.
+
+### Visual "wow" direction (decided after the first context write)
+- **D-26:** **No depth map and no background visuals.** Depth map, nature simulations and procedural terrain were each tried and rejected: borrowed aesthetics, not Yahya's interests, and trying to look "cracked" is forced. The wow comes from (1) the YAHYA letter navigation, (2) craft (paging feel, giant Swiss type, precise cursor), (3) real interactive proof (playable Atlantis, rotatable robot model; Phase 8). All photos are plain greyscale with hard crops on the grid (DSGN-05 rewritten).
+- **D-27:** Green keeps "nature (as grandeur) and code" as private inspiration only; nature is never a visible theme.
+- **D-28:** Yahya's real interests outside code are competitive games and building machines/systems. They show up as content (wins, projects, the two habits in About), not as decoration.
+- **D-29:** The v7 sketch tests no background visuals; it judges the pages on type, grid and plain photos.
 
 ### Claude's Discretion
 - The exact font shortlist inside the four buckets
@@ -67,7 +73,7 @@ No product code. This phase delivers:
 
 ### Project scope and decisions
 - `.planning/PROJECT.md`: vision, constraints, Key Decisions table (research Decisions 1-6 already recorded there)
-- `.planning/REQUIREMENTS.md`: v1 requirements; CONT-02 ("giant" 75/75) and the "custom cursor" out-of-scope line are affected by D-11 and D-18
+- `.planning/REQUIREMENTS.md`: v1 requirements; DSGN-05 rewritten and PROOF-01/02 added (D-26); CONT-02 ("giant" 75/75) and the "custom cursor" out-of-scope line are still affected by D-11 and D-18
 - `.planning/ROADMAP.md` §Phase 1: success criteria 1-5
 
 ### Design
@@ -86,7 +92,7 @@ No product code. This phase delivers:
 - `/home/atlas/Downloads/DEVFEST 2026.jpeg`: portrait source (D-22)
 - `https://agisback.crcrobotics.com/fr/`: AG robotics team website (CRC). Optional. Use it as the outbound link on the robot firmware project and as a fact source for the CRC results.
 - `/home/atlas/Downloads/AG Logos Mø-Duel 2026/AG Logos Mø-Duel 2026/AG Files 2025-2026/AG_svg_files/`: team logo (SVG, black and white versions; PNGs in the sibling `AG_png_files/`). Optional. If used, only the single-colour white SVG, small, next to the robot project as attribution, never as decoration (DSGN-06). Skip `AG Online` (social banners) and the `__MACOSX` junk.
-- Robot 3D model: may arrive later; not needed for Phase 1. It feeds the Phase 6 robot project and Phase 8.
+- Robot 3D model: may arrive later; not needed for Phase 1. It feeds Phase 8 (PROOF-02).
 
 </canonical_refs>
 
@@ -110,7 +116,7 @@ No product code. This phase delivers:
 ## Specific Ideas
 
 - Yahya's "that kid is cracked" goal: the GDG backdrop in the portrait counts as quiet proof.
-- Assets Yahya may add (all real): proof sources for every claim (CCC 2026 result, DIRO hackathon, video game competition, CRC 2025/2026 results), more event or robot photos for the depth-map set, Showdown AI material or confirmation that it is "in progress" only, GitHub repo links per project, the robot CAD file (later), and any font licence he already owns.
+- Assets Yahya may add (all real): proof sources for every claim (CCC 2026 result, DIRO hackathon, video game competition, CRC 2025/2026 results), more real event or robot photos, Showdown AI material or confirmation that it is "in progress" only, GitHub repo links per project, the robot CAD file (later), and any font licence he already owns.
 
 </specifics>
 
@@ -120,8 +126,8 @@ No product code. This phase delivers:
 - Viscous goo cursor and the Sableye pink/green hint: dropped, not deferred
 - French version and `/fr` routes: v2
 - Full phone portrait layouts: Phase 6
-- Depth-map treatment of the portrait and project shots: Phase 8 (the face must stay readable, D-15)
-- Requirements updates triggered here: add a custom cursor requirement and remove the anti-feature line (D-18); possibly revise CONT-02 (D-11); refine DSGN-05 for a readable portrait (D-15)
+- Depth-map treatment: dropped (D-26), not deferred. Phase 8 is now Interactive Proof
+- Requirements updates applied 2026-11-06: DSGN-05 rewritten, PROOF-01/02 added. Still pending: a custom cursor requirement plus removing the anti-feature line (D-18); possibly CONT-02 (D-11)
 
 </deferred>
 

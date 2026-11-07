@@ -26,7 +26,8 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 - [ ] Experience: Work and Involvement lists
 - [ ] About ("Two habits") and Say hi (email, LinkedIn, GitHub)
 - [ ] Footer pager (00 / 05), "Next" control, progress bar
-- [ ] Depth-map aesthetic placed somewhere deliberate (leading idea: a real depth map of a portrait of Yahya on About) — placement still open
+- [ ] Real photos (portrait on About, project screenshots) in one plain greyscale treatment
+- [ ] Interactive proof: playable Atlantis in the browser and a rotatable 3D model of the robot
 - [ ] Accessible: keyboard navigation, focus states, inactive pages inert, reduced-motion versions of every animation, works without the pointer
 - [ ] Works on phones (swipe paging, letter rail scaled down)
 - [ ] Hero shows a role line and one proof line beside the giant YAHYA, readable with no interaction
@@ -80,16 +81,19 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 | Left rail kept; iOS edge-swipe mitigated (inset, edge exclusion, device test) | His choice "on the left for the name" (Decision 3) | — Pending |
 | Pages designed to fit one screen, inner scroll as safety net | Zoom/reflow accessibility (Decision 4) | — Pending |
 | Host on Vercel, not GitHub Pages | His choice; real headers, no basePath stage | — Pending |
-| Style-led "wow" over a story concept | He finds speed/"cracked" hard to convey; wow must come from craft (letters, depth-map imagery, distinct page compositions) | — Pending |
-| Green = nature and terminals | His meaning for the accent | — Pending |
-| Depth map = one treatment for all real photos/screenshots of his work | Solves missing visual proof and gives the aesthetic a purpose | — Pending |
+| Style-led "wow" over a story concept | He finds speed/"cracked" hard to convey; wow must come from craft (letters, distinct page compositions, real interactive proof) | — Pending |
+| Green = nature and terminals | His meaning for the accent | ⚠️ Refined 2026-11-06 (see below) |
+| Depth map = one treatment for all real photos/screenshots of his work | Solves missing visual proof and gives the aesthetic a purpose | ✗ Dropped 2026-11-06 |
 | Drop the 75-dot judge; static typographic 75/75 | Read as a loader in the Swiss direction | ✓ Good |
 | Remove pixel stickers; personality via About in his voice | Clash with dark Swiss | ✓ Good |
 | Facturo is the flagship project | Real users, 700+ tests | — Pending |
 | One motion rule: horizontal, fast, no bounce | Ties all animation together | — Pending |
 | Short first-visit intro (<1 s, skippable) | His request, bounded by recruiter research | — Pending |
 | Portrait phone version, no rotate gate | Recruiters open links on phones, often rotation-locked | — Pending |
-| Depth map placement deferred | He asked to focus on Swiss typography first | — Pending |
+| Depth map placement deferred | He asked to focus on Swiss typography first | ✗ Superseded 2026-11-06 |
+| No background visuals; wow = YAHYA letter nav + craft + real interactive proof | Depth map, nature simulations and procedural terrain were all tried and rejected as borrowed, not his; showing "cracked" visually reads as forced; the record proves it | — Pending |
+| Photos plain greyscale, hard grid crops | Recruiters should see his face and the real work | — Pending |
+| Green = nature (as grandeur) and code, private inspiration only | He is inspired by both but nature must not become a visible theme | — Pending |
 
 ## Evolution
 
