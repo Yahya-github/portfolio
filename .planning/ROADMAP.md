@@ -12,7 +12,7 @@ The site goes from an approved design to a live dark Swiss portfolio on Vercel a
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Design Gate** - Updated design doc approved for the dark Swiss horizontal direction, final font chosen, six page compositions defined, real material collected
+- [x] **Phase 1: Design Gate** - Updated design doc approved for the dark Swiss horizontal direction, final font chosen, six page compositions defined, real material collected (completed 2026-11-07)
 - [ ] **Phase 2: Live Deploy Spike** - Scaffolded Next.js static export live on Vercel at yahya-h.dev over HTTPS with self-hosted font, image and PDF
 - [ ] **Phase 3: Static Design System and Pages** - Tokens, grid, giant YAHYA letter links and all six pages server-rendered at their own routes, fully usable without JavaScript
 - [ ] **Phase 4: Horizontal Pager and Input** - One page per gesture by wheel, trackpad, keys and swipe, with real URLs, Back history and accessible page hand-off
@@ -42,7 +42,7 @@ Plans:
 - [x] 01-05-PLAN.md — Font pick checkpoint with Yahya (round 2 only if needed, max 2 rounds)
 - [x] 01-06-PLAN.md — v7 sketch: six compositions in the winning font, Achievements a/b and cursor a/b/c toggles
 - [x] 01-07-PLAN.md — v7 picks checkpoint (Achievements, cursor, portrait crop) and picks written into the doc and requirements
-- [ ] 01-08-PLAN.md — Pre-approval sweep and Yahya's approval commit (gate)
+- [x] 01-08-PLAN.md — Pre-approval sweep and Yahya's approval commit (gate)
 **UI hint**: yes
 
 ### Phase 2: Live Deploy Spike
@@ -139,7 +139,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Design Gate | 7/8 | In Progress|  |
+| 1. Design Gate | 8/8 | Complete   | 2026-11-07 |
 | 2. Live Deploy Spike | 0/TBD | Not started | - |
 | 3. Static Design System and Pages | 0/TBD | Not started | - |
 | 4. Horizontal Pager and Input | 0/TBD | Not started | - |
