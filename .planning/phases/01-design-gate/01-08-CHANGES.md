@@ -103,3 +103,118 @@ Plan 01-08 Task 2 (the approval checkpoint) came back with a change list, not an
 4. **ICPC row:** the entry is "McGill Compete, ICPC NENA" and the mark is ICPC's (the three squares). Is the ICPC mark right for that row, or would you rather have McGill Compete's own logo (none supplied)? At 28px the squares' line drawings are small; the "icpc" letters are the alternative.
 5. **GDG:** the mark is the generic Google Developer Groups chevron, not a "GDG on Campus McGill" chapter lockup. OK?
 6. **Rail hit size (build note, no answer needed now):** rail items are about 46x30px on desktop, which meets WCAG 2.5.8 (24x24). The doc's "44x44" target holds on touch in height (28px gap) but not in width (36px rail column on phones). Phase 5 sizes this.
+
+## Change round 2 (2026-11-07)
+
+### Yahya's reply (verbatim)
+
+> "club-of-the-year: https://www.instagram.com/p/DYPS2bGOAQy/; trophies-photo: https://www.instagram.com/p/DWmZr18kTA3/?img_index=1; facturo-showcase: the hitbox of the showcase is too big that's why it was stopping for no reason; design-inspo: https://www.behance.net/gallery/192265061/Swiss-Typography-Wallpaper-Pack/modules/1087550045, https://www.behance.net/gallery/239485669/Modern-Swiss-Typography-Poster-System-Exploratio, https://www.behance.net/gallery/221014645/50-Swiss-Style-Posters/modules/1260764327, [Image #11], grid guide https://swissgrid.posterhouse.org/; facturo-showcase-color: when going over the showcase it stops like usually but also shows color;"
+
+Follow-up (verbatim, relayed by the orchestrator):
+
+> "achievements: photo preview with color preferably and clicking doesn't make the photo stay;"
+
+### What was done
+
+| # | Item | Status | Commits |
+|---|------|--------|---------|
+| 1 | club-of-the-year / trophies-photo: Instagram links on the two CRC lines | Done | 59efe77 |
+| 2 | facturo-showcase: pause area too big | Fixed | 9ca7f32 |
+| 3 | facturo-showcase-color: colour while paused | Done | a4b863f |
+| 4 | design-inspo and grid guide | Recorded verbatim, pending discussion (no redesign) | 3ded714 |
+| 5 | Unanswered round-1 questions | Defaults applied and recorded | 3ded714 |
+| 6 | achievements: colour preview photos | Done | c623e9b |
+| 7 | achievements: clicked line keeps its photo | Fixed | c623e9b |
+
+**1. CRC lines link to the posts.**
+- The robot competition line (Club of the Year photo) links to https://www.instagram.com/p/DYPS2bGOAQy/. The programming line (trophies photo) links to https://www.instagram.com/p/DWmZr18kTA3/. The `?img_index=1` query was dropped because it only picks the first image of the post.
+- Both lines behave like the DIRO and game lines: `target="_blank" rel="noopener"`, cursor tag "See the post", and the preview source line now reads "Post, instagram.com".
+- links.md proof table: both URLs answered 200 with no redirect to a plain request, recorded as such. Instagram gates post content from scripts, so the post body was not read and the account name is not known. Fetching the preview metadata with a crawler user agent was refused by the tool permission system, and that was not pursued.
+- Doc: "both CRC lines are not links" is replaced. Only the CCC line is not a link now. CONT-10 says "public source (an article or a post)".
+
+**2. Facturo pause area.**
+- **Root cause:** `pointerenter` and `pointerleave` were on `.proj .lead`, the whole cols 1-8 block: the frame, the controls, the "Facturo" heading, the two lines, the deep-dive link and the block's bottom padding. At 1440 that block is 882x748px (x 80-962, y 96-844), but the frame is 882x426px (y 96-522). With real Playwright pointer moves, before the fix the reel paused 2px below the frame, on the heading (120,602), on the paragraph (180,784) and in the bottom padding (480,840). It behaved the same at 1366 (block y 96-712, frame y 96-396).
+- **Fix:** hover is a geometry test against the visible frame. For landscape frames that is the reel box. For the portrait phone frame (`object-fit: contain`) it is the centred picture at its current push-in scale, clipped to the reel. The test also runs when a frame changes under a still pointer. The three control buttons each count as hover too. Keyboard pause is limited to the frame and the controls.
+- **Verified** with real pointer moves at 1440x900, 1366x768 and 390x844 (57 probes, 0 wrong):
+  - Inside the frame, at its centre and 3px in from two opposite corners: paused.
+  - 2px outside on all four sides: running.
+  - Heading, paragraph, bottom padding, the gap between Pause and Previous, and the counter text: running.
+  - Next button: paused.
+  - Phone frame: on the picture, paused. 14px beside it on either side (clear of the 1.06 push-in) and in the empty reel corner: running.
+
+**3. Facturo colour.**
+- Each frame is now a `.fr` holding its grey picture and a colour twin `img.c`. The twin's `data-src` is `screenshots/facturo-NN-*.png`. All 10 twins exist, have the same size as their grey files, and hold only IHDR/IDAT/IEND chunks. They load on demand: the current frame and its neighbours.
+- One condition, `engaged()`, drives both pause and colour, so they cannot disagree. It is true for:
+  - the pointer on the visible frame or on a control;
+  - keyboard `:focus-visible` on the frame or a control (the frame is now `tabindex="0"`, and a mouse click does not focus it);
+  - a tap on the frame on touch, released by a second tap; swipes are ignored.
+- Previous and Next while engaged wait for the new frame's colour, so it arrives in colour. Leaving returns to grey and resumes. Paging away clears the state. Under reduced motion the swap is instant (`transition: none`).
+- Doc: the Facturo screenshots join the portrait and logos as colour exceptions, not accent uses. Facturo's brand green inside the screenshots is content. DSGN-05 and CONT-11 updated.
+- **Verified** with real input, 21/21 PASS:
+  - rest grey; hover shows colour (`facturo-01-accueil.png`) and pauses; unhover goes grey and runs;
+  - hovering Next shows colour; clicking Next shows the new frame (02) in colour, paused; Prev twice gives frame 10 in colour;
+  - leaving the controls goes grey; hover then page away clears colour; back with the pointer elsewhere stays grey and running;
+  - keyboard focus on the frame gives colour and pause; Tab to Pause stays in colour; Tab out to "Read the deep dive" goes grey and runs;
+  - a mouse click does not focus the frame;
+  - phone frame: beside the picture grey and running, on it colour;
+  - touch tap: colour and pause; second tap: grey and running;
+  - reduced motion: instant colour (`0s`), Next then back on the frame shows colour, unhover goes grey;
+  - no page errors.
+
+**4. Design inspiration and grid guide (pending discussion).** Recorded verbatim in the design doc, new section 3.1 References. Nothing was redesigned.
+- https://www.behance.net/gallery/192265061/Swiss-Typography-Wallpaper-Pack/modules/1087550045
+- https://www.behance.net/gallery/239485669/Modern-Swiss-Typography-Poster-System-Exploratio
+- https://www.behance.net/gallery/221014645/50-Swiss-Style-Posters/modules/1260764327
+- [Image #11] (pasted in chat, not saved to the repo)
+- Grid guide: https://swissgrid.posterhouse.org/
+
+**5. Defaults for the unanswered round-1 questions** (recorded in the doc's Experience section as defaults, which Yahya may still override):
+- Logos: dim grey mono, brand colours on hover or tap.
+- The Facturo mark keeps its brand green on hover. It is content, not the accent.
+- The ICPC three-square mark stays on the McGill Compete / ICPC NENA row.
+- The generic GDG chevron stays.
+- Round-1 question 1 (the Club of the Year caption wording) is still open. The source line of that caption is now "Post, instagram.com".
+
+**6. Colour preview photos.**
+- The hover and focus preview loads the colour original through `<picture><source media="(hover: hover) and (min-width: 821px)" srcset="<name>.jpg">`. The grey `<img>` stays as the fallback, so each context fetches one file.
+- All four colour files exist (`diro-hackathon-2026-award.jpg`, `game-competition-2026-team.jpg`, `club-of-the-year-award.jpg`, `crc-2026-trophies.jpg`). Each matches its grey twin's size, and exiftool finds no EXIF, XMP, IPTC, GPS, ICC or comment metadata (JFIF header only).
+- **Choice on touch and phones:** the inline thumbnails stay greyscale. They are on screen at rest under each line and there is no hover moment, so colour there would break "photos are greyscale at rest". Every other colour exception (portrait, marks, Facturo) is grey at rest and colour on interaction. In the 390 screenshot the grey thumbnails sit well with the list.
+- Doc: the previews are the fourth colour exception ("anything on screen at rest stays greyscale"). CONT-10 and DSGN-05 updated.
+
+**7. Clicked line keeps its photo.**
+- **Root cause:** the same family as the round-1 freeze. The CSS showed the preview on `li:focus-within`. A link clicked with the mouse keeps focus while its source opens in a new tab, so after coming back and moving away the photo stayed. Reproduced on the pre-fix file with real input: "line 1 clicked, back, pointer moved away: shown=1" and the same for line 3. The CCC line (a focusable div) had the same problem after a mouse click.
+- **Fix:** the preview shows on `:hover` or `li:has(.row:focus-visible)` only. Window `blur` and `visibilitychange` also add `.quiet` to the page, which hides hover-only previews (desktop only) until the pointer really moves again or leaves the page, so a stale `:hover` on return does not bring the photo back.
+- **Verified** with real input, 17/17 PASS:
+  - hover on lines 1-4 shows the colour photo;
+  - line 1 and line 3 are clicked (a new tab opens, stubbed), then the test switches back. With the pointer resting on the line after a blur: hidden. A real move over it: shown. Pointer moved away: hidden, even though focus is still on the link. Hovering again: shown;
+  - the CCC line clicked then left: hidden;
+  - keyboard focus on line 1 and Tab to lines 2 and 3 show each preview (in colour);
+  - on a 390 touch phone the inline thumbnails are visible and grey.
+  - Headless Chrome does not blur the opener when the new tab opens, so the test sends the blur a real browser sends.
+
+### Verification
+
+- `bash .planning/phases/01-design-gate/check.sh`: 18 PASS and 1 FAIL. SC-1c fails because the doc is not approved, as expected:
+  `PASS SC-1a, PASS SC-1b, FAIL SC-1c, PASS SC-2a, PASS SC-2b, PASS SC-2c, PASS SC-3a, PASS SC-3b, PASS SC-3c, PASS SC-3d, PASS SC-4a, PASS SC-4b, PASS SC-4c, PASS SC-4d, PASS SC-4e, PASS SC-4f, PASS SC-5a, PASS SC-5b, PASS REQ-edits`
+- Round-1 walkthrough regression, re-run after items 2 and 3, all PASS:
+  - rapid hover in/out x40, then away, advances;
+  - hovering holds; leaving resumes;
+  - mouse Next/Prev/Next, then leave, advances;
+  - Pause holds after leaving; Play resumes;
+  - hover in/out during a crossfade advances;
+  - keyboard focus in the controls holds; Tab out resumes;
+  - hover, page away, back, pointer elsewhere advances;
+  - hover, wheel away, key back, move away advances;
+  - tab hidden holds; tab visible resumes;
+  - Next at 4.95s of a 5.2s frame: exactly one step (`reel3`);
+  - 30s auto-play steps 03 to 09 in order.
+
+  The older `reel2` "Next late in a frame" line reports 03 instead of 02 on both the pre-change and the new file. Its 900ms load wait plus 4800ms is past one 5.2s frame, so the reel is already on 02 when Next is clicked, and it then steps exactly once. This is a timing flaw in that test, not a regression; `reel3` is the exact check.
+- Screenshots looked at, Projects (rest and hover or tap) and Achievements (hover on lines 1, 3 and 4 on desktop; top and bottom on the phone), at 1440x900, 1366x768 and 390x844: no page errors. Previews stay inside the viewport, the phone frame is centred, and colour shows only while engaged.
+- v7: the inline script parses. The 01-06 banned patterns all count 0. The design doc has 0 em dashes, its Status line still reads DRAFT, and no APPROVED line exists.
+
+### Needs Yahya
+
+1. Discuss the design references (item 4); the orchestrator is handling this.
+2. Round-1 question 1 is still open: the Club of the Year caption wording "Our school's Club of the Year", alt "The team on stage with its school's Club of the Year award".
+3. Achievement thumbnails on phones are greyscale (item 6 choice). Say if you want them in colour there too.
