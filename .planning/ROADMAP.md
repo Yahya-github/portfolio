@@ -54,7 +54,14 @@ Plans:
   2. The placeholder renders the chosen font, one image and a link to the resume PDF, all served from yahya-h.dev itself (no third-party asset requests in the network panel)
   3. A pull request runs lint, type check, unit tests and Playwright against the built static export, and a failure blocks the merge
   4. The baseline JavaScript size of the empty App Router build is measured and written down
-**Plans**: TBD
+**Plans**: 6 plans
+Plans:
+- [ ] 02-01-PLAN.md — Domain rename to yahya-hallani.dev in live docs; STACK.md rewritten for Vercel and CLAUDE.md regenerated (folded todo)
+- [ ] 02-02-PLAN.md — Hand-written Next 16.4.5 export scaffold: pins, configs, bare placeholder (Instrument Sans, portrait, resume PDF, noindex), shortSha unit test
+- [ ] 02-03-PLAN.md — vercel.json headers + test, measure-js baseline gate, Playwright e2e (first-party, CSP, axe), 4-job CI workflow
+- [ ] 02-04-PLAN.md — Public-safety audit (gitleaks) + Yahya sign-off, then public repo Yahya-github/portfolio and first green CI
+- [ ] 02-05-PLAN.md — Branch protection on main (4 required checks, 0 approvals, admin bypass) + failing-PR merge-gate proof
+- [ ] 02-06-PLAN.md — Yahya connects Vercel (import, Corepack, domains, public previews); live checks; baseline JS write-up via gated PR + redeploy proof
 
 ### Phase 3: Static Design System and Pages
 **Goal**: All six pages exist as real, readable, server-rendered HTML in the dark Swiss system, and the giant YAHYA letters already work as navigation, even without JavaScript
@@ -140,7 +147,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Design Gate | 8/8 | Complete   | 2026-11-07 |
-| 2. Live Deploy Spike | 0/TBD | Not started | - |
+| 2. Live Deploy Spike | 0/6 | Planned | - |
 | 3. Static Design System and Pages | 0/TBD | Not started | - |
 | 4. Horizontal Pager and Input | 0/TBD | Not started | - |
 | 5. Letter Navigation and Motion | 0/TBD | Not started | - |
