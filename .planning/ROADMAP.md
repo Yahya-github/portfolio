@@ -60,7 +60,7 @@ Plans:
 - [x] 02-02-PLAN.md — Hand-written Next 16.4.5 export scaffold: pins, configs, bare placeholder (Instrument Sans, portrait, resume PDF, noindex), shortSha unit test
 - [x] 02-03-PLAN.md — vercel.json headers + test, measure-js baseline gate, Playwright e2e (first-party, CSP, axe), 4-job CI workflow
 - [x] 02-04-PLAN.md — Public-safety audit (gitleaks) + Yahya sign-off, then public repo Yahya-github/portfolio and first green CI
-- [ ] 02-05-PLAN.md — Branch protection on main (4 required checks, 0 approvals, admin bypass) + failing-PR merge-gate proof
+- [x] 02-05-PLAN.md — Branch protection on main (4 required checks, 0 approvals, admin bypass) + failing-PR merge-gate proof
 - [ ] 02-06-PLAN.md — Yahya connects Vercel (import, Corepack, domains, public previews); live checks; baseline JS write-up via gated PR + redeploy proof
 
 ### Phase 3: Static Design System and Pages
@@ -147,7 +147,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Design Gate | 8/8 | Complete   | 2026-11-07 |
-| 2. Live Deploy Spike | 4/6 | In Progress|  |
+| 2. Live Deploy Spike | 5/6 | In Progress|  |
 | 3. Static Design System and Pages | 0/TBD | Not started | - |
 | 4. Horizontal Pager and Input | 0/TBD | Not started | - |
 | 5. Letter Navigation and Motion | 0/TBD | Not started | - |
