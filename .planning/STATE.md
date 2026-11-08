@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 2 context gathered
-last_updated: "2026-11-08T01:44:16.879Z"
-last_activity: 2026-11-08 -- Phase 02 execution started
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-11-08T01:47:53.348Z"
+last_activity: 2026-11-08
 progress:
   total_phases: 8
   completed_phases: 1
   total_plans: 14
-  completed_plans: 8
+  completed_plans: 9
   percent: 13
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-11-06)
 ## Current Position
 
 Phase: 02 (live-deploy-spike) — EXECUTING
-Plan: 1 of 6
-Status: Executing Phase 02
-Last activity: 2026-11-08 -- Phase 02 execution started
+Plan: 2 of 6
+Status: Ready to execute
+Last activity: 2026-11-08
 
-Progress: [██████████] 100%
+Progress: [██████░░░░] 64%
 
 ## Performance Metrics
 
@@ -60,6 +60,7 @@ Progress: [██████████] 100%
 | Phase 01 P06 | 13 min | 3 tasks | 2 files |
 | Phase 01 P07 | 30 min | 3 tasks | 9 files |
 | Phase 01 P08 | 281 min | 3 tasks | 46 files |
+| Phase 02 P01 | 6 min | 2 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -89,11 +90,12 @@ Recent decisions affecting current work:
 - [Phase 1 P07]: Hero FLIP targets are measured relative to the sliding track, fixing letters vanishing when paging back to the Index
 - [Phase 1 P08]: Design doc revision 5 approved by Yahya 2026-11-07 (commit 030fee1); Phase 1 gate 19/19
 - [Phase 1 P08]: Experience Work runs newest first with a MAME Developer row (since Nov 2026); below 880px height ruled rows close to 8px and Experience heads cap to the free height
+- [Phase 2 P01]: Domain is yahya-hallani.dev (Vercel Domains); apex canonical, www 308 to apex; earlier short domain dropped
+- [Phase 2 P01]: CLAUDE.md stack block regenerated from research/STACK.md (Vercel only); STACK.md notes must be headings, bullets or tables to survive generation
 
 ### Pending Todos
 
 - Update ~/.claude/skills/portfolio-design and portfolio-voice-and-facts to match design doc rev 5 (approved 2026-11-07) (`.planning/todos/pending/2026-11-07-update-portfolio-skills-to-design-rev-5.md`)
-- Regenerate the CLAUDE.md stack section for Vercel (GitHub Pages notes are stale) (`.planning/todos/pending/2026-11-07-regenerate-claude-md-stack-for-vercel.md`)
 
 ### Blockers/Concerns
 
@@ -112,6 +114,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-07T23:50:57.734Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-live-deploy-spike/02-CONTEXT.md
+Last session: 2026-11-08T01:47:26.849Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: None
