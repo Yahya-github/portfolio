@@ -1,4 +1,4 @@
-# Yahya Hallani — Portfolio (yahya-h.dev)
+# Yahya Hallani — Portfolio (yahya-hallani.dev)
 
 ## What This Is
 
@@ -61,7 +61,7 @@ Phase 1 (Design Gate) complete 2026-11-07: design doc revision 5 approved by Yah
 ## Constraints
 
 - **Tech stack**: Next.js static export hosted on Vercel (switched from GitHub Pages 2026-11-06) — free hobby tier, real headers, no basePath stage
-- **Domain**: yahya-h.dev (not bought yet)
+- **Domain**: yahya-hallani.dev (bought on Vercel Domains 2026-11-07; apex is canonical, www redirects to the apex; the earlier short domain was dropped)
 - **Content**: only verified, real facts; no invented numbers
 - **Assets**: self-host fonts and media; no hotlinked sprites in production
 - **Process**: no product code until the design doc is approved (brainstorming gate)
@@ -80,7 +80,7 @@ Phase 1 (Design Gate) complete 2026-11-07: design doc revision 5 approved by Yah
 | Real URLs per page, Back steps through pages | Shareable links, per-page metadata, no load flash (research Decision 1) | — Pending |
 | Letters-to-rail FLIP with the native Web Animations API, no library | 0 kB, interruptible; swap to GSAP Flip only if bugs cost over a day (Decision 2) | — Pending |
 | Add a resume PDF | Recruiters expect it (Decision 5) | — Pending |
-| Buy yahya-h.dev before the first deploy | Avoids the basePath stage and asset-path bugs (Decision 6) | — Pending |
+| Domain yahya-hallani.dev, bought on Vercel before the first deploy (earlier short domain dropped) | Avoids the basePath stage and asset-path bugs (Decision 6); apex canonical, www 308 to apex (D-02) | ✓ Good |
 | Left rail kept; iOS edge-swipe mitigated (inset, edge exclusion, device test) | His choice "on the left for the name" (Decision 3) | — Pending |
 | Pages designed to fit one screen, inner scroll as safety net | Zoom/reflow accessibility (Decision 4) | — Pending |
 | Host on Vercel, not GitHub Pages | His choice; real headers, no basePath stage | — Pending |

@@ -1,4 +1,4 @@
-# Requirements — Yahya Hallani Portfolio (yahya-h.dev)
+# Requirements — Yahya Hallani Portfolio (yahya-hallani.dev)
 
 Version 1 scope. Design comes first; final copy is written by Yahya later (content lives in data files so wording can change without touching components).
 
@@ -64,7 +64,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [ ] **A11Y-05**: With JavaScript disabled all text is present and every letter link still reaches its page
 
 ### Deployment (DEP)
-- [ ] **DEP-01**: Site is live on Vercel at yahya-h.dev over HTTPS (domain bought before the first deploy)
+- [ ] **DEP-01**: Site is live on Vercel at yahya-hallani.dev over HTTPS (apex is canonical; www.yahya-hallani.dev redirects to the apex)
 - [ ] **DEP-02**: Fonts, images and the resume are self-hosted (no hotlinked assets)
 
 ## v2 Requirements (deferred)
