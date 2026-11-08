@@ -11,14 +11,28 @@ test("all assets first-party; font, image and PDF load; page is noindex", async 
     const u = r.url();
     if (!u.startsWith(origin) && !u.startsWith("data:")) foreign.push(u);
   });
+  const fontStatuses: number[] = [];
+  page.on("response", (r) => {
+    if (/\/_next\/static\/media\/[^/?]+\.woff2(?:\?|$)/.test(r.url())) {
+      fontStatuses.push(r.status());
+    }
+  });
   await page.goto("/", { waitUntil: "networkidle" });
   expect(foreign).toEqual([]);
 
+  // The self-hosted WOFF2 must actually be fetched from /_next/static/media.
+  expect(fontStatuses.length).toBeGreaterThan(0);
+  expect(fontStatuses.every((s) => s === 200)).toBe(true);
+
   // The family string comes from the exported const name in app/fonts.ts.
+  // Match it exactly: next/font also emits an "instrumentSans Fallback" face
+  // backed by local(Arial), which must not satisfy this check.
   const fontLoaded = await page.evaluate(async () => {
     await document.fonts.ready;
     return [...document.fonts].some(
-      (f) => f.status === "loaded" && f.family.includes("instrumentSans"),
+      (f) =>
+        f.status === "loaded" &&
+        f.family.replace(/["']/g, "") === "instrumentSans",
     );
   });
   expect(fontLoaded).toBe(true);
