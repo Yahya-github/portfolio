@@ -13,7 +13,7 @@ The site goes from an approved design to a live dark Swiss portfolio on Vercel a
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Design Gate** - Updated design doc approved for the dark Swiss horizontal direction, final font chosen, six page compositions defined, real material collected (completed 2026-11-07)
-- [ ] **Phase 2: Live Deploy Spike** - Scaffolded Next.js static export live on Vercel at yahya-hallani.dev over HTTPS with self-hosted font, image and PDF
+- [x] **Phase 2: Live Deploy Spike** - Scaffolded Next.js static export live on Vercel at yahya-hallani.dev over HTTPS with self-hosted font, image and PDF (completed 2026-11-08)
 - [ ] **Phase 3: Static Design System and Pages** - Tokens, grid, giant YAHYA letter links and all six pages server-rendered at their own routes, fully usable without JavaScript
 - [ ] **Phase 4: Horizontal Pager and Input** - One page per gesture by wheel, trackpad, keys and swipe, with real URLs, Back history and accessible page hand-off
 - [ ] **Phase 5: Letter Navigation and Motion** - Letters glide from the hero into the left rail, footer pager, first-visit hint, opening animation and reduced-motion versions
@@ -61,7 +61,7 @@ Plans:
 - [x] 02-03-PLAN.md — vercel.json headers + test, measure-js baseline gate, Playwright e2e (first-party, CSP, axe), 4-job CI workflow
 - [x] 02-04-PLAN.md — Public-safety audit (gitleaks) + Yahya sign-off, then public repo Yahya-github/portfolio and first green CI
 - [x] 02-05-PLAN.md — Branch protection on main (4 required checks, 0 approvals, admin bypass) + failing-PR merge-gate proof
-- [ ] 02-06-PLAN.md — Yahya connects Vercel (import, Corepack, domains, public previews); live checks; baseline JS write-up via gated PR + redeploy proof
+- [x] 02-06-PLAN.md — Yahya connects Vercel (import, Corepack, domains, public previews); live checks; baseline JS write-up via gated PR + redeploy proof
 
 ### Phase 3: Static Design System and Pages
 **Goal**: All six pages exist as real, readable, server-rendered HTML in the dark Swiss system, and the giant YAHYA letters already work as navigation, even without JavaScript
@@ -147,7 +147,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Design Gate | 8/8 | Complete   | 2026-11-07 |
-| 2. Live Deploy Spike | 5/6 | In Progress|  |
+| 2. Live Deploy Spike | 6/6 | Complete   | 2026-11-08 |
 | 3. Static Design System and Pages | 0/TBD | Not started | - |
 | 4. Horizontal Pager and Input | 0/TBD | Not started | - |
 | 5. Letter Navigation and Motion | 0/TBD | Not started | - |
