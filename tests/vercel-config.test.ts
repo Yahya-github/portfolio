@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 type HeaderEntry = { key: string; value: string };
@@ -10,9 +11,10 @@ type VercelConfig = {
 const ALL_PATHS = "/(.*)";
 const ONE_YEAR_SECONDS = 31536000;
 
+// jsdom gives import.meta.url a non-file scheme, so resolve from the Vitest root.
 function loadConfig(): VercelConfig {
   return JSON.parse(
-    readFileSync(new URL("../vercel.json", import.meta.url), "utf8"),
+    readFileSync(join(process.cwd(), "vercel.json"), "utf8"),
   ) as VercelConfig;
 }
 
