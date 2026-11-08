@@ -30,7 +30,7 @@ Anti-goals (any of these makes the site a failure even if it technically works):
 
 - **Stack:** Next.js static export (`output: 'export'`) hosted on Vercel. Custom headers through `vercel.json` are available. There is no basePath stage: the site lives at the domain root.
 - **Self-hosting:** fonts, images and the resume are self-hosted (DEP-02). Nothing is hotlinked in production.
-- **Performance budget:** landing JavaScript under about 150 kB gzipped, CSS under 30 kB, LCP under 2.5 s, CLS under 0.1, INP under 200 ms. Measure; do not guess.
+- **Performance budget:** landing JavaScript under about 150 kB gzipped, CSS under 30 kB, LCP under 2.5 s, CLS under 0.1, INP under 200 ms. Measure; do not guess. Baseline (Phase 2, 2026-11-07): the empty App Router build loads 132.1 kB gzip / 112.5 kB brotli of JS on `/`; see `docs/reference/perf-baseline.md`.
 - **Accessibility:** WCAG AA contrast, full keyboard use, reduced motion honoured, and every page works without JavaScript.
 - **Routes:** English only: `/achievements/`, `/projects/`, `/experience/`, `/about/`, `/say-hi/` and `/projects/facturo/`. French is v2; copy lives in data files so adding it stays cheap (D-20).
 - **Facts:** only facts from `portfolio-voice-and-facts` and the resume. No phone number. The CRC contest platform is not mentioned anywhere.
