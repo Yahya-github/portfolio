@@ -68,7 +68,7 @@ Progress: [██████████] 100%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- [Roadmap]: Hosting is Vercel (not GitHub Pages); yahya-h.dev is bought before the first deploy, so there is no basePath stage
+- [Roadmap]: Hosting is Vercel (not GitHub Pages); the domain is yahya-hallani.dev, bought on Vercel Domains, so there is no basePath stage
 - [Roadmap]: Phase 1 is a design gate; no product code until the updated design doc is approved
 - [Phase 1 discuss]: Depth map and background visuals dropped (2026-11-06). Photos are plain greyscale (DSGN-05, now Phase 6). Phase 8 is now Interactive Proof (PROOF-01 Atlantis, PROOF-02 robot model), a parallel track that does not gate launch
 - [Roadmap]: Research phases 4 (pager core) and 5 (input model) merged into one phase for standard granularity
@@ -97,7 +97,6 @@ Recent decisions affecting current work:
 
 ### Blockers/Concerns
 
-- yahya-h.dev must be bought before Phase 2 (the `.dev` HTTPS setup can take up to 24 h)
 - Material collected (plan 04); still missing: Atlantis screenshots (to capture), higher-res robot CAD capture, physical robot photo (see docs/material/links.md)
 - Font decided (Instrument Sans 700, wdth 75 display, plan 05); every Display word fits incl. "Achievements" on a 390px phone; poster is height-bound at 1366x768
 - Phase 4 needs real devices: Mac trackpad, Magic Mouse, Windows wheel, Linux touchpad, iPhone (Safari and LinkedIn in-app browser), Android

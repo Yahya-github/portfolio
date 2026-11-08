@@ -1,8 +1,8 @@
-# Roadmap: Yahya Hallani Portfolio (yahya-h.dev)
+# Roadmap: Yahya Hallani Portfolio (yahya-hallani.dev)
 
 ## Overview
 
-The site goes from an approved design to a live dark Swiss portfolio on Vercel at yahya-h.dev. Phase 1 is a design gate: no product code until Yahya approves the updated design doc, the final font, each page's composition and the real material (photos, screenshots, resume, links). After that, a live deploy spike proves the hosting. Then come a static, server-rendered version of all six pages that works without JavaScript, the horizontal pager with its input model tuned on real hardware, the signature letters-to-rail navigation and its motion, the six page compositions with their content, and finally his own copy, sharing metadata and launch checks. Interactive proof (playable Atlantis, rotatable robot model) is its own track. It can start once the static pages exist, and it does not block the launch.
+The site goes from an approved design to a live dark Swiss portfolio on Vercel at yahya-hallani.dev. Phase 1 is a design gate: no product code until Yahya approves the updated design doc, the final font, each page's composition and the real material (photos, screenshots, resume, links). After that, a live deploy spike proves the hosting. Then come a static, server-rendered version of all six pages that works without JavaScript, the horizontal pager with its input model tuned on real hardware, the signature letters-to-rail navigation and its motion, the six page compositions with their content, and finally his own copy, sharing metadata and launch checks. Interactive proof (playable Atlantis, rotatable robot model) is its own track. It can start once the static pages exist, and it does not block the launch.
 
 ## Phases
 
@@ -13,7 +13,7 @@ The site goes from an approved design to a live dark Swiss portfolio on Vercel a
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Design Gate** - Updated design doc approved for the dark Swiss horizontal direction, final font chosen, six page compositions defined, real material collected (completed 2026-11-07)
-- [ ] **Phase 2: Live Deploy Spike** - Scaffolded Next.js static export live on Vercel at yahya-h.dev over HTTPS with self-hosted font, image and PDF
+- [ ] **Phase 2: Live Deploy Spike** - Scaffolded Next.js static export live on Vercel at yahya-hallani.dev over HTTPS with self-hosted font, image and PDF
 - [ ] **Phase 3: Static Design System and Pages** - Tokens, grid, giant YAHYA letter links and all six pages server-rendered at their own routes, fully usable without JavaScript
 - [ ] **Phase 4: Horizontal Pager and Input** - One page per gesture by wheel, trackpad, keys and swipe, with real URLs, Back history and accessible page hand-off
 - [ ] **Phase 5: Letter Navigation and Motion** - Letters glide from the hero into the left rail, footer pager, first-visit hint, opening animation and reduced-motion versions
@@ -46,12 +46,12 @@ Plans:
 **UI hint**: yes
 
 ### Phase 2: Live Deploy Spike
-**Goal**: A minimal build is live at yahya-h.dev on Vercel, which proves the hosting, domain, assets and CI before any real feature work
+**Goal**: A minimal build is live at yahya-hallani.dev on Vercel, which proves the hosting, domain, assets and CI before any real feature work
 **Depends on**: Phase 1
 **Requirements**: DEP-01, DEP-02
 **Success Criteria** (what must be TRUE):
-  1. Opening https://yahya-h.dev shows the placeholder build over HTTPS with no certificate warning, and pushing to the main branch redeploys it on Vercel
-  2. The placeholder renders the chosen font, one image and a link to the resume PDF, all served from yahya-h.dev itself (no third-party asset requests in the network panel)
+  1. Opening https://yahya-hallani.dev shows the placeholder build over HTTPS with no certificate warning, and pushing to the main branch redeploys it on Vercel
+  2. The placeholder renders the chosen font, one image and a link to the resume PDF, all served from yahya-hallani.dev itself (no third-party asset requests in the network panel)
   3. A pull request runs lint, type check, unit tests and Playwright against the built static export, and a failure blocks the merge
   4. The baseline JavaScript size of the empty App Router build is measured and written down
 **Plans**: 6 plans
@@ -83,7 +83,7 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. One wheel notch or one trackpad flick moves exactly one page, and trackpad momentum never skips a page (verified on a Mac trackpad, a Magic Mouse, a Windows wheel and a Linux touchpad, plus recorded-trace tests)
   2. Arrow keys, Page Up/Down, Space and Home/End page correctly; on a phone a horizontal swipe pages, and a swipe that starts at the left edge is left to the system back gesture (tested on a real iPhone in Safari and the LinkedIn in-app browser, and on Android)
-  3. Opening yahya-h.dev/projects/ lands directly on Projects; the URL updates on every page change, and the browser Back button steps back through the visited pages
+  3. Opening yahya-hallani.dev/projects/ lands directly on Projects; the URL updates on every page change, and the browser Back button steps back through the visited pages
   4. Every page fits one screen at 1366x768; at 200% zoom or on a short screen the page scrolls vertically, and paging happens only once the visitor reaches its edge
   5. Keyboard and screen-reader users only reach the current page; after a page change focus moves to the new page's heading and a live region announces the page
 **Plans**: TBD
@@ -123,7 +123,7 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. About ("Two habits") and all other text are Yahya's final, approved copy in the data files, and every fact on the site has been checked against a real source
   2. Each page has its own title, description and canonical URL, and a search engine sees Person structured data
-  3. Pasting yahya-h.dev into LinkedIn shows a branded preview card; the tab shows the favicon; a mistyped URL shows an on-brand 404 that leads back into the site
+  3. Pasting yahya-hallani.dev into LinkedIn shows a branded preview card; the tab shows the favicon; a mistyped URL shows an on-brand 404 that leads back into the site
   4. A five-second test with someone new shows they can say who Yahya is, one proof point and how to contact him; axe, Lighthouse budgets and a VoiceOver or NVDA pass are clean
 **Plans**: TBD
 **UI hint**: yes

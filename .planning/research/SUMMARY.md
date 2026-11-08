@@ -1,6 +1,6 @@
 # Project Research Summary
 
-**Project:** Yahya Hallani Portfolio (yahya-h.dev)
+**Project:** Yahya Hallani Portfolio (yahya-hallani.dev)
 **Domain:** Static, animation-heavy personal developer portfolio (dark Swiss, six horizontal full-screen pages, name-as-navigation)
 **Researched:** 2026-11-06
 **Confidence:** MEDIUM-HIGH
@@ -39,7 +39,7 @@ Rail stays left (his choice). Mitigations: inset letters 24-32 px on phones; ign
 ### 5. Resume PDF
 **Add it:** "Resume (PDF)" on Say hi plus one always-reachable spot; self-hosted; public, so omit home address/phone if desired.
 
-### 6. Buy yahya-h.dev before first deploy
+### 6. Domain yahya-hallani.dev bought before first deploy
 - A. Buy first, no `basePath` stage; `.dev` HTTPS wait (up to 24 h) happens in Phase 2.
 - B. Deploy at `<user>.github.io/portfolio` first; every raw asset URL needs `withBase()`; second cutover later.
 **Recommendation: A.** Verify domain in GitHub before DNS; set it in repo Settings > Pages; keep `basePath: process.env.PAGES_BASE_PATH`.

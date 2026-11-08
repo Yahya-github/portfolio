@@ -154,9 +154,9 @@ Each page is designed as a 1440x900 poster. On a 1366x768 laptop, at 200% browse
 - Add a visually hidden **`<h1>Yahya Hallani, Software Engineering student at McGill</h1>`**. Make the giant letters a `<nav aria-label="Sections">` whose links are named for their sections. Keep the visible caption text inside each accessible name, for example "Y, 01 Achievements", to satisfy WCAG 2.5.3 Label in Name. Only mark the decorative glyph spans `aria-hidden` if the label still contains the visible text.
 - Render **all six sections into the exported HTML** as server components, and keep only the motion layer client-side. Content offset by a transform is still indexed.
 - Use the Metadata API: a real `title`, `description` and `openGraph`, plus a static OG image (a 1200x630 PNG in `public/`, or a statically generated `opengraph-image`). Add `sitemap.ts` and `robots.ts`, which both export statically, and JSON-LD `Person` with `sameAs` links to LinkedIn and GitHub.
-- Set `metadataBase` to `https://yahya-h.dev` so OG URLs are absolute.
+- Set `metadataBase` to `https://yahya-hallani.dev` so OG URLs are absolute.
 
-**Warning signs:** `curl https://yahya-h.dev | grep Projects` returns nothing. LinkedIn Post Inspector shows no image.
+**Warning signs:** `curl https://yahya-hallani.dev | grep Projects` returns nothing. LinkedIn Post Inspector shows no image.
 
 **Phase to address:** Foundation phase (metadata and semantic skeleton) and the pre-launch phase (validate previews and Search Console).
 
@@ -239,10 +239,10 @@ Three.js plus a depth texture adds 150 to 600 KB to the first load, even though 
 
 **What goes wrong (each item confirmed in official docs or a widely repeated issue):**
 - **`_next/` assets return 404.** GitHub Pages runs Jekyll, which ignores folders whose names start with `_`. Fix: add an empty `.nojekyll` to `public/`, or deploy with the official `actions/deploy-pages` workflow (artifact upload, no Jekyll).
-- **`basePath` mismatch.** While the site lives at `user.github.io/portfolio`, it needs `basePath: '/portfolio'`. Once `yahya-h.dev` points at it, it needs `''`. The value is inlined at build time. `next/link` adds the prefix automatically, but **`next/image` `src` strings, plain `<a href>`, CSS `url()`, and font and PDF paths do not** (per the Next.js basePath docs). Getting it wrong produces a site with no styles and broken images. Fix: make basePath an env var (`NEXT_PUBLIC_BASE_PATH`). Better, **skip the subpath stage**: buy the domain first, or name the repo `<user>.github.io`.
+- **`basePath` mismatch.** While the site lives at `user.github.io/portfolio`, it needs `basePath: '/portfolio'`. Once `yahya-hallani.dev` points at it, it needs `''`. The value is inlined at build time. `next/link` adds the prefix automatically, but **`next/image` `src` strings, plain `<a href>`, CSS `url()`, and font and PDF paths do not** (per the Next.js basePath docs). Getting it wrong produces a site with no styles and broken images. Fix: make basePath an env var (`NEXT_PUBLIC_BASE_PATH`). Better, **skip the subpath stage**: buy the domain first, or name the repo `<user>.github.io`.
 - **Image Optimization does not work** with the default loader under `output: 'export'`. Set `images: { unoptimized: true }` and pre-optimise images yourself: AVIF and WebP at the right sizes, explicit width and height, or a build-time tool. Otherwise the 4 MB source portrait ships as-is.
 - **CNAME is ignored with Actions deploys.** When publishing through a custom Actions workflow, "no CNAME file is created and any existing CNAME file is ignored". The domain must be set in repo Settings > Pages. A `public/CNAME` does no harm, but it is not what makes the domain work.
-- **Domain takeover risk.** Verify `yahya-h.dev` in the GitHub account's Pages settings **before** pointing DNS at it, and never use wildcard DNS records. Apex A records go to 185.199.108.153, 185.199.109.153, 185.199.110.153 and 185.199.111.153. Add a `www` CNAME pointing to `<user>.github.io`.
+- **Domain takeover risk.** Verify `yahya-hallani.dev` in the GitHub account's Pages settings **before** pointing DNS at it, and never use wildcard DNS records. Apex A records go to 185.199.108.153, 185.199.109.153, 185.199.110.153 and 185.199.111.153. Add a `www` CNAME pointing to `<user>.github.io`.
 - **`.dev` is HSTS-preloaded,** so every browser requires HTTPS for it. The site is unreachable until GitHub provisions the certificate (which can take up to 24 hours after DNS is correct) and "Enforce HTTPS" is ticked. Treat the domain cutover as a planned event, not a last-minute step.
 - **Trailing slashes.** With `trailingSlash: false`, the export emits `about.html`. Pages usually serves that at `/about`, but hosts differ. A hash-based single page sidesteps the issue almost entirely. If routes are added later, set `trailingSlash: true`, which emits `about/index.html`, the most portable form.
 - **404.** The export emits `404.html`, and GitHub Pages serves it automatically for unknown paths. Make it an on-brand page with a link home that does not depend on the paging JS.
@@ -346,7 +346,7 @@ Three.js plus a depth texture adds 150 to 600 KB to the first load, even though 
 |-------------|----------------|------------------|
 | GitHub Pages (branch deploy) | `_next` hidden by Jekyll | Add `public/.nojekyll`, or use `actions/deploy-pages` |
 | GitHub Pages (Actions deploy) | Relying on `public/CNAME` for the domain | Set the custom domain in Settings > Pages (CNAME is ignored with Actions) |
-| Custom domain `yahya-h.dev` | Pointing DNS before verifying the domain; using a wildcard record | Verify in account settings first, point A records at the four 185.199.x.153 IPs, add the `www` CNAME, tick Enforce HTTPS |
+| Custom domain `yahya-hallani.dev` | Pointing DNS before verifying the domain; using a wildcard record | Verify in account settings first, point A records at the four 185.199.x.153 IPs, add the `www` CNAME, tick Enforce HTTPS |
 | `.dev` TLD | Expecting HTTP to work while the certificate provisions | HSTS preload means HTTPS only. Allow up to 24 h for the certificate |
 | `next/image` in export | Default loader, or a string `src` without the basePath prefix | `images.unoptimized: true`, pre-optimised assets, and a manual basePath prefix (or no basePath at all) |
 | `next/font` | A Google Fonts `<link>` (hotlinked, breaks the self-host constraint) | `next/font/google` or `next/font/local`, served from your own origin |
@@ -368,7 +368,7 @@ Three.js plus a depth texture adds 150 to 600 KB to the first load, even though 
 
 | Mistake | Risk | Prevention |
 |---------|------|------------|
-| Pointing DNS at Pages before verifying the domain, or using a wildcard record | Subdomain takeover: someone else hosts content on yahya-h.dev | Verify the domain first, no wildcards, and remove the DNS records if Pages is ever disabled |
+| Pointing DNS at Pages before verifying the domain, or using a wildcard record | Subdomain takeover: someone else hosts content on yahya-hallani.dev | Verify the domain first, no wildcards, and remove the DNS records if Pages is ever disabled |
 | Hotlinked third-party scripts (fonts, CDN libraries, analytics) | Supply-chain injection on a page recruiters trust | Self-host everything (already a project constraint). Use SRI if a CDN is truly unavoidable |
 | `dangerouslySetInnerHTML` for copy or markdown | XSS if the content source ever changes | Plain JSX content, no HTML injection |
 | Secrets in Actions workflows (for example an analytics token) | Leaked tokens in a public repo | The site needs no secrets. If one is ever added, store it in repo secrets |

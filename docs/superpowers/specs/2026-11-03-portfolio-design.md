@@ -1,7 +1,7 @@
 # Portfolio website: design
 
 Status: APPROVED by Yahya, 2026-11-07 (revision 5: dark Swiss horizontal). Nothing is built yet.
-Owner: Yahya Hallani. Domain: `yahya-h.dev` (Yahya buys it before the first deploy). Host: Vercel.
+Owner: Yahya Hallani. Domain: `yahya-hallani.dev` (bought on Vercel Domains; apex canonical, www redirects to the apex). Host: Vercel.
 
 Visual contract: `.planning/phases/01-design-gate/01-UI-SPEC.md` holds every token value; this doc records decisions, the trial results and the page compositions. Where they disagree, this doc wins after approval. This revision overrides the `portfolio-design` skill and the stack notes in `CLAUDE.md` wherever they disagree.
 
@@ -44,7 +44,7 @@ Anti-goals (any of these makes the site a failure even if it technically works):
 | Decision 3 | Rail inset | Accepted, 2026-11-06 | The left rail stays; on phones it sits 24px from the left edge, and swipes starting within 20px of the edge are left to the system back gesture; tested on a real iPhone and Android. |
 | Decision 4 | Inner scroll | Accepted, 2026-11-06 | Pages are designed to fit one screen at 1366x768; at zoom or on short screens the page scrolls vertically and paging happens only at its edge. |
 | Decision 5 | Resume | Accepted, 2026-11-06 | A self-hosted resume PDF, reachable from every page. |
-| Decision 6 | Domain | Accepted, 2026-11-06 | Buy yahya-h.dev before the first deploy. On Vercel the basePath risk disappears; the domain is still bought first. |
+| Decision 6 | Domain | Accepted, 2026-11-06 | yahya-hallani.dev, bought on Vercel before the first deploy (the earlier short domain was dropped). On Vercel the basePath risk disappears; the domain is still bought first. |
 | Host | Vercel | Accepted, 2026-11-06 | Yahya's choice: real headers, no basePath stage. |
 
 ### 3.1 References
@@ -305,7 +305,7 @@ Still missing (copied from links.md):
 2. Atlantis line counts. Not shown until confirmed.
 3. Showdown AI status. Settled 2026-11-07, round 7: kept as "In progress, nothing built yet" ("keep the in progress"), with the description "An agent that plays ranked Pokémon Showdown battles" in place of "Planned".
 4. Domain purchase.
-5. Font purchase, if a paid face wins; the licence must name yahya-h.dev.
+5. Font purchase, if a paid face wins; the licence must name yahya-hallani.dev.
 6. Robot CAD file (Phase 8).
 7. Atlantis asset licences and teammates' consent to a public playable build (Phase 8).
 8. Whether the public resume keeps the contest-platform bullet. Settled 2026-11-07: removed.

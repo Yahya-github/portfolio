@@ -131,7 +131,7 @@ src/
 │   ├── grid.css                   # 12-col grid (or a Tailwind v4 @theme mapping these vars)
 │   └── global.css                 # html/body lockdown: overflow: clip, overscroll-behavior: none
 public/
-├── CNAME                          # yahya-h.dev (once bought)
+├── CNAME                          # not used: Vercel hosts the site (no CNAME file)
 ├── .nojekyll                      # otherwise GitHub Pages' Jekyll drops _next/
 ├── fonts/                         # self-hosted variable font
 └── media/                         # portrait, depth map (fallback image and texture)
@@ -358,7 +358,7 @@ Traffic is irrelevant (static files on a CDN). The pressures that do grow:
 | Service | Integration | Notes |
 |---|---|---|
 | GitHub Pages | Actions: `next build` → upload `out/` → `actions/deploy-pages` | `public/.nojekyll` is required (Jekyll ignores `_next/`). With the custom domain at the root, no `basePath`. **Until the domain exists**, a `user.github.io/portfolio` project page needs `basePath`/`assetPrefix`. Decide before Phase 1 ends, because it affects every asset URL. |
-| Custom domain | `public/CNAME` + DNS, enforce HTTPS | Domain not bought yet |
+| Custom domain | Vercel Domains (yahya-hallani.dev, apex primary, www 308 to apex) | Domain bought on Vercel; Vercel hosts, no CNAME |
 | Fonts | `next/font/local` | Self-hosted per constraint |
 | Analytics | None by default | At most a tiny privacy-friendly beacon; anything more breaks the small-JS goal |
 
