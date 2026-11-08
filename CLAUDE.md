@@ -1,7 +1,7 @@
 <!-- GSD:project-start source:PROJECT.md -->
 ## Project
 
-**Yahya Hallani — Portfolio (yahya-h.dev)**
+**Yahya Hallani — Portfolio (yahya-hallani.dev)**
 
 A personal portfolio site for Yahya Hallani, a Software Engineering student at McGill, aimed at recruiters and internship leads. It presents his competition record, projects and experience so a visitor leaves thinking "that kid is cracked". It should feel intuitive, never tiring, and make people want to explore the whole site.
 
@@ -10,7 +10,7 @@ A personal portfolio site for Yahya Hallani, a Software Engineering student at M
 ### Constraints
 
 - **Tech stack**: Next.js static export hosted on Vercel (switched from GitHub Pages 2026-11-06) — free hobby tier, real headers, no basePath stage
-- **Domain**: yahya-h.dev (not bought yet)
+- **Domain**: yahya-hallani.dev (bought on Vercel Domains 2026-11-07; apex is canonical, www redirects to the apex; the earlier short domain was dropped)
 - **Content**: only verified, real facts; no invented numbers
 - **Assets**: self-host fonts and media; no hotlinked sprites in production
 - **Process**: no product code until the design doc is approved (brainstorming gate)
@@ -21,7 +21,7 @@ A personal portfolio site for Yahya Hallani, a Software Engineering student at M
 ## Technology Stack
 
 ## TL;DR (prescriptive)
-- **Next.js 16.4 (App Router) + React 19.3 + TypeScript 6.0.x**, with `output: 'export'`, deployed by the **official GitHub Actions Pages workflow**. No CNAME file. `basePath` comes from `actions/configure-pages`.
+- **Next.js 16.4 (App Router) + React 19.3 + TypeScript 6.0.x**, with `output: 'export'`, deployed by the **Vercel Git integration** (a push to `main` deploys production; PRs get public previews). No basePath. Domain `yahya-hallani.dev` (apex canonical, www 308 to the apex). Headers (CSP, HSTS, X-Robots-Tag) live in `vercel.json`.
 - **Styling:** **CSS Modules + one global `tokens.css`** made of CSS custom properties, with a **CSS Grid 12-column system** (`repeat(12, minmax(0,1fr))` + `subgrid`). **No Tailwind.**
 - **Font:** **`next/font`**. Use `next/font/google` `Inter_Tight` (variable) now; switch to `next/font/local` if the final font is not on Google Fonts. Fonts are self-hosted at build time in both cases.
 - **Motion:**
@@ -36,9 +36,9 @@ A personal portfolio site for Yahya Hallani, a Software Engineering student at M
 | Next.js | `16.4.5` (latest on 2026-11-06) | Framework, build, static export | Required by the project constraint. In v16, Turbopack is the default for `dev` and `build`, `next lint` is removed, `reactCompiler` is a stable option, and the minimum is Node 20.9. `output: 'export'` turns Server Components into static HTML at build time, so the site ships as plain files. | HIGH (npm + nextjs.org v16 upgrade guide) |
 | React / React DOM | `19.3.1` | UI | Next 16 peers on `^19`. React 19 treats `inert` as a real boolean prop, which the "inactive pages inert" requirement needs. It also has `useEffectEvent`, which suits wheel and keyboard listeners that read the latest page index without re-subscribing. | HIGH (npm); MEDIUM for `inert` (secondary sources agree) |
 | TypeScript | **`~6.0.3`, not 7.x** | Types | TS 7.0.2 (the Go-native compiler) is `latest` on npm, but **`typescript-eslint` 8.72 peers on `typescript >=4.8.4 <6.1.0`**, and `eslint-config-next` depends on it. Pin 6.0.x until typescript-eslint supports 7. Next 16 needs TS 5.1 or later. | HIGH (npm peerDependencies checked) |
-| Node.js | 22 LTS (local is 22.22) or 24 LTS | Runtime for build and CI | Next 16 needs 20.9 or later. **Vitest 5 needs `^22.12 \|\| ^24`**. Pin CI to the same major as local, with an `.nvmrc` or `engines` field. | HIGH |
-| pnpm | 12.x (12.11 installed locally) | Package manager | Already installed. The official Next GitHub Pages template uses pnpm. Set `"packageManager": "pnpm@12.x"` so `pnpm/action-setup` picks up the version automatically. | MEDIUM (template uses pnpm 10; v12 is current) |
-| GitHub Pages + GitHub Actions | `actions/checkout@v7`, `actions/setup-node@v7`, `actions/configure-pages@v6`, `actions/upload-pages-artifact@v5`, `actions/deploy-pages@v5`, `pnpm/action-setup@v6` | Hosting and deploy | Free and no server, as the constraint requires. With a custom Actions workflow, **no CNAME file is created and any existing one is ignored**. You set the custom domain in repo Settings > Pages instead. Jekyll does not run on the uploaded artifact, so `_next/` is served correctly. | HIGH for the CNAME behaviour (GitHub docs) and action release tags (GitHub API); the template itself still pins older majors |
+| Node.js | 22 LTS (local is 22.22) or 24 LTS | Runtime for build and CI | Next 16 needs 20.9 or later. **Vitest 5 needs `^22.12 \|\| ^24`**. Pin CI to the same major as local, with an `.nvmrc` or `engines` field. Pin `"engines": { "node": "22.x" }` in package.json, because Vercel's default is Node 26.x. | HIGH |
+| pnpm | 12.x (12.11 installed locally) | Package manager | Already installed. Set `"packageManager": "pnpm@12.11.2"` (pnpm/action-setup reads it) and set `ENABLE_EXPERIMENTAL_COREPACK=1` in the Vercel project. Without it, Vercel installs a v9.0 lockfile with pnpm 9 or 10. | MEDIUM (template uses pnpm 10; v12 is current) |
+| Vercel (Hobby) + Vercel GitHub App; CI on GitHub Actions (`actions/checkout@v7`, `pnpm/action-setup@v6`, `actions/setup-node@v7`, `actions/upload-artifact@v7`) | n/a | Hosting, deploy, merge gate | Vercel's Next builder detects `output: 'export'`, serves `out/`, strips `.html` and adds a 404 route, so leave Output Directory unset. `vercel.json` `headers` give real CSP, HSTS and X-Robots-Tag headers. GitHub Actions only runs lint, typecheck, unit and e2e (the required checks on `main`); it never deploys. | HIGH (Vercel docs + builder source, 2026-11-07) |
 ### Styling, Fonts, Animation
 | Library | Version | Purpose | When to Use | Confidence |
 |---------|---------|---------|-------------|------------|
@@ -54,9 +54,9 @@ A personal portfolio site for Yahya Hallani, a Software Engineering student at M
 ### Development and Test Tools
 | Tool | Version | Purpose | Notes | Confidence |
 |------|---------|---------|-------|------------|
-| Vitest | `5.1.0` (+ `vite@8.3.6`, `@vitejs/plugin-react@6.2.1`, `@vitest/coverage-v8@5.1.0`, `vite-tsconfig-paths@6.1.1`) | Unit and integration tests | Test pure logic first: the pager reducer (index clamp, Home/End), the wheel-gesture accumulator (simulated inertia tail produces exactly one page), the swipe threshold, and grid-span helpers. Vitest 5 lists `vite` as a peer, so install it explicitly. **Async Server Components are not supported by Vitest.** Keep tested components synchronous or cover them in Playwright. | HIGH on versions; MEDIUM on the Vite 8 plugin peers |
+| Vitest | `5.1.0` (+ `vite@8.3.6`, `@vitejs/plugin-react@6.2.1`, `@vitest/coverage-v8@5.1.0`; no `vite-tsconfig-paths`, which peers on typescript ^5, so use a Vite `resolve.alias` instead) | Unit and integration tests | Test pure logic first: the pager reducer (index clamp, Home/End), the wheel-gesture accumulator (simulated inertia tail produces exactly one page), the swipe threshold, and grid-span helpers. Vitest 5 lists `vite` as a peer, so install it explicitly. **Async Server Components are not supported by Vitest.** Keep tested components synchronous or cover them in Playwright. | HIGH on versions; MEDIUM on the Vite 8 plugin peers |
 | jsdom + Testing Library | `jsdom@31.0.0`, `@testing-library/react@16.3.3`, `@testing-library/user-event@14.6.8`, `@testing-library/jest-dom@7.0.1` | DOM tests for keyboard paging, focus moving into the active page, `inert` on inactive pages | jsdom has no layout, so FLIP and transforms cannot be asserted here. That belongs in Playwright. | HIGH |
-| Playwright | `@playwright/test@1.65.0` | E2E, visual regression, motion and a11y flows | Run against the **production export**: `next build`, then `serve out` (`serve@14.2.6`) as `webServer`. This catches basePath and asset-path bugs that `next dev` hides. Use `test.use({ reducedMotion: 'reduce' })` for the reduced-motion project, `page.mouse.wheel()` and keyboard presses for paging, `toHaveScreenshot()` at 320/768/1024/1440, and Chromium + Firefox + WebKit projects (Safari matters for wheel and trackpad behaviour). | HIGH |
+| Playwright | `@playwright/test@1.65.0` | E2E, visual regression, motion and a11y flows | Run against the **production export**: `next build`, then `serve out` (`serve@14.2.7`) as `webServer`. Use `test.use({ reducedMotion: 'reduce' })` for the reduced-motion project, `page.mouse.wheel()` and keyboard presses for paging, `toHaveScreenshot()` at 320/768/1024/1440, and Chromium + Firefox + WebKit projects (Safari matters for wheel and trackpad behaviour). | HIGH |
 | `@axe-core/playwright` | `4.14.0` | Automated WCAG checks | Run `AxeBuilder` on every page index, after paging, in both motion modes. It covers contrast for the green accent on black. It does not replace manual keyboard and screen-reader passes. | HIGH |
 | Lighthouse CI | `@lhci/cli@0.16.0` | Performance and a11y budgets in CI | Assert LCP < 2.5 s, CLS < 0.1, TBT < 200 ms on `out/`, matching the user's web performance rules. | MEDIUM |
 | ESLint | `eslint@10.14.0` + `eslint-config-next@16.4.5` | Lint | `next lint` is gone in v16, so call `eslint .` directly with a flat config. `eslint-config-next` 16.4+ supports ESLint 10 and already includes `eslint-plugin-jsx-a11y` and `eslint-plugin-react-hooks@^7` (React Compiler rules). | HIGH |
@@ -64,7 +64,9 @@ A personal portfolio site for Yahya Hallani, a Software Engineering student at M
 | Stylelint | `stylelint@18.0.0` + `stylelint-config-standard@41.0.0` | CSS lint | Optional but cheap, since most of the design lives in CSS. Add a rule that bans raw hex outside `tokens.css`. | MEDIUM |
 | React Compiler | `babel-plugin-react-compiler@1.0.0`, `reactCompiler: true` | Auto-memoisation | **Optional; default to off.** It routes builds through Babel and is slower. This site has about six components and the hot path is GSAP and CSS, not React re-renders. Enable later only if profiling shows a need. | HIGH (Next docs) |
 ## Key Configuration
-# .github/workflows/deploy.yml (shape of the official nextjs/deploy-github-pages template, actions bumped to current majors)
+- **`vercel.json`:** one `headers` block on `/(.*)` sets `X-Robots-Tag: noindex, nofollow` (until launch); a CSP with `default-src 'self'` and `script-src 'self' 'unsafe-inline'` (the export inlines RSC payload scripts, and nonces need a server); `Strict-Transport-Security` (HSTS); `X-Content-Type-Options: nosniff`; `Referrer-Policy: strict-origin-when-cross-origin`; a `Permissions-Policy` that turns off camera, microphone, geolocation and browsing-topics; and `X-Frame-Options: DENY`. A second block gives `/_next/static/(.*)` `Cache-Control: public, max-age=31536000, immutable`.
+- **CI:** `.github/workflows/ci.yml` has four jobs named lint, typecheck, unit and e2e. typecheck is `next typegen && tsc --noEmit`, because a clean checkout otherwise has no LayoutProps or image module types.
+- **Domain:** yahya-hallani.dev on Vercel Domains. The apex is primary and www redirects to it with a 308, set in Project > Settings > Domains.
 ## Installation
 # Pin TS to a typescript-eslint-compatible line
 # Animation
@@ -82,7 +84,7 @@ A personal portfolio site for Yahya Hallani, a Software Engineering student at M
 | Single route `/` with hash state (`#projects`) | Six real routes (`/projects/`, ...) | Use real routes if per-page SEO metadata matters more than continuity. Separate routes remount content and fight the shared-element letter FLIP. If you want them anyway, keep the stage in `layout.tsx`. That decision belongs to ARCHITECTURE.md. |
 | Raw WebGL2 | **three.js `0.187.0`** | Use three.js only if you need GLTF or point-cloud loaders, post-processing, or many scenes. It is roughly 10x the bytes of OGL for one shader on a quad. |
 | `next/font` | Hand-written `@font-face` in `/public/fonts` | Use only if you need a font feature next/font cannot express. You lose automatic preload and size-adjusted fallback (CLS protection). |
-| GitHub Pages | Cloudflare Pages / Netlify (free) | Use these if real HTTP headers (CSP, HSTS, cache-control) become a requirement. GitHub Pages cannot set custom headers. |
+| Vercel | GitHub Pages (original plan, dropped 2026-11-06) | Only if the site must avoid Vercel. It cannot set HTTP headers and needs a basePath stage on a project page. |
 | Vitest jsdom | Vitest Browser Mode (`@vitest/browser-playwright@5.1.0`) | Use it if you want component tests with real layout (for example, asserting FLIP end positions) without full E2E. |
 ## What NOT to Use
 | Avoid | Why | Use Instead |
@@ -90,20 +92,16 @@ A personal portfolio site for Yahya Hallani, a Software Engineering student at M
 | TypeScript 7.x (today) | Breaks the `typescript-eslint` peer range (`<6.1.0`), which `eslint-config-next` pulls in. You get install warnings and possible lint crashes. | `typescript@~6.0.3`; revisit when typescript-eslint supports 7 |
 | `next lint`, `.eslintrc`, `eslint` key in next.config | Removed in Next 16 | `eslint .` with `eslint.config.mjs` (flat) |
 | Default `next/image` loader | Unsupported with `output: 'export'` (build error) | `images.unoptimized: true` plus pre-sized AVIF/WebP, or static `import img from './x.jpg'` so paths and basePath resolve automatically |
-| `headers`, `redirects`, `rewrites`, `proxy`/middleware, Server Actions, route handlers that read `Request` | Not supported by static export | Static equivalents. A CSP, if wanted, goes in a `<meta http-equiv>` tag, and Next's inline RSC payload scripts mean `script-src` needs `'unsafe-inline'` or hashes (no nonces without a server). |
-| Hard-coded `/foo.png` strings in `<img>`, CSS `url()`, `fetch()` or WebGL texture loads | `basePath` is applied only to `next/link`, the router and static imports. Raw strings 404 on `<user>.github.io/portfolio`. | Static imports, or a `withBase()` helper that reads `process.env.NEXT_PUBLIC_BASE_PATH` |
+| `headers`, `redirects`, `rewrites`, `proxy`/middleware, Server Actions, route handlers that read `Request` | Not supported by static export | `vercel.json` `headers` (applied at Vercel's edge), with a `<meta>` robots tag as backup |
 | Lenis, Locomotive Scroll, fullPage.js | Smooth-scroll and scroll-hijack libraries built for vertical scroll. They fight the "one gesture = one page, inertia ignored" rule and native keyboard behaviour. fullPage.js also needs a commercial license. | Custom `usePager` (wheel accumulator + lock + idle gap) |
 | `@use-gesture/react` | No release since March 2024, no pushes since July 2024 | Native Pointer Events: `pointerdown`/`pointerup` delta plus velocity threshold, with `touch-action: pan-y` on the stage |
 | `react-swipeable`, Swiper, Embla for page switching | Carousel abstractions that add their own a11y semantics (roles, live regions) and DOM structure that conflict with full-screen sections and `inert` | One transform track you own |
 | Framer Motion (`framer-motion` package name) | Renamed to `motion`; the old name is legacy | `motion` if you choose Motion at all |
 | `gsap-trial`, Club GreenSock private registry | Deprecated. Every plugin is in the public `gsap` package. | `gsap` from npm |
 | Google Fonts `<link>` or any runtime CDN font | Breaks the self-host constraint; adds a third-party connection and FOUT | `next/font` |
-| `.nojekyll` / CNAME juggling, `gh-pages` branch-push packages | Only needed for branch-based publishing. The Actions artifact flow skips Jekyll and ignores CNAME. | Official `configure-pages` + `upload-pages-artifact` + `deploy-pages` |
+| `next/image` on the landing page | +5.7 kB gzip of client JS against ~18 kB of headroom (the empty App Router build is 132.1 kB gzip) | `<img>` with a static import (hashed, immutable URL) |
 | WebGL in the initial bundle, or without a fallback | Hurts LCP and TBT; breaks reduced-motion and low-power users | Dynamic `import()` after first paint and in view; poster `<img>`; skip entirely under `prefers-reduced-motion` |
 ## Stack Patterns by Variant
-- `configure-pages` outputs `base_path=/portfolio`, which is fed to `PAGES_BASE_PATH`.
-- Every raw asset URL must go through `withBase()`. Playwright E2E on `out/` must also be served under `/portfolio` to catch this. Run `serve` with a rewrite, or build a second time with `PAGES_BASE_PATH=/portfolio` in CI.
-- `base_path` is empty and assets resolve at root.
 - Use `next/font/local({ src: './fonts/X-Variable.woff2', variable: '--font-sans', display: 'swap' })`, subset to Latin (and Latin-Extended for French later).
 - CSS: `@media (prefers-reduced-motion: reduce)` sets page track transitions to near-zero opacity crossfades.
 - GSAP: `gsap.matchMedia().add('(prefers-reduced-motion: reduce)', ...)` jumps letters straight to the rail (`Flip.from(..., { duration: 0 })`) and shows the judge result as a static 75/75.
@@ -122,12 +120,11 @@ A personal portfolio site for Yahya Hallani, a Software Engineering student at M
 | next/font + output: 'export' | works | Files are downloaded at build time (CI needs network for `next/font/google`) |
 ## Sources
 - npm registry (`npm view`, 2026-11-06): versions and peerDependencies for next, react, typescript, typescript-eslint, eslint-config-next, gsap, @gsap/react, motion, three, ogl, vitest, vite, @playwright/test, @axe-core/playwright, testing-library, tailwindcss, lenis, @use-gesture/react. HIGH
-- https://nextjs.org/docs/app/guides/static-exports (updated 2026-08-09): `output: 'export'`, supported and unsupported features, image loader, link to the GitHub Pages template. HIGH
+- https://nextjs.org/docs/app/guides/static-exports (updated 2026-08-09): `output: 'export'`, supported and unsupported features, image loader. HIGH
 - https://nextjs.org/docs/app/guides/upgrading/version-16 (updated 2026-10-15): Turbopack default, `next lint` removal, Node 20.9 / TS 5.1 minimums, browser floor, React 19.2 features, `reactCompiler` stable but off by default, scroll-behavior change. HIGH
 - https://nextjs.org/docs/app/api-reference/config/next-config-js/basePath: basePath is applied to Link and the router, not to `next/image` `src` strings. HIGH
-- https://github.com/nextjs/deploy-github-pages (`next.config.ts`, `.github/workflows/deploy.yml`): `basePath: process.env.PAGES_BASE_PATH` pattern and workflow shape. HIGH
-- GitHub API releases (2026-11-06): checkout v7.0.1, setup-node v7.1.0, configure-pages v6.0.0, upload-pages-artifact v5.0.0, deploy-pages v5.0.1, pnpm/action-setup v6.1.1. HIGH
-- https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site: CNAME file ignored with Actions workflows, apex A/AAAA IPs, www CNAME, domain verification, HTTPS enforcement delay. HIGH
+- GitHub API releases (2026-11-06): checkout v7.0.1, setup-node v7.1.0, pnpm/action-setup v6.1.1. HIGH
+- https://vercel.com/docs/project-configuration/vercel-json, /docs/package-managers, /docs/deployment-protection (2026-11-07): headers, Corepack, previews. HIGH
 - https://webflow.com/blog/gsap-becomes-free and https://gsap.com/community/standard-license/: GSAP and all plugins free since 2025-04-30. HIGH
 - https://developer.wordpress.org/block-editor/reference-guides/packages/packages-react-inert-value/ and https://github.com/patternfly/patternfly-react/issues/12295: React 19 boolean `inert`. MEDIUM
 - GitHub API repo metadata: oframe/ogl last push 2025-04-13; pmndrs/use-gesture last push 2024-07-15. HIGH (for staleness facts)
