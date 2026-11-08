@@ -12,9 +12,12 @@ The design itself: a distinctive, non-generic dark Swiss experience (giant YAHYA
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Site live on Vercel at https://yahya-hallani.dev over HTTPS, apex canonical, www 308 → apex (DEP-01) — Validated in Phase 2: Live Deploy Spike
+- [x] Fonts, images and the resume self-hosted, no third-party asset requests (DEP-02) — Validated in Phase 2: Live Deploy Spike
 
 Phase 1 (Design Gate) complete 2026-11-07: design doc revision 5 approved by Yahya; font, layouts, cursor, material and copy facts decided. Requirements stay Active until built.
+
+Phase 2 (Live Deploy Spike) complete 2026-11-08: placeholder static export live on Vercel; public repo Yahya-github/portfolio with branch-protected main (lint, typecheck, unit, e2e required); baseline JS 132.1 kB gzip recorded in docs/reference/perf-baseline.md.
 
 ### Active
 
@@ -120,4 +123,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-11-07 after Phase 1 (Design Gate) completion*
+*Last updated: 2026-11-08 after Phase 2 (Live Deploy Spike) completion*
