@@ -21,18 +21,26 @@ if (maxGzipKb !== null && !Number.isFinite(maxGzipKb)) {
   process.exit(2);
 }
 
-const html = readFileSync(join(outDir, "index.html"), "utf8");
+const indexPath = join(outDir, "index.html");
+const html = readFileSync(indexPath, "utf8");
 const files = new Set();
+// Query strings (e.g. Vercel's ?dpl=...) are allowed and stripped from the path.
 for (const [tag, src] of html.matchAll(
-  /<script\b[^>]*\bsrc="([^"]+\.js)"[^>]*>/g,
+  /<script\b[^>]*\bsrc="([^"?]+\.js)(?:\?[^"]*)?"[^>]*>/g,
 )) {
   if (!/\bnoModule\b/i.test(tag)) files.add(src); // modern browsers skip noModule polyfills
 }
 for (const [link] of html.matchAll(
   /<link\b[^>]*rel="(?:preload|modulepreload)"[^>]*>/g,
 )) {
-  const href = link.match(/href="([^"]+\.js)"/)?.[1];
+  const href = link.match(/href="([^"?]+\.js)(?:\?[^"]*)?"/)?.[1];
   if (href) files.add(href);
+}
+
+// Fail closed: a scrape that matches nothing must not report a passing 0 kB.
+if (files.size === 0) {
+  console.error(`No JS chunks found in ${indexPath}; refusing to report 0 kB`);
+  process.exit(2);
 }
 
 const totals = [...files].reduce(
