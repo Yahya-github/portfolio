@@ -1,7 +1,8 @@
 ---
 phase: 3
 slug: static-design-system-and-pages
-status: draft
+status: approved
+reviewed_at: 2026-11-08
 shadcn_initialized: false
 preset: none
 created: 2026-11-08
@@ -130,6 +131,8 @@ Exceptions (all multiples of 4, all named tokens):
 
 ## Typography
 
+> Size contract: four set text sizes (Label 12, Body 16, Heading 24, Display). Poster, Rail letter and the derived Display caps are wordmark and display fitting, not additional text sizes.
+
 One family, two weights (400, 700), four set sizes plus the fitted Poster wordmark.
 
 | Role | Size | Weight | Line height | Tracking | Width axis | Used for in Phase 3 |
@@ -216,7 +219,7 @@ URLs: `/`, `/achievements/`, `/projects/`, `/experience/`, `/about/`, `/say-hi/`
 | Hover | Colour change to accent only, on fine pointers only, `transition: color var(--dur-ui) var(--ease-ui)`. No movement, scale or animated underline |
 | Active | Accent at once (`transition: none` on `:active`) |
 | Focus | `:focus-visible` 2px accent outline, 4px offset (ink on rail letters). Never removed. The Display-size Say hi lines use the same ring |
-| Inline / Label links | `text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px` (Projects row links, Say hi address). Header, footer, hero and Display links have no underline |
+| Inline / Label links | `text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px` (Projects row links, Say hi address). Header, footer, hero and Display links have no underline |
 | External links | `target="_blank" rel="noopener"` on Achievements sources, Projects "Code" / "Live site" / "Team site", LinkedIn, GitHub. No new-tab icon |
 
 ---
@@ -238,6 +241,7 @@ Column spans count inside the page content box (after the rail column on 01-05).
 - Line 1, "75/75" in accent (tabular), is plain text: not a link and not focusable in Phase 3 (its focusable preview is Phase 6).
 - Lines 2-5 are `<a>` rows to their sources, in a new tab. Hover/focus: the result text turns accent and gets a 1px underline, offset 4px.
 - Cols 11-12 empty (previews, Phase 6). No hairlines.
+- Dominant element: the AC/HI/EV/EM/EN/TS stack; the accent "75/75" is the secondary anchor.
 - Phone: the one-line title "Achievements" in Display at 64px, title case (the stack hidden; the visually hidden heading text stays), then each line stacked rank, result, detail with `--space-xs` between them and `--space-lg` between lines.
 
 ### 02 Projects (`/projects/`)
@@ -397,11 +401,11 @@ Third-party runtime assets: none. Font, images and resume are self-hosted; no CD
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
+- [x] Dimension 1 Copywriting: PASS
+- [x] Dimension 2 Visuals: PASS
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS
+- [x] Dimension 5 Spacing: PASS
+- [x] Dimension 6 Registry Safety: PASS
 
-**Approval:** pending
+**Approval:** approved 2026-11-08 (gsd-ui-checker; FLAGs on Typography size count and 3px offset resolved)
