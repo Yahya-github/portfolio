@@ -3,7 +3,9 @@ import { shortSha } from "@/lib/build-info";
 
 describe("shortSha", () => {
   it("returns the first 7 characters of a full 40-char SHA", () => {
-    expect(shortSha("0123456789abcdef0123456789abcdef01234567")).toBe("0123456");
+    expect(shortSha("0123456789abcdef0123456789abcdef01234567")).toBe(
+      "0123456",
+    );
   });
 
   it("returns 'local' when the SHA is undefined", () => {
