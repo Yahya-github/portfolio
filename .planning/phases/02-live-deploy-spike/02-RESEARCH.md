@@ -788,17 +788,21 @@ magick docs/material/portrait-devfest-2026-grey.jpg -resize 800x -strip -quality
 | A7 | A robots.txt Disallow hides the noindex from crawlers | Anti-patterns | Low. The advice is simply not to add one. |
 | A8 | Without Corepack, Vercel's pnpm 10 may switch itself to pnpm 12 because of `packageManager` | Pitfall 2 | Low. Setting the env var makes this moot. |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Is the ~150 kB landing JS budget gzip or brotli, and does it need revisiting?**
    - What we know: empty Next 16.4.5 is 132.1 kB gzip and 112.6 kB brotli. The design doc says "gzipped".
    - What's unclear: whether Yahya wants to restate the budget, or accept about 18 kB of headroom for motion.
    - Recommendation: Phase 2 records the numbers and adds the CI gate at 150 kB gzip. Bring this into Phase 4/5 planning instead of deciding it in Phase 2.
+   - RESOLVED: deferred to Phase 4/5 planning. Plan 02-06 Task 3 records the gzip and brotli numbers, the ~18 kB headroom and this open question in `docs/reference/perf-baseline.md`; plan 02-03 gates CI at 150 kB gzip in the meantime.
 2. **`.planning/` going public.**
    - What we know: D-05 pushes "the existing history", and that history includes `.planning/`.
    - Recommendation: name it explicitly in the D-06 audit checkpoint.
+   - RESOLVED: plan 02-04 Task 2 is a blocking `checkpoint:human-action` in which Yahya explicitly confirms `.planning/` and `docs/` may go public before any push.
 3. **Resume URL name.** Recommendation: `/yahya-hallani-resume.pdf`, because the filename is what a recruiter's download shows. D-11 only says "copied to public/". Low stakes, but Phases 6-7 link to it.
+   - RESOLVED: `/yahya-hallani-resume.pdf` (plan 02-02 Task 2 copies `docs/material/resume-public.pdf` to `public/yahya-hallani-resume.pdf`).
 4. **Vercel `ignoreCommand` for doc-only commits.** Each GSD doc commit to main triggers a production build. That is harmless and takes a few seconds. An option is `"ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ':(exclude).planning' ':(exclude)docs'"`. Recommendation: skip it for now (YAGNI). A skipped build would also make the SHA-match check fail on doc commits.
+   - RESOLVED: skipped. No `ignoreCommand` in `vercel.json`; every push to main builds.
 
 ## Environment Availability
 
@@ -838,10 +842,10 @@ Local note: the pnpm store on `/home` cannot hard-link into projects under `/tmp
 | DEP-02 / SC2 | Zero non-origin requests on `/`; the `instrumentSans` face loads; the img decodes; the PDF returns 200 `application/pdf` | e2e | `pnpm test:e2e -g "first-party"` | ❌ Wave 0 `e2e/assets.spec.ts` |
 | DEP-02 / SC2 | Built HTML has no `http(s)://` asset URLs | smoke | `! grep -Eo '(src\|href)="https?://' out/index.html` | — (inline in the plan's verify step) |
 | D-12 | `<meta name="robots" content="noindex, nofollow">` is present | e2e | part of `assets.spec.ts` | ❌ Wave 0 |
-| D-12 / D-13 | vercel.json has the X-Robots-Tag noindex, a CSP with `default-src 'self'`, and HSTS | unit | `pnpm test -- vercel-config` | ❌ Wave 0 `tests/vercel-config.test.ts` |
+| D-12 / D-13 | vercel.json has the X-Robots-Tag noindex, a CSP with `default-src 'self'`, and HSTS | unit | `pnpm exec vitest run vercel-config` | ❌ Wave 0 `tests/vercel-config.test.ts` |
 | D-13 | The page runs under the production CSP with zero violations | e2e | `pnpm test:e2e -g "CSP"` | ❌ Wave 0 `e2e/csp.spec.ts` |
 | Accessibility baseline | axe finds no violations on `/` | e2e | `pnpm test:e2e -g "axe"` | ❌ Wave 0 `e2e/a11y.spec.ts` |
-| SC1 redeploy proof | `shortSha()` returns the 7-character SHA, or "local" when unset | unit | `pnpm test -- build-info` | ❌ Wave 0 `tests/build-info.test.ts` |
+| SC1 redeploy proof | `shortSha()` returns the 7-character SHA, or "local" when unset | unit | `pnpm exec vitest run build-info` | ❌ Wave 0 `tests/build-info.test.ts` |
 | SC4 | Baseline JS is measured, and CI fails above 150 kB gzip | script | `pnpm measure:js -- --max-gzip-kb 150` | ❌ Wave 0 `scripts/measure-js.mjs` |
 | SC3 | Protection lists exactly lint, typecheck, unit and e2e, with admins not enforced and 0 approvals | API | `gh api repos/Yahya-github/portfolio/branches/main/protection --jq '[.required_status_checks.checks[].context]'` | — |
 | SC3 | A failing check blocks the merge | manual, scripted | Open a throwaway PR with a unit test that fails on purpose. `gh pr checks <n>` shows `unit` failing, and `gh pr view <n> --json mergeStateStatus` returns `BLOCKED`. Then close the PR and delete the branch. | — |
