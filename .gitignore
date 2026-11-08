@@ -4,3 +4,15 @@ docs/reference/fonts-private/
 *client_secret*.json
 # Local tool caches
 .ruff_cache/
+
+# Build and tooling output
+node_modules/
+.next/
+out/
+.vercel/
+next-env.d.ts
+*.tsbuildinfo
+coverage/
+playwright-report/
+test-results/
+.env*
