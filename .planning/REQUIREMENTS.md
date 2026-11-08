@@ -64,8 +64,8 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [ ] **A11Y-05**: With JavaScript disabled all text is present and every letter link still reaches its page
 
 ### Deployment (DEP)
-- [ ] **DEP-01**: Site is live on Vercel at yahya-hallani.dev over HTTPS (apex is canonical; www.yahya-hallani.dev redirects to the apex)
-- [ ] **DEP-02**: Fonts, images and the resume are self-hosted (no hotlinked assets)
+- [x] **DEP-01**: Site is live on Vercel at yahya-hallani.dev over HTTPS (apex is canonical; www.yahya-hallani.dev redirects to the apex)
+- [x] **DEP-02**: Fonts, images and the resume are self-hosted (no hotlinked assets)
 
 ## v2 Requirements (deferred)
 - French version
@@ -130,8 +130,8 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | A11Y-03 | Phase 3 | Pending |
 | A11Y-04 | Phase 5 | Pending |
 | A11Y-05 | Phase 3 | Pending |
-| DEP-01 | Phase 2 | Pending |
-| DEP-02 | Phase 2 | Pending |
+| DEP-01 | Phase 2 | Complete |
+| DEP-02 | Phase 2 | Complete |
 | PROOF-01 | Phase 8 | Pending |
 | PROOF-02 | Phase 8 | Pending |
 

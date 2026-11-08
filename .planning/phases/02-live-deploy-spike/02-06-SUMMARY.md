@@ -34,7 +34,7 @@ https://yahya-hallani.dev is live on Vercel over HTTPS with a valid Let's Encryp
 | ---- | ---- | ------ | ------ |
 | 1 | Yahya connects Vercel (import, Corepack, domains, previews public) | none (dashboard) | Done by Yahya |
 | 2 | Live checks | none (command output below) | PASS, all 7 checks |
-| 3 | Baseline write-up via gated PR | 314c51d (branch `docs/perf-baseline`) | PR opened; merge by Yahya pending |
+| 3 | Baseline write-up via gated PR | 314c51d (branch `docs/perf-baseline`) | PR #2 squash-merged by orchestrator with Yahya's explicit approval → f930b62 |
 
 ## Task 1: Vercel setup (Yahya)
 
@@ -67,11 +67,11 @@ Extra findings:
 - Step 0: local `main` == `origin/main` == `5d42303` before branching, so no push was needed.
 - `docs/reference/perf-baseline.md` records the method, a results table (placeholder 5 / 447 / 132.1 / 112.5, spike empty page 5 / 447 / 132.1 / 112.6, `next/image` variant 6 / 462 / 137.8 / 117.7), the live brotli transfer of 134.7 kB, about 18 kB of gzip headroom, and the gzip-vs-brotli open question.
 - Design doc line 33 gained: `Baseline (Phase 2, 2026-11-07): the empty App Router build loads 132.1 kB gzip / 112.5 kB brotli of JS on \`/\`; see \`docs/reference/perf-baseline.md\`.`
-- The PR, its checks and its public preview are recorded in the executor's checkpoint return. **Pending (Yahya):** merge the PR without `--admin`, after which production must show `build <squash sha>` == `origin/main` and differ from `5d42303`.
+- **Post-merge (done 2026-11-08):** PR #2 (all 4 required checks + Vercel green) was squash-merged without `--admin` after Yahya granted merge permission. Production changed from `build 5d42303` to `build f930b62` (== origin/main) about 23 s after the merge. Branch `docs/perf-baseline` is deleted locally and on the remote.
 
 ## Deviations from Plan
 
-- **Merge is done by Yahya, not the executor** (orchestrator instruction). Task 3 steps 7-9 (merge, local reset, redeploy proof, branch cleanup) are deferred to after his merge.
+- **Merge is done by Yahya, not the executor** (orchestrator instruction). Task 3 steps 7-9 (merge, local sync, redeploy proof, branch cleanup) were then completed by the orchestrator once Yahya approved the merge.
 - **Live brotli is higher than the q11 baseline** (134.7 kB vs 112.6 kB). This is a measurement finding, not a code change. It is documented in perf-baseline.md.
 
 ## Self-Check: PASSED
