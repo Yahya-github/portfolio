@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 
 const ROOT = join(__dirname, "..");
 const DIRS = ["app", "components"] as const;
-const PLACEHOLDER = join("app", "page.tsx");
 
 const LITERAL_A11Y_ATTR = /\b(aria-label|alt|title)="[^"]/;
 const USE_CLIENT = /["']use client["']/;
@@ -22,12 +21,10 @@ function listTsx(): readonly string[] {
 }
 
 function sources(): readonly { file: string; text: string }[] {
-  return listTsx()
-    .map((file) => ({ file, text: readFileSync(join(ROOT, file), "utf8") }))
-    .filter(
-      // exemption ends when plan 03-08 replaces app/page.tsx
-      ({ file, text }) => !(file === PLACEHOLDER && text.includes("shortSha")),
-    );
+  return listTsx().map((file) => ({
+    file,
+    text: readFileSync(join(ROOT, file), "utf8"),
+  }));
 }
 
 function offenders(pattern: RegExp): readonly string[] {
