@@ -11,3 +11,5 @@ Seen in the approved Phase 3 baselines (`e2e/visual.spec.ts-snapshots/index-1440
 Likely cause is in the Label role (letter-spacing, `font-kerning`/feature settings, or the Instrument Sans subset). Check in Yahya's own Chrome too.
 
 Done when: labels render without inner-word gaps, `pnpm test:e2e` passes, and the visual baselines are regenerated in the Playwright container (command in 03-10-SUMMARY).
+
+Resolved (Phase 4, plan 04-14): `.t-label` gets `text-rendering: geometricPrecision; font-kerning: normal` (commit 0d6714d). Signal: "fixed" (the coordinator checked Chrome at dpr 1.33 for Yahya; there all glyph advances are fractional, but the original gap did not reproduce in that Chrome). The 1x container baselines no longer show "ACHIE VEMENTS" or "00 /05". Baselines regenerated in the container.
