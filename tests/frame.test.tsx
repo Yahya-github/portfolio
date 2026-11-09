@@ -1,10 +1,15 @@
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { act, cleanup, render, screen, within } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import { Footer } from "@/components/frame/Footer";
 import { Header } from "@/components/frame/Header";
 import { SkipLink } from "@/components/frame/SkipLink";
+import { PagerContext } from "@/components/shell/PagerContext";
 import type { Slug } from "@/content/types";
+import { createPagerController } from "@/lib/pager/controller";
+import type { PagerController } from "@/lib/pager/types";
 import { indexOfSlug } from "@/lib/sections";
+import { createStubDeps } from "./helpers/stub-ports";
 
 afterEach(cleanup);
 
@@ -79,6 +84,83 @@ describe("Footer", () => {
     expect(bar).not.toBeNull();
     expect((bar as HTMLElement).style.getPropertyValue("--page-index")).toBe(
       String(indexOfSlug(s)),
+    );
+  });
+});
+
+describe("chrome follows the pager target (D-10)", () => {
+  const setup = (initial: number): PagerController =>
+    createPagerController(createStubDeps().deps, initial);
+
+  const withPager = (controller: PagerController, ui: ReactNode) => (
+    <PagerContext value={controller}>{ui}</PagerContext>
+  );
+
+  const renderChrome = (controller: PagerController, current: Slug) =>
+    render(
+      withPager(
+        controller,
+        <>
+          <Header current={current} />
+          <Footer current={current} />
+        </>,
+      ),
+    );
+
+  it("switches label, counter and Next link at slide start", () => {
+    const controller = setup(0);
+    renderChrome(controller, "index");
+    act(() => {
+      controller.intent({ type: "next", source: "key" });
+    });
+    expect(screen.getByText("01 Achievements")).toBeInTheDocument();
+    expect(screen.getByText("01 / 05")).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Next, Projects" }),
+    ).toHaveAttribute("href", "/projects/");
+  });
+
+  it("follows a retarget before landing", () => {
+    const controller = setup(0);
+    renderChrome(controller, "index");
+    act(() => {
+      controller.intent({ type: "next", source: "key" });
+    });
+    act(() => {
+      controller.intent({ type: "next", source: "key" });
+    });
+    expect(screen.getByText("02 Projects")).toBeInTheDocument();
+    expect(screen.getByText("02 / 05")).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Next, Experience" }),
+    ).toBeInTheDocument();
+  });
+
+  it("marks Say hi current and links back to the start when targeting 05", () => {
+    const controller = setup(0);
+    renderChrome(controller, "index");
+    act(() => {
+      controller.intent({ type: "goto", index: 5, source: "link" });
+    });
+    expect(screen.getByRole("link", { name: "Say hi" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    expect(
+      screen.getByRole("link", { name: "Back to the start" }),
+    ).toHaveAttribute("href", "/");
+  });
+
+  it("never rewrites the bar's initial --page-index (D-11)", () => {
+    const controller = setup(2);
+    const { container } = renderChrome(controller, "projects");
+    const bar = container.querySelector('[data-pager="bar"]');
+    expect(bar).not.toBeNull();
+    act(() => {
+      controller.intent({ type: "goto", index: 4, source: "link" });
+    });
+    expect((bar as HTMLElement).style.getPropertyValue("--page-index")).toBe(
+      "2",
     );
   });
 });

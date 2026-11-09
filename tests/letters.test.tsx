@@ -1,7 +1,12 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { act, cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { LetterNav } from "@/components/letters/LetterNav";
+import { PagerContext } from "@/components/shell/PagerContext";
 import type { Slug } from "@/content/types";
+import { createPagerController } from "@/lib/pager/controller";
+import type { PagerController } from "@/lib/pager/types";
+import { slugAt } from "@/lib/sections";
+import { createStubDeps, type StubDeps } from "./helpers/stub-ports";
 
 afterEach(cleanup);
 
@@ -94,5 +99,82 @@ describe("LetterNav rail", () => {
     const links = [...navOf(container).querySelectorAll("a")];
     expect(links.map((a) => a.getAttribute("href"))).toEqual(HREFS);
     expect(links.map((a) => a.getAttribute("data-glyph"))).toEqual(GLYPHS);
+  });
+
+  it("is tagged for the pager", () => {
+    const { container } = render(<LetterNav current="projects" />);
+    expect(navOf(container)).toHaveAttribute("data-pager", "letters");
+    expect(navOf(container)).not.toHaveAttribute("inert");
+    expect(navOf(container)).not.toHaveAttribute("data-enter");
+  });
+});
+
+describe("LetterNav stand-in follows the pager (D-09, D-10)", () => {
+  interface Rig {
+    readonly stub: StubDeps;
+    readonly controller: PagerController;
+    readonly nav: HTMLElement;
+  }
+
+  const rig = (initial: number): Rig => {
+    const stub = createStubDeps();
+    const controller = createPagerController(stub.deps, initial);
+    const { container } = render(
+      <PagerContext value={controller}>
+        <LetterNav current={slugAt(initial)} />
+      </PagerContext>,
+    );
+    return { stub, controller, nav: navOf(container) };
+  };
+
+  const currentLinks = (nav: HTMLElement) =>
+    nav.querySelectorAll('a[aria-current="page"]');
+  const nowOf = (nav: HTMLElement) =>
+    nav.querySelector(':scope > [aria-hidden="true"]');
+
+  it("leaving Index: hero row rides out inert, rail fades in on landing", async () => {
+    const { stub, controller, nav } = rig(0);
+    act(() => {
+      controller.intent({ type: "next", source: "key" });
+    });
+    expect(nav).toHaveAttribute("data-mode", "hero");
+    expect(nav).toHaveAttribute("inert");
+    expect(nav).not.toHaveAttribute("data-enter");
+
+    stub.slides[0].resolve(true);
+    await act(async () => {});
+    expect(nav).toHaveAttribute("data-mode", "rail");
+    expect(nav).not.toHaveAttribute("inert");
+    expect(nav).toHaveAttribute("data-enter");
+    expect(
+      screen.getByRole("link", { name: "01 Achievements" }),
+    ).toHaveAttribute("aria-current", "page");
+    expect(nowOf(nav)).toHaveTextContent("01 Achievements");
+  });
+
+  it("returning to Index switches to hero at slide start, live", () => {
+    const { controller, nav } = rig(2);
+    act(() => {
+      controller.intent({ type: "goto", index: 0, source: "link" });
+    });
+    expect(nav).toHaveAttribute("data-mode", "hero");
+    expect(nav).not.toHaveAttribute("inert");
+    expect(currentLinks(nav)).toHaveLength(0);
+    expect(nowOf(nav)).toBeNull();
+  });
+
+  it("rail to rail: aria-current and name move at slide start, no fade", () => {
+    const { controller, nav } = rig(1);
+    act(() => {
+      controller.intent({ type: "next", source: "key" });
+    });
+    expect(nav).toHaveAttribute("data-mode", "rail");
+    expect(currentLinks(nav)).toHaveLength(1);
+    expect(screen.getByRole("link", { name: "02 Projects" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    expect(nowOf(nav)).toHaveTextContent("02 Projects");
+    expect(nav).not.toHaveAttribute("data-enter");
   });
 });
