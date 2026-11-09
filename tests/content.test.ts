@@ -82,12 +82,13 @@ describe("achievements", () => {
 });
 
 describe("links", () => {
-  const hrefs = [
+  const allHrefs: readonly (string | null)[] = [
     ...achievements.lines.map((l) => l.href),
     ...projects.rows.map((r) => r.link?.href ?? null),
     ...sayHi.lines.map((l) => l.href),
     sayHi.address.href,
-  ].filter((h): h is string => h !== null);
+  ];
+  const hrefs = allHrefs.filter((h): h is string => h !== null);
 
   it("has links to check", () => {
     expect(hrefs.length).toBeGreaterThan(0);
