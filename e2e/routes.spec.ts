@@ -13,7 +13,10 @@ for (const s of sections) {
     page,
   }) => {
     await page.goto(s.route);
-    await expect(page.locator("main#content > section:visible")).toHaveCount(1);
+    // With JS the five inert pages still render off-screen; without JS they are display: none.
+    await expect(
+      page.locator("main#content > section:not([inert])"),
+    ).toHaveCount(1);
     await expect(page.locator(`#page-${s.slug}`)).toBeVisible();
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page).toHaveTitle(s.title);
