@@ -40,9 +40,11 @@
     font-size: inherit;
   }
 
+  /* Re-declare the em tracking here: the parent's -0.05em resolves against its inherited 16px. */
   .word {
     display: block;
     width: max-content;
+    letter-spacing: var(--display-track);
     font-size: min(
       var(--text-display-phone),
       calc((100vw - var(--phone-inset)) / var(--word-em))
