@@ -15,3 +15,5 @@ The two skills in ~/.claude/skills still describe the retired light design (pape
 ## Solution
 
 Rewrite portfolio-design from the approved doc (tokens from 01-UI-SPEC.md, Instrument Sans, six poster devices, rail, cursor, marks and colour-on-hover exceptions). Update portfolio-voice-and-facts with the round 6 and 7 facts: MAME Tool Rental (project and Experience row "Developer, since Nov 2026"), Facturo "Jun 2026 to Oct 2026", Showdown AI "An agent that plays ranked Pokémon Showdown battles, in progress, nothing built yet". Only verified facts.
+
+Done 2026-11-08 in plan 03-01; Yahya approved both skills. Skill files live outside the repo and are not committed.
