@@ -3,13 +3,13 @@ import { AboutPage } from "@/components/pages/AboutPage";
 import { AchievementsPage } from "@/components/pages/AchievementsPage";
 import { ExperiencePage } from "@/components/pages/ExperiencePage";
 import { IndexPage } from "@/components/pages/IndexPage";
-import { PageLevelProvider } from "@/components/pages/PageLevel";
 import { ProjectsPage } from "@/components/pages/ProjectsPage";
 import { SayHiPage } from "@/components/pages/SayHiPage";
 import type { PageProps } from "@/components/pages/types";
 import { sections } from "@/content/site";
 import type { Slug } from "@/content/types";
 import { indexOfSlug } from "@/lib/sections";
+import { PageSection } from "./PageSection";
 import styles from "./shell.module.css";
 
 const PAGE_COMPONENTS: Readonly<Record<Slug, ComponentType<PageProps>>> = {
@@ -28,6 +28,7 @@ interface TrackProps {
 /**
  * All six pages on every route (D-05). Only the current one is live; the
  * other five are inert and hidden by CSS, so JS-off visitors see one page.
+ * PageSection projects pager state (inert, collapse, heading level) live.
  */
 export function Track({ current }: TrackProps) {
   return (
@@ -38,23 +39,18 @@ export function Track({ current }: TrackProps) {
       className={styles.track}
       style={{ "--track-index": indexOfSlug(current) } as CSSProperties}
     >
-      {sections.map((s) => {
+      {sections.map((s, i) => {
         const isCurrent = s.slug === current;
         const Body = PAGE_COMPONENTS[s.slug];
         return (
-          <section
+          <PageSection
             key={s.slug}
-            id={`page-${s.slug}`}
-            data-page={s.slug}
-            inert={!isCurrent}
-            data-collapsed={isCurrent ? undefined : ""}
-            aria-labelledby={`title-${s.slug}`}
-            className={styles.page}
+            index={i}
+            slug={s.slug}
+            initialIndex={indexOfSlug(current)}
           >
-            <PageLevelProvider level={isCurrent ? 1 : 2}>
-              <Body isCurrent={isCurrent} />
-            </PageLevelProvider>
-          </section>
+            <Body isCurrent={isCurrent} />
+          </PageSection>
         );
       })}
     </main>

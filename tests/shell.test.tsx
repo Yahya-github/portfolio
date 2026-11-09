@@ -73,6 +73,7 @@ describe("Shell on /about/", () => {
       "nav:Sections",
       "main",
       "footer",
+      "p",
     ]);
   });
 
