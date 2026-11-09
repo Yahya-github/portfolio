@@ -1,0 +1,139 @@
+/* Fixed em-width letter boxes: the wordmark geometry never depends on the active font face (Pitfall 1). */
+.letter {
+  position: relative;
+  display: block;
+  flex: none;
+  width: var(--adv);
+  height: 0.76em;
+  pointer-events: none;
+  color: var(--color-ink);
+}
+.letter[data-glyph="Y"] {
+  --adv: var(--adv-y);
+}
+.letter[data-glyph="A"] {
+  --adv: var(--adv-a);
+}
+.letter[data-glyph="H"] {
+  --adv: var(--adv-h);
+}
+.letter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+}
+.glyph {
+  display: block;
+  line-height: 0.76;
+}
+
+/* Hero: absolute, so the row stays on the first screen when the phone document scrolls. */
+.nav[data-mode="hero"] {
+  position: absolute;
+  z-index: 6;
+  left: var(--grid-margin);
+  bottom: calc(var(--frame-bottom) + var(--hero-bottom-gap));
+  display: flex;
+  white-space: nowrap;
+  font-weight: var(--weight-bold);
+  line-height: 0.76;
+  font-stretch: var(--wdth-display);
+  letter-spacing: var(--yahya-track);
+  font-size: min(
+    calc((100vw - 2 * var(--grid-margin)) / var(--yahya-fit)),
+    calc((100svh - var(--hero-reserve)) / 0.76)
+  );
+}
+/* YA kern on both Y letters (Pitfall 2). */
+.nav[data-mode="hero"] .letter[data-glyph="Y"] {
+  margin-right: var(--yahya-kern);
+}
+.nav[data-mode="hero"] .caption {
+  position: absolute;
+  left: 0;
+  top: calc(100% + var(--space-md));
+  white-space: nowrap;
+  pointer-events: auto;
+}
+.nav[data-mode="hero"] .letter:focus-visible .num,
+.nav[data-mode="hero"] .letter:active .num {
+  color: var(--color-accent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav[data-mode="hero"] .letter:hover .num {
+    color: var(--color-accent);
+  }
+}
+/* Phones: captions stay as accessible names; IndexPage shows the visible list. */
+@media (max-width: 820px) {
+  .nav[data-mode="hero"] .caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* Rail */
+.nav[data-mode="rail"] {
+  position: fixed;
+  z-index: 4;
+  left: var(--grid-margin);
+  top: calc(var(--frame-top) + var(--space-lg));
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  font-size: var(--rail-size);
+  font-weight: var(--weight-bold);
+  line-height: 0.76;
+  font-stretch: var(--wdth-display);
+  letter-spacing: var(--yahya-track);
+}
+.nav[data-mode="rail"] .caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.nav[data-mode="rail"] .letter::before {
+  inset: calc(var(--rail-gap) / -2) auto calc(var(--rail-gap) / -2) 0;
+  width: calc(var(--rail-col) - var(--space-sm));
+}
+@media (pointer: coarse) {
+  .nav[data-mode="rail"] .letter::before {
+    min-width: var(--hit-min);
+    min-height: var(--hit-min);
+  }
+}
+/* DSGN-01 accent rule 1: only the route colours a rail letter; hover and focus never do. */
+.nav[data-mode="rail"] .letter,
+.nav[data-mode="rail"] .letter:hover,
+.nav[data-mode="rail"] .letter:focus-visible,
+.nav[data-mode="rail"] .letter:active {
+  color: var(--color-ink);
+}
+.nav[data-mode="rail"] .letter[aria-current="page"],
+.nav[data-mode="rail"] .letter[aria-current="page"]:hover,
+.nav[data-mode="rail"] .letter[aria-current="page"]:focus-visible,
+.nav[data-mode="rail"] .letter[aria-current="page"]:active {
+  color: var(--color-accent);
+}
+.nav[data-mode="rail"] .letter:focus-visible {
+  outline-color: var(--color-ink);
+}
+.now {
+  margin-top: var(--space-md);
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+}
+/* Phones: 24px inset (design doc section 6). */
+@media (max-width: 820px) {
+  .nav[data-mode="rail"] {
+    left: var(--space-lg);
+  }
+}
