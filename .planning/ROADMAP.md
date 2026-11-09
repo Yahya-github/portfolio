@@ -83,7 +83,7 @@ Plans:
 - [x] 03-06-PLAN.md — Index, Achievements and Projects page compositions
 - [x] 03-07-PLAN.md — Experience, About and Say hi page compositions
 - [x] 03-08-PLAN.md — Shell + Track (six inert sections per route), six routes with metadata, layout, trailingSlash, placeholder and build-info removed
-- [ ] 03-09-PLAN.md — E2E: JS-off routing, focus, layout/accent/overflow, font-shift, axe/CSP/assets on all six routes
+- [x] 03-09-PLAN.md — E2E: JS-off routing, focus, layout/accent/overflow, font-shift, axe/CSP/assets on all six routes
 - [ ] 03-10-PLAN.md — Visual baselines in the Playwright container, CI e2e in the container, Yahya's visual sign-off, Vercel 308 preview check
 **UI hint**: yes
 
@@ -159,7 +159,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 |-------|----------------|--------|-----------|
 | 1. Design Gate | 8/8 | Complete   | 2026-11-07 |
 | 2. Live Deploy Spike | 6/6 | Complete   | 2026-11-08 |
-| 3. Static Design System and Pages | 8/10 | In Progress|  |
+| 3. Static Design System and Pages | 9/10 | In Progress|  |
 | 4. Horizontal Pager and Input | 0/TBD | Not started | - |
 | 5. Letter Navigation and Motion | 0/TBD | Not started | - |
 | 6. Page Compositions and Content | 0/TBD | Not started | - |
