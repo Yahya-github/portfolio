@@ -112,7 +112,7 @@ Plans:
 - [x] 04-11-PLAN.md — ?debug overlay and trace recorder, exact client allowlist (W5)
 - [x] 04-12-PLAN.md — Accessibility-after-paging and overflow-edge e2e (W5)
 - [x] 04-13-PLAN.md — Swipe and motion-contract e2e, CI cross-browser switch (W5)
-- [ ] 04-14-PLAN.md — Label letter-gap fix and baseline regeneration (checkpoint, W6)
+- [x] 04-14-PLAN.md — Label letter-gap fix and baseline regeneration (checkpoint, W6)
 - [ ] 04-15-PLAN.md — PR preview and D-12 real-device checklist, trace-backed tuning (checkpoint, W7)
 **UI hint**: yes
 
@@ -176,7 +176,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 1. Design Gate | 8/8 | Complete   | 2026-11-07 |
 | 2. Live Deploy Spike | 6/6 | Complete   | 2026-11-08 |
 | 3. Static Design System and Pages | 10/10 | Complete   | 2026-11-09 |
-| 4. Horizontal Pager and Input | 13/15 | In Progress|  |
+| 4. Horizontal Pager and Input | 14/15 | In Progress|  |
 | 5. Letter Navigation and Motion | 0/TBD | Not started | - |
 | 6. Page Compositions and Content | 0/TBD | Not started | - |
 | 7. Copy, Sharing and Launch | 0/TBD | Not started | - |
