@@ -1,11 +1,13 @@
-import { render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { cleanup, render, screen, within } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 import { AchievementsPage } from "@/components/pages/AchievementsPage";
 import { IndexPage } from "@/components/pages/IndexPage";
 import { achievements } from "@/content/achievements";
 import { indexPage } from "@/content/index";
 import { site } from "@/content/site";
 import { letterSections } from "@/lib/sections";
+
+afterEach(cleanup);
 
 describe("IndexPage", () => {
   it("renders an h1 named after the site with the role line as plain text", () => {
