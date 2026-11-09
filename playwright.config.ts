@@ -21,12 +21,26 @@ export default defineConfig({
       },
   // Firefox and WebKit projects arrive in Phase 4 (wheel/trackpad differences).
   projects: [
-    { name: "chromium", use: { ...devices["Desktop Chrome"] } },
+    {
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
+      testIgnore: /visual\.spec\.ts/,
+    },
     // A11Y-05: the same routes with JavaScript off.
     {
       name: "chromium-nojs",
       use: { ...devices["Desktop Chrome"], javaScriptEnabled: false },
       testMatch: /routes\.spec\.ts/,
     },
+    // DSGN-01/02/06: screenshot baselines, only inside the pinned Playwright container (Pitfall 6).
+    ...(process.env.VISUAL === "1"
+      ? [
+          {
+            name: "visual",
+            use: { ...devices["Desktop Chrome"] },
+            testMatch: /visual\.spec\.ts/,
+          },
+        ]
+      : []),
   ],
 });
