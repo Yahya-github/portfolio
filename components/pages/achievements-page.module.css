@@ -91,10 +91,12 @@ a.line:active .result {
     font-size: inherit;
   }
 
+  /* Re-declare the em tracking here: the parent's -0.05em resolves against its inherited 16px. */
   .one {
     display: block;
     width: max-content;
     text-transform: none;
+    letter-spacing: var(--display-track);
     font-size: min(
       var(--text-display-phone),
       calc((100vw - var(--phone-inset)) / var(--word-em))

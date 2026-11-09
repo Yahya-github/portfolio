@@ -20,5 +20,13 @@ export default defineConfig({
         reuseExistingServer: !process.env.CI,
       },
   // Firefox and WebKit projects arrive in Phase 4 (wheel/trackpad differences).
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+  projects: [
+    { name: "chromium", use: { ...devices["Desktop Chrome"] } },
+    // A11Y-05: the same routes with JavaScript off.
+    {
+      name: "chromium-nojs",
+      use: { ...devices["Desktop Chrome"], javaScriptEnabled: false },
+      testMatch: /routes\.spec\.ts/,
+    },
+  ],
 });

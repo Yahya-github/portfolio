@@ -18,7 +18,12 @@ export function ProjectsPage({ headingLevel, isCurrent }: PageProps) {
   const sub = (headingLevel + 1) as 2 | 3;
   return (
     <div className={`grid ${styles.root}`}>
-      <PageTitle slug="projects" level={headingLevel} text={projects.title} />
+      <PageTitle
+        slug="projects"
+        level={headingLevel}
+        text={projects.title}
+        className={styles.title}
+      />
       <div className={styles.lead}>
         <div className={styles.still}>
           <Photo
