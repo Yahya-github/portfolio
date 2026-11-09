@@ -19,12 +19,16 @@ Phase 1 (Design Gate) complete 2026-11-07: design doc revision 5 approved by Yah
 
 Phase 2 (Live Deploy Spike) complete 2026-11-08: placeholder static export live on Vercel; public repo Yahya-github/portfolio with branch-protected main (lint, typecheck, unit, e2e required); baseline JS 132.1 kB gzip recorded in docs/reference/perf-baseline.md.
 
+- [x] Dark Swiss design system: black ground, white type, one green accent, one sans family (Instrument Sans), 12-column grid, flush-left text, no ornament (DSGN-01, DSGN-02, DSGN-06) — Validated in Phase 3: Static Design System and Pages
+- [x] Hero: giant YAHYA spanning the page; each letter is a clickable link to its section, with numbered captions (LTR-01, LTR-02) — Validated in Phase 3
+- [x] Hero role line readable with no interaction (CONT-01); all text from typed data files (CONT-09); skip link, focus states, WCAG AA contrast, full no-JS reach (A11Y-02, A11Y-03, A11Y-05) — Validated in Phase 3
+
+Phase 3 (Static Design System and Pages) complete 2026-11-09: six server-rendered routes in the dark Swiss system, letter links work without JavaScript, 180 unit + 162 e2e tests, 18 visual baselines pinned in the Playwright container, JS 132.2 kB gzip. Approved by Yahya; draft PR #5. Known follow-ups: label inner-word gaps (todo), review warnings WR-01..03 in 03-REVIEW.md, `react/jsx-no-literals` lint rule pending approval, resume PDF not yet in public/.
+
 ### Active
 
-- [ ] Dark Swiss design system: black ground, white type, one green accent, one sans family (Instrument Sans), 12-column grid, flush-left text, no ornament
-- [ ] Six full-screen pages switched horizontally: Index (hero), Achievements, Projects, Experience, About, Say hi
+- [ ] Six full-screen pages switched horizontally: Index (hero), Achievements, Projects, Experience, About, Say hi (pages exist as static routes since Phase 3; horizontal switching is Phase 4)
 - [ ] Page switching by wheel/trackpad (one gesture = one page, inertia ignored), arrow keys, Page Up/Down, Space, Home/End, and swipe
-- [ ] Hero: giant YAHYA spanning the page; each letter is a clickable link to its section (Y Achievements, A Projects, H Experience, Y About, A Say hi), with numbered captions
 - [ ] Leaving the hero, the five letters shrink and glide into a vertical rail on the left that stays as the navigation, current section in the accent colour
 - [ ] Achievements: variant (b), letter-pair title with five equal lines (CCC 75/75 included, not dominant) and hover photo previews linking to public sources (chosen in Phase 1)
 - [ ] Custom cursor that sits exactly on the pointer (EXP-03), form (a) square outline that snaps to the hovered item (chosen in Phase 1)
@@ -36,7 +40,6 @@ Phase 2 (Live Deploy Spike) complete 2026-11-08: placeholder static export live 
 - [ ] Interactive proof: playable Atlantis in the browser and a rotatable 3D model of the robot
 - [ ] Accessible: keyboard navigation, focus states, inactive pages inert, reduced-motion versions of every animation, works without the pointer
 - [ ] Works on phones (swipe paging, letter rail scaled down)
-- [ ] Hero shows a role line beside the giant YAHYA, readable with no interaction (proof line dropped by Yahya, 2026-11-07)
 - [ ] Resume PDF (self-hosted) on Say hi and reachable from every page
 - [ ] Contact visible from every page
 - [ ] Each page has its own real URL (/achievements/ etc.); Back steps through visited pages
@@ -123,4 +126,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-11-08 after Phase 2 (Live Deploy Spike) completion*
+*Last updated: 2026-11-09 after Phase 3 (Static Design System and Pages) completion*
