@@ -27,6 +27,7 @@ Not in this phase: letters-to-rail FLIP glide, first-visit hint, opening animati
 - **D-05:** **Fresh gesture at the edge.** On an overflowing page, the wheel scrolls the page. The momentum that brings it to the bottom (or top) is spent; only a new gesture that starts at the edge pages. No accidental page change mid-read.
 - **D-06:** **Pages always open at their top**, heading in view, whether reached forwards or backwards. No remembered scroll positions.
 - **D-07:** **Phones never page by vertical scroll.** Vertical = read the page (document scroll, per Phase 3), horizontal swipe = change page. No overscroll-to-page.
+  - **D-07a (2026-11-09, clarified at plan-phase):** D-07 is touch-only. With wheel/trackpad on a document-scroll layout (narrow desktop window, 200% zoom), the wheel scrolls the page first; momentum reaching the edge never pages; a fresh gesture starting at the edge pages (NAV-07).
 - **D-08:** Swipe distance, velocity and "mostly horizontal" angle thresholds are Claude's call, tuned in device tests. The left-edge 20px exclusion from design-doc Decision 3 stands (swipes starting there are left to the system back gesture).
 
 ### Chrome during the slide (before Phase 5)
