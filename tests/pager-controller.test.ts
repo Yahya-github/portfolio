@@ -1,6 +1,10 @@
+import { act, renderHook } from "@testing-library/react";
+import { createElement, type ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
+import { PagerContext, usePagerState } from "@/components/shell/PagerContext";
 import { REPEAT_GATE_MS, createPagerController } from "@/lib/pager/controller";
 import { createSignals } from "@/lib/pager/signals";
+import { initialState } from "@/lib/pager/state";
 import type { Intent, SlideStartEvent, Source } from "@/lib/pager/types";
 import { createStubDeps } from "./helpers/stub-ports";
 
@@ -288,5 +292,25 @@ describe("createSignals", () => {
     expect(() => hub.emitLanded(1)).not.toThrow();
     hub.emitLanded(2);
     expect(seen).toEqual([2]);
+  });
+});
+
+describe("usePagerState", () => {
+  it("falls back to initialState outside a provider", () => {
+    const { result } = renderHook(() => usePagerState(3));
+    expect(result.current).toEqual(initialState(3));
+  });
+
+  it("re-renders on accepted intents inside the context", () => {
+    const { controller } = setup();
+    const wrapper = ({ children }: { children: ReactNode }) =>
+      createElement(PagerContext, { value: controller }, children);
+    const { result } = renderHook(() => usePagerState(0), { wrapper });
+    expect(result.current.target).toBe(0);
+    act(() => {
+      controller.intent(NEXT);
+    });
+    expect(result.current.target).toBe(1);
+    expect(result.current.phase).toBe("sliding");
   });
 });
