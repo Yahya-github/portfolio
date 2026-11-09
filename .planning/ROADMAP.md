@@ -99,8 +99,8 @@ Plans:
   5. Keyboard and screen-reader users only reach the current page; after a page change focus moves to the new page's heading and a live region announces the page
 **Plans**: 15 plans
 Plans:
-- [ ] 04-01-PLAN.md — Pager contracts, pure reducer, live-region/debug copy, client allowlist and jsdom stubs (W1)
-- [ ] 04-02-PLAN.md — JS-on track layout at rest: data-js flag, track CSS, root overscroll/touch-action, title ring rules, e2e selector updates (W1)
+- [x] 04-01-PLAN.md — Pager contracts, pure reducer, live-region/debug copy, client allowlist and jsdom stubs (W1)
+- [x] 04-02-PLAN.md — JS-on track layout at rest: data-js flag, track CSS, root overscroll/touch-action, title ring rules, e2e selector updates (W1)
 - [ ] 04-03-PLAN.md — Wheel/trackpad gesture FSM with trace replay tests (TDD, W2)
 - [ ] 04-04-PLAN.md — Key map (WR-04, scroll-first) and touch-swipe recogniser (TDD, W2)
 - [ ] 04-05-PLAN.md — Pager controller, slide/landed signals, React context hooks (TDD, W2)
@@ -176,7 +176,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 1. Design Gate | 8/8 | Complete   | 2026-11-07 |
 | 2. Live Deploy Spike | 6/6 | Complete   | 2026-11-08 |
 | 3. Static Design System and Pages | 10/10 | Complete   | 2026-11-09 |
-| 4. Horizontal Pager and Input | 0/TBD | Not started | - |
+| 4. Horizontal Pager and Input | 2/15 | In Progress|  |
 | 5. Letter Navigation and Motion | 0/TBD | Not started | - |
 | 6. Page Compositions and Content | 0/TBD | Not started | - |
 | 7. Copy, Sharing and Launch | 0/TBD | Not started | - |
