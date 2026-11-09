@@ -13,6 +13,7 @@ import {
   useLayoutEffect,
   useState,
   useSyncExternalStore,
+  type ComponentType,
   type ReactNode,
 } from "react";
 import { flushSync } from "react-dom";
@@ -104,5 +105,23 @@ export function PagerProvider({ initial, children }: PagerProviderProps) {
     [controller],
   );
 
-  return <PagerContext value={controller}>{children}</PagerContext>;
+  // D-14: the overlay chunk loads only with ?debug; the query value is never read.
+  const [Debug, setDebug] = useState<ComponentType | null>(null);
+  useEffect(() => {
+    if (!new URLSearchParams(window.location.search).has("debug")) return;
+    let alive = true;
+    import("./DebugOverlay").then((m) => {
+      if (alive) setDebug(() => m.DebugOverlay);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  return (
+    <PagerContext value={controller}>
+      {children}
+      {Debug ? <Debug /> : null}
+    </PagerContext>
+  );
 }
