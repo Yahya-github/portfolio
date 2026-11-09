@@ -68,9 +68,9 @@ describe("translateXOf", () => {
   });
 
   it("reads the 13th value from a matrix3d", () => {
-    expect(
-      translateXOf("matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,-720.5,0,0,1)"),
-    ).toBe(-720.5);
+    expect(translateXOf("matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,-720.5,0,0,1)")).toBe(
+      -720.5,
+    );
   });
 
   it("returns 0 for a malformed matrix", () => {
