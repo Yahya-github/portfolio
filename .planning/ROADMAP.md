@@ -97,7 +97,23 @@ Plans:
   3. Opening yahya-hallani.dev/projects/ lands directly on Projects; the URL updates on every page change, and the browser Back button steps back through the visited pages
   4. Every page fits one screen at 1366x768; at 200% zoom or on a short screen the page scrolls vertically, and paging happens only once the visitor reaches its edge
   5. Keyboard and screen-reader users only reach the current page; after a page change focus moves to the new page's heading and a live region announces the page
-**Plans**: TBD
+**Plans**: 15 plans
+Plans:
+- [ ] 04-01-PLAN.md — Pager contracts, pure reducer, live-region/debug copy, client allowlist and jsdom stubs (W1)
+- [ ] 04-02-PLAN.md — JS-on track layout at rest: data-js flag, track CSS, root overscroll/touch-action, title ring rules, e2e selector updates (W1)
+- [ ] 04-03-PLAN.md — Wheel/trackpad gesture FSM with trace replay tests (TDD, W2)
+- [ ] 04-04-PLAN.md — Key map (WR-04, scroll-first) and touch-swipe recogniser (TDD, W2)
+- [ ] 04-05-PLAN.md — Pager controller, slide/landed signals, React context hooks (TDD, W2)
+- [ ] 04-06-PLAN.md — DOM ports: WAAPI animator, history (announcer, scroll restoration), focus, scroll hold, edge probe (W2)
+- [ ] 04-07-PLAN.md — PageLevel heading context and focusable page titles (W2)
+- [ ] 04-08-PLAN.md — PagerProvider, PageSection, LiveRegion, link/popstate paging, history e2e (W3)
+- [ ] 04-09-PLAN.md — Header/Footer/LetterNav projections and the letters stand-in (W3)
+- [ ] 04-10-PLAN.md — Wheel/key/swipe listeners, Playwright projects, wheel and key e2e (W4)
+- [ ] 04-11-PLAN.md — ?debug overlay and trace recorder, exact client allowlist (W5)
+- [ ] 04-12-PLAN.md — Accessibility-after-paging and overflow-edge e2e (W5)
+- [ ] 04-13-PLAN.md — Swipe and motion-contract e2e, CI cross-browser switch (W5)
+- [ ] 04-14-PLAN.md — Label letter-gap fix and baseline regeneration (checkpoint, W6)
+- [ ] 04-15-PLAN.md — PR preview and D-12 real-device checklist, trace-backed tuning (checkpoint, W7)
 **UI hint**: yes
 
 ### Phase 5: Letter Navigation and Motion
