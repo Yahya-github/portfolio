@@ -195,9 +195,19 @@ test("switching reduced motion mid-session applies without a reload (WR-08)", as
   await page.keyboard.press("ArrowRight");
   await waitForLanded(page, before);
 
+  // Listeners fire in registration order, so once this later-registered one has
+  // run, PagerProvider's change listener has already told the controller.
+  await page.evaluate(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    (window as unknown as { __mqChanged: Promise<void> }).__mqChanged =
+      new Promise((resolve) =>
+        mq.addEventListener("change", () => resolve(), { once: true }),
+      );
+  });
   await page.emulateMedia({ reducedMotion: "reduce" });
   before = await landId(page);
   const reduced = await page.evaluate(async () => {
+    await (window as unknown as { __mqChanged: Promise<void> }).__mqChanged;
     const init = { key: "ArrowLeft", bubbles: true };
     window.dispatchEvent(new KeyboardEvent("keydown", init));
     await new Promise((resolve) => requestAnimationFrame(resolve));
