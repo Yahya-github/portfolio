@@ -3,6 +3,9 @@ import { defineConfig, devices } from "@playwright/test";
 // Set BASE_URL (e.g. https://yahya-hallani.dev) for a manual live check; otherwise the built out/ is served locally.
 const liveBaseUrl = process.env.BASE_URL;
 
+// NAV-01: wheel/key differences across engines; host has Chromium only, CI's Playwright container has all three (RESEARCH Environment).
+const PAGER_CROSS = /pager-(wheel|keys|history)\.spec\.ts/;
+
 export default defineConfig({
   testDir: "e2e",
   forbidOnly: !!process.env.CI,
@@ -19,12 +22,11 @@ export default defineConfig({
         url: "http://localhost:4173",
         reuseExistingServer: !process.env.CI,
       },
-  // Firefox and WebKit projects arrive in Phase 4 (wheel/trackpad differences).
   projects: [
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
-      testIgnore: /visual\.spec\.ts/,
+      testIgnore: [/visual\.spec\.ts/, /pager-swipe\.spec\.ts/],
     },
     // A11Y-05: the same routes with JavaScript off.
     {
@@ -32,6 +34,30 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"], javaScriptEnabled: false },
       testMatch: /routes\.spec\.ts/,
     },
+    // NAV-03: touch swipe on a phone-sized viewport.
+    {
+      name: "chromium-touch",
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 390, height: 844 },
+        hasTouch: true,
+      },
+      testMatch: /pager-swipe\.spec\.ts/,
+    },
+    ...(process.env.ALL_BROWSERS === "1"
+      ? [
+          {
+            name: "firefox",
+            use: { ...devices["Desktop Firefox"] },
+            testMatch: PAGER_CROSS,
+          },
+          {
+            name: "webkit",
+            use: { ...devices["Desktop Safari"] },
+            testMatch: PAGER_CROSS,
+          },
+        ]
+      : []),
     // DSGN-01/02/06: screenshot baselines, only inside the pinned Playwright container (Pitfall 6).
     ...(process.env.VISUAL === "1"
       ? [
