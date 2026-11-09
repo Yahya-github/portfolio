@@ -10,8 +10,8 @@ const USE_CLIENT = /["']use client["']/;
 const NEXT_VALUE_IMPORT =
   /^import\s+(?!type\b)[^;]*from\s+["']next\/(link|image)["']/m;
 
-// Subset semantics so Wave 2/3 plans can add client files in parallel;
-// plan 04-11 tightens this to exact equality.
+// Exact list (plan 04-11): every Phase 4 client file exists, so a new
+// "use client" file must be added here deliberately.
 const CLIENT_ALLOWLIST: readonly string[] = [
   join("components", "frame", "Header.tsx"),
   join("components", "frame", "Footer.tsx"),
@@ -57,10 +57,10 @@ describe("source guard (CONT-09, T-03-12, T-03-13)", () => {
     expect(offenders(LITERAL_A11Y_ATTR)).toEqual([]);
   });
 
-  it("allows client components only from the Phase 4 allowlist", () => {
-    expect(
-      offenders(USE_CLIENT).filter((f) => !CLIENT_ALLOWLIST.includes(f)),
-    ).toEqual([]);
+  it("has exactly the Phase 4 client components", () => {
+    expect([...offenders(USE_CLIENT)].sort()).toEqual(
+      [...CLIENT_ALLOWLIST].sort(),
+    );
   });
 
   it("has no value imports from next/link or next/image", () => {
