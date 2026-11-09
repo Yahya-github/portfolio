@@ -28,6 +28,7 @@ import { pageElement } from "@/lib/pager/input/edge";
 import { createScrollPort } from "@/lib/pager/scroll";
 import { PAGER_SELECTORS, type PagerDeps } from "@/lib/pager/types";
 import { PagerContext } from "./PagerContext";
+import { usePagerInput } from "./usePagerInput";
 import { usePagerNavigation } from "./usePagerNavigation";
 
 const query = (selector: string) => (): HTMLElement | null =>
@@ -66,6 +67,7 @@ export function PagerProvider({ initial, children }: PagerProviderProps) {
   const [controller] = useState(() =>
     createPagerController(createDomDeps(), initial),
   );
+  usePagerInput(controller);
   usePagerNavigation(controller);
   const state = useSyncExternalStore(
     controller.subscribe,
