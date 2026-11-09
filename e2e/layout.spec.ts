@@ -60,7 +60,10 @@ for (const s of sections) {
       await open(page, s.route, vp);
       const result = await page.evaluate(() => {
         const de = document.documentElement;
+        // Inert pages and the six-page track itself sit past innerWidth by design (JS-on track); scrollWidth still guards the document.
         const offenders = [...document.querySelectorAll("body *")]
+          .filter((el) => !el.closest("[inert]"))
+          .filter((el) => !el.matches("main#content"))
           .filter((el) => el.checkVisibility())
           .map((el) => ({ el, r: el.getBoundingClientRect() }))
           .filter(({ r }) => r.width > 1 && r.right > innerWidth + 0.5)
@@ -105,6 +108,7 @@ for (const s of sections) {
     const accentText = await page.evaluate(
       (accent) =>
         [...document.querySelectorAll("body *")]
+          .filter((el) => !el.closest("[inert]"))
           .filter((el) => el.checkVisibility())
           .filter((el) =>
             [...el.childNodes].some(
@@ -133,9 +137,30 @@ for (const s of sections) {
     await open(page, s.route, VIEWPORTS.desktop);
     await expect(page.locator("svg")).toHaveCount(0);
     await expect(page.locator("img")).toHaveCount(2);
-    await expect(page.locator("img:visible")).toHaveCount(
-      VISIBLE_IMG_ROUTES.has(s.route) ? 1 : 0,
+    // Off-screen inert pages render their images with JS, so count the current page plus anything outside main.
+    const onPage = await page.locator(`#page-${s.slug} img:visible`).count();
+    const outsideMain = await page
+      .locator("body img:not(main img):visible")
+      .count();
+    expect(onPage + outsideMain).toBe(VISIBLE_IMG_ROUTES.has(s.route) ? 1 : 0);
+  });
+
+  test(`${s.route} deep link paints its page in place at 1440x900`, async ({
+    page,
+  }) => {
+    await open(page, s.route, VIEWPORTS.desktop);
+    const state = await page.evaluate(
+      (slug) => ({
+        hasJs: document.documentElement.hasAttribute("data-js"),
+        left: document.getElementById(`page-${slug}`)!.getBoundingClientRect()
+          .left,
+        scrollX: window.scrollX,
+      }),
+      s.slug,
     );
+    expect(state.hasJs).toBe(true);
+    expect(Math.abs(state.left)).toBeLessThanOrEqual(1);
+    expect(state.scrollX).toBe(0);
   });
 }
 
