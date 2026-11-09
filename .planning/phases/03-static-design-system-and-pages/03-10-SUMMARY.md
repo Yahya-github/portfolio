@@ -77,7 +77,7 @@ All six static pages now have 18 screenshot baselines, generated and compared in
 ## Known Issues (not fixed; Yahya approved as-is)
 
 - **Gaps inside words in small uppercase labels** at 1440x900 in Chromium on Linux: "YAHYA HALL ANI", "RESU ME (PDF)", "SOFTWARE ENGINE ERING", "NE XT, ACHIE VEMENTS". This is probably a tracking or kerning problem with the font in Chromium on Linux. Fix it later and regenerate the baselines in the container.
-- **About at 390x844:** the Display heading "TWO HABITS" breaks inside the word as "TWO / HAB / ITS" (`about-390x844-visual-linux.png`). It was flagged at the checkpoint, and the approval covered the pages as they are. This needs a follow-up in the display-fit or word-break rules for phone Display words. Regenerate the baselines afterwards.
+- **About at 390x844, "TWO / HAB / ITS": not a defect.** It was flagged at the checkpoint, but 03-UI-SPEC (Display row and the About composition, "TWO / HAB / ITS in Display, line height 0.82") specifies this three-row stack, the same device as Achievements' AC / HI / EV. The visually hidden "Two habits" carries the heading text. No follow-up is needed.
 
 ## Threat Flags
 
