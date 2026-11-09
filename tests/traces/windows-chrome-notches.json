@@ -1,0 +1,11 @@
+{
+  "device": "Windows mouse wheel, three slow notches",
+  "browser": "Chrome",
+  "os": "Windows",
+  "samples": [
+    { "t": 1000, "dx": 0, "dy": 100, "mode": 0, "legacy": -120 },
+    { "t": 1250, "dx": 0, "dy": 100, "mode": 0, "legacy": -120 },
+    { "t": 1500, "dx": 0, "dy": 100, "mode": 0, "legacy": -120 }
+  ],
+  "expectPages": 3
+}

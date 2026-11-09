@@ -1,0 +1,7 @@
+{
+  "device": "Mac mouse wheel, one low-delta notch",
+  "browser": "Safari",
+  "os": "macOS",
+  "samples": [{ "t": 1000, "dx": 0, "dy": 12, "mode": 0, "legacy": -120 }],
+  "expectPages": 1
+}

@@ -1,0 +1,10 @@
+{
+  "device": "Two small nudges split by an idle gap",
+  "browser": "Chrome",
+  "os": "Linux",
+  "samples": [
+    { "t": 1000, "dx": 0, "dy": 30, "mode": 0 },
+    { "t": 1200, "dx": 0, "dy": 30, "mode": 0 }
+  ],
+  "expectPages": 0
+}
