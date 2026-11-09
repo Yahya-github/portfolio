@@ -106,8 +106,8 @@ Plans:
 - [x] 04-05-PLAN.md — Pager controller, slide/landed signals, React context hooks (TDD, W2)
 - [x] 04-06-PLAN.md — DOM ports: WAAPI animator, history (announcer, scroll restoration), focus, scroll hold, edge probe (W2)
 - [x] 04-07-PLAN.md — PageLevel heading context and focusable page titles (W2)
-- [ ] 04-08-PLAN.md — PagerProvider, PageSection, LiveRegion, link/popstate paging, history e2e (W3)
-- [ ] 04-09-PLAN.md — Header/Footer/LetterNav projections and the letters stand-in (W3)
+- [x] 04-08-PLAN.md — PagerProvider, PageSection, LiveRegion, link/popstate paging, history e2e (W3)
+- [x] 04-09-PLAN.md — Header/Footer/LetterNav projections and the letters stand-in (W3)
 - [ ] 04-10-PLAN.md — Wheel/key/swipe listeners, Playwright projects, wheel and key e2e (W4)
 - [ ] 04-11-PLAN.md — ?debug overlay and trace recorder, exact client allowlist (W5)
 - [ ] 04-12-PLAN.md — Accessibility-after-paging and overflow-edge e2e (W5)
@@ -176,7 +176,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 1. Design Gate | 8/8 | Complete   | 2026-11-07 |
 | 2. Live Deploy Spike | 6/6 | Complete   | 2026-11-08 |
 | 3. Static Design System and Pages | 10/10 | Complete   | 2026-11-09 |
-| 4. Horizontal Pager and Input | 7/15 | In Progress|  |
+| 4. Horizontal Pager and Input | 9/15 | In Progress|  |
 | 5. Letter Navigation and Motion | 0/TBD | Not started | - |
 | 6. Page Compositions and Content | 0/TBD | Not started | - |
 | 7. Copy, Sharing and Launch | 0/TBD | Not started | - |
