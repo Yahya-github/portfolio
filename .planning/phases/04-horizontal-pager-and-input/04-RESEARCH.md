@@ -427,18 +427,22 @@ In `app/layout.tsx`: `<html ... suppressHydrationWarning><head><script dangerous
 | A5 | Chrome on Windows sends about 100px per notch, and Windows precision touchpads produce Mac-like momentum streams | Validation (synthetic traces) | The synthetic traces may not match reality; D-13 records the gap |
 | A6 | Playwright's WebKit does not run on the Fedora host (Playwright supports WebKit on Ubuntu/Debian) | Environment | Use the container either way |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should the wheel page at the document edge on a narrow desktop window (≤820px, including 200% zoom)?**
    - What we know: NAV-07 criterion 4 requires paging at the edge at 200% zoom, and D-07 says phones never page by vertical scroll.
    - What's unclear: D-07 says "phones", which reads as touch. The recommendation applies the D-05 rule to wheel input against the document scroller.
    - Recommendation: implement it that way and mark it in the plan as an interpretation.
+   - RESOLVED: CONTEXT D-07a (2026-11-09) makes D-07 touch-only: with wheel/trackpad on a document-scroll layout the wheel scrolls first, momentum reaching the edge never pages, and a fresh gesture starting at the edge pages (NAV-07).
 2. **Does a swipe without finger-follow feel unresponsive?** The UI-SPEC already lists this as a revisit-on-device item. Keep the recogniser's API able to expose `dx` so a follow can be added later.
+   - RESOLVED: plan 04-04 keeps `dx` exposed in the swipe recogniser's state-derived values (no API change needed for a later finger-follow); plan 04-15 device checklist item 13 asks Yahya whether the swipe feels responsive, and a "no" is recorded as a follow-up.
 3. **On a pinch-zoomed phone with `touch-action: pan-y pinch-zoom`, can the visitor still pan sideways?** Check on the iPhone. Fallback: switch to `touch-action: auto` while `visualViewport.scale > 1`.
+   - RESOLVED: swipes ignore pinch-zoomed samples (plan 04-04); plan 04-15 device checklist item 12 checks sideways panning on the iPhone, and if it fails plan 04-15 Task 3 adds the `touch-action: auto` while `visualViewport.scale > 1` toggle in `usePagerInput.ts` and Task 4 re-checks it; only a second failure is reported as a gap.
 4. **Where do the recorded traces come from?** I searched and found no reliable public dataset.
    - Record traces on Yahya's devices through `?debug`: keep a ring buffer of the last ~600 samples on `window.__pagerTrace` (debug only) and copy it from DevTools.
    - Synthesise the Windows notch traces from documented values.
    - iPhone and Android need no wheel traces.
+   - RESOLVED: plan 04-11 adds the `?debug`-only `window.__pagerTrace` recorder (last 600 samples, trace-file format); plan 04-03 ships the synthetic traces (including the Windows notch traces, D-13); plan 04-15 turns recorded device traces into replay tests.
 
 ## Environment Availability
 
