@@ -1,11 +1,9 @@
-import type { Metadata } from "next";
+import { rootMetadata } from "@/lib/metadata";
 import { instrumentSans } from "./fonts";
-import "./globals.css";
+import "@/styles/tokens.css";
+import "@/styles/base.css";
 
-export const metadata: Metadata = {
-  title: "Yahya Hallani",
-  robots: { index: false, follow: false },
-};
+export const metadata = rootMetadata;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
