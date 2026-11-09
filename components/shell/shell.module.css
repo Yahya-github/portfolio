@@ -38,3 +38,40 @@
     height: auto;
   }
 }
+
+/* JS-on track (UI-SPEC Track Contract): six pages in one row; the server sets --track-index for first paint, the pager on landing. */
+:global(html[data-js]) .track {
+  display: flex;
+  align-items: flex-start;
+  width: calc(var(--page-count) * 100vw);
+  transform: translate3d(calc(var(--track-index, 0) * -100vw), 0, 0);
+}
+
+:global(html[data-js]) .track[data-phase="sliding"] {
+  will-change: transform;
+}
+
+:global(html[data-js]) .page {
+  flex: 0 0 100vw;
+  width: 100vw;
+}
+
+/* Inert pages stay rendered off-screen with JS (overrides the D-06 JS-off rule above). */
+:global(html[data-js]) .page[inert] {
+  display: block;
+}
+
+@media (min-width: 821px) {
+  :global(html[data-js]) .page {
+    overscroll-behavior-y: contain;
+  }
+}
+
+/* Phones: the document scroll follows the current page only; applied strictly after landing (data-collapsed). */
+@media (max-width: 820px) {
+  :global(html[data-js]) .page[data-collapsed] {
+    height: 100svh;
+    min-height: 0;
+    overflow: clip;
+  }
+}

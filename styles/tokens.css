@@ -52,6 +52,8 @@
   --dur-ui: 150ms;
   --stagger: 30ms;
   --ease-page: cubic-bezier(0.77, 0, 0.18, 1);
+  --ease-retarget: cubic-bezier(0.3, 0.6, 0.18, 1);
+  --page-count: 6;
   --ease-ui: cubic-bezier(0.16, 1, 0.3, 1);
 }
 

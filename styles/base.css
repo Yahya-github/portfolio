@@ -111,3 +111,26 @@ main:focus {
 .measure {
   max-width: 60ch;
 }
+/* D-04 / Pitfall 11: no horizontal document scroll and no horizontal history swipe once the track is live. */
+html[data-js],
+html[data-js] body {
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+}
+/* NAV-03 / RESEARCH Pitfall 7: touch-action is read where the touch starts; pinch-zoom stays (WCAG 1.4.4). UI-SPEC said pan-y on the track. */
+@media (max-width: 820px), (pointer: coarse) {
+  html[data-js] {
+    touch-action: pan-y pinch-zoom;
+  }
+}
+/* A11Y-01: page titles are focus targets; the ring shows only for keyboard-initiated focus. */
+[id^="title-"]:focus:not(:focus-visible) {
+  outline: none;
+}
+/* Titles whose content is entirely visually hidden have no box to frame (UI-SPEC Accessibility Contract). */
+#title-index:focus,
+#title-projects:focus,
+#title-experience:focus,
+#title-say-hi:focus {
+  outline: none;
+}

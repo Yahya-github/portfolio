@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+import type { ComponentType, CSSProperties } from "react";
 import { AboutPage } from "@/components/pages/AboutPage";
 import { AchievementsPage } from "@/components/pages/AchievementsPage";
 import { ExperiencePage } from "@/components/pages/ExperiencePage";
@@ -8,6 +8,7 @@ import { SayHiPage } from "@/components/pages/SayHiPage";
 import type { PageProps } from "@/components/pages/types";
 import { sections } from "@/content/site";
 import type { Slug } from "@/content/types";
+import { indexOfSlug } from "@/lib/sections";
 import styles from "./shell.module.css";
 
 const PAGE_COMPONENTS: Readonly<Record<Slug, ComponentType<PageProps>>> = {
@@ -34,6 +35,7 @@ export function Track({ current }: TrackProps) {
       tabIndex={-1}
       data-current={current}
       className={styles.track}
+      style={{ "--track-index": indexOfSlug(current) } as CSSProperties}
     >
       {sections.map((s) => {
         const isCurrent = s.slug === current;
@@ -44,6 +46,7 @@ export function Track({ current }: TrackProps) {
             id={`page-${s.slug}`}
             data-page={s.slug}
             inert={!isCurrent}
+            data-collapsed={isCurrent ? undefined : ""}
             aria-labelledby={`title-${s.slug}`}
             className={styles.page}
           >
