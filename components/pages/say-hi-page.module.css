@@ -1,0 +1,67 @@
+/* 05 Say hi (v7 .hi, without the spiral and clip variables: Phase 6).
+   Cols 7-12 stay empty. */
+.root {
+  --col: calc(
+    (
+        100vw - 2 * var(--grid-margin) - var(--rail-col) - 11 *
+          var(--grid-gutter)
+      ) /
+      12
+  );
+  --S: min(
+    calc(6 * var(--col) + 5 * var(--grid-gutter)),
+    calc(
+      100svh - var(--frame-top) - var(--frame-bottom) - 2 * var(--space-lg) -
+        40px
+    )
+  );
+
+  grid-template-rows: var(--S) auto;
+  align-content: start;
+  row-gap: var(--space-md);
+  padding-top: var(--space-lg);
+}
+
+.links {
+  grid-column: 1 / 7;
+  grid-row: 1;
+  align-self: start;
+}
+
+.line {
+  display: block;
+  width: max-content;
+  font-size: min(
+    var(--text-display),
+    calc(var(--S) / 4 / 0.88),
+    calc((6 * var(--col) + 5 * var(--grid-gutter)) / 3.6)
+  );
+}
+
+.side {
+  grid-column: 1 / 4;
+  grid-row: 2;
+  overflow-wrap: anywhere;
+}
+
+/* the address keeps its real case */
+.addr {
+  text-transform: none;
+}
+
+@media (max-width: 820px) {
+  .root {
+    padding: var(--space-lg) 0;
+  }
+
+  .line {
+    font-size: min(
+      var(--text-display-phone),
+      calc((100vw - var(--phone-inset)) / var(--word-em))
+    );
+  }
+
+  .side {
+    padding-top: var(--space-lg);
+  }
+}

@@ -1,0 +1,55 @@
+/* 03 Experience. Cols 9-12 under Involvement stay empty: the cropped "03"
+   and the organisation marks arrive in Phase 6. */
+.root {
+  align-content: start;
+}
+
+.work {
+  grid-column: 1 / 7;
+}
+
+.involvement {
+  grid-column: 7 / 13;
+}
+
+.table {
+  margin-top: var(--space-xl);
+}
+
+.row {
+  border-top: 1px solid var(--color-hair);
+  padding: var(--row-pad) 0;
+}
+
+.role {
+  margin-top: var(--space-xs);
+}
+
+/* v7 budget: frame 128 + gaps 48 + table margin 32 + five 8px rows 449 + 3 */
+@media (min-width: 821px) and (max-height: 879px) {
+  .head {
+    font-size: max(
+      var(--text-display-phone),
+      min(var(--text-display), calc((100svh - 660px) / 0.88))
+    );
+  }
+}
+
+@media (max-width: 820px) {
+  .head {
+    font-size: inherit;
+  }
+
+  .word {
+    display: block;
+    width: max-content;
+    font-size: min(
+      var(--text-display-phone),
+      calc((100vw - var(--phone-inset)) / var(--word-em))
+    );
+  }
+
+  .involvement {
+    margin-top: var(--space-2xl);
+  }
+}
