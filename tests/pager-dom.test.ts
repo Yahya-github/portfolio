@@ -7,6 +7,13 @@ import {
 } from "@/lib/pager/animator";
 import { createFocusPort } from "@/lib/pager/focus";
 import {
+  createHistoryPort,
+  indexFromLocation,
+  setManualScrollRestoration,
+  silenceNextAnnouncer,
+} from "@/lib/pager/history";
+import { createScrollPort } from "@/lib/pager/scroll";
+import {
   edgeInfo,
   pageElement,
   pageScrolls,
@@ -373,5 +380,167 @@ describe("focus port", () => {
 
   it("is a no-op when the title is missing", () => {
     expect(() => createFocusPort().focusTitle(3, false)).not.toThrow();
+  });
+});
+
+function setWindowNumber(key: "scrollX" | "scrollY", value: number): void {
+  Object.defineProperty(window, key, { value, configurable: true });
+}
+
+describe("history port", () => {
+  afterEach(() => {
+    window.history.replaceState(null, "", "/");
+  });
+
+  it("pushes the landed route, keeps the query and silences Next's announcer first", () => {
+    window.history.replaceState(null, "", "/?debug");
+    const announcer = document.createElement("next-route-announcer");
+    document.body.appendChild(announcer);
+    let announcerPresentAtPush = true;
+    const push = vi
+      .spyOn(window.history, "pushState")
+      .mockImplementation(() => {
+        announcerPresentAtPush = document.body.contains(announcer);
+      });
+
+    createHistoryPort().push(2);
+
+    expect(push).toHaveBeenCalledWith(null, "", "/projects/?debug");
+    expect(announcerPresentAtPush).toBe(false);
+  });
+
+  it("does not push the URL that is already current", () => {
+    window.history.replaceState(null, "", "/projects/");
+    const push = vi.spyOn(window.history, "pushState");
+    createHistoryPort().push(2);
+    expect(push).not.toHaveBeenCalled();
+  });
+
+  it("swallows pushState errors without logging", () => {
+    const error = vi.spyOn(console, "error");
+    const warn = vi.spyOn(console, "warn");
+    vi.spyOn(window.history, "pushState").mockImplementation(() => {
+      throw new DOMException("denied", "SecurityError");
+    });
+    expect(() => createHistoryPort().push(3)).not.toThrow();
+    expect(error).not.toHaveBeenCalled();
+    expect(warn).not.toHaveBeenCalled();
+  });
+
+  it("silenceNextAnnouncer is safe without an announcer", () => {
+    expect(() => silenceNextAnnouncer()).not.toThrow();
+  });
+
+  it("indexFromLocation matches exact routes only", () => {
+    window.history.replaceState(null, "", "/experience/");
+    expect(indexFromLocation()).toBe(3);
+    window.history.replaceState(null, "", "/unknown/");
+    expect(indexFromLocation()).toBeNull();
+  });
+
+  it("sets manual scroll restoration", () => {
+    setManualScrollRestoration();
+    expect(window.history.scrollRestoration).toBe("manual");
+  });
+});
+
+function page(slug: string, options: { scrolls: boolean; scrollTop?: number }) {
+  const el = document.createElement("section");
+  el.id = `page-${slug}`;
+  if (options.scrolls) el.style.overflowY = "auto";
+  Object.defineProperty(el, "scrollTop", {
+    value: options.scrollTop ?? 0,
+    configurable: true,
+    writable: true,
+  });
+  document.body.appendChild(el);
+  return el;
+}
+
+describe("scroll port", () => {
+  afterEach(() => {
+    setWindowNumber("scrollX", 0);
+    setWindowNumber("scrollY", 0);
+  });
+
+  it("resets the target page to its top on desktop (D-06)", () => {
+    const target = page("projects", { scrolls: true, scrollTop: 300 });
+    page("achievements", { scrolls: true });
+    createScrollPort().beforeSlide(1, 2, true);
+    expect(target.scrollTop).toBe(0);
+  });
+
+  it("keeps the origin page's scroll on a cancelled leave", () => {
+    const origin = page("achievements", { scrolls: true, scrollTop: 250 });
+    page("projects", { scrolls: true, scrollTop: 300 });
+    const port = createScrollPort();
+    port.beforeSlide(1, 2, true);
+    port.beforeSlide(2, 1, false);
+    expect(origin.scrollTop).toBe(250);
+  });
+
+  it("holds the outgoing page and resets the window scroll on phones", () => {
+    const from = page("achievements", { scrolls: false });
+    page("projects", { scrolls: false });
+    setWindowNumber("scrollY", 400);
+    const scrollTo = vi.spyOn(window, "scrollTo");
+    const port = createScrollPort();
+
+    port.beforeSlide(1, 2, true);
+    expect(from.style.transform).toBe("translateY(-400px)");
+    expect(scrollTo).toHaveBeenCalledWith({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+
+    setWindowNumber("scrollY", 0);
+    scrollTo.mockClear();
+    port.afterLand(2);
+    expect(from.style.transform).toBe("");
+    expect(scrollTo).not.toHaveBeenCalled();
+  });
+
+  it("restores the origin scroll when the leave is cancelled on phones", () => {
+    const from = page("achievements", { scrolls: false });
+    page("projects", { scrolls: false });
+    setWindowNumber("scrollY", 400);
+    const scrollTo = vi.spyOn(window, "scrollTo");
+    const port = createScrollPort();
+
+    port.beforeSlide(1, 2, true);
+    setWindowNumber("scrollY", 0);
+    port.beforeSlide(2, 1, false);
+    port.afterLand(1);
+
+    expect(from.style.transform).toBe("");
+    expect(scrollTo).toHaveBeenLastCalledWith({
+      top: 400,
+      left: 0,
+      behavior: "instant",
+    });
+  });
+
+  it("does not hold or scroll when the window is at the top", () => {
+    const from = page("achievements", { scrolls: false });
+    page("projects", { scrolls: false });
+    const scrollTo = vi.spyOn(window, "scrollTo");
+    const port = createScrollPort();
+    port.beforeSlide(1, 2, true);
+    port.afterLand(2);
+    expect(from.style.transform).toBe("");
+    expect(scrollTo).not.toHaveBeenCalled();
+  });
+
+  it("afterLand resets a horizontal window scroll (Pitfall 11)", () => {
+    setWindowNumber("scrollX", 30);
+    setWindowNumber("scrollY", 120);
+    const scrollTo = vi.spyOn(window, "scrollTo");
+    createScrollPort().afterLand(0);
+    expect(scrollTo).toHaveBeenCalledWith({
+      top: 120,
+      left: 0,
+      behavior: "instant",
+    });
   });
 });
