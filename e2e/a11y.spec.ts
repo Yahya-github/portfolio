@@ -1,4 +1,5 @@
 // A11Y-03: axe finds no WCAG 2.0/2.1 A/AA violation on any route at desktop and phone sizes.
+// Direct loads only; the same axe pass after real page changes (inert pages excluded) lives in pager-a11y.spec.ts.
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { sections } from "../content/site";
