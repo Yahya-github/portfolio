@@ -76,9 +76,9 @@ Plans:
 **Plans**: 10 plans
 Plans:
 - [ ] 03-01-PLAN.md — Folded todo: rewrite the portfolio-design and voice-and-facts skills to design rev 5 (outside the repo, Yahya approves, not committed)
-- [ ] 03-02-PLAN.md — styles/tokens.css + base.css, font display block, contrast and CSS-guard tests
-- [ ] 03-03-PLAN.md — Typed content files (all copy verbatim), lib/sections + lib/metadata, fact-guard tests
-- [ ] 03-04-PLAN.md — Portrait/Facturo WebP assets, Photo/Heading/PageProps primitives, phone Display fit, jsx-no-literals + source guard
+- [x] 03-02-PLAN.md — styles/tokens.css + base.css, font display block, contrast and CSS-guard tests
+- [x] 03-03-PLAN.md — Typed content files (all copy verbatim), lib/sections + lib/metadata, fact-guard tests
+- [x] 03-04-PLAN.md — Portrait/Facturo WebP assets, Photo/Heading/PageProps primitives, phone Display fit, jsx-no-literals + source guard
 - [ ] 03-05-PLAN.md — SkipLink, Header, Footer and LetterNav (hero with fixed-width letters, rail with route-only accent)
 - [ ] 03-06-PLAN.md — Index, Achievements and Projects page compositions
 - [ ] 03-07-PLAN.md — Experience, About and Say hi page compositions
@@ -159,7 +159,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 |-------|----------------|--------|-----------|
 | 1. Design Gate | 8/8 | Complete   | 2026-11-07 |
 | 2. Live Deploy Spike | 6/6 | Complete   | 2026-11-08 |
-| 3. Static Design System and Pages | 0/10 | Planned | - |
+| 3. Static Design System and Pages | 3/10 | In Progress|  |
 | 4. Horizontal Pager and Input | 0/TBD | Not started | - |
 | 5. Letter Navigation and Motion | 0/TBD | Not started | - |
 | 6. Page Compositions and Content | 0/TBD | Not started | - |
