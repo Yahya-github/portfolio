@@ -18,6 +18,30 @@ export function indexOfSlug(slug: Slug): number {
   return ALL.indexOf(sectionBySlug(slug));
 }
 
+/** Exact route match (trailing slash included); any other path is ignored (T-04-01). */
+export function indexOfRoute(pathname: string): number | null {
+  const i = ALL.findIndex((s) => s.route === pathname);
+  return i === -1 ? null : i;
+}
+
+function sectionAt(index: number): Section {
+  const found = Number.isInteger(index) ? ALL[index] : undefined;
+  if (!found) throw new Error(`unknown index: ${index}`);
+  return found;
+}
+
+export function slugAt(index: number): Slug {
+  return sectionAt(index).slug;
+}
+
+export function liveRegionText(index: number): string {
+  const s = sectionAt(index);
+  return site.liveRegion.template
+    .replace("{name}", s.name)
+    .replace("{n}", String(index + 1))
+    .replace("{total}", String(ALL.length));
+}
+
 export function nextLink(slug: Slug): NextLink {
   const next = ALL[indexOfSlug(slug) + 1];
   if (!next) return { href: "/", label: site.footer.backToStart };
