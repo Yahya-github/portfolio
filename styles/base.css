@@ -72,6 +72,9 @@ main:focus {
   letter-spacing: 0.02em;
   text-transform: uppercase;
   font-stretch: var(--wdth-body);
+  /* Label letter gaps (todo 2026-11-08, RESEARCH Pitfall 14): subpixel glyph positioning and kerning at 12px. */
+  text-rendering: geometricPrecision;
+  font-kerning: normal;
 }
 .t-body {
   font-size: var(--text-body);
