@@ -26,6 +26,12 @@
 .glyph {
   display: block;
   line-height: 0.76;
+  /* Chromium counts the font's full ascent/descent as scrollable overflow, which
+     made the Index document ~0.03em taller than the viewport (a stray scrollbar
+     that also narrowed every 100vw page). Clip it; the margin keeps the ink. */
+  height: 0.76em;
+  overflow: clip;
+  overflow-clip-margin: 0.06em;
 }
 
 /* Hero: absolute, so the row stays on the first screen when the phone document scrolls. */

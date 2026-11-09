@@ -75,3 +75,9 @@
     overflow: clip;
   }
 }
+
+/* The visually-hidden live region would otherwise sit at the document bottom and add 1px of scroll. */
+.live {
+  top: 0;
+  left: 0;
+}
