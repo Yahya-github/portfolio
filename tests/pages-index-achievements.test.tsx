@@ -1,5 +1,6 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
+import { PageLevelProvider } from "@/components/pages/PageLevel";
 import { AchievementsPage } from "@/components/pages/AchievementsPage";
 import { IndexPage } from "@/components/pages/IndexPage";
 import { achievements } from "@/content/achievements";
@@ -11,7 +12,11 @@ afterEach(cleanup);
 
 describe("IndexPage", () => {
   it("renders an h1 named after the site with the role line as plain text", () => {
-    const { container } = render(<IndexPage headingLevel={1} isCurrent />);
+    const { container } = render(
+      <PageLevelProvider level={1}>
+        <IndexPage />
+      </PageLevelProvider>,
+    );
     const h1 = screen.getByRole("heading", { level: 1 });
     expect(h1).toHaveAttribute("id", "title-index");
     expect(h1).toHaveAccessibleName(indexPage.title);
@@ -20,14 +25,22 @@ describe("IndexPage", () => {
   });
 
   it("renders the three meta labels", () => {
-    render(<IndexPage headingLevel={1} isCurrent />);
+    render(
+      <PageLevelProvider level={1}>
+        <IndexPage />
+      </PageLevelProvider>,
+    );
     for (const label of indexPage.metaLabels) {
       expect(screen.getByText(label)).toBeInTheDocument();
     }
   });
 
   it("lists the five letter sections as links to their routes", () => {
-    render(<IndexPage headingLevel={1} isCurrent />);
+    render(
+      <PageLevelProvider level={1}>
+        <IndexPage />
+      </PageLevelProvider>,
+    );
     const links = screen.getAllByRole("link");
     const expected = letterSections();
     expect(links).toHaveLength(5);
@@ -41,8 +54,12 @@ describe("IndexPage", () => {
     expect(links[4]).toHaveTextContent("05 Say hi");
   });
 
-  it("renders an h2 when headingLevel is 2", () => {
-    render(<IndexPage headingLevel={2} isCurrent={false} />);
+  it("renders an h2 under page level 2", () => {
+    render(
+      <PageLevelProvider level={2}>
+        <IndexPage />
+      </PageLevelProvider>,
+    );
     expect(screen.queryByRole("heading", { level: 1 })).toBeNull();
     expect(screen.getByRole("heading", { level: 2 })).toHaveAttribute(
       "id",
@@ -51,14 +68,22 @@ describe("IndexPage", () => {
   });
 
   it("renders no svg and no img", () => {
-    const { container } = render(<IndexPage headingLevel={1} isCurrent />);
+    const { container } = render(
+      <PageLevelProvider level={1}>
+        <IndexPage />
+      </PageLevelProvider>,
+    );
     expect(container.querySelector("svg, img")).toBeNull();
   });
 });
 
 describe("AchievementsPage", () => {
   it("renders the title with the six letter rows aria-hidden", () => {
-    render(<AchievementsPage headingLevel={1} isCurrent />);
+    render(
+      <PageLevelProvider level={1}>
+        <AchievementsPage />
+      </PageLevelProvider>,
+    );
     const h = screen.getByRole("heading", { level: 1 });
     expect(h).toHaveAttribute("id", "title-achievements");
     expect(h).toHaveAccessibleName(achievements.title);
@@ -70,7 +95,11 @@ describe("AchievementsPage", () => {
   });
 
   it("renders 75/75 as accent tabular plain text outside any link", () => {
-    render(<AchievementsPage headingLevel={1} isCurrent />);
+    render(
+      <PageLevelProvider level={1}>
+        <AchievementsPage />
+      </PageLevelProvider>,
+    );
     const rank = screen.getByText("75/75");
     expect(rank).toHaveClass("c-accent");
     expect(rank).toHaveClass("tnum");
@@ -78,7 +107,11 @@ describe("AchievementsPage", () => {
   });
 
   it("renders exactly four external source links in new tabs", () => {
-    render(<AchievementsPage headingLevel={1} isCurrent />);
+    render(
+      <PageLevelProvider level={1}>
+        <AchievementsPage />
+      </PageLevelProvider>,
+    );
     const links = screen.getAllByRole("link");
     const linked = achievements.lines.filter((l) => l.href !== null);
     expect(links).toHaveLength(4);
@@ -90,8 +123,12 @@ describe("AchievementsPage", () => {
     });
   });
 
-  it("renders an h2 when headingLevel is 2", () => {
-    render(<AchievementsPage headingLevel={2} isCurrent={false} />);
+  it("renders an h2 under page level 2", () => {
+    render(
+      <PageLevelProvider level={2}>
+        <AchievementsPage />
+      </PageLevelProvider>,
+    );
     expect(screen.queryByRole("heading", { level: 1 })).toBeNull();
     expect(screen.getByRole("heading", { level: 2 })).toHaveAttribute(
       "id",
@@ -101,7 +138,9 @@ describe("AchievementsPage", () => {
 
   it("renders no svg and no img", () => {
     const { container } = render(
-      <AchievementsPage headingLevel={1} isCurrent />,
+      <PageLevelProvider level={1}>
+        <AchievementsPage />
+      </PageLevelProvider>,
     );
     expect(container.querySelector("svg, img")).toBeNull();
   });
