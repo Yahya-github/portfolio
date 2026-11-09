@@ -1,10 +1,4 @@
-import {
-  act,
-  cleanup,
-  render,
-  screen,
-  within,
-} from "@testing-library/react";
+import { act, cleanup, render, screen, within } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import { Footer } from "@/components/frame/Footer";
@@ -121,10 +115,9 @@ describe("chrome follows the pager target (D-10)", () => {
     });
     expect(screen.getByText("01 Achievements")).toBeInTheDocument();
     expect(screen.getByText("01 / 05")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Next, Projects" })).toHaveAttribute(
-      "href",
-      "/projects/",
-    );
+    expect(
+      screen.getByRole("link", { name: "Next, Projects" }),
+    ).toHaveAttribute("href", "/projects/");
   });
 
   it("follows a retarget before landing", () => {
