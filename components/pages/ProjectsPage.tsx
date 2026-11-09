@@ -14,13 +14,11 @@ const FACTURO_SIZES = "(max-width: 820px) 100vw, 60vw";
  * 02 Projects. Greyscale Facturo still and lead in cols 1-8, five compact
  * ruled rows in cols 9-12. The case-study link and walkthrough wait for Phase 6 (D-13).
  */
-export function ProjectsPage({ headingLevel, isCurrent }: PageProps) {
-  const sub = (headingLevel + 1) as 2 | 3;
+export function ProjectsPage({ isCurrent }: PageProps) {
   return (
     <div className={`grid ${styles.root}`}>
       <PageTitle
         slug="projects"
-        level={headingLevel}
         text={projects.title}
         className={styles.title}
       />
@@ -34,7 +32,7 @@ export function ProjectsPage({ headingLevel, isCurrent }: PageProps) {
             className={styles.img}
           />
         </div>
-        <Heading level={sub} className={`t-display ${styles.name}`}>
+        <Heading offset={1} className={`t-display ${styles.name}`}>
           <span
             style={displayFitStyle(projects.flagship.name) as CSSProperties}
             className={styles.nameWord}
@@ -54,7 +52,7 @@ export function ProjectsPage({ headingLevel, isCurrent }: PageProps) {
           <li key={r.number} className={styles.row}>
             <div className={styles.head}>
               <span className="t-label c-dim tnum">{r.number}</span>
-              <Heading level={sub} className="t-heading">
+              <Heading offset={1} className="t-heading">
                 {r.name}
               </Heading>
               {r.link ? (

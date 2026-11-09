@@ -1,6 +1,5 @@
 import type { CSSProperties } from "react";
 import { PageTitle } from "@/components/pages/Heading";
-import type { PageProps } from "@/components/pages/types";
 import { achievements } from "@/content/achievements";
 import { displayFitStyle } from "@/lib/display-fit";
 import styles from "./achievements-page.module.css";
@@ -9,12 +8,11 @@ import styles from "./achievements-page.module.css";
  * 01 Achievements. Letter-pair title stack in cols 1-2, five lines on a
  * subgrid in cols 3-10. Cols 11-12 stay empty (previews arrive in Phase 6).
  */
-export function AchievementsPage({ headingLevel }: PageProps) {
+export function AchievementsPage() {
   return (
     <div className={`grid ${styles.root}`}>
       <PageTitle
         slug="achievements"
-        level={headingLevel}
         text={achievements.title}
         className={`t-display ${styles.title}`}
       >

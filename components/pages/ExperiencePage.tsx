@@ -2,20 +2,14 @@ import type { CSSProperties } from "react";
 import { experience } from "@/content/experience";
 import { displayFitStyle } from "@/lib/display-fit";
 import { Heading, PageTitle } from "./Heading";
-import type { PageProps } from "./types";
 import styles from "./experience-page.module.css";
 
-export function ExperiencePage({ headingLevel }: PageProps) {
-  const sub = (headingLevel + 1) as 2 | 3;
+export function ExperiencePage() {
   return (
     <div className={`grid ${styles.root}`}>
-      <PageTitle
-        slug="experience"
-        level={headingLevel}
-        text={experience.title}
-      />
+      <PageTitle slug="experience" text={experience.title} />
       <div className={styles.work}>
-        <Heading level={sub} className={`t-display ${styles.head}`}>
+        <Heading offset={1} className={`t-display ${styles.head}`}>
           <span
             className={styles.word}
             style={displayFitStyle(experience.workHead) as CSSProperties}
@@ -34,7 +28,7 @@ export function ExperiencePage({ headingLevel }: PageProps) {
         </ol>
       </div>
       <div className={styles.involvement}>
-        <Heading level={sub} className={`t-display ${styles.head}`}>
+        <Heading offset={1} className={`t-display ${styles.head}`}>
           <span
             className={styles.word}
             style={displayFitStyle(experience.involvementHead) as CSSProperties}
