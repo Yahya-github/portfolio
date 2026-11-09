@@ -9,6 +9,7 @@ import {
   SWIPE_VELOCITY,
   VELOCITY_WINDOW_MS,
   stepSwipe,
+  swipeDx,
   swipeVelocity,
   type PointerSample,
   type SwipeState,
@@ -238,6 +239,15 @@ describe("stepSwipe (NAV-03, D-08)", () => {
     const snapshot = JSON.stringify(start);
     stepSwipe(start, s("move", 250, 400, 20));
     expect(JSON.stringify(start)).toBe(snapshot);
+  });
+});
+
+describe("swipeDx", () => {
+  it("is 0 when idle and follows the finger while tracking", () => {
+    expect(swipeDx(INITIAL_SWIPE)).toBe(0);
+    const down = stepSwipe(INITIAL_SWIPE, s("down", 300, 400, 0)).state;
+    const moved = stepSwipe(down, s("move", 260, 402, 20)).state;
+    expect(swipeDx(moved)).toBe(-40);
   });
 });
 
