@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { test, expect, type Page } from "@playwright/test";
+import { sections } from "../content/site";
 
 // Pitfall 7: `serve` does not send vercel.json headers, so inject the production CSP here.
 type HeaderEntry = { key: string; value: string };
@@ -22,6 +23,7 @@ const localCsp = productionCsp
 async function runUnderCsp(
   page: Page,
   csp: string,
+  route: string,
 ): Promise<{ violations: string[]; errors: string[] }> {
   await page.addInitScript(() => {
     const w = window as unknown as CspWindow;
@@ -43,21 +45,23 @@ async function runUnderCsp(
   });
   const errors: string[] = [];
   page.on("pageerror", (err) => errors.push(err.message));
-  await page.goto("/", { waitUntil: "networkidle" });
+  await page.goto(route, { waitUntil: "networkidle" });
   const violations = await page.evaluate(
     () => (window as unknown as CspWindow).__cspViolations,
   );
   return { violations, errors };
 }
 
-test("page runs under the production CSP with zero violations", async ({
-  page,
-}) => {
-  expect(localCsp).toContain("default-src 'self'");
-  const { violations, errors } = await runUnderCsp(page, localCsp);
-  expect(violations).toEqual([]);
-  expect(errors).toEqual([]);
-});
+for (const s of sections) {
+  test(`${s.route} runs under the production CSP with zero violations`, async ({
+    page,
+  }) => {
+    expect(localCsp).toContain("default-src 'self'");
+    const { violations, errors } = await runUnderCsp(page, localCsp, s.route);
+    expect(violations).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+}
 
 test("CSP negative control: strict script-src reports violations", async ({
   page,
@@ -67,6 +71,6 @@ test("CSP negative control: strict script-src reports violations", async ({
     "script-src 'self'",
   );
   expect(strictCsp).not.toBe(localCsp);
-  const { violations } = await runUnderCsp(page, strictCsp);
+  const { violations } = await runUnderCsp(page, strictCsp, "/");
   expect(violations.length).toBeGreaterThan(0);
 });
