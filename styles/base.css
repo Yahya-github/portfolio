@@ -1,0 +1,113 @@
+/* Global primitives. Values come only from styles/tokens.css; longhand font properties only (the shorthand resets font-stretch). */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+html {
+  background: var(--color-ground);
+  color: var(--color-ink);
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: 1.5;
+  font-stretch: var(--wdth-body);
+  -webkit-font-smoothing: antialiased;
+}
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--dur-ui) var(--ease-ui);
+}
+a:focus-visible {
+  color: var(--color-accent);
+}
+a:active {
+  color: var(--color-accent);
+  transition: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    color: var(--color-accent);
+  }
+}
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+/* Skip-link target, not a control (Pitfall 10, user decision 2026-11-08). */
+main:focus {
+  outline: none;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.t-label {
+  font-size: var(--text-label);
+  font-weight: var(--weight-regular);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-stretch: var(--wdth-body);
+}
+.t-body {
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: 1.5;
+  font-stretch: var(--wdth-body);
+}
+.t-heading {
+  font-size: var(--text-heading);
+  font-weight: var(--weight-bold);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-stretch: var(--wdth-body);
+}
+.t-display {
+  font-size: var(--text-display);
+  font-weight: var(--weight-bold);
+  line-height: 0.88;
+  letter-spacing: var(--display-track);
+  font-stretch: var(--wdth-display);
+  margin-left: -0.03em;
+}
+.c-dim {
+  color: var(--color-dim);
+}
+.c-accent {
+  color: var(--color-accent);
+}
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+.ulink {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.measure {
+  max-width: 60ch;
+}
