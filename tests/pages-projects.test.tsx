@@ -1,5 +1,6 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
+import { PageLevelProvider } from "@/components/pages/PageLevel";
 import { ProjectsPage } from "@/components/pages/ProjectsPage";
 import { projects } from "@/content/projects";
 
@@ -7,7 +8,9 @@ afterEach(cleanup);
 
 function renderPage(headingLevel: 1 | 2 = 1, isCurrent = true) {
   return render(
-    <ProjectsPage headingLevel={headingLevel} isCurrent={isCurrent} />,
+    <PageLevelProvider level={headingLevel}>
+      <ProjectsPage isCurrent={isCurrent} />
+    </PageLevelProvider>,
   );
 }
 

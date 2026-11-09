@@ -13,7 +13,7 @@ const PORTRAIT_SOURCES = [p800, p1200, p1512] as const;
 // (object-fit: cover in a tall column), not the slot width.
 const PORTRAIT_SIZES = "(max-width: 820px) 100vw, calc((100vh - 128px) * 1.22)";
 
-export function AboutPage({ headingLevel, isCurrent }: PageProps) {
+export function AboutPage({ isCurrent }: PageProps) {
   return (
     <div className={`grid ${styles.root}`}>
       <div className={styles.portrait}>
@@ -27,7 +27,6 @@ export function AboutPage({ headingLevel, isCurrent }: PageProps) {
       </div>
       <PageTitle
         slug="about"
-        level={headingLevel}
         text={about.title}
         className={`t-display ${styles.title}`}
       >

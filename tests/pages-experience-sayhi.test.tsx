@@ -1,5 +1,6 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
+import { PageLevelProvider } from "@/components/pages/PageLevel";
 import { ExperiencePage } from "@/components/pages/ExperiencePage";
 import { SayHiPage } from "@/components/pages/SayHiPage";
 
@@ -10,7 +11,9 @@ const EMAIL = "yahya.hallani.email@gmail.com";
 describe("ExperiencePage", () => {
   it("renders a visually hidden h1 and two h2 heads at level 1", () => {
     const { container } = render(
-      <ExperiencePage headingLevel={1} isCurrent={true} />,
+      <PageLevelProvider level={1}>
+        <ExperiencePage />
+      </PageLevelProvider>,
     );
     const h1 = screen.getByRole("heading", { level: 1 });
     expect(h1).toHaveAttribute("id", "title-experience");
@@ -22,7 +25,11 @@ describe("ExperiencePage", () => {
   });
 
   it("drops the sub heads to h3 at level 2", () => {
-    render(<ExperiencePage headingLevel={2} isCurrent={false} />);
+    render(
+      <PageLevelProvider level={2}>
+        <ExperiencePage />
+      </PageLevelProvider>,
+    );
     expect(screen.getByRole("heading", { level: 2 })).toHaveAccessibleName(
       "Experience",
     );
@@ -33,7 +40,9 @@ describe("ExperiencePage", () => {
 
   it("lists five work rows in content order with date, role and organisation", () => {
     const { container } = render(
-      <ExperiencePage headingLevel={1} isCurrent={true} />,
+      <PageLevelProvider level={1}>
+        <ExperiencePage />
+      </PageLevelProvider>,
     );
     const rows = container.querySelectorAll("ol > li");
     expect(rows).toHaveLength(5);
@@ -51,7 +60,9 @@ describe("ExperiencePage", () => {
 
   it("lists three involvement rows with no date element", () => {
     const { container } = render(
-      <ExperiencePage headingLevel={1} isCurrent={true} />,
+      <PageLevelProvider level={1}>
+        <ExperiencePage />
+      </PageLevelProvider>,
     );
     const rows = container.querySelectorAll("ul > li");
     expect(rows).toHaveLength(3);
@@ -63,7 +74,11 @@ describe("ExperiencePage", () => {
   });
 
   it("sets the per-word fit variable on each head word", () => {
-    render(<ExperiencePage headingLevel={1} isCurrent={true} />);
+    render(
+      <PageLevelProvider level={1}>
+        <ExperiencePage />
+      </PageLevelProvider>,
+    );
     expect(screen.getByText("Work").style.getPropertyValue("--word-em")).toBe(
       "1.67",
     );
@@ -75,7 +90,11 @@ describe("ExperiencePage", () => {
 
 describe("SayHiPage", () => {
   it("renders a visually hidden h1 named Say hi", () => {
-    render(<SayHiPage headingLevel={1} isCurrent={true} />);
+    render(
+      <PageLevelProvider level={1}>
+        <SayHiPage />
+      </PageLevelProvider>,
+    );
     const h1 = screen.getByRole("heading", { level: 1 });
     expect(h1).toHaveAttribute("id", "title-say-hi");
     expect(h1).toHaveAccessibleName("Say hi");
@@ -83,7 +102,9 @@ describe("SayHiPage", () => {
 
   it("renders the four Display links in order", () => {
     const { container } = render(
-      <SayHiPage headingLevel={1} isCurrent={true} />,
+      <PageLevelProvider level={1}>
+        <SayHiPage />
+      </PageLevelProvider>,
     );
     const lines = [...container.querySelectorAll("a.t-display")];
     expect(lines.map((a) => a.textContent)).toEqual([
@@ -97,7 +118,11 @@ describe("SayHiPage", () => {
   });
 
   it("opens external links in a new tab with noopener noreferrer (T-03-20)", () => {
-    render(<SayHiPage headingLevel={1} isCurrent={true} />);
+    render(
+      <PageLevelProvider level={1}>
+        <SayHiPage />
+      </PageLevelProvider>,
+    );
     for (const name of ["LinkedIn", "GitHub"]) {
       const link = screen.getByRole("link", { name });
       expect(link).toHaveAttribute("target", "_blank");
@@ -111,7 +136,11 @@ describe("SayHiPage", () => {
   });
 
   it("renders the underlined address mailto link", () => {
-    render(<SayHiPage headingLevel={1} isCurrent={true} />);
+    render(
+      <PageLevelProvider level={1}>
+        <SayHiPage />
+      </PageLevelProvider>,
+    );
     const addr = screen.getByRole("link", { name: EMAIL });
     expect(addr).toHaveAttribute("href", `mailto:${EMAIL}`);
     expect(addr).toHaveClass("ulink");

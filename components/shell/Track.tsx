@@ -3,6 +3,7 @@ import { AboutPage } from "@/components/pages/AboutPage";
 import { AchievementsPage } from "@/components/pages/AchievementsPage";
 import { ExperiencePage } from "@/components/pages/ExperiencePage";
 import { IndexPage } from "@/components/pages/IndexPage";
+import { PageLevelProvider } from "@/components/pages/PageLevel";
 import { ProjectsPage } from "@/components/pages/ProjectsPage";
 import { SayHiPage } from "@/components/pages/SayHiPage";
 import type { PageProps } from "@/components/pages/types";
@@ -50,7 +51,9 @@ export function Track({ current }: TrackProps) {
             aria-labelledby={`title-${s.slug}`}
             className={styles.page}
           >
-            <Body headingLevel={isCurrent ? 1 : 2} isCurrent={isCurrent} />
+            <PageLevelProvider level={isCurrent ? 1 : 2}>
+              <Body isCurrent={isCurrent} />
+            </PageLevelProvider>
           </section>
         );
       })}

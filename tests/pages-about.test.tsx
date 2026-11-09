@@ -1,5 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { PageLevelProvider } from "@/components/pages/PageLevel";
 import { AboutPage } from "@/components/pages/AboutPage";
 import { about } from "@/content/about";
 
@@ -20,7 +21,11 @@ afterEach(cleanup);
 const SIZES = "(max-width: 820px) 100vw, calc((100vh - 128px) * 1.22)";
 
 function renderAbout(isCurrent: boolean) {
-  const view = render(<AboutPage headingLevel={1} isCurrent={isCurrent} />);
+  const view = render(
+    <PageLevelProvider level={1}>
+      <AboutPage isCurrent={isCurrent} />
+    </PageLevelProvider>,
+  );
   const imgs = view.container.querySelectorAll("img");
   expect(imgs).toHaveLength(1);
   return { ...view, img: imgs[0] };
@@ -72,7 +77,11 @@ describe("AboutPage", () => {
   it("does not make the portrait interactive (colour twin is Phase 6)", () => {
     const { container, img } = renderAbout(true);
     expect(container.querySelector("button")).toBeNull();
-    expect(container.querySelector("[tabindex]")).toBeNull();
+    // The title is script-focusable (tabindex -1, A11Y-01); nothing is Tab-reachable.
+    expect(
+      container.querySelector('[tabindex]:not([tabindex="-1"])'),
+    ).toBeNull();
+    expect(img.closest("[tabindex]")).toBeNull();
     expect(img.closest("button, a")).toBeNull();
   });
 });

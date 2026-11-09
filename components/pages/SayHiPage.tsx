@@ -2,15 +2,14 @@ import type { CSSProperties } from "react";
 import { sayHi } from "@/content/say-hi";
 import { displayFitStyle } from "@/lib/display-fit";
 import { PageTitle } from "./Heading";
-import type { PageProps } from "./types";
 import styles from "./say-hi-page.module.css";
 
 const EXTERNAL_REL = "noopener noreferrer";
 
-export function SayHiPage({ headingLevel }: PageProps) {
+export function SayHiPage() {
   return (
     <div className={`grid ${styles.root}`}>
-      <PageTitle slug="say-hi" level={headingLevel} text={sayHi.title} />
+      <PageTitle slug="say-hi" text={sayHi.title} />
       <div className={styles.links}>
         {sayHi.lines.map((l) => (
           <a

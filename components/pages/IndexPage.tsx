@@ -1,5 +1,4 @@
 import { PageTitle } from "@/components/pages/Heading";
-import type { PageProps } from "@/components/pages/types";
 import { indexPage } from "@/content/index";
 import { site } from "@/content/site";
 import { letterSections } from "@/lib/sections";
@@ -10,10 +9,10 @@ import styles from "./index-page.module.css";
  * (plan 03-05); this page carries the role line, the desktop meta labels and
  * the phone section list.
  */
-export function IndexPage({ headingLevel }: PageProps) {
+export function IndexPage() {
   return (
     <div className={`grid ${styles.root}`}>
-      <PageTitle slug="index" level={headingLevel} text={indexPage.title} />
+      <PageTitle slug="index" text={indexPage.title} />
       <div className={styles.intro}>
         <p className="t-body measure">{site.roleLine}</p>
         <ul className={`t-label ${styles.list}`}>
