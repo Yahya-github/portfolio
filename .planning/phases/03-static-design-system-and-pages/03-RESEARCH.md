@@ -488,12 +488,16 @@ Not a rename/migration phase. The one out-of-repo item is the folded skills todo
 | A3 | Glyph advances measured in Chromium (Y .461, A .445, H .469em) match Firefox and WebKit within 1px | Pattern 4 | Small hero misfit in other engines; Phase 4 adds those projects |
 | A4 | Running visual tests in the `v1.65.0-noble` container gives stable baselines across local and CI | Pitfall 6 | Flaky screenshots; fall back to a manual-only visual project |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Phone Display fit below 375px (Pitfall 4).** The UI-SPEC says "64px on phones" and also "no horizontal overflow from 320px", and both cannot hold. Recommendation: per-word fit with `min(64px, …)`. Record it in the plan as a refinement and tell Yahya in the summary.
+   RESOLVED: user decision 2026-11-08, per-word `min(64px, …)` Display fit below ~375px; implemented in plan 03-04 (display-fit helper and test).
 2. **Portrait `sizes` (Pitfall 3).** This is a technical correction to the UI-SPEC value. Recommendation: use the drawn-width `sizes` and add the 1200px file.
+   RESOLVED: user decision 2026-11-08, drawn-width `sizes` plus a 1200px q72 file and the 1512px q66 file; assets in plan 03-04, `sizes` markup in plan 03-07 (About portrait).
 3. **`lib/build-info.ts` and the "build {sha}" line.** Phase 2 showed the build SHA on the placeholder page, and the UI-SPEC has no slot for it. Recommendation: drop it from the UI and keep the lib and its test, or delete both. Either is fine; decide in the plan.
+   RESOLVED: user decision 2026-11-08, delete `lib/build-info.ts` and `tests/build-info.test.ts`; done in plan 03-08 Task 2.
 4. **Vercel trailing-slash redirect (A2).** Verify on the first preview deploy of this phase.
+   RESOLVED: plan 03-10 Task 3 curls the preview (`/about` must 308 to `/about/`); if it does not, it adds `"trailingSlash": true` to `vercel.json` with a matching vercel-config test.
 
 ## Environment Availability
 

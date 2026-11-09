@@ -29,6 +29,7 @@ created: 2026-11-08
 
 - **After every task commit:** Run `pnpm lint && pnpm typecheck && pnpm test`
 - **After every plan wave:** Run the full suite command
+  - Known exception: after wave 3, `e2e/assets.spec.ts` is expected red (the portrait moves into the hidden About section) until plan 03-09 fixes the spec in wave 4. Treat that single spec as a known failure for wave 3 only; every other check must be green.
 - **Before `/gsd-verify-work`:** Full suite must be green locally and in CI; visual baselines committed from the `mcr.microsoft.com/playwright:v1.65.0-noble` container
 - **Max feedback latency:** 180 seconds
 
