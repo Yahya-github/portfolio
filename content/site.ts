@@ -14,6 +14,18 @@ export const site = {
     backToStart: "Back to the start",
     counterSeparator: " / ",
   },
+  liveRegion: { template: "{name}, page {n} of {total}" },
+  debug: {
+    index: "Index",
+    phase: "Phase",
+    source: "Source",
+    wheel: "Wheel",
+    accum: "Accum",
+    gesture: "Gesture",
+    edge: "Edge",
+    swipe: "Swipe",
+    motion: "Motion",
+  },
   contact: {
     email: "yahya.hallani.email@gmail.com",
     linkedin: "https://www.linkedin.com/in/yahya-hallani",

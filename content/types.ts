@@ -34,6 +34,18 @@ export interface Site {
     readonly backToStart: string;
     readonly counterSeparator: string;
   };
+  readonly liveRegion: { readonly template: string };
+  readonly debug: {
+    readonly index: string;
+    readonly phase: string;
+    readonly source: string;
+    readonly wheel: string;
+    readonly accum: string;
+    readonly gesture: string;
+    readonly edge: string;
+    readonly swipe: string;
+    readonly motion: string;
+  };
   readonly contact: {
     readonly email: string;
     readonly linkedin: string;

@@ -10,6 +10,21 @@ const USE_CLIENT = /["']use client["']/;
 const NEXT_VALUE_IMPORT =
   /^import\s+(?!type\b)[^;]*from\s+["']next\/(link|image)["']/m;
 
+// Subset semantics so Wave 2/3 plans can add client files in parallel;
+// plan 04-11 tightens this to exact equality.
+const CLIENT_ALLOWLIST: readonly string[] = [
+  join("components", "frame", "Header.tsx"),
+  join("components", "frame", "Footer.tsx"),
+  join("components", "letters", "LetterNav.tsx"),
+  join("components", "pages", "Heading.tsx"),
+  join("components", "pages", "PageLevel.tsx"),
+  join("components", "shell", "PagerContext.tsx"),
+  join("components", "shell", "PagerProvider.tsx"),
+  join("components", "shell", "PageSection.tsx"),
+  join("components", "shell", "LiveRegion.tsx"),
+  join("components", "shell", "DebugOverlay.tsx"),
+];
+
 function listTsx(): readonly string[] {
   return DIRS.flatMap((dir) => {
     const abs = join(ROOT, dir);
@@ -42,8 +57,10 @@ describe("source guard (CONT-09, T-03-12, T-03-13)", () => {
     expect(offenders(LITERAL_A11Y_ATTR)).toEqual([]);
   });
 
-  it("has no client components", () => {
-    expect(offenders(USE_CLIENT)).toEqual([]);
+  it("allows client components only from the Phase 4 allowlist", () => {
+    expect(
+      offenders(USE_CLIENT).filter((f) => !CLIENT_ALLOWLIST.includes(f)),
+    ).toEqual([]);
   });
 
   it("has no value imports from next/link or next/image", () => {
