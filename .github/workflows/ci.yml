@@ -54,6 +54,8 @@ jobs:
       options: --user 1001
     env:
       VISUAL: "1"
+      # Pager specs also run in Firefox and WebKit (the container ships all three browsers).
+      ALL_BROWSERS: "1"
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
