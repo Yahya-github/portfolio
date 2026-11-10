@@ -1,39 +1,44 @@
 ---
 phase: 05-letter-navigation-and-motion
 plan: 13
-status: stopped
+status: complete
 gap_closure: true
 requirements: [NAV-01, NAV-05]
 ---
 
-# Phase 5 Plan 13: Wheel-stream double page diagnosis Summary
+# Phase 5 Plan 13: Wheel-stream double page Summary
 
-**Plan stopped at Task 1 on ESCAPE-NOREPRO: the double page did not reproduce on this host, so no fix was applied.**
+**The load-sensitive continuous-wheel e2e test now dispatches a pre-built in-page stream, so it passes 36/36 at 4, 12 and 24 workers; the recogniser needed no change (Branch: TEST).**
 
-## What ran
+## Tasks
 
-Task 1 diagnosis only, with four modes: playwright, prebuilt, timer16 and cost. The idle run was 12 repeats with 1 worker. The loaded run was 36 repeats with 4 workers. Chromium only, serving this worktree's out/ on port 4414.
+1. Task 1 (diagnosis): first run at 4 workers stopped with ESCAPE-NOREPRO (befd137) because that load is below where the failure appears. The orchestrator then reproduced it and ran the discriminating streams itself (not Task 1's temporary spec); evidence recorded in deferred-items.md (d198c8e) with `Branch: TEST`.
+2. Task 2 (TEST): added `dispatchWheelStream` to `e2e/pager-wheel.spec.ts` and used it in "a continuous stream of small deltas moves exactly one page"; name and all assertions unchanged. No lib/ or components/ change in any 05-13 commit.
+3. Task 3: determinism and full gate, deferred entry closed.
 
 ## Numbers
 
-- Playwright (M1) double pages: 0/12 idle, 0/36 loaded. Worst inter-event gap was 137 ms, under the 160 ms GESTURE_GAP_MS.
-- Prebuilt (M2): 0 double pages. Timer16 (M3): 0 double pages, worst gap 35 ms.
-- M4 handler cost: median 10 ms, max 20 ms vs GESTURE_GAP_MS 160 ms (below threshold). Max longtask was 0.
+Old test (Playwright wheel loop), `--repeat-each=36`: workers 4 -> 0 failed, 12 -> 11 failed, 24 -> 27 failed (lands on /projects/).
+In-page at 24 workers, 60 runs each: prebuilt 0 double pages (maxGap 0-1 ms); timer16 0 double pages (max gap about 83 ms). Handler cost median 10 ms, max 20 ms vs GESTURE_GAP_MS 160.
 
-The full table is in `deferred-items.md` under "Diagnosis (05-13)".
+New test, chromium, `--repeat-each=36`: workers 4 36/36, workers 12 36/36, workers 24 36/36. Whole pager-wheel spec at 24 workers 144/144. pager-swipe (touch) 72/72, pager-overflow + pager-keys 192/192.
 
-## Decision
+## Gate
 
-Rule step 1 (ESCAPE-GAP) did not match. Step 2 (ESCAPE-NOREPRO) matched: M1 had 0 double pages under load. As the plan requires, no Branch line was written, no product or test code was changed, and the bisect, Task 2 and Task 3 were not run. The 36x repeat result (144/144 or 180/180) therefore does not exist for this plan.
+Full default e2e 293 passed, 1 skipped, 0 failed (known pager-motion reduced-motion flake did not occur). vitest 530/530. lint and typecheck clean. measure:js / 143.3 gzip KB (limit 150).
 
-## Recommendation
+## Not run
 
-Rerun the temporary diagnosis spec inside the CI image (mcr.microsoft.com/playwright:v1.65.0-noble), where the failure was originally seen. I did not try docker or podman here. If M1 reproduces there and M2/M3 do not, take the TEST branch. If M3 double-pages with maxGap > 160, take the PRODUCT branch.
+- Webkit and the CI container (not available/tried here; CI covers it).
+- VISUAL=1.
 
 ## Deviations
 
-None from the plan. One environment note: the worktree started at 7861a39, so I hard-reset it to the required base a3385b1 before starting.
+- The plan's `:45` line filter no longer applies after adding the helper; runs used `-g "continuous stream"`.
+- Did not add the optional separate dispatch-path test: the retained test already asserts exactly +1 page via that path.
+- `pnpm format:check` fails on 7 pre-existing files unrelated to this plan (listed in deferred-items.md); not fixed (out of scope). The files this plan changed are clean.
+- Worktree started at 7861a39 and was reset to the required base 06fce1d.
 
 ## Cleanup
 
-The temporary spec e2e/wheel-diagnosis.spec.ts was deleted and never committed. No bisect worktrees were created. Port 4414 was freed. STATE.md, ROADMAP.md and CLAUDE.md are untouched.
+Port 4414 freed, no temporary specs. STATE.md, ROADMAP.md and CLAUDE.md untouched.
