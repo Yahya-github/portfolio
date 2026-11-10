@@ -55,6 +55,9 @@
   --ease-retarget: cubic-bezier(0.3, 0.6, 0.18, 1);
   --page-count: 6;
   --ease-ui: cubic-bezier(0.16, 1, 0.3, 1);
+  /* D-11: Y and scale settle after X on a gentler ease (no control point above 1). */
+  --ease-settle: cubic-bezier(0.5, 0, 0.2, 1);
+  --glide-y-lag: 100ms;
 }
 
 @media (max-width: 820px) {
@@ -84,5 +87,6 @@
     --dur-letters: 0ms;
     --dur-ui: 0ms;
     --stagger: 0ms;
+    --glide-y-lag: 0ms;
   }
 }
