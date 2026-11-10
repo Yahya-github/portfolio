@@ -2,6 +2,7 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { Y_LAG_MS } from "@/lib/letters/geometry";
 
 const SCAN_DIRS = ["styles", "components", "app", "lib"] as const;
 const TOKENS_FILE = "styles/tokens.css";
@@ -51,6 +52,10 @@ describe("motion-guard", () => {
     const css = source(TOKENS_FILE);
     expect(css).toContain("--ease-settle: cubic-bezier(0.5, 0, 0.2, 1)");
     expect(css).toContain("--glide-y-lag: 100ms");
+  });
+
+  it("--glide-y-lag equals the glide's Y_LAG_MS", () => {
+    expect(source(TOKENS_FILE)).toContain(`--glide-y-lag: ${Y_LAG_MS}ms`);
   });
 
   it("allows cubic-bezier only in styles/tokens.css", () => {

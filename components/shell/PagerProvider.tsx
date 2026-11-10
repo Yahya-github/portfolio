@@ -40,7 +40,6 @@ function createDomDeps(): PagerDeps {
     animator: createWaapiAnimator({
       track: query(PAGER_SELECTORS.track),
       bar: query(PAGER_SELECTORS.bar),
-      letters: query(PAGER_SELECTORS.letters),
     }),
     history: createHistoryPort(),
     focus: createFocusPort(),
