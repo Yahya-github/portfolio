@@ -110,9 +110,13 @@ export function PagerProvider({ initial, children }: PagerProviderProps) {
   useEffect(() => {
     if (!new URLSearchParams(window.location.search).has("debug")) return;
     let alive = true;
-    import("./DebugOverlay").then((m) => {
-      if (alive) setDebug(() => m.DebugOverlay);
-    });
+    import("./DebugOverlay")
+      .then((m) => {
+        if (alive) setDebug(() => m.DebugOverlay);
+      })
+      .catch(() => {
+        // WR-03: the overlay is optional; a failed chunk load is not an error.
+      });
     return () => {
       alive = false;
     };
