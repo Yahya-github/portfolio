@@ -1,6 +1,13 @@
 // D-04 / DSGN-01 / DSGN-02 / DSGN-06 / UI-SPEC: overflow, desktop fit, accent use, grid, Poster size, no ornament.
 import { test, expect, type Page } from "@playwright/test";
 import { sections } from "../content/site";
+import {
+  landId,
+  open as openHydrated,
+  pathname,
+  waitForLanded,
+} from "./helpers/pager";
+import { LETTERS, letterRects, waitForGlideSettled } from "./helpers/letters";
 
 const ACCENT = "rgb(95, 174, 132)";
 
@@ -217,4 +224,68 @@ test("portrait resolves to the 1200 or 1512 source at 1440x900", async ({
   await expect
     .poll(() => img.evaluate((i: HTMLImageElement) => i.currentSrc))
     .toMatch(/portrait-(1200|1512)/);
+});
+
+test("exactly one accent letter after any paging sequence (LTR-05)", async ({
+  page,
+}) => {
+  await openHydrated(page, "/", VIEWPORTS.desktop);
+  for (const key of [
+    "ArrowRight",
+    "ArrowRight",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowLeft",
+    "ArrowLeft",
+  ]) {
+    const before = await landId(page);
+    await page.keyboard.press(key);
+    await waitForLanded(page, before);
+    await waitForGlideSettled(page);
+    const route = pathname(page);
+    const section = sections.find((x) => x.route === route)!;
+    const current = page.locator(`${LETTERS} a[aria-current="page"]`);
+    if (section.slug === "index") {
+      await expect(current).toHaveCount(0);
+      continue;
+    }
+    await expect(current).toHaveCount(1);
+    await expect(current).toHaveAttribute("href", route);
+    await expect(current).toHaveCSS("color", ACCENT);
+    const others = page.locator(`${LETTERS} a:not([aria-current="page"])`);
+    for (let i = 0; i < (await others.count()); i += 1) {
+      await expect(others.nth(i)).not.toHaveCSS("color", ACCENT);
+    }
+    const now = page.locator(`${LETTERS} > [aria-hidden="true"]`);
+    await expect(now).toHaveText(`${section.number} ${section.name}`);
+    await expect(now).toBeVisible();
+  }
+});
+
+test("the accent arrives with the move", async ({ page }) => {
+  await openHydrated(page, "/", VIEWPORTS.desktop);
+  await page.keyboard.press("ArrowRight");
+  await expect(page.locator(`${LETTERS}[data-flight="out"]`)).toHaveCount(1);
+  await expect(page.locator(`${LETTERS} a[href="/achievements/"]`)).toHaveCSS(
+    "color",
+    ACCENT,
+  );
+});
+
+test("each letter's hit area is its own box", async ({ page }) => {
+  await openHydrated(page, "/achievements/", VIEWPORTS.desktop);
+  const rects = await letterRects(page);
+  for (let i = 0; i < rects.length; i += 1) {
+    const r = rects[i];
+    const owner = await page.evaluate(
+      ({ x, y, sel }) => {
+        const hit = document.elementFromPoint(x, y)?.closest("a");
+        return [...document.querySelectorAll(`${sel} > a`)].indexOf(
+          hit as Element,
+        );
+      },
+      { x: r.left + r.width / 2, y: r.top + r.height / 2, sel: LETTERS },
+    );
+    expect(owner, `letter ${i}`).toBe(i);
+  }
 });
