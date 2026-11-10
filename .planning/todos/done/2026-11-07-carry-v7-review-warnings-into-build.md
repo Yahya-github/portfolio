@@ -16,3 +16,5 @@ The approved v7 sketch is a reference, not code to copy. Its review found behavi
 - IN-01 (Phase 4): reset the wheel accumulator after the idle gap between gestures.
 
 Also use `--yahya-fit` 2.188 with the manual Y-A kerning rule (design doc), not 2.155.
+
+Closed in Phase 5 (2026-11-10): WR-05 (plan 08, nullable pointer position), WR-07 (plan 01 CSS rule plus plan 08 script-set attribute), and the --yahya-fit 2.188 / YA kern check (letters.module.css untouched).

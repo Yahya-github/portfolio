@@ -1,9 +1,9 @@
 ---
 phase: 5
 slug: letter-navigation-and-motion
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: executing
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-11-09
 ---
 
@@ -38,21 +38,21 @@ created: 2026-11-09
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 5-XX-XX | TBD | TBD | LTR-03 | — | N/A | unit | `pnpm vitest run tests/letters-glide.test.ts` | ❌ W0 | ⬜ pending |
-| 5-XX-XX | TBD | TBD | LTR-03 | — | N/A | e2e | `pnpm playwright test e2e/letters-glide.spec.ts` | ❌ W0 | ⬜ pending |
-| 5-XX-XX | TBD | TBD | LTR-03 / DSGN-04 | — | N/A | e2e (rAF sampler) | `pnpm playwright test e2e/letters-glide.spec.ts` | ❌ W0 | ⬜ pending |
-| 5-XX-XX | TBD | TBD | LTR-04 | — | N/A | e2e | `pnpm playwright test e2e/letters-labels.spec.ts` | ❌ W0 | ⬜ pending |
-| 5-XX-XX | TBD | TBD | LTR-05 | — | N/A | e2e (extend) | `pnpm playwright test e2e/layout.spec.ts` | ✅ extend | ⬜ pending |
-| 5-XX-XX | TBD | TBD | LTR-06 | — | N/A | e2e | `pnpm playwright test e2e/letters-glide.spec.ts` | ❌ W0 | ⬜ pending |
-| 5-XX-XX | TBD | TBD | NAV-05 | — | N/A | e2e (extend) | `pnpm playwright test e2e/pager-motion.spec.ts` | ✅ extend | ⬜ pending |
-| 5-XX-XX | TBD | TBD | NAV-06 | — | N/A | unit (fake timers) | `pnpm vitest run tests/first-visit-hint.test.ts` | ❌ W0 | ⬜ pending |
-| 5-XX-XX | TBD | TBD | NAV-06 | T-5 storage denial | Storage throwing is harmless | e2e | `pnpm playwright test e2e/first-visit.spec.ts` | ❌ W0 | ⬜ pending |
-| 5-XX-XX | TBD | TBD | EXP-01 | T-5 storage denial | Wrappers never throw; Tab/Shift+Tab/modifiers never intercepted | unit | `pnpm vitest run tests/first-visit-opening.test.ts` | ❌ W0 | ⬜ pending |
-| 5-XX-XX | TBD | TBD | EXP-01 | T-5 input capture | Listeners removed when opening ends; JS off stays readable | e2e | `pnpm playwright test e2e/first-visit.spec.ts` | ❌ W0 | ⬜ pending |
-| 5-XX-XX | TBD | TBD | EXP-03 | T-5 DOM XSS | Tag text via `textContent` only | unit | `pnpm vitest run tests/cursor.test.ts` | ❌ W0 | ⬜ pending |
-| 5-XX-XX | TBD | TBD | EXP-03 | — | N/A | e2e | `pnpm playwright test e2e/cursor.spec.ts` | ❌ W0 | ⬜ pending |
-| 5-XX-XX | TBD | TBD | A11Y-04 | — | N/A | e2e | `pnpm playwright test e2e/reduced-motion.spec.ts` | ❌ W0 | ⬜ pending |
-| 5-XX-XX | TBD | TBD | DSGN-04 / A11Y-04 | — | N/A | unit (guard) | `pnpm vitest run tests/motion-guard.test.ts` | ❌ W0 | ⬜ pending |
+| 5-02-01 | 05-02 | 1 | LTR-03 | — | N/A | unit | `pnpm vitest run tests/letters-glide.test.ts` | ✅ | ✅ green |
+| 5-10-01 | 05-10 | 4 | LTR-03 | — | N/A | e2e | `pnpm playwright test e2e/letters-glide.spec.ts` | ✅ | ✅ green |
+| 5-10-02 | 05-10 | 4 | LTR-03 / DSGN-04 | — | N/A | e2e (rAF sampler) | `pnpm playwright test e2e/letters-glide.spec.ts` | ✅ | ✅ green |
+| 5-10-03 | 05-10 | 4 | LTR-04 | — | N/A | e2e | `pnpm playwright test e2e/letters-labels.spec.ts` | ✅ | ✅ green |
+| 5-10-04 | 05-10 | 4 | LTR-05 | — | N/A | e2e (extend) | `pnpm playwright test e2e/layout.spec.ts` | ✅ | ✅ green |
+| 5-10-05 | 05-10 | 4 | LTR-06 | — | N/A | e2e | `pnpm playwright test e2e/letters-glide.spec.ts` | ✅ | ✅ green |
+| 5-11-01 | 05-11 | 5 | NAV-05 | — | N/A | e2e (extend) | `pnpm playwright test e2e/pager-motion.spec.ts` | ✅ | ✅ green |
+| 5-05-01 | 05-05 | 2 | NAV-06 | — | N/A | unit (fake timers) | `pnpm vitest run tests/first-visit-hint.test.ts` | ✅ | ✅ green |
+| 5-07-01 | 05-07 | 3 | NAV-06 | T-5 storage denial | Storage throwing is harmless | e2e | `pnpm playwright test e2e/first-visit-hint.spec.ts` | ✅ | ✅ green |
+| 5-05-02 | 05-05 | 2 | EXP-01 | T-5 storage denial | Wrappers never throw; Tab/Shift+Tab/modifiers never intercepted | unit | `pnpm vitest run tests/first-visit-opening.test.ts` | ✅ | ✅ green |
+| 5-09-01 | 05-09 | 4 | EXP-01 | T-5 input capture | Listeners removed when opening ends; JS off stays readable | e2e | `pnpm playwright test e2e/first-visit.spec.ts` | ✅ | ✅ green |
+| 5-03-01 | 05-03 | 2 | EXP-03 | T-5 DOM XSS | Tag text via `textContent` only | unit | `pnpm vitest run tests/cursor.test.ts` | ✅ | ✅ green |
+| 5-08-01 | 05-08 | 3 | EXP-03 | — | N/A | e2e | `pnpm playwright test e2e/cursor.spec.ts` | ✅ | ✅ green |
+| 5-11-02 | 05-11 | 5 | A11Y-04 | — | N/A | e2e | `pnpm playwright test e2e/reduced-motion.spec.ts` | ✅ | ✅ green |
+| 5-01-01 | 05-01 | 1 | DSGN-04 / A11Y-04 | — | N/A | unit (guard) | `pnpm vitest run tests/motion-guard.test.ts` | ✅ | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -60,12 +60,12 @@ created: 2026-11-09
 
 ## Wave 0 Requirements
 
-- [ ] Playwright default `storageState` (or fixture) seeding both first-visit flags; opt-out for first-visit specs
-- [ ] `e2e/helpers/letters.ts` — rect reader, rAF sampler of per-letter `translate`/`transform`, "glide settled" wait
-- [ ] `tests/letters-glide.test.ts`, `tests/first-visit-opening.test.ts`, `tests/first-visit-hint.test.ts`, `tests/cursor.test.ts`, `tests/motion-guard.test.ts`
-- [ ] `e2e/letters-glide.spec.ts`, `e2e/letters-labels.spec.ts`, `e2e/first-visit.spec.ts`, `e2e/cursor.spec.ts`, `e2e/reduced-motion.spec.ts`
-- [ ] Update `tests/pager-state.test.ts`, `tests/letters.test.tsx`, `e2e/pager-a11y.spec.ts` (lines 141-152) once `lettersMode`/`railEnter`/`lettersInert` are removed
-- [ ] `tests/source-guard.test.ts` `CLIENT_ALLOWLIST` if any new `"use client"` file is added
+- [x] Playwright default `storageState` (or fixture) seeding both first-visit flags; opt-out for first-visit specs
+- [x] `e2e/helpers/letters.ts` — rect reader, rAF sampler of per-letter `translate`/`transform`, "glide settled" wait
+- [x] `tests/letters-glide.test.ts`, `tests/first-visit-opening.test.ts`, `tests/first-visit-hint.test.ts`, `tests/cursor.test.ts`, `tests/motion-guard.test.ts`
+- [x] `e2e/letters-glide.spec.ts`, `e2e/letters-labels.spec.ts`, `e2e/first-visit.spec.ts`, `e2e/cursor.spec.ts`, `e2e/reduced-motion.spec.ts`
+- [x] Update `tests/pager-state.test.ts`, `tests/letters.test.tsx`, `e2e/pager-a11y.spec.ts` (lines 141-152) once `lettersMode`/`railEnter`/`lettersInert` are removed
+- [x] `tests/source-guard.test.ts` `CLIENT_ALLOWLIST` if any new `"use client"` file is added
 
 ---
 
