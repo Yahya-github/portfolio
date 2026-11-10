@@ -91,10 +91,7 @@ export function createGlide(options: GlideOptions): Glide {
       const { xDelay, yDelay } = letterTiming(i);
       animations.push(
         el.animate(
-          [
-            { translate: `${from.dx}px 0px` },
-            { translate: `${to.dx}px 0px` },
-          ],
+          [{ translate: `${from.dx}px 0px` }, { translate: `${to.dx}px 0px` }],
           {
             duration: LETTERS_MS,
             delay: xDelay,

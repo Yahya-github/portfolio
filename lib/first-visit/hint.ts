@@ -27,13 +27,23 @@ export interface HintState {
 }
 
 export type HintEvent =
-  | { readonly type: "load"; readonly at: number; readonly openingPending: boolean }
+  | {
+      readonly type: "load";
+      readonly at: number;
+      readonly openingPending: boolean;
+    }
   | { readonly type: "opening-done"; readonly at: number }
   | { readonly type: "tick"; readonly at: number }
   | { readonly type: "page-change"; readonly at: number };
 
 export function initialHint(): HintState {
-  return { phase: "idle", showAt: null, hideAt: null, seenAt: null, seen: false };
+  return {
+    phase: "idle",
+    showAt: null,
+    hideAt: null,
+    seenAt: null,
+    seen: false,
+  };
 }
 
 export function stepHint(state: HintState, event: HintEvent): HintState {
@@ -43,7 +53,9 @@ export function stepHint(state: HintState, event: HintEvent): HintState {
       if (state.phase !== "idle") return state;
       return {
         phase: "waiting",
-        showAt: event.openingPending ? null : event.at + HINT_DELAY_NO_OPENING_MS,
+        showAt: event.openingPending
+          ? null
+          : event.at + HINT_DELAY_NO_OPENING_MS,
         hideAt: null,
         seenAt: null,
         seen: false,
@@ -52,7 +64,11 @@ export function stepHint(state: HintState, event: HintEvent): HintState {
       if (state.phase !== "waiting" || state.showAt !== null) return state;
       return { ...state, showAt: event.at + HINT_DELAY_AFTER_OPENING_MS };
     case "tick":
-      if (state.phase === "waiting" && state.showAt !== null && event.at >= state.showAt) {
+      if (
+        state.phase === "waiting" &&
+        state.showAt !== null &&
+        event.at >= state.showAt
+      ) {
         return {
           phase: "shown",
           showAt: state.showAt,

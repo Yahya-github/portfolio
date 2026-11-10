@@ -1,11 +1,7 @@
 // EXP-01: the opening (D-01..D-06), once ever; D-10 hint timing after it; NAV-05 footer state after it.
 import { expect, test, type Page } from "@playwright/test";
 import { FRESH_VISITOR, HINT_KEY, OPENING_KEY } from "./helpers/first-visit";
-import {
-  LETTERS,
-  letterAnimationCount,
-  letterRects,
-} from "./helpers/letters";
+import { LETTERS, letterAnimationCount, letterRects } from "./helpers/letters";
 import { open, pathname, waitForLanded, landId } from "./helpers/pager";
 
 test.use({ storageState: FRESH_VISITOR });
@@ -91,7 +87,10 @@ async function seededRestRects(page: Page, baseURL: string) {
 }
 
 const opacityOf = (page: Page, sel: string): Promise<string> =>
-  page.evaluate((s) => getComputedStyle(document.querySelector(s)!).opacity, sel);
+  page.evaluate(
+    (s) => getComputedStyle(document.querySelector(s)!).opacity,
+    sel,
+  );
 
 async function waitDone(page: Page): Promise<void> {
   await expect
@@ -124,7 +123,9 @@ test("a first visit to / plays the opening under 1 second", async ({
     expect(Math.abs(r.left - rest[i].left)).toBeLessThan(0.5);
     expect(Math.abs(r.top - rest[i].top)).toBeLessThan(0.5);
   });
-  expect(await page.evaluate((k) => localStorage.getItem(k), OPENING_KEY)).toBe("1");
+  expect(await page.evaluate((k) => localStorage.getItem(k), OPENING_KEY)).toBe(
+    "1",
+  );
 });
 
 test("letters start offscreen right and travel left", async ({ page }) => {
@@ -211,7 +212,9 @@ test("a deep link does not use it up; the first paged arrival at the Index plays
   expect(await page.evaluate(() => window.__openingStates)).not.toContain(
     "pending",
   );
-  expect(await page.evaluate((k) => localStorage.getItem(k), OPENING_KEY)).toBeNull();
+  expect(
+    await page.evaluate((k) => localStorage.getItem(k), OPENING_KEY),
+  ).toBeNull();
   for (let i = 0; i < 2; i += 1) {
     const before = await landId(page);
     await page.keyboard.press("ArrowLeft");
@@ -220,7 +223,9 @@ test("a deep link does not use it up; the first paged arrival at the Index plays
   await waitDone(page);
   const lefts = (await page.evaluate(() => window.__lefts)) ?? [];
   expect(Math.min(...lefts)).toBeLessThan(0);
-  expect(await page.evaluate((k) => localStorage.getItem(k), OPENING_KEY)).toBe("1");
+  expect(await page.evaluate((k) => localStorage.getItem(k), OPENING_KEY)).toBe(
+    "1",
+  );
   await expect(page.locator(LETTERS)).toHaveAttribute("data-mode", "hero");
 });
 
@@ -239,7 +244,9 @@ test("blocked storage hides nothing", async ({ page, baseURL }) => {
   await expect(page.locator('main#content[data-phase="idle"]')).toHaveCount(1);
   const rest = await seededRestRects(page, baseURL!);
   const now = await letterRects(page);
-  now.forEach((r, i) => expect(Math.abs(r.left - rest[i].left)).toBeLessThan(0.5));
+  now.forEach((r, i) =>
+    expect(Math.abs(r.left - rest[i].left)).toBeLessThan(0.5),
+  );
 });
 
 test("reduced motion shows the final state and writes the flag", async ({
@@ -263,19 +270,25 @@ test("a failed bundle cannot keep content hidden (failsafe)", async ({
   await page.route("**/_next/static/**/*.js", (r) => r.abort());
   await page.setViewportSize(DESKTOP);
   await page.goto("/");
-  expect(await page.evaluate(() => window.__openingStates)).toContain("pending");
+  expect(await page.evaluate(() => window.__openingStates)).toContain(
+    "pending",
+  );
   await expect(page.locator("html[data-opening]")).toHaveCount(0, {
     timeout: 3500,
   });
   expect(await opacityOf(page, "header")).toBe("1");
 });
 
-test("the hint follows the opening by about a second (D-10)", async ({ page }) => {
+test("the hint follows the opening by about a second (D-10)", async ({
+  page,
+}) => {
   await installRecorder(page);
   await page.setViewportSize(DESKTOP);
   await page.goto("/");
   await waitDone(page);
-  await expect(page.locator('footer [data-hint][data-state="shown"]')).toHaveCount(1, {
+  await expect(
+    page.locator('footer [data-hint][data-state="shown"]'),
+  ).toHaveCount(1, {
     timeout: 4000,
   });
   const gap = await page.evaluate(
@@ -284,9 +297,13 @@ test("the hint follows the opening by about a second (D-10)", async ({ page }) =
   expect(gap).toBeGreaterThan(900);
   expect(gap).toBeLessThan(1600);
   // 05-12: remembered only after paging or 3s visible, not at show time.
-  expect(await page.evaluate((k) => localStorage.getItem(k), HINT_KEY)).toBeNull();
+  expect(
+    await page.evaluate((k) => localStorage.getItem(k), HINT_KEY),
+  ).toBeNull();
   await expect
-    .poll(() => page.evaluate((k) => localStorage.getItem(k), HINT_KEY), { timeout: 5000 })
+    .poll(() => page.evaluate((k) => localStorage.getItem(k), HINT_KEY), {
+      timeout: 5000,
+    })
     .toBe("1");
 });
 

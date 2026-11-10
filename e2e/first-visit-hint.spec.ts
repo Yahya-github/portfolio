@@ -5,7 +5,12 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { site } from "../content/site";
-import { FRESH_VISITOR, HINT_KEY, OPENING_KEY, SEEN_VALUE } from "./helpers/first-visit";
+import {
+  FRESH_VISITOR,
+  HINT_KEY,
+  OPENING_KEY,
+  SEEN_VALUE,
+} from "./helpers/first-visit";
 import { open } from "./helpers/pager";
 
 test.use({ storageState: FRESH_VISITOR });
@@ -21,7 +26,14 @@ const NEXT = "footer a";
 const COUNTER = "footer > span";
 const DESKTOP = { width: 1440, height: 900 };
 const PHONE = { width: 390, height: 844 };
-const ROUTES = ["/", "/achievements/", "/projects/", "/experience/", "/about/", "/say-hi/"];
+const ROUTES = [
+  "/",
+  "/achievements/",
+  "/projects/",
+  "/experience/",
+  "/about/",
+  "/say-hi/",
+];
 
 interface Box {
   x: number;
@@ -92,7 +104,9 @@ test("desktop: the hint is ink, 16px, one line, centred, clear of counter and Ne
   const hint = page.locator(HINT);
   await expect(hint).toHaveCSS("color", "rgb(240, 240, 240)");
   await expect(hint).toHaveCSS("font-size", "16px");
-  await expect.poll(() => hint.evaluate((el) => getComputedStyle(el).opacity)).toBe("1");
+  await expect
+    .poll(() => hint.evaluate((el) => getComputedStyle(el).opacity))
+    .toBe("1");
   const contrast = await hint.evaluate((el) => {
     const lum = (rgb: string): number => {
       const [r, g, b] = (rgb.match(/[\d.]+/g) ?? []).slice(0, 3).map((v) => {
@@ -184,12 +198,16 @@ test("Next nudges twice by about 12px, 200ms after the hint appears, and returns
     if (xs[i - 1]! < rest + 6 && xs[i]! >= rest + 6) crossings++;
   }
   expect(crossings).toBe(2);
-  expect(Math.abs(r.samples[r.samples.length - 1]!.x - rest)).toBeLessThanOrEqual(0.5);
+  expect(
+    Math.abs(r.samples[r.samples.length - 1]!.x - rest),
+  ).toBeLessThanOrEqual(0.5);
   await page.evaluate(() => window.__nudges[0]!.cancel());
   expect(Math.abs((await nextX(page)) - rest)).toBeLessThanOrEqual(0.5);
 });
 
-test("the first page change dismisses it and remembers it", async ({ page }) => {
+test("the first page change dismisses it and remembers it", async ({
+  page,
+}) => {
   await openFresh(page);
   await showHint(page);
   await page.keyboard.press("ArrowRight");
@@ -260,7 +278,9 @@ test.describe("touch", () => {
       await expect(hint).toHaveText(site.hint.coarse);
       await expect(hint).toHaveCSS("color", "rgb(240, 240, 240)");
       await expect(hint).toHaveCSS("font-size", "16px");
-      const fits = await hint.evaluate((el) => el.scrollWidth <= el.clientWidth);
+      const fits = await hint.evaluate(
+        (el) => el.scrollWidth <= el.clientWidth,
+      );
       expect(fits).toBe(true);
       const box = await hint.boundingBox();
       const counter = await page.locator(COUNTER).first().boundingBox();
@@ -295,9 +315,10 @@ test("footer still tracks the page (NAV-05)", async ({ page }) => {
   await openFresh(page);
   await page.keyboard.press("ArrowRight");
   await expect(page.locator("footer")).toContainText("03 / 05");
-  await expect(
-    page.getByRole("link", { name: "Next, About" }),
-  ).toHaveAttribute("href", "/about/");
+  await expect(page.getByRole("link", { name: "Next, About" })).toHaveAttribute(
+    "href",
+    "/about/",
+  );
   await expect(page.locator("main#content[data-phase=idle]")).toHaveCount(1);
   await expect(page.locator('[data-pager="bar"]')).toHaveCSS(
     "transform",
@@ -305,7 +326,9 @@ test("footer still tracks the page (NAV-05)", async ({ page }) => {
   );
   const index = await page
     .locator('[data-pager="bar"]')
-    .evaluate((el) => (el as HTMLElement).style.getPropertyValue("--page-index"));
+    .evaluate((el) =>
+      (el as HTMLElement).style.getPropertyValue("--page-index"),
+    );
   expect(index).toBe("3");
 });
 

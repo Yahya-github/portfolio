@@ -83,7 +83,8 @@ export async function letterAnimationCount(page: Page): Promise<number> {
         a
           .getAnimations()
           .filter(
-            (x) => !(x instanceof CSSTransition) && !(x instanceof CSSAnimation),
+            (x) =>
+              !(x instanceof CSSTransition) && !(x instanceof CSSAnimation),
           ).length,
       0,
     );

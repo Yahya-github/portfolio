@@ -1,8 +1,4 @@
-import {
-  LETTERS_MS,
-  LETTER_COUNT,
-  STAGGER_MS,
-} from "@/lib/letters/geometry";
+import { LETTERS_MS, LETTER_COUNT, STAGGER_MS } from "@/lib/letters/geometry";
 
 /**
  * Pure opening rules (EXP-01, D-01, D-06, UI-SPEC section 2). No DOM, no clock.
@@ -12,7 +8,8 @@ import {
 export const OPENING_UI_MS = 150;
 
 /** Chrome appears once the last letter has finished its staggered slide. */
-export const OPENING_CHROME_DELAY_MS = (LETTER_COUNT - 1) * STAGGER_MS + LETTERS_MS;
+export const OPENING_CHROME_DELAY_MS =
+  (LETTER_COUNT - 1) * STAGGER_MS + LETTERS_MS;
 
 /** Whole opening: under one second (EXP-01). */
 export const OPENING_TOTAL_MS = OPENING_CHROME_DELAY_MS + OPENING_UI_MS;
