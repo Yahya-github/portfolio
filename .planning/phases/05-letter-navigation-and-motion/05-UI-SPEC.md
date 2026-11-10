@@ -33,9 +33,9 @@ Inherited from `tokens.css` (multiples of 4 only):
 
 | Token | Value | Usage in this phase |
 |-------|-------|---------------------|
-| xs | 4px | Snap box inflation around target; tag padding (vertical); hint nudge travel |
+| xs | 4px | Snap box inflation around target; tag padding (vertical) |
 | sm | 8px | Tag padding (horizontal); tag viewport clamp inset; focus-tag gap to the letter |
-| md | 16px | Hero caption offset below letter; gap between hint and Next link |
+| md | 16px | Hero caption offset below letter; footer column gap on phone (counter, hint, Next) |
 | lg | 24px | Grid margin (desktop); phone rail left inset (24px, LTR-06) |
 | xl | 32px | unused here |
 | 2xl | 48px | unused here |
@@ -45,6 +45,7 @@ Exceptions:
 - Rail geometry stays on existing tokens: `--rail-size` 30px (22px under 820px), `--rail-col` 56px (36px phone), `--rail-gap` 8px (28px coarse). These are letter sizes, not spacing.
 - Touch targets stay at `--hit-min` 44px (coarse pointer) for rail letters, Next, header links. The hint line is not interactive, so no target size applies.
 - Cursor idle square is 16px and the dot is 4px (both multiples of 4). Hairlines are 1px (border width, not spacing).
+- Hint nudge travel is 12px (`NUDGE_PX` in lib/first-visit/hint.ts), a motion constant, not layout spacing (05-12).
 - Tag-to-box gap is 12px (the v7 `tagPos` gap, kept in `placeTag(..., gap = 12)`); this is a placement constant, not a layout spacing token.
 
 ---
@@ -55,15 +56,15 @@ No new sizes or weights. Everything in this phase reuses the existing contract: 
 
 | Role | Size | Weight | Line Height | Used for in this phase |
 |------|------|--------|-------------|------------------------|
-| Body | 16px | 400 | 1.5 | not used by new pieces |
-| Label | 12px, uppercase (`.t-label`) | 400 | existing `.t-label` ratio (1.4) | First-visit hint line; cursor/focus Label tag; hero captions (existing) |
+| Body | 16px | 400 | 1.5 | First-visit hint line (line-height 1, uppercase and tracking inherited from the footer `.t-label`) (05-12) |
+| Label | 12px, uppercase (`.t-label`) | 400 | existing `.t-label` ratio (1.4) | Cursor/focus Label tag; hero captions (existing) |
 | Heading | 24px | 700 | 1.2 | not used by new pieces |
 | Display | hero `min((100vw - 2*margin)/2.188, (100svh - 320px)/0.76)`; rail 30px / 22px phone | 700, `font-stretch` 75%, line-height 0.76 | 0.76 | The five letters, in flight and at rest |
 
 Rules:
 - Moving letters keep `--yahya-fit` 2.188, `--yahya-track`, and the hero-only Y-A kern (`margin-right: var(--yahya-kern)` on Y). Never re-measure with 2.155.
 - Letters always fly laid out at hero `font-size` with scale at most 1 (research Pattern 1); the rest state is real `font-size`. Never animate `font-size`.
-- The hint and tag use `.t-label` exactly (no new class, no new size).
+- The tag uses `.t-label` exactly. The hint uses the existing 16px body size inside the `.t-label` footer; no new size (05-12).
 
 ---
 
@@ -74,9 +75,9 @@ Inherited from `tokens.css`. No new colour values.
 | Role | Value | Usage |
 |------|-------|-------|
 | Dominant (60%) | `--color-ground` #0b0b0b | Page ground; the opening's "black ground" (nothing else is painted) |
-| Secondary (30%) | `--color-ink` #f0f0f0 / `--color-hair` #2e2e2e | Letters at rest, cursor square and dot (before blending), tag fill; hairlines |
+| Secondary (30%) | `--color-ink` #f0f0f0 / `--color-hair` #2e2e2e | Letters at rest, cursor square and dot (before blending), tag fill; hairlines; first-visit hint text (05-12) |
 | Accent (10%) | `--color-accent` #5fae84 | see reserved list |
-| Muted text | `--color-dim` #8e8e8e (about 6:1 on ground, passes AA) | First-visit hint text |
+| Muted text | `--color-dim` #8e8e8e (about 6:1 on ground, passes AA) | Not used by this phase's new pieces (the hint moved to ink in 05-12) |
 | Destructive | none | no destructive actions in this phase |
 
 Accent reserved for (unchanged from DSGN-01; this phase adds no accent use):
@@ -142,13 +143,13 @@ Captions (D-14):
 
 | Property | Contract |
 |----------|----------|
-| Element | A plain text `<span>` in the footer, `.t-label`, `--color-dim`, not interactive, not announced (no `aria-live`, no `role`). Empty on the server; text chosen after mount |
-| Placement desktop | Footer grid columns 6-9, right-aligned so it ends 16px (`--space-md`) before the Next link in columns 10-12; baseline aligned with counter and Next |
-| Placement phone (<= 820px) | Between counter and Next in the same footer row, `min-width: 0`, single line, `white-space: nowrap`, right-aligned and 16px from Next; never wraps, never overlaps the progress bar (bar stays at the footer bottom edge), never covers page content. If it cannot fit at 360px width, it is hidden for that visit (never truncated with an ellipsis) |
+| Element | A plain text `<span data-hint>` that is its own footer grid item (not inside the Next wrapper), `--color-ink` #f0f0f0, `--text-body` 16px, weight 400, line-height 1, uppercase and tracking inherited from the footer `.t-label`; not interactive, not announced (no `aria-live`, no `role`). Empty on the server; text chosen after mount |
+| Placement desktop | Footer grid columns 4-9 (`grid-column: 4 / 10`), `justify-self: center`, text centred, so its centre sits on the viewport centre; bottom-aligned with the counter (columns 1-3) and Next (columns 10-12, right-aligned). Showing it never moves the counter or Next |
+| Placement phone (<= 820px) | The footer becomes a flex row with a 16px (`--space-md`) column gap: counter, hint (`flex: 1 1 0`, `min-width: 0`, text centred), Next. Single line, `white-space: nowrap`; never wraps, never overlaps the counter, Next or the progress bar, never covers page content. If the text does not fit, it is hidden for that page load (never truncated with an ellipsis) |
 | Copy | See Copywriting Contract |
 | Timing | Shows 1000ms after the opening ends or is skipped; 1500ms after load when no opening runs. Ends on the first page change or 8000ms after showing, whichever first. Fade in and out over `--dur-ui` (opacity only) |
-| Nudge | Once, when the hint appears: Next link `translate` 0 -> 4px (`--space-xs`) -> 0 on X only, 300ms total, `--ease-ui`, no overshoot past the start. Skipped under reduced motion |
-| Memory | Own `localStorage` key, separate from the opening's, written when the hint appears; never returns. All access in try/catch |
+| Nudge | Twice, starting 200ms after the hint appears (after its fade): Next link `translate` on X only, 0 -> 12px -> 0, a 120ms pause at rest, then 0 -> 12px -> 0. Each pulse 300ms with `--ease-ui` per segment, 720ms total. No overshoot: every keyframe is between 0 and 12px and `--ease-ui` stays in the unit square. Cancelled if the hint ends early. Skipped under reduced motion (no animation is created) |
+| Memory | Own `localStorage` key `yh-hint-seen`, separate from the opening's. Written only when the visitor pages (first slide start, whether the hint is waiting or shown) or after the hint has stayed visible 3000ms; a reload before either shows it again. Once written it never returns. All access in try/catch |
 | Routes | Every route |
 
 ### 4. Rail labels and focus tag (LTR-04, D-17, D-18)

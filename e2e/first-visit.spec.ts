@@ -283,7 +283,11 @@ test("the hint follows the opening by about a second (D-10)", async ({ page }) =
   );
   expect(gap).toBeGreaterThan(900);
   expect(gap).toBeLessThan(1600);
-  expect(await page.evaluate((k) => localStorage.getItem(k), HINT_KEY)).toBe("1");
+  // 05-12: remembered only after paging or 3s visible, not at show time.
+  expect(await page.evaluate((k) => localStorage.getItem(k), HINT_KEY)).toBeNull();
+  await expect
+    .poll(() => page.evaluate((k) => localStorage.getItem(k), HINT_KEY), { timeout: 5000 })
+    .toBe("1");
 });
 
 test("the footer is right after the opening (NAV-05)", async ({ page }) => {
