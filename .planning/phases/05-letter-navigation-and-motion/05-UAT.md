@@ -1,9 +1,9 @@
 ---
-status: partial
+status: diagnosed
 phase: 05-letter-navigation-and-motion
 source: [05-07-SUMMARY.md, 05-11 checkpoint (real-hardware feel check, still open)]
 started: 2026-11-10T00:00:00Z
-updated: 2026-11-10T00:00:00Z
+updated: 2026-11-10T12:00:00Z
 ---
 
 ## Current Test
@@ -21,39 +21,52 @@ expected: With `yh-hint-seen` deleted, opening /projects/ shows "Scroll or use t
 result: issue
 reported: "I don't even see where's the hint"
 severity: major
+resolved_by: 05-12 (user re-check: "Ok its good")
 
 ### 2. Next link nudge is perceptible
 expected: When the hint appears, the Next link visibly nudges once toward the hint's direction, so the eye is drawn to the Next control.
 result: issue
 reported: "I don't really see where's the nudging"
 severity: major
+resolved_by: 05-12 (user re-check: "Ok its good")
 
 ### 3. Opening (slide-in, click-to-skip, no replay on reload)
 expected: Letters slide in from the right in under a second, then captions and chrome appear; a click skips to the end without navigating; a reload shows no opening.
-result: [pending]
+result: pass
+reported: \"Ok its good\" (user chose \"Everything is good\" for the whole feel check)
 
 ### 4. Letter glide (order, easing, no bounce, resize mid-glide)
 expected: Letters slide left first then settle into the column; no bounce, nothing stranded, including fast double presses and resize mid-glide.
-result: [pending]
+result: pass
+reported: \"Ok its good\" (user chose \"Everything is good\" for the whole feel check)
 
 ### 5. Rail labels
 expected: Hover and Tab across rail letters show the name to the right; only the current letter is green with its vertical numbered name.
-result: [pending]
+result: pass
+reported: \"Ok its good\" (user chose \"Everything is good\" for the whole feel check)
 
 ### 6. Custom cursor
 expected: Dot sits on the pointer, square snaps to letters and links, tag never leaves the screen, snap drops while paging and returns after landing.
-result: [pending]
+result: pass
+reported: \"Ok its good\" (user chose \"Everything is good\" for the whole feel check)
 
 ### 7. Reduced motion
 expected: With reduced motion on, paging, letters and opening are all instant.
-result: [pending]
+result: pass
+reported: \"Ok its good\" (user chose \"Everything is good\" for the whole feel check)
+
+### 8. A continuous wheel stream moves exactly one page
+expected: A continuous stream of small wheel deltas (one gesture) moves exactly one page, every run, in chromium and webkit.
+result: issue
+reported: "e2e/pager-wheel.spec.ts:45 fails in the full chromium run (3 occurrences) and in the container (chromium + webkit); 5 of 12 with --repeat-each=12; page lands on /projects/ instead of /achievements/. Passed 36/36 before Phase 5 (parent of 8cb24b4). User chose: plan a fix now."
+severity: major
 
 ## Summary
 
-total: 7
-passed: 0
-issues: 2
-pending: 5
+total: 8
+passed: 5
+issues: 3
+pending: 0
 skipped: 0
 blocked: 0
 
@@ -94,4 +107,22 @@ blocked: 0
     - "Travel of about 10-12px on X only, two pulses with a short pause, starting about 200ms after the hint appears; still skipped under reduced motion; no overshoot past the start position."
     - "e2e asserts the Next link's x position changes by more than a stated threshold during the nudge and returns to rest."
     - "UI-SPEC 'Nudge' and 'Hint' rows updated to match."
+  debug_session: ""
+- truth: "A continuous stream of small wheel deltas moves exactly one page, deterministically."
+  status: failed
+  reason: "Test 1/12-repeat failure rate observed after Phase 5; see deferred-items.md. Passed 36/36 on the parent of 8cb24b4."
+  severity: major
+  test: 8
+  root_cause: "UNCONFIRMED hypothesis (05-11 agent): Phase 5 made the first slide heavier, so Playwright's 12 wheel events sometimes gap more than GESTURE_GAP_MS (160) and the tail counts as a second gesture. Not caused by the cursor chunk. Could be a test-only timing artefact OR a real double page jump for wheel users; the plan must diagnose which before choosing a fix."
+  artifacts:
+    - e2e/pager-wheel.spec.ts
+    - lib/pager/wheel.ts
+    - lib/pager/controller.ts
+    - components/letters/useGlide.ts
+    - lib/letters/glide.ts
+    - .planning/phases/05-letter-navigation-and-motion/deferred-items.md
+  missing:
+    - "Diagnosis: reproduce with the 12 wheel deltas dispatched in one page.evaluate (removes Playwright inter-event latency). If it still double-pages, it is a real pager/glide regression: fix the product code. If it passes deterministically, the failure was test-side latency: harden the test."
+    - "Result is deterministic: --repeat-each=36 under parallel load passes 36/36 on chromium (and webkit if available)."
+    - "deferred-items.md entry closed with the diagnosis."
   debug_session: ""
