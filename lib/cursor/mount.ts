@@ -129,7 +129,8 @@ export function mountCursor(signals: PagerSignals): () => void {
   };
 
   const onPointerOver = (e: PointerEvent) => {
-    if (paging || !pos) return;
+    // pointerover fires before the first pointermove, so pos may still be null here (root stays invisible until the move).
+    if (paging || e.pointerType === "touch") return;
     const t = snapTargetOf(e.target as Element);
     if (t !== target) setTarget(t);
   };
