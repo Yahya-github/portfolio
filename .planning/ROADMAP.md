@@ -128,9 +128,9 @@ Plans:
   5. Every motion moves on the horizontal axis, fast with no bounce; with reduced motion enabled every animation (opening, paging, letters, hint) becomes an instant change
 **Plans**: 11 plans
 Plans:
-- [ ] 05-01-PLAN.md — Foundations: motion tokens + guard, safe storage, Playwright returning-visitor seeding, shared tag/cursor CSS, e2e letter helpers
-- [ ] 05-02-PLAN.md — Glide engine: pure geometry, shared WAAPI helpers, events, createGlide runner
-- [ ] 05-03-PLAN.md — Cursor maths and CSS: snap targets, tag text, hairline box, placeTag
+- [x] 05-01-PLAN.md — Foundations: motion tokens + guard, safe storage, Playwright returning-visitor seeding, shared tag/cursor CSS, e2e letter helpers
+- [x] 05-02-PLAN.md — Glide engine: pure geometry, shared WAAPI helpers, events, createGlide runner
+- [x] 05-03-PLAN.md — Cursor maths and CSS: snap targets, tag text, hairline box, placeTag
 - [ ] 05-04-PLAN.md — Replace the D-09 stand-in with the glide: animator cleanup, useGlide, LetterNav, flight and rail-tag CSS, stand-in e2e rewritten
 - [ ] 05-05-PLAN.md — First-visit rules (TDD): before-paint script, skip keys, opening timing, hint state machine
 - [ ] 05-06-PLAN.md — Reducer stand-in state removed; heldScrollY for the phone scroll offset
@@ -189,7 +189,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 2. Live Deploy Spike | 6/6 | Complete   | 2026-11-08 |
 | 3. Static Design System and Pages | 10/10 | Complete   | 2026-11-09 |
 | 4. Horizontal Pager and Input | 14/15 | Complete    | 2026-11-10 |
-| 5. Letter Navigation and Motion | 0/TBD | Not started | - |
+| 5. Letter Navigation and Motion | 3/11 | In Progress|  |
 | 6. Page Compositions and Content | 0/TBD | Not started | - |
 | 7. Copy, Sharing and Launch | 0/TBD | Not started | - |
 | 8. Interactive Proof | 0/TBD | Not started | - |
