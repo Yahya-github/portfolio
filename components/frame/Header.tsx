@@ -26,7 +26,9 @@ export function Header({ current }: HeaderProps) {
       <span className={styles.who}>{site.name}</span>
       <span className={`c-dim ${styles.where}`}>{headerLabel(slug)}</span>
       <nav aria-label={site.headerNavLabel} className={styles.links}>
-        <a href={site.resume.href}>{site.resume.label}</a>
+        <a href={site.resume.href} data-cursor-tag={site.resume.label}>
+          {site.resume.label}
+        </a>
         <a
           href={sayHi.route}
           aria-current={slug === "say-hi" ? "page" : undefined}
