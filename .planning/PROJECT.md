@@ -25,6 +25,11 @@ Phase 2 (Live Deploy Spike) complete 2026-11-08: placeholder static export live 
 
 Phase 3 (Static Design System and Pages) complete 2026-11-09: six server-rendered routes in the dark Swiss system, letter links work without JavaScript, 180 unit + 162 e2e tests, 18 visual baselines pinned in the Playwright container, JS 132.2 kB gzip. Approved by Yahya; draft PR #5. Known follow-ups: label inner-word gaps (todo), review warnings WR-01..03 in 03-REVIEW.md, `react/jsx-no-literals` lint rule pending approval, resume PDF not yet in public/.
 
+- [x] Each page has its own real URL (/achievements/ etc.); opening a link lands on it; Back steps through visited pages (NAV-04) — Validated in Phase 4: Horizontal Pager and Input
+- [x] Page switching by keyboard: arrow keys, Page Up/Down, Space, Home/End (NAV-02) — Validated in Phase 4 (e2e)
+
+Phase 4 (Horizontal Pager and Input) complete 2026-11-10: hand-written pager (pure reducer, wheel/swipe recognisers, WAAPI slide, history, inert pages, focus hand-off, live region), 453 unit + 227 Chromium e2e tests, JS 140.3 kB gzip. Code review: 0 critical, 4 warnings fixed, 6 info items open. Plan 04-15 (real-device checks) was skipped by choice; NAV-01, NAV-03 and A11Y-01 stay Active until the 10 items in 04-HUMAN-UAT.md (trackpads, wheels, iPhone/LinkedIn/Android, VoiceOver/NVDA, Firefox/WebKit specs) are checked.
+
 ### Active
 
 - [ ] Six full-screen pages switched horizontally: Index (hero), Achievements, Projects, Experience, About, Say hi (pages exist as static routes since Phase 3; horizontal switching is Phase 4)
@@ -42,7 +47,6 @@ Phase 3 (Static Design System and Pages) complete 2026-11-09: six server-rendere
 - [ ] Works on phones (swipe paging, letter rail scaled down)
 - [ ] Resume PDF (self-hosted) on Say hi and reachable from every page
 - [ ] Contact visible from every page
-- [ ] Each page has its own real URL (/achievements/ etc.); Back steps through visited pages
 - [ ] First-visit hint and visible Next control
 - [ ] SEO and sharing: titles, description, canonical, Person JSON-LD, Open Graph card, favicon, on-brand 404
 - [ ] Skip link, live region announcing page changes, contrast-tested tokens (small grey text no lighter than #8a8a8a on black)
@@ -126,4 +130,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-11-09 after Phase 3 (Static Design System and Pages) completion*
+*Last updated: 2026-11-10 after Phase 4 (Horizontal Pager and Input) completion*
