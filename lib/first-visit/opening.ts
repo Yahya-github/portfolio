@@ -76,6 +76,26 @@ export function createOpening(options: OpeningOptions): Opening {
     done();
   };
 
+  let swallowTimer: ReturnType<typeof setTimeout> | null = null;
+  const cleanupSwallow = (): void => {
+    window.removeEventListener("click", swallowClick, { capture: true });
+    window.removeEventListener("pointerup", drop);
+    window.removeEventListener("pointercancel", drop);
+    if (swallowTimer !== null) clearTimeout(swallowTimer);
+    swallowTimer = null;
+  };
+  function swallowClick(e: Event): void {
+    e.preventDefault();
+    e.stopPropagation();
+    cleanupSwallow();
+  }
+  function drop(): void {
+    window.removeEventListener("pointerup", drop);
+    window.removeEventListener("pointercancel", drop);
+    if (swallowTimer !== null) clearTimeout(swallowTimer);
+    swallowTimer = setTimeout(cleanupSwallow, 0);
+  }
+
   const installSkip = (): void => {
     const onKey = (e: KeyboardEvent): void => {
       if (!isSkipKey(e)) return;
@@ -83,23 +103,9 @@ export function createOpening(options: OpeningOptions): Opening {
       e.preventDefault();
       e.stopPropagation();
     };
-    const swallowClick = (e: Event): void => {
-      e.preventDefault();
-      e.stopPropagation();
-      window.removeEventListener("click", swallowClick, { capture: true });
-    };
     const onPointer = (): void => {
       finish();
       window.addEventListener("click", swallowClick, { capture: true });
-      const drop = (): void => {
-        setTimeout(
-          () =>
-            window.removeEventListener("click", swallowClick, {
-              capture: true,
-            }),
-          0,
-        );
-      };
       window.addEventListener("pointerup", drop, { once: true });
       window.addEventListener("pointercancel", drop, { once: true });
     };
@@ -108,6 +114,7 @@ export function createOpening(options: OpeningOptions): Opening {
     removeSkip = () => {
       window.removeEventListener("keydown", onKey, { capture: true });
       window.removeEventListener("pointerdown", onPointer, { capture: true });
+      cleanupSwallow();
     };
   };
 
@@ -207,6 +214,7 @@ export function createOpening(options: OpeningOptions): Opening {
     finish,
     isRunning: () => running,
     destroy() {
+      cleanupSwallow();
       if (running) finish();
     },
   };
