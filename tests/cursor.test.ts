@@ -38,7 +38,9 @@ describe("snapTargetOf", () => {
   });
   it("resolves a span inside an anchor to the anchor", () => {
     const host = make('<a href="/x"><span id="s">hi</span></a>');
-    expect(snapTargetOf(host.querySelector("#s"))).toBe(host.querySelector("a"));
+    expect(snapTargetOf(host.querySelector("#s"))).toBe(
+      host.querySelector("a"),
+    );
   });
   it("returns a button itself", () => {
     const host = make("<button>go</button>");
