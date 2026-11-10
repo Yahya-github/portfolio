@@ -166,3 +166,14 @@ nav[data-mode="rail"] a:focus-visible > [data-tag] .c-dim {
     color: var(--color-ground);
   }
 }
+
+/* EXP-01 / D-05: while the opening is pending (before the bundle claims it) the chrome waits on the black ground and the letters wait offscreen right. */
+html[data-opening="pending"] header,
+html[data-opening="pending"] footer,
+html[data-opening="pending"] #page-index,
+html[data-opening="pending"] nav[data-pager="letters"] .t-label {
+  opacity: 0;
+}
+html[data-opening="pending"] nav[data-pager="letters"] > a {
+  translate: calc(100vw + var(--space-lg)) 0;
+}
