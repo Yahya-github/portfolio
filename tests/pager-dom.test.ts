@@ -268,6 +268,31 @@ describe("createWaapiAnimator", () => {
     expect(bar.running.cancel).toHaveBeenCalled();
     expect(letters.running.cancel).toHaveBeenCalled();
   });
+
+  it("settle leaves CSS animations and transitions running (WR-01)", () => {
+    class FakeCssAnimation {
+      readonly cancel = vi.fn();
+    }
+    class FakeCssTransition {
+      readonly cancel = vi.fn();
+    }
+    vi.stubGlobal("CSSAnimation", FakeCssAnimation);
+    vi.stubGlobal("CSSTransition", FakeCssTransition);
+    try {
+      const { letters, animator } = setup();
+      const railIn = new FakeCssAnimation();
+      const fade = new FakeCssTransition();
+      letters.getAnimations.mockReturnValue([railIn, fade, letters.running]);
+
+      animator.settle(2);
+
+      expect(railIn.cancel).not.toHaveBeenCalled();
+      expect(fade.cancel).not.toHaveBeenCalled();
+      expect(letters.running.cancel).toHaveBeenCalled();
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
 });
 
 function sized(

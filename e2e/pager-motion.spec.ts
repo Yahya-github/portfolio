@@ -252,3 +252,33 @@ test("at rest the track has no animations and --track-index is the landed index"
   expect(rest.running).toBe(0);
   expect(rest.index).toBe("2");
 });
+
+test("landing off 00 lets the letters' rail-in fade run to its end (WR-01)", async ({
+  page,
+}) => {
+  await open(page, "/", DESKTOP);
+  await page.evaluate(() => {
+    const seen: string[] = [];
+    (window as unknown as { __cssEvents: string[] }).__cssEvents = seen;
+    for (const type of ["animationstart", "animationcancel", "animationend"]) {
+      document.addEventListener(
+        type,
+        (e) => seen.push(`${type}:${(e as AnimationEvent).animationName}`),
+        true,
+      );
+    }
+  });
+  const before = await landId(page);
+  await page.keyboard.press("ArrowRight");
+  await waitForLanded(page, before);
+
+  const events = () =>
+    page.evaluate(() =>
+      (window as unknown as { __cssEvents: string[] }).__cssEvents.filter((e) =>
+        e.includes("rail-in"),
+      ),
+    );
+  await expect
+    .poll(async () => (await events()).map((e) => e.split(":")[0]))
+    .toEqual(["animationstart", "animationend"]);
+});

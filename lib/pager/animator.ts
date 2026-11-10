@@ -46,8 +46,20 @@ function easing(retarget: boolean): string {
   return value || (retarget ? FALLBACK_EASE.retarget : FALLBACK_EASE.page);
 }
 
+/** CSS-driven animations and transitions (e.g. the letters' `rail-in` fade) are not ours to cancel. */
+function isCssDriven(animation: Animation): boolean {
+  return (
+    (typeof CSSAnimation !== "undefined" &&
+      animation instanceof CSSAnimation) ||
+    (typeof CSSTransition !== "undefined" && animation instanceof CSSTransition)
+  );
+}
+
+/** Cancels the WAAPI slide animations on `el`; getAnimations() also returns CSS ones (WR-01). */
 function cancelOn(el: HTMLElement | null): void {
-  el?.getAnimations?.().forEach((a) => a.cancel());
+  el?.getAnimations?.()
+    .filter((a) => !isCssDriven(a))
+    .forEach((a) => a.cancel());
 }
 
 function canAnimate(el: HTMLElement | null): el is HTMLElement {
