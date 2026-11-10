@@ -61,6 +61,7 @@
   top: calc(100% + var(--space-md));
   white-space: nowrap;
   pointer-events: auto;
+  transition: opacity var(--dur-ui) var(--ease-ui);
 }
 .nav[data-mode="hero"] .letter:focus-visible .num,
 .nav[data-mode="hero"] .letter:active .num {
@@ -144,15 +145,61 @@
   }
 }
 
-/* D-09: the rail appears on landing off 00 with a 150ms fade; reduced motion makes --dur-ui 0ms. */
-@keyframes rail-in {
-  from {
-    opacity: 0;
-  }
-  to {
+/* Phase 5 glide: letters fly in hero geometry, scaled from their top-left corner (RESEARCH Pattern 1). */
+.nav[data-flight] .letter {
+  transform-origin: 0 0;
+}
+/* Pitfall 15: an invisible caption must not catch the pointer. */
+.nav[data-flight] .caption {
+  pointer-events: none;
+}
+/* D-14: captions fade out at slide start ... */
+.nav[data-flight="out"] .caption {
+  opacity: 0;
+}
+/* ... and wait, hidden with no transition, until the letters have landed (Pitfall 5). */
+.nav[data-flight="in"] .caption {
+  opacity: 0;
+  transition: none;
+}
+.nav[data-mode="hero"] .now {
+  display: none;
+}
+/* Accent arrives with the move (UI-SPEC accent timing). */
+.nav[data-flight="out"] .letter[aria-current="page"],
+.nav[data-flight="out"] .letter[aria-current="page"]:hover,
+.nav[data-flight="out"] .letter[aria-current="page"]:focus-visible,
+.nav[data-flight="out"] .letter[aria-current="page"]:active {
+  color: var(--color-accent);
+}
+/* LTR-04, D-18: the rail caption un-clips into a tag right of the rail on keyboard focus. */
+.nav[data-mode="rail"] .caption {
+  opacity: 0;
+  transition: opacity var(--dur-ui) var(--ease-ui);
+}
+.nav[data-mode="rail"] .letter:focus-visible .caption {
+  left: calc(var(--rail-col) + var(--space-sm));
+  top: 50%;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  translate: 0 -50%;
+  opacity: 1;
+}
+/* Pitfall 12: mouse users without the custom cursor get the same tag on hover. */
+@media (hover: hover) and (pointer: fine) {
+  :global(html:not([data-cursor]))
+    .nav[data-mode="rail"]
+    .letter:hover
+    .caption {
+    left: calc(var(--rail-col) + var(--space-sm));
+    top: 50%;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    translate: 0 -50%;
     opacity: 1;
   }
-}
-.nav[data-mode="rail"][data-enter] {
-  animation: rail-in var(--dur-ui) var(--ease-ui);
 }

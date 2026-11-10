@@ -1,6 +1,11 @@
 // D-01 / D-03 / D-11 / WR-08: motion contract
 import { test, expect, type Page } from "@playwright/test";
 import { landId, open, pathname, waitForLanded } from "./helpers/pager";
+import {
+  LETTERS,
+  letterAnimationCount,
+  waitForGlideSettled,
+} from "./helpers/letters";
 
 const DESKTOP = { width: 1440, height: 900 };
 const SLIDE_MS = 600;
@@ -253,32 +258,32 @@ test("at rest the track has no animations and --track-index is the landed index"
   expect(rest.index).toBe("2");
 });
 
-test("landing off 00 lets the letters' rail-in fade run to its end (WR-01)", async ({
+test("leaving 00 the glide ends on the rail with nothing left behind", async ({
   page,
 }) => {
   await open(page, "/", DESKTOP);
-  await page.evaluate(() => {
-    const seen: string[] = [];
-    (window as unknown as { __cssEvents: string[] }).__cssEvents = seen;
-    for (const type of ["animationstart", "animationcancel", "animationend"]) {
-      document.addEventListener(
-        type,
-        (e) => seen.push(`${type}:${(e as AnimationEvent).animationName}`),
-        true,
-      );
-    }
-  });
   const before = await landId(page);
   await page.keyboard.press("ArrowRight");
   await waitForLanded(page, before);
+  await waitForGlideSettled(page);
 
-  const events = () =>
-    page.evaluate(() =>
-      (window as unknown as { __cssEvents: string[] }).__cssEvents.filter((e) =>
-        e.includes("rail-in"),
-      ),
-    );
-  await expect
-    .poll(async () => (await events()).map((e) => e.split(":")[0]))
-    .toEqual(["animationstart", "animationend"]);
+  expect(await letterAnimationCount(page)).toBe(0);
+  const inline = await page.evaluate(
+    (sel) =>
+      [...document.querySelectorAll(`${sel} > a`)].map((a) => ({
+        translate: (a as HTMLElement).style.translate,
+        transform: (a as HTMLElement).style.transform,
+      })),
+    LETTERS,
+  );
+  for (const letter of inline) {
+    expect(letter.translate).toBe("");
+    expect(letter.transform).toBe("");
+  }
+  const nav = page.locator(LETTERS);
+  await expect(nav).toHaveAttribute("data-mode", "rail");
+  await expect(nav).not.toHaveAttribute("data-flight", /.*/);
+  await expect(
+    page.locator(`${LETTERS} a[aria-current="page"]`),
+  ).toHaveAttribute("href", "/achievements/");
 });

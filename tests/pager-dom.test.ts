@@ -103,7 +103,6 @@ describe("createWaapiAnimator", () => {
 
   function setup(
     options: {
-      mode?: "hero" | "rail";
       outcome?: "finish" | "cancel";
     } = {},
   ) {
@@ -117,14 +116,11 @@ describe("createWaapiAnimator", () => {
       value: 200,
       configurable: true,
     });
-    const letters = animatable("nav", "matrix(1, 0, 0, 1, -1000, 0)");
-    letters.el.dataset.mode = options.mode ?? "hero";
     const animator = createWaapiAnimator({
       track: () => track.el,
       bar: () => bar.el,
-      letters: () => letters.el,
     });
-    return { track, bar, letters, animator };
+    return { track, bar, animator };
   }
 
   it("animates the track from its rendered position with the page ease", async () => {
@@ -197,24 +193,6 @@ describe("createWaapiAnimator", () => {
     );
   });
 
-  it("animates the hero letters with the track's from/to", async () => {
-    const { letters, animator } = setup({ mode: "hero" });
-    await animator.slideTo(2, { retarget: false, reduced: false });
-    expect(letters.animate).toHaveBeenCalledWith(
-      [
-        { transform: "translate3d(-1000px, 0, 0)" },
-        { transform: "translate3d(-2000px, 0, 0)" },
-      ],
-      expect.objectContaining({ duration: 600, fill: "forwards" }),
-    );
-  });
-
-  it("leaves the rail letters alone", async () => {
-    const { letters, animator } = setup({ mode: "rail" });
-    await animator.slideTo(2, { retarget: false, reduced: false });
-    expect(letters.animate).not.toHaveBeenCalled();
-  });
-
   it("settles instantly under reduced motion", async () => {
     const { track, bar, animator } = setup();
     const done = await animator.slideTo(2, { retarget: false, reduced: true });
@@ -234,7 +212,6 @@ describe("createWaapiAnimator", () => {
     const animator = createWaapiAnimator({
       track: () => track,
       bar: () => null,
-      letters: () => null,
     });
     const done = await animator.slideTo(5, { retarget: false, reduced: false });
     expect(done).toBe(true);
@@ -245,7 +222,6 @@ describe("createWaapiAnimator", () => {
     const animator = createWaapiAnimator({
       track: () => null,
       bar: () => null,
-      letters: () => null,
     });
     await expect(
       animator.slideTo(1, { retarget: false, reduced: false }),
@@ -260,13 +236,12 @@ describe("createWaapiAnimator", () => {
   });
 
   it("settle writes the resting indices then cancels every animation", () => {
-    const { track, bar, letters, animator } = setup();
+    const { track, bar, animator } = setup();
     animator.settle(4);
     expect(track.el.style.getPropertyValue("--track-index")).toBe("4");
     expect(bar.el.style.getPropertyValue("--page-index")).toBe("4");
     expect(track.running.cancel).toHaveBeenCalled();
     expect(bar.running.cancel).toHaveBeenCalled();
-    expect(letters.running.cancel).toHaveBeenCalled();
   });
 
   it("settle leaves CSS animations and transitions running (WR-01)", () => {
@@ -279,16 +254,16 @@ describe("createWaapiAnimator", () => {
     vi.stubGlobal("CSSAnimation", FakeCssAnimation);
     vi.stubGlobal("CSSTransition", FakeCssTransition);
     try {
-      const { letters, animator } = setup();
+      const { bar, animator } = setup();
       const railIn = new FakeCssAnimation();
       const fade = new FakeCssTransition();
-      letters.getAnimations.mockReturnValue([railIn, fade, letters.running]);
+      bar.getAnimations.mockReturnValue([railIn, fade, bar.running]);
 
       animator.settle(2);
 
       expect(railIn.cancel).not.toHaveBeenCalled();
       expect(fade.cancel).not.toHaveBeenCalled();
-      expect(letters.running.cancel).toHaveBeenCalled();
+      expect(bar.running.cancel).toHaveBeenCalled();
     } finally {
       vi.unstubAllGlobals();
     }

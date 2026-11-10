@@ -9,6 +9,7 @@ import {
   pathname,
   waitForLanded,
 } from "./helpers/pager";
+import { waitForGlideSettled } from "./helpers/letters";
 
 const DESKTOP = { width: 1440, height: 900 };
 const VIEWPORTS = [
@@ -131,25 +132,28 @@ test("the title ring follows the input source (Pitfall 10)", async ({
   );
 });
 
-test("the riding hero row cannot be reached by Tab", async ({ page }) => {
+test("the letters are never inert during the glide", async ({ page }) => {
   await open(page, "/", DESKTOP);
   const before = await landId(page);
   await page.keyboard.press("ArrowRight");
   await expect(page.locator('main#content[data-phase="sliding"]')).toHaveCount(
     1,
   );
-  await expect(page.locator(LETTERS)).toHaveAttribute("inert", "");
-  for (let i = 0; i < 3; i += 1) {
+  await expect(page.locator(LETTERS)).toHaveAttribute("data-flight", "out");
+  await expect(page.locator(LETTERS)).not.toHaveAttribute("inert", /.*/);
+  await waitForLanded(page, before);
+  await waitForGlideSettled(page);
+  await expect(page.locator(LETTERS)).toHaveAttribute("data-mode", "rail");
+  await expect(page.locator(LETTERS)).not.toHaveAttribute("data-flight", /.*/);
+  let reached = false;
+  for (let i = 0; i < 12 && !reached; i += 1) {
     await page.keyboard.press("Tab");
-    const inLetters = await page.evaluate(
+    reached = await page.evaluate(
       (sel) => document.activeElement?.closest(sel) != null,
       LETTERS,
     );
-    expect(inLetters).toBe(false);
   }
-  await waitForLanded(page, before);
-  await expect(page.locator(LETTERS)).not.toHaveAttribute("inert", /.*/);
-  await expect(page.locator(LETTERS)).toHaveAttribute("data-mode", "rail");
+  expect(reached).toBe(true);
 });
 
 test("paging past the last page changes nothing", async ({ page }) => {

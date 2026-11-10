@@ -1,17 +1,17 @@
+import {
+  FALLBACK_EASE,
+  cancelOn,
+  canAnimate,
+  readEase,
+} from "@/lib/motion/waapi";
 import type { Animator, SlideOptions } from "@/lib/pager/types";
 
-/** One slide, shared by track, progress bar and riding hero row (D-03, D-09, D-11). */
+/** One slide, shared by track and progress bar (D-03, D-11); the letters glide on their own (Phase 5, lib/letters/glide.ts). */
 export const SLIDE_MS = 600;
-
-const FALLBACK_EASE = {
-  page: "cubic-bezier(0.77, 0, 0.18, 1)",
-  retarget: "cubic-bezier(0.3, 0.6, 0.18, 1)",
-} as const;
 
 export interface AnimatorTargets {
   track(): HTMLElement | null;
   bar(): HTMLElement | null;
-  letters(): HTMLElement | null;
 }
 
 const MATRIX = /^matrix(3d)?\(([^)]*)\)$/;
@@ -27,7 +27,7 @@ export function translateXOf(transform: string): number {
   return Number.isFinite(x) ? x : 0;
 }
 
-/** Track offset at rest. Phase 5 replaces the viewport width with the rail measurement. */
+/** Track offset at rest. The letters are outside the track, so the glide measures their own CSS rests (Phase 5 D-15). */
 export function restingOffsetPx(
   index: number,
   viewportWidth: number = window.innerWidth,
@@ -40,30 +40,9 @@ function renderedX(el: HTMLElement | null): number {
 }
 
 function easing(retarget: boolean): string {
-  const value = getComputedStyle(document.documentElement)
-    .getPropertyValue(retarget ? "--ease-retarget" : "--ease-page")
-    .trim();
-  return value || (retarget ? FALLBACK_EASE.retarget : FALLBACK_EASE.page);
-}
-
-/** CSS-driven animations and transitions (e.g. the letters' `rail-in` fade) are not ours to cancel. */
-function isCssDriven(animation: Animation): boolean {
-  return (
-    (typeof CSSAnimation !== "undefined" &&
-      animation instanceof CSSAnimation) ||
-    (typeof CSSTransition !== "undefined" && animation instanceof CSSTransition)
-  );
-}
-
-/** Cancels the WAAPI slide animations on `el`; getAnimations() also returns CSS ones (WR-01). */
-function cancelOn(el: HTMLElement | null): void {
-  el?.getAnimations?.()
-    .filter((a) => !isCssDriven(a))
-    .forEach((a) => a.cancel());
-}
-
-function canAnimate(el: HTMLElement | null): el is HTMLElement {
-  return el !== null && typeof el.animate === "function";
+  return retarget
+    ? readEase("--ease-retarget", FALLBACK_EASE.retarget)
+    : readEase("--ease-page", FALLBACK_EASE.page);
 }
 
 function track3d(x: number): Keyframe {
@@ -75,7 +54,6 @@ export function createWaapiAnimator(targets: AnimatorTargets): Animator {
   const cancelAll = (): void => {
     cancelOn(targets.track());
     cancelOn(targets.bar());
-    cancelOn(targets.letters());
   };
 
   const settle = (index: number): void => {
@@ -92,7 +70,6 @@ export function createWaapiAnimator(targets: AnimatorTargets): Animator {
       return Promise.resolve(true);
     }
     const bar = targets.bar();
-    const letters = targets.letters();
     // Read every "from" before cancelling: cancel drops the fill and would snap to rest.
     const trackFrom = renderedX(track);
     const barFrom = renderedX(bar);
@@ -116,9 +93,6 @@ export function createWaapiAnimator(targets: AnimatorTargets): Animator {
         ],
         timing,
       );
-    }
-    if (canAnimate(letters) && letters.dataset.mode === "hero") {
-      letters.animate([track3d(trackFrom), track3d(trackTo)], timing);
     }
     return trackAnimation.finished.then(
       () => true,

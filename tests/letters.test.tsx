@@ -106,10 +106,13 @@ describe("LetterNav rail", () => {
     expect(navOf(container)).toHaveAttribute("data-pager", "letters");
     expect(navOf(container)).not.toHaveAttribute("inert");
     expect(navOf(container)).not.toHaveAttribute("data-enter");
+    const links = [...navOf(container).querySelectorAll("a")];
+    expect(links.map((a) => a.getAttribute("data-cursor-tag"))).toEqual(NAMES);
+    expect(navOf(container).querySelectorAll("[data-tag]")).toHaveLength(5);
   });
 });
 
-describe("LetterNav stand-in follows the pager (D-09, D-10)", () => {
+describe("LetterNav follows the pager (Phase 5 glide, D-10)", () => {
   interface Rig {
     readonly stub: StubDeps;
     readonly controller: PagerController;
@@ -132,24 +135,23 @@ describe("LetterNav stand-in follows the pager (D-09, D-10)", () => {
   const nowOf = (nav: HTMLElement) =>
     nav.querySelector(':scope > [aria-hidden="true"]');
 
-  it("leaving Index: hero row rides out inert, rail fades in on landing", async () => {
+  it("leaving Index: rail at slide start, never inert, landing keeps it", async () => {
     const { stub, controller, nav } = rig(0);
     act(() => {
       controller.intent({ type: "next", source: "key" });
     });
-    expect(nav).toHaveAttribute("data-mode", "hero");
-    expect(nav).toHaveAttribute("inert");
+    expect(nav).toHaveAttribute("data-mode", "rail");
+    expect(nav).not.toHaveAttribute("inert");
     expect(nav).not.toHaveAttribute("data-enter");
+    expect(
+      screen.getByRole("link", { name: "01 Achievements" }),
+    ).toHaveAttribute("aria-current", "page");
+    expect(nowOf(nav)).toHaveTextContent("01 Achievements");
 
     stub.slides[0].resolve(true);
     await act(async () => {});
     expect(nav).toHaveAttribute("data-mode", "rail");
     expect(nav).not.toHaveAttribute("inert");
-    expect(nav).toHaveAttribute("data-enter");
-    expect(
-      screen.getByRole("link", { name: "01 Achievements" }),
-    ).toHaveAttribute("aria-current", "page");
-    expect(nowOf(nav)).toHaveTextContent("01 Achievements");
   });
 
   it("returning to Index switches to hero at slide start, live", () => {
