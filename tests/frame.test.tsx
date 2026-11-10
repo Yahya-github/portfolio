@@ -1,6 +1,8 @@
 import { act, cleanup, render, screen, within } from "@testing-library/react";
 import type { ReactNode } from "react";
+import { renderToString } from "react-dom/server";
 import { afterEach, describe, expect, it } from "vitest";
+import { site } from "@/content/site";
 import { Footer } from "@/components/frame/Footer";
 import { Header } from "@/components/frame/Header";
 import { SkipLink } from "@/components/frame/SkipLink";
@@ -76,6 +78,23 @@ describe("Footer", () => {
     expect(
       screen.getByRole("link", { name: "Back to the start" }),
     ).toHaveAttribute("href", "/");
+  });
+
+  it("server HTML carries neither hint string and an empty inert hint span", () => {
+    const html = renderToString(<Footer current="index" />);
+    expect(html).not.toContain("Scroll or use the arrow keys");
+    expect(html).not.toContain("Swipe sideways");
+    const { container } = render(<Footer current="index" />);
+    const hint = container.querySelector("[data-hint]");
+    expect(hint).not.toBeNull();
+    expect(hint?.textContent).toBe("");
+    expect(hint?.hasAttribute("role")).toBe(false);
+    expect(hint?.hasAttribute("aria-live")).toBe(false);
+  });
+
+  it("holds the hint wording in typed content", () => {
+    expect(site.hint.fine).toBe("Scroll or use the arrow keys");
+    expect(site.hint.coarse).toBe("Swipe sideways");
   });
 
   it.each(ALL_SLUGS)("progress bar for %s is aria-hidden at its index", (s) => {

@@ -53,10 +53,28 @@
 .counter {
   grid-column: 1 / 4;
 }
-.next {
-  grid-column: 10 / 13;
+.end {
+  grid-column: 6 / 13;
   justify-self: end;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-md);
+  min-width: 0;
+}
+.next {
   text-align: right;
+}
+.hint {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: right;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-ui) var(--ease-ui);
+}
+.hint[data-state="shown"] {
+  opacity: 1;
 }
 .bar {
   position: absolute;
@@ -93,7 +111,7 @@
   .where {
     display: none;
   }
-  .next {
-    grid-column: 6 / 13;
+  .end {
+    grid-column: 4 / 13;
   }
 }

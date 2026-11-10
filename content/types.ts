@@ -34,6 +34,7 @@ export interface Site {
     readonly backToStart: string;
     readonly counterSeparator: string;
   };
+  readonly hint: { readonly fine: string; readonly coarse: string };
   readonly liveRegion: { readonly template: string };
   readonly debug: {
     readonly index: string;
