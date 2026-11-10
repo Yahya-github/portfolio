@@ -121,8 +121,8 @@ export function createGlide(options: GlideOptions): Glide {
 
   const start = (s: GlideStart): void => {
     if (options.intercept?.(s)) {
+      // The interceptor already cancelled any flight and now owns the letters' animations.
       flightId += 1;
-      letters().forEach(cancelOn);
       flying = false;
       heading = "hero";
       return;

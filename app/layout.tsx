@@ -1,3 +1,4 @@
+import { OPENING_SCRIPT } from "@/lib/first-visit/script";
 import { JS_FLAG_SCRIPT } from "@/lib/js-flag";
 import { rootMetadata } from "@/lib/metadata";
 import { instrumentSans } from "./fonts";
@@ -15,6 +16,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: JS_FLAG_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: OPENING_SCRIPT }} />
       </head>
       <body>{children}</body>
     </html>
