@@ -1,11 +1,7 @@
 // A11Y-04: every Phase 5 animation is instant under prefers-reduced-motion, including a live switch.
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { FRESH_VISITOR, OPENING_KEY } from "./helpers/first-visit";
-import {
-  LETTERS,
-  letterAnimationCount,
-  letterRects,
-} from "./helpers/letters";
+import { LETTERS, letterAnimationCount, letterRects } from "./helpers/letters";
 import { open, waitForLanded, landId } from "./helpers/pager";
 
 const DESKTOP = { width: 1440, height: 900 };
@@ -104,7 +100,9 @@ test.describe("fresh visitor with reduced motion", () => {
         .last()
         .evaluate((el) => el.getAnimations().length),
     ).toBe(0);
-    const d = await hint.evaluate((el) => getComputedStyle(el).transitionDuration);
+    const d = await hint.evaluate(
+      (el) => getComputedStyle(el).transitionDuration,
+    );
     expect(d.split(",").every((x) => x.trim() === "0s")).toBe(true);
   });
 });
