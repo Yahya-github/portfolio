@@ -45,6 +45,11 @@ export function createOpening(options: OpeningOptions): Opening {
   let animations: Animation[] = [];
   let removeSkip: (() => void) | null = null;
 
+  // Child effects run before the pager provider syncs its reduced flag, so also read the media query (A11Y-04).
+  const reduced = (): boolean =>
+    options.isReduced() ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   const letters = (): HTMLElement[] =>
     Array.from(nav.querySelectorAll<HTMLElement>(":scope > a"));
 
@@ -178,7 +183,7 @@ export function createOpening(options: OpeningOptions): Opening {
       }
       if (
         location.pathname === "/" &&
-        options.isReduced() &&
+        reduced() &&
         seenState(OPENING_KEY) === "unseen"
       ) {
         markSeen(OPENING_KEY);
@@ -190,7 +195,7 @@ export function createOpening(options: OpeningOptions): Opening {
         return false;
       }
       if (s.to !== 0 || playedThisLoad) return false;
-      if (options.isReduced()) {
+      if (reduced()) {
         if (seenState(OPENING_KEY) === "unseen") markSeen(OPENING_KEY);
         return false;
       }
