@@ -42,7 +42,8 @@ describe("motion-guard", () => {
         nums: m[1].split(",").map((n) => Number.parseFloat(n)),
       }))
       .filter(
-        ({ nums }) => nums.length !== 4 || nums.some((n) => !(n >= 0 && n <= 1)),
+        ({ nums }) =>
+          nums.length !== 4 || nums.some((n) => !(n >= 0 && n <= 1)),
       )
       .map(({ raw }) => raw);
     expect(bad).toEqual([]);
