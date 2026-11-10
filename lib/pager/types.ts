@@ -9,7 +9,6 @@ export type Intent =
     }
   | { readonly type: "goto"; readonly index: number; readonly source: Source };
 export type Phase = "idle" | "sliding";
-export type LettersMode = "hero" | "rail";
 export interface PagerState {
   readonly current: number; // last landed index
   readonly target: number; // where the track is heading (=== current at rest)
@@ -18,8 +17,6 @@ export interface PagerState {
   readonly slideId: number; // +1 on every accepted intent, including retargets
   readonly retarget: boolean; // latest accepted intent arrived while sliding (D-01)
   readonly focusHolder: number; // page that keeps inert off until landing (UI-SPEC Focus hand-off)
-  readonly lettersMode: LettersMode; // D-09 stand-in
-  readonly railEnter: boolean; // true only on the landing that switched hero -> rail
   readonly announced: number | null; // index for the live region; null on first load
   readonly landId: number; // +1 on every landing (e2e waits on it)
 }
