@@ -139,6 +139,25 @@ test.describe("fine pointer", () => {
     await expect(page.locator(ROOT)).not.toHaveAttribute("data-visible", "");
   });
 
+  test("a settle while the pointer is outside the window shows no tag", async ({
+    page,
+  }) => {
+    await open(page, "/achievements/", DESKTOP);
+    await expect(page.locator(ROOT)).toBeAttached();
+    await hover(page, page.locator(RAIL_PROJECTS));
+    await waitSnapped(page);
+    await expect(page.locator(TAG)).toHaveAttribute("data-visible", "");
+    await page.evaluate(() =>
+      document.documentElement.dispatchEvent(new PointerEvent("pointerleave")),
+    );
+    await expect(page.locator(TAG)).not.toHaveAttribute("data-visible", "");
+    await page.evaluate(() =>
+      document.dispatchEvent(new Event("yh:glide-settled")),
+    );
+    await expect(page.locator(ROOT)).not.toHaveAttribute("data-visible", "");
+    await expect(page.locator(TAG)).not.toHaveAttribute("data-visible", "");
+  });
+
   test("the square blends with difference", async ({ page }) => {
     await open(page, "/achievements/", DESKTOP);
     await expect(page.locator(ROOT)).toBeAttached();

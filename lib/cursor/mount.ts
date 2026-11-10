@@ -56,6 +56,8 @@ export function mountCursor(signals: PagerSignals): () => void {
   let pos: { x: number; y: number } | null = null;
   let target: HTMLElement | null = null;
   let paging = false;
+  // True between pointerleave and the next pointer activity: nothing may snap or show the tag then.
+  let outside = false;
   let landed = true;
   let snapTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -108,7 +110,7 @@ export function mountCursor(signals: PagerSignals): () => void {
 
   const resnap = () => {
     paging = false;
-    if (!pos) return;
+    if (!pos || outside) return;
     const t = snapTargetOf(document.elementFromPoint(pos.x, pos.y));
     setTarget(t);
   };
@@ -119,6 +121,7 @@ export function mountCursor(signals: PagerSignals): () => void {
   const onPointerMove = (e: PointerEvent) => {
     if (e.pointerType === "touch") return;
     const first = pos === null;
+    outside = false;
     pos = { x: e.clientX, y: e.clientY };
     if (first) {
       html.dataset.cursor = "";
@@ -145,14 +148,18 @@ export function mountCursor(signals: PagerSignals): () => void {
   };
 
   const onLeave = () => {
+    outside = true;
     delete root.dataset.visible;
     hideTag();
   };
   const onEnter = () => {
-    if (pos) root.dataset.visible = "";
+    if (pos) {
+      outside = false;
+      root.dataset.visible = "";
+    }
   };
   const onScroll = () => {
-    if (target) setTarget(target);
+    if (target && !outside) setTarget(target);
   };
   const onGlideSettled = () => {
     if (landed) resnap();
