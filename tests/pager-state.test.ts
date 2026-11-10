@@ -6,7 +6,6 @@ import {
   isCollapsed,
   isLive,
   land,
-  lettersInert,
   reduce,
 } from "@/lib/pager/state";
 import type { Intent, PagerState } from "@/lib/pager/types";
@@ -41,15 +40,25 @@ describe("initialState", () => {
       slideId: 0,
       retarget: false,
       focusHolder: 2,
-      lettersMode: "rail",
-      railEnter: false,
       announced: null,
       landId: 0,
     });
   });
 
-  it("shows hero letters on the index", () => {
-    expect(initialState(0).lettersMode).toBe("hero");
+  it("carries no letters stand-in state", () => {
+    expect(Object.keys(initialState(0)).sort()).toEqual(
+      [
+        "announced",
+        "current",
+        "focusHolder",
+        "landId",
+        "phase",
+        "retarget",
+        "slideId",
+        "source",
+        "target",
+      ].sort(),
+    );
   });
 });
 
@@ -63,7 +72,6 @@ describe("reduce", () => {
       retarget: false,
       slideId: 1,
       focusHolder: 1,
-      lettersMode: "hero",
       source: "wheel",
     });
   });
@@ -120,23 +128,6 @@ describe("reduce", () => {
     const state = initialState(1);
     expect(reduce(state, goto(index))).toBe(state);
   });
-
-  it("switches letters to hero as soon as the index is targeted (D-09)", () => {
-    const toIndex = reduce(initialState(3), goto(0));
-    expect(toIndex.lettersMode).toBe("hero");
-    const retargeted = reduce(toIndex, NEXT);
-    expect(retargeted.target).toBe(1);
-    expect(retargeted.lettersMode).toBe("hero");
-    const landed = land(retargeted);
-    expect(landed.lettersMode).toBe("rail");
-    expect(landed.railEnter).toBe(true);
-  });
-
-  it("clears railEnter on any accepted intent", () => {
-    const landed = land(reduce(initialState(0), NEXT));
-    expect(landed.railEnter).toBe(true);
-    expect(reduce(landed, NEXT).railEnter).toBe(false);
-  });
 });
 
 describe("land", () => {
@@ -158,18 +149,6 @@ describe("land", () => {
   it("returns the same object when idle", () => {
     const state = initialState(2);
     expect(land(state)).toBe(state);
-  });
-
-  it("keeps hero letters when landing on the index", () => {
-    const s = land(reduce(initialState(2), goto(0)));
-    expect(s.lettersMode).toBe("hero");
-    expect(s.railEnter).toBe(false);
-  });
-
-  it("does not flag railEnter when already on the rail", () => {
-    const s = land(reduce(initialState(2), NEXT));
-    expect(s.lettersMode).toBe("rail");
-    expect(s.railEnter).toBe(false);
   });
 });
 
@@ -207,20 +186,5 @@ describe("isCollapsed", () => {
   it("collapses nothing while sliding", () => {
     const s = reduce(initialState(2), NEXT);
     expect([0, 1, 2, 3, 4, 5].some((i) => isCollapsed(s, i))).toBe(false);
-  });
-});
-
-describe("lettersInert", () => {
-  it("is false on the index with hero letters", () => {
-    expect(lettersInert(initialState(0))).toBe(false);
-  });
-
-  it("is true while hero letters ride out to another page", () => {
-    expect(lettersInert(reduce(initialState(0), NEXT))).toBe(true);
-  });
-
-  it("is false on the rail", () => {
-    expect(lettersInert(initialState(3))).toBe(false);
-    expect(lettersInert(land(reduce(initialState(0), NEXT)))).toBe(false);
   });
 });

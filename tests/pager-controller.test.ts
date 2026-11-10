@@ -50,7 +50,9 @@ describe("createPagerController: accepted intent", () => {
       "animator.slideTo(1,retarget=false,reduced=false)",
       "focus.focusTitle(1,false)",
     ]);
-    expect(starts).toEqual([{ from: 0, to: 1, source: "wheel" }]);
+    expect(starts).toEqual([
+      { from: 0, to: 1, source: "wheel", heldScrollY: 0 },
+    ]);
     expect(controller.getSnapshot().target).toBe(1);
     expect(controller.getSnapshot().phase).toBe("sliding");
     expect(notify).toHaveBeenCalledTimes(1);
@@ -321,11 +323,11 @@ describe("createSignals", () => {
     const landed: number[] = [];
     const offStart = hub.onSlideStart((e) => starts.push(e.to));
     const offLanded = hub.onLanded((i) => landed.push(i));
-    hub.emitSlideStart({ from: 0, to: 1, source: "key" });
+    hub.emitSlideStart({ from: 0, to: 1, source: "key", heldScrollY: 0 });
     hub.emitLanded(1);
     offStart();
     offLanded();
-    hub.emitSlideStart({ from: 1, to: 2, source: "key" });
+    hub.emitSlideStart({ from: 1, to: 2, source: "key", heldScrollY: 0 });
     hub.emitLanded(2);
     expect(starts).toEqual([1]);
     expect(landed).toEqual([1]);

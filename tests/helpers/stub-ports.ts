@@ -48,6 +48,9 @@ export function createStubDeps(): StubDeps {
       afterLand(index) {
         log.push(`scroll.afterLand(${index})`);
       },
+      heldScrollY() {
+        return 0;
+      },
     },
     commit(fn) {
       log.push("commit");

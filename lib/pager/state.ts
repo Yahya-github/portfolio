@@ -5,8 +5,6 @@
  *   second gesture mid-slide retargets instead of queueing.
  * - D-02: the ends are hard stops; a rejected intent returns the same object.
  * - D-03: goto jumps straight to any page (long jumps are one slide).
- * - D-09: letters stand-in; hero on the index, rail elsewhere, switched to
- *   hero as soon as the index is targeted and to rail only on landing.
  * - UI-SPEC Focus hand-off: the page holding focus when a slide starts stays
  *   live (not inert) until landing, alongside the target.
  *
@@ -26,8 +24,6 @@ export function initialState(index: number): PagerState {
     slideId: 0,
     retarget: false,
     focusHolder: index,
-    lettersMode: index === 0 ? "hero" : "rail",
-    railEnter: false,
     announced: null,
     landId: 0,
   };
@@ -50,8 +46,6 @@ export function reduce(state: PagerState, intent: Intent): PagerState {
     slideId: state.slideId + 1,
     retarget: state.phase === "sliding",
     focusHolder: state.phase === "idle" ? to : state.focusHolder,
-    lettersMode: to === 0 ? "hero" : state.lettersMode,
-    railEnter: false,
   };
 }
 
@@ -63,8 +57,6 @@ export function land(state: PagerState): PagerState {
     phase: "idle",
     retarget: false,
     focusHolder: state.target,
-    lettersMode: state.target === 0 ? "hero" : "rail",
-    railEnter: state.lettersMode === "hero" && state.target !== 0,
     announced: state.target,
     landId: state.landId + 1,
   };
@@ -81,8 +73,4 @@ export function headingLevelOf(state: PagerState, index: number): 1 | 2 {
 
 export function isCollapsed(state: PagerState, index: number): boolean {
   return state.phase === "idle" && index !== state.current;
-}
-
-export function lettersInert(state: PagerState): boolean {
-  return state.lettersMode === "hero" && state.target !== 0;
 }
