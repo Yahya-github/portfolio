@@ -181,13 +181,61 @@ describe("createPagerController: retarget and landing", () => {
     expect(log.some((l) => l.startsWith("history."))).toBe(false);
   });
 
-  it("never lands when the slide is cancelled", async () => {
+  it("lands on the target when the slide is abandoned without a newer one (WR-02)", async () => {
     const { controller, slides, landed } = setup();
+    controller.intent(NEXT);
+    slides[0].resolve(false);
+    await flush();
+    expect(landed).toEqual([1]);
+    expect(controller.getSnapshot().phase).toBe("idle");
+  });
+
+  it("ignores a cancelled slide that a newer slide superseded", async () => {
+    const { controller, slides, landed } = setup();
+    controller.intent(NEXT);
     controller.intent(NEXT);
     slides[0].resolve(false);
     await flush();
     expect(landed).toEqual([]);
     expect(controller.getSnapshot().phase).toBe("sliding");
+  });
+
+  it("lands when the animator promise rejects (WR-02)", async () => {
+    const stub = createStubDeps();
+    const controller = createPagerController(
+      {
+        ...stub.deps,
+        animator: {
+          ...stub.deps.animator,
+          slideTo: () => Promise.reject(new Error("boom")),
+        },
+      },
+      0,
+    );
+    controller.intent(NEXT);
+    await flush();
+    expect(controller.getSnapshot().phase).toBe("idle");
+    expect(controller.getSnapshot().current).toBe(1);
+  });
+
+  it("lands without throwing when the animator throws synchronously (WR-02)", async () => {
+    const stub = createStubDeps();
+    const controller = createPagerController(
+      {
+        ...stub.deps,
+        animator: {
+          ...stub.deps.animator,
+          slideTo: () => {
+            throw new Error("detached track");
+          },
+        },
+      },
+      0,
+    );
+    expect(() => controller.intent(NEXT)).not.toThrow();
+    await flush();
+    expect(controller.getSnapshot().phase).toBe("idle");
+    expect(controller.getSnapshot().current).toBe(1);
   });
 });
 

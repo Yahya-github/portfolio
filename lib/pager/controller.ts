@@ -11,6 +11,8 @@
  *   old focus holder inert.
  * - Only the last slide of a chain lands (stale promises are ignored by
  *   slideId), so history, the announcement and `landed` are coalesced.
+ * - A slide that ends abandoned (cancelled, rejected, thrown) lands too, so
+ *   the controller never strands in "sliding" (WR-02).
  * - Held keys: a repeat is accepted only at rest and REPEAT_GATE_MS after
  *   the last accepted step, independent of motion settings (UI-SPEC).
  *
@@ -66,6 +68,14 @@ export function createPagerController(
     signals.emitLanded(next.current);
   }
 
+  function startSlide(target: number, retarget: boolean): Promise<boolean> {
+    try {
+      return deps.animator.slideTo(target, { retarget, reduced });
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
   function intent(i: Intent): boolean {
     if (isGated(i)) return false;
     const prev = state;
@@ -76,10 +86,13 @@ export function createPagerController(
     const fromRest = prev.phase === "idle";
     deps.scroll.beforeSlide(prev.current, next.target, fromRest);
     const id = next.slideId;
-    void deps.animator
-      .slideTo(next.target, { retarget: next.retarget, reduced })
-      .then((finished) => {
-        if (finished && state.slideId === id) landNow();
+    // WR-02: a slide that ends without a newer slide (finished, cancelled
+    // externally, rejected or thrown) still converges on the target, so the
+    // phase can never strand in "sliding". A superseded slide is ignored by id.
+    void startSlide(next.target, next.retarget)
+      .catch(() => false)
+      .then(() => {
+        if (state.slideId === id) landNow();
       });
     if (fromRest) deps.focus.focusTitle(next.target, i.source === "key");
     signals.emitSlideStart({
