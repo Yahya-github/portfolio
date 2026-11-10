@@ -126,7 +126,19 @@ Plans:
   3. The footer shows a 00 / 05 counter, a "Next" control and a progress bar that track the current page; a first-time visitor sees a quiet hint that the site moves sideways
   4. A first-time visitor sees an opening animation under about 1 second, with content already loaded underneath; any click or key skips it, and it never plays again
   5. Every motion moves on the horizontal axis, fast with no bounce; with reduced motion enabled every animation (opening, paging, letters, hint) becomes an instant change
-**Plans**: TBD
+**Plans**: 11 plans
+Plans:
+- [ ] 05-01-PLAN.md — Foundations: motion tokens + guard, safe storage, Playwright returning-visitor seeding, shared tag/cursor CSS, e2e letter helpers
+- [ ] 05-02-PLAN.md — Glide engine: pure geometry, shared WAAPI helpers, events, createGlide runner
+- [ ] 05-03-PLAN.md — Cursor maths and CSS: snap targets, tag text, hairline box, placeTag
+- [ ] 05-04-PLAN.md — Replace the D-09 stand-in with the glide: animator cleanup, useGlide, LetterNav, flight and rail-tag CSS, stand-in e2e rewritten
+- [ ] 05-05-PLAN.md — First-visit rules (TDD): before-paint script, skip keys, opening timing, hint state machine
+- [ ] 05-06-PLAN.md — Reducer stand-in state removed; heldScrollY for the phone scroll offset
+- [ ] 05-07-PLAN.md — First-visit hint in the footer with device wording, Next nudge and e2e
+- [ ] 05-08-PLAN.md — Custom cursor mount, lazy load, Resume tag and cursor e2e
+- [ ] 05-09-PLAN.md — Opening runtime (fresh and paged), inline script, hide CSS and e2e
+- [ ] 05-10-PLAN.md — Glide, phone rail and rail-label e2e (sampler, convergence, resize, accent)
+- [ ] 05-11-PLAN.md — Reduced-motion and NAV-05 e2e, container baselines, todo close, real-hardware check
 **UI hint**: yes
 
 ### Phase 6: Page Compositions and Content
