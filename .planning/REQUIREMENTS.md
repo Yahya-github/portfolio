@@ -25,9 +25,9 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [x] **LTR-01**: Hero shows YAHYA in giant letters across the page; each letter is a link to its section (Y Achievements, A Projects, H Experience, Y About, A Say hi)
 - [x] **LTR-02**: Each hero letter has a numbered caption naming its section
 - [x] **LTR-03**: Leaving the hero, the letters glide and shrink into a vertical rail on the left; returning to the hero grows them back
-- [ ] **LTR-04**: Rail letters reveal their section name on hover and keyboard focus
-- [ ] **LTR-05**: The current section's letter is marked by the accent colour plus a non-colour cue; only that letter is ever in the accent (derived from the current page, never from hover or focus), and each letter's hit area is its own box
-- [ ] **LTR-06**: On phones the rail sits inset from the left edge so it does not compete with the system back swipe
+- [x] **LTR-04**: Rail letters reveal their section name on hover and keyboard focus
+- [x] **LTR-05**: The current section's letter is marked by the accent colour plus a non-colour cue; only that letter is ever in the accent (derived from the current page, never from hover or focus), and each letter's hit area is its own box
+- [x] **LTR-06**: On phones the rail sits inset from the left edge so it does not compete with the system back swipe
 
 ### Content (CONT)
 - [x] **CONT-01**: Hero shows a role line beside the name, readable without any interaction (the proof line was dropped by Yahya, 2026-11-07)
@@ -105,9 +105,9 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | LTR-01 | Phase 3 | Complete |
 | LTR-02 | Phase 3 | Complete |
 | LTR-03 | Phase 5 | Complete |
-| LTR-04 | Phase 5 | Pending |
-| LTR-05 | Phase 5 | Pending |
-| LTR-06 | Phase 5 | Pending |
+| LTR-04 | Phase 5 | Complete |
+| LTR-05 | Phase 5 | Complete |
+| LTR-06 | Phase 5 | Complete |
 | CONT-01 | Phase 3 | Complete |
 | CONT-02 | Phase 6 | Pending |
 | CONT-03 | Phase 6 | Pending |
