@@ -1,11 +1,11 @@
 # Deferred items (Phase 5)
 
-## pager-wheel "a continuous stream of small deltas moves exactly one page" is load-sensitive in the CI image
+## CLOSED (05-13): pager-wheel "a continuous stream of small deltas moves exactly one page" is load-sensitive in the CI image
 
 - Found in plan 05-11 container run (mcr.microsoft.com/playwright:v1.65.0-noble, VISUAL=1 ALL_BROWSERS=1, full suite): fails in chromium and webkit (2 of 343); passes in isolation (host and container) and in later container reruns about half the time.
 - Pre-Phase-5 code (parent of 8cb24b4) passed 36/36 with the same repeat run, so Phase 5 raised the cost of the first slide enough that Playwright's 12 wheel events sometimes gap more than GESTURE_GAP_MS (160) and the tail counts as a second gesture (page lands on /projects/).
 - Not caused by the cursor chunk (disabling it did not remove the webkit failures).
-- Suggested follow-up: make the test's stream robust (dispatch the 12 deltas inside one page.evaluate with dispatchEvent) or raise the gap margin; CI retries: 1 may mask it.
+- Suggested follow-up: done in 05-13 (dispatch the 12 deltas inside one page.evaluate with dispatchEvent).
 
 ### Diagnosis (05-13, 2026-11-10) - initial run STOPPED: ESCAPE-NOREPRO (superseded below)
 
@@ -56,3 +56,25 @@ M1 reproduces under load while M2 and M3 never double-page, and no ESCAPE condit
 Branch: TEST
 
 No product code changes (nothing under lib/ or components/ in any 05-13 commit).
+
+### Resolution (05-13)
+
+Root cause: Playwright's `page.mouse.wheel` creates wheel event N+1 only after event N is acked, so under heavy parallel load (12 or more workers) the ack latency pushed timeStamp gaps past GESTURE_GAP_MS (160 ms) and the tail opened a second gesture. Pre-built and 16 ms-timer in-page streams never split (0/60 each at 24 workers), so the recogniser is correct and the product was left alone.
+
+Branch: TEST. Changed only `e2e/pager-wheel.spec.ts`: added `dispatchWheelStream` (pre-built in-page WheelEvents) and used it in the unchanged-name, unchanged-assertion test. No lib/ or components/ change.
+
+Results (chromium, built out/ on port 4414), "a continuous stream" test at `--repeat-each=36`:
+
+| workers | passed |
+|---|---|
+| 4 | 36/36 |
+| 12 | 36/36 |
+| 24 | 36/36 |
+
+Whole pager-wheel.spec.ts at `--repeat-each=36 --workers=24`: 144/144. Sibling pager specs at `--repeat-each=12 --workers=4`: pager-swipe (chromium-touch) 72/72; pager-overflow + pager-keys (chromium) 192/192.
+
+Webkit / CI container: not run (no container runtime tried; CI container covers it). VISUAL=1 not run.
+
+Full default e2e suite (chromium, chromium-nojs, chromium-touch): 293 passed, 1 skipped, 0 failed (the known pager-motion "switching reduced motion mid-session" flake did not appear this run). `vitest run`: 530/530. lint and typecheck clean. `measure:js`: / is 143.3 gzip KB (budget 150).
+
+Unrelated pre-existing issue found, not fixed (out of scope, none of these files touched by 05-13): `pnpm format:check` reports Prettier warnings in e2e/first-visit-hint.spec.ts, e2e/first-visit.spec.ts, e2e/helpers/first-visit.ts, e2e/helpers/letters.ts, lib/first-visit/hint.ts, lib/first-visit/opening-rules.ts, lib/letters/glide.ts. e2e/pager-wheel.spec.ts is Prettier-clean.
