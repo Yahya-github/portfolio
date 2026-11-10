@@ -440,12 +440,16 @@ export function safeSet(key: string, value: string): boolean {
 | A5 | With storage unreadable, the opening never runs (D-05), rather than once per page load (D-04 wording) | Pattern 4 | Small: both satisfy "at most once per page load" |
 | A6 | Failsafe timeout of about 2.5-3s | Pitfall 7 | Too short on a very slow device could reveal letters before the module claims them (harmless: no opening plays) |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Opening direction (A2).** What we know: D-01 says "horizontally" only. Recommendation: from the right on a fresh load, from the left when reached by paging back (follows the track). Settle in the UI-SPEC (`ui_phase` is on).
+   **RESOLVED:** UI-SPEC opening section; plan 05-09 (fresh load from the right, D-03 paged arrival from the left).
 2. **Phone scroll offset for the first rect (Pitfall 6).** Recommendation: extend `SlideStartEvent` with `heldScrollY` (0 when not held), set by the scroll port, and subtract it from the hero "first" rect.
+   **RESOLVED:** UI-SPEC phone row (line 115); plan 05-06 adds `heldScrollY`.
 3. **When does the current rail letter turn accent?** The accent rule is scoped to `data-mode="rail"`, which arrives at glide settle (about 820ms). Recommendation: also allow it under `data-flight="out"`, so the accent arrives with the move. UI-SPEC call.
+   **RESOLVED:** UI-SPEC and plan 05-04 (flight/accent CSS).
 4. **Hint placement on 390px.** The footer is crowded (counter, Next, bar). This is a layout decision for the UI-SPEC.
+   **RESOLVED:** UI-SPEC (hint ends 16px before Next, `--space-md`); plan 05-07 phone fit rule.
 
 ## Environment Availability
 
