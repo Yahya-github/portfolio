@@ -126,7 +126,7 @@ Plans:
   3. The footer shows a 00 / 05 counter, a "Next" control and a progress bar that track the current page; a first-time visitor sees a quiet hint that the site moves sideways
   4. A first-time visitor sees an opening animation under about 1 second, with content already loaded underneath; any click or key skips it, and it never plays again
   5. Every motion moves on the horizontal axis, fast with no bounce; with reduced motion enabled every animation (opening, paging, letters, hint) becomes an instant change
-**Plans**: 12 plans
+**Plans**: 13 plans
 Plans:
 - [x] 05-01-PLAN.md — Foundations: motion tokens + guard, safe storage, Playwright returning-visitor seeding, shared tag/cursor CSS, e2e letter helpers
 - [x] 05-02-PLAN.md — Glide engine: pure geometry, shared WAAPI helpers, events, createGlide runner
@@ -140,6 +140,7 @@ Plans:
 - [x] 05-10-PLAN.md — Glide, phone rail and rail-label e2e (sampler, convergence, resize, accent)
 - [x] 05-11-PLAN.md — Reduced-motion and NAV-05 e2e, container baselines, todo close, real-hardware check
 - [x] 05-12-PLAN.md — Gap closure: noticeable first-visit hint (ink, 16px, footer centre, remembered after paging or 3s) and a two-pulse 12px Next nudge
+- [ ] 05-13-PLAN.md — Gap closure: diagnose and fix the load-sensitive wheel-stream double page (UAT test 8), 36x repeat proof
 **UI hint**: yes
 
 ### Phase 6: Page Compositions and Content
