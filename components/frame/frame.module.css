@@ -54,21 +54,28 @@
   grid-column: 1 / 4;
 }
 .end {
-  grid-column: 6 / 13;
+  grid-column: 10 / 13;
   justify-self: end;
   display: flex;
   align-items: flex-end;
-  gap: var(--space-md);
   min-width: 0;
 }
 .next {
   text-align: right;
 }
 .hint {
+  grid-column: 4 / 10;
+  justify-self: center;
+  align-self: end;
   min-width: 0;
+  max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
-  text-align: right;
+  text-align: center;
+  color: var(--color-ink);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: 1;
   pointer-events: none;
   opacity: 0;
   transition: opacity var(--dur-ui) var(--ease-ui);
@@ -111,7 +118,19 @@
   .where {
     display: none;
   }
+  .footer.footer {
+    display: flex;
+    align-items: flex-end;
+    column-gap: var(--space-md);
+  }
+  .counter {
+    flex: none;
+  }
+  .hint {
+    flex: 1 1 0;
+  }
   .end {
-    grid-column: 4 / 13;
+    flex: none;
+    margin-left: auto;
   }
 }
