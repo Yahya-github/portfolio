@@ -137,3 +137,32 @@ html[data-js] body {
 #title-say-hi:focus {
   outline: none;
 }
+/* EXP-03 / WR-07: the native cursor hides only once the custom cursor runs; script sets html[data-cursor] on the first real mouse move. */
+@media (hover: hover) and (pointer: fine) and (forced-colors: none) {
+  html[data-cursor],
+  html[data-cursor] * {
+    cursor: none;
+  }
+}
+/* UI-SPEC section 4 / D-18: one tag style for the cursor tag and the rail letter focus/hover tag. */
+.t-tag,
+nav[data-mode="rail"] a:focus-visible > [data-tag] {
+  background: var(--color-ink);
+  color: var(--color-ground);
+  padding: var(--space-xs) var(--space-sm);
+}
+.t-tag .c-dim,
+nav[data-mode="rail"] a:focus-visible > [data-tag] .c-dim {
+  color: var(--color-ground);
+}
+@media (hover: hover) and (pointer: fine) {
+  /* Pitfall 12: mouse users without the custom cursor (forced colours, failed chunk) still get the hover name. */
+  html:not([data-cursor]) nav[data-mode="rail"] a:hover > [data-tag] {
+    background: var(--color-ink);
+    color: var(--color-ground);
+    padding: var(--space-xs) var(--space-sm);
+  }
+  html:not([data-cursor]) nav[data-mode="rail"] a:hover > [data-tag] .c-dim {
+    color: var(--color-ground);
+  }
+}

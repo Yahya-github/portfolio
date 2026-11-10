@@ -3,7 +3,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
-const SCAN_DIRS = ["styles", "components", "app"] as const;
+const SCAN_DIRS = ["styles", "components", "app", "lib"] as const;
 const TOKENS_FILE = "styles/tokens.css";
 const ONLY_FAMILY = "var(--font-sans)";
 const RAW_HEX = /#[0-9a-fA-F]{3,8}\b/g;

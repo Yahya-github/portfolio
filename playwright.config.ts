@@ -1,7 +1,9 @@
 import { defineConfig, devices } from "@playwright/test";
+import { HINT_KEY, OPENING_KEY, SEEN_VALUE } from "./lib/first-visit/storage";
 
 // Set BASE_URL (e.g. https://yahya-hallani.dev) for a manual live check; otherwise the built out/ is served locally.
 const liveBaseUrl = process.env.BASE_URL;
+const baseURL = liveBaseUrl ?? "http://localhost:4173";
 
 // NAV-01: wheel/key differences across engines; host has Chromium only, CI's Playwright container has all three (RESEARCH Environment).
 const PAGER_CROSS = /pager-(wheel|keys|history)\.spec\.ts/;
@@ -12,8 +14,21 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [["github"], ["html", { open: "never" }]] : "list",
   use: {
-    baseURL: liveBaseUrl ?? "http://localhost:4173",
+    baseURL,
     trace: "retain-on-failure",
+    // Pitfall 9: every spec is a returning visitor; first-visit specs opt out with FRESH_VISITOR.
+    storageState: {
+      cookies: [],
+      origins: [
+        {
+          origin: new URL(baseURL).origin,
+          localStorage: [
+            { name: OPENING_KEY, value: SEEN_VALUE },
+            { name: HINT_KEY, value: SEEN_VALUE },
+          ],
+        },
+      ],
+    },
   },
   webServer: liveBaseUrl
     ? undefined
