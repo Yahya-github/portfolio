@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Design Gate** - Updated design doc approved for the dark Swiss horizontal direction, final font chosen, six page compositions defined, real material collected (completed 2026-11-07)
 - [x] **Phase 2: Live Deploy Spike** - Scaffolded Next.js static export live on Vercel at yahya-hallani.dev over HTTPS with self-hosted font, image and PDF (completed 2026-11-08)
 - [x] **Phase 3: Static Design System and Pages** - Tokens, grid, giant YAHYA letter links and all six pages server-rendered at their own routes, fully usable without JavaScript (completed 2026-11-09)
-- [ ] **Phase 4: Horizontal Pager and Input** - One page per gesture by wheel, trackpad, keys and swipe, with real URLs, Back history and accessible page hand-off
+- [x] **Phase 4: Horizontal Pager and Input** - One page per gesture by wheel, trackpad, keys and swipe, with real URLs, Back history and accessible page hand-off (completed 2026-11-10)
 - [ ] **Phase 5: Letter Navigation and Motion** - Letters glide from the hero into the left rail, footer pager, first-visit hint, opening animation and reduced-motion versions
 - [ ] **Phase 6: Page Compositions and Content** - Each page gets its distinct composition: 75/75, Facturo flagship plus deep dive, Experience, Say hi with resume, phone portrait layouts
 - [ ] **Phase 7: Copy, Sharing and Launch** - Yahya's final copy, per-page SEO metadata, LinkedIn share card, favicon, 404 and launch verification
@@ -176,7 +176,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 1. Design Gate | 8/8 | Complete   | 2026-11-07 |
 | 2. Live Deploy Spike | 6/6 | Complete   | 2026-11-08 |
 | 3. Static Design System and Pages | 10/10 | Complete   | 2026-11-09 |
-| 4. Horizontal Pager and Input | 14/15 | In Progress|  |
+| 4. Horizontal Pager and Input | 14/15 | Complete    | 2026-11-10 |
 | 5. Letter Navigation and Motion | 0/TBD | Not started | - |
 | 6. Page Compositions and Content | 0/TBD | Not started | - |
 | 7. Copy, Sharing and Launch | 0/TBD | Not started | - |

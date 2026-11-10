@@ -14,7 +14,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 
 ### Paging (NAV)
 - [ ] **NAV-01**: Visitor moves one page per wheel or trackpad gesture; trackpad momentum never skips a page
-- [ ] **NAV-02**: Visitor can page with arrow keys, Page Up/Down, Space and Home/End
+- [x] **NAV-02**: Visitor can page with arrow keys, Page Up/Down, Space and Home/End
 - [ ] **NAV-03**: Visitor on a phone can swipe between pages; the left screen edge is left to the system back gesture
 - [x] **NAV-04**: Each page has its own URL (/achievements/ etc.); opening a link lands on that page directly; Back steps through visited pages
 - [ ] **NAV-05**: Visitor always sees where they are: 00 / 05 counter, a "Next" control and a progress bar
@@ -96,7 +96,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | DSGN-05 | Phase 6 | Pending |
 | DSGN-06 | Phase 3 | Complete |
 | NAV-01 | Phase 4 | Pending |
-| NAV-02 | Phase 4 | Pending |
+| NAV-02 | Phase 4 | Complete |
 | NAV-03 | Phase 4 | Pending |
 | NAV-04 | Phase 4 | Complete |
 | NAV-05 | Phase 5 | Pending |
