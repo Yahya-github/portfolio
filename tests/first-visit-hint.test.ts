@@ -2,22 +2,37 @@ import { describe, expect, it } from "vitest";
 import {
   HINT_DELAY_AFTER_OPENING_MS,
   HINT_DELAY_NO_OPENING_MS,
+  HINT_SEEN_AFTER_MS,
   HINT_VISIBLE_MS,
+  NUDGE_DELAY_MS,
+  NUDGE_PAUSE_MS,
+  NUDGE_PULSE_MS,
+  NUDGE_PX,
+  NUDGE_TOTAL_MS,
   initialHint,
   nextWakeAt,
+  nudgeKeyframes,
   stepHint,
   type HintState,
 } from "@/lib/first-visit/hint";
 
 const frozen = (s: HintState): HintState => Object.freeze({ ...s });
 const waiting = (showAt: number | null): HintState =>
-  frozen({ phase: "waiting", showAt, hideAt: null });
+  frozen({ phase: "waiting", showAt, hideAt: null, seenAt: null, seen: false });
+const shown = (seen = false): HintState =>
+  frozen({ phase: "shown", showAt: 1500, hideAt: 9500, seenAt: 4500, seen });
 
 describe("hint constants", () => {
   it("match the locked timings", () => {
     expect(HINT_DELAY_AFTER_OPENING_MS).toBe(1000);
     expect(HINT_DELAY_NO_OPENING_MS).toBe(1500);
     expect(HINT_VISIBLE_MS).toBe(8000);
+    expect(HINT_SEEN_AFTER_MS).toBe(3000);
+    expect(NUDGE_PX).toBe(12);
+    expect(NUDGE_PULSE_MS).toBe(300);
+    expect(NUDGE_PAUSE_MS).toBe(120);
+    expect(NUDGE_DELAY_MS).toBe(200);
+    expect(NUDGE_TOTAL_MS).toBe(720);
   });
 });
 
@@ -27,6 +42,8 @@ describe("stepHint", () => {
       phase: "idle",
       showAt: null,
       hideAt: null,
+      seenAt: null,
+      seen: false,
     });
   });
 
@@ -36,7 +53,13 @@ describe("stepHint", () => {
       at: 0,
       openingPending: false,
     });
-    expect(s).toEqual({ phase: "waiting", showAt: 1500, hideAt: null });
+    expect(s).toEqual({
+      phase: "waiting",
+      showAt: 1500,
+      hideAt: null,
+      seenAt: null,
+      seen: false,
+    });
   });
 
   it("load with an opening waits for opening-done", () => {
@@ -45,7 +68,13 @@ describe("stepHint", () => {
       at: 0,
       openingPending: true,
     });
-    expect(s).toEqual({ phase: "waiting", showAt: null, hideAt: null });
+    expect(s).toEqual({
+      phase: "waiting",
+      showAt: null,
+      hideAt: null,
+      seenAt: null,
+      seen: false,
+    });
   });
 
   it("opening-done schedules the show 1000ms later", () => {
@@ -68,6 +97,8 @@ describe("stepHint", () => {
       phase: "shown",
       showAt: 1500,
       hideAt: 9500,
+      seenAt: 4500,
+      seen: false,
     });
   });
 
@@ -77,21 +108,30 @@ describe("stepHint", () => {
   });
 
   it("tick at hideAt finishes the hint", () => {
-    const shown = frozen({ phase: "shown", showAt: 1500, hideAt: 9500 });
-    expect(stepHint(shown, { type: "tick", at: 9499 })).toBe(shown);
-    expect(stepHint(shown, { type: "tick", at: 9500 }).phase).toBe("done");
+    const s = shown(true);
+    expect(stepHint(s, { type: "tick", at: 9499 })).toBe(s);
+    const done = stepHint(s, { type: "tick", at: 9500 });
+    expect(done.phase).toBe("done");
+    expect(done.seen).toBe(true);
   });
 
   it("page-change ends it from waiting or shown", () => {
-    const shown = frozen({ phase: "shown", showAt: 1500, hideAt: 9500 });
     expect(stepHint(waiting(1500), { type: "page-change", at: 5 }).phase).toBe(
       "done",
     );
-    expect(stepHint(shown, { type: "page-change", at: 5 }).phase).toBe("done");
+    expect(stepHint(shown(), { type: "page-change", at: 5 }).phase).toBe(
+      "done",
+    );
   });
 
   it("any event after done returns the same object", () => {
-    const done = frozen({ phase: "done", showAt: null, hideAt: null });
+    const done = frozen({
+      phase: "done",
+      showAt: null,
+      hideAt: null,
+      seenAt: null,
+      seen: true,
+    });
     expect(stepHint(done, { type: "tick", at: 1 })).toBe(done);
     expect(stepHint(done, { type: "page-change", at: 1 })).toBe(done);
     expect(stepHint(done, { type: "load", at: 1, openingPending: false })).toBe(
@@ -107,14 +147,76 @@ describe("stepHint", () => {
   });
 });
 
+describe("seen rule", () => {
+  it("flips seen after 3000ms visible, not before", () => {
+    const s = shown();
+    expect(stepHint(s, { type: "tick", at: 4499 })).toBe(s);
+    const seen = stepHint(s, { type: "tick", at: 4500 });
+    expect(seen).toEqual({ ...s, seen: true });
+  });
+
+  it("a skipped timer still marks seen when the hint ends", () => {
+    const done = stepHint(shown(), { type: "tick", at: 9500 });
+    expect(done.phase).toBe("done");
+    expect(done.seen).toBe(true);
+  });
+
+  it("page-change marks seen from waiting and from shown", () => {
+    const a = stepHint(waiting(1500), { type: "page-change", at: 5 });
+    expect(a.phase).toBe("done");
+    expect(a.seen).toBe(true);
+    const b = stepHint(shown(), { type: "page-change", at: 5 });
+    expect(b.phase).toBe("done");
+    expect(b.seen).toBe(true);
+  });
+});
+
 describe("nextWakeAt", () => {
   it("reports the next timer or null", () => {
     expect(nextWakeAt(waiting(1500))).toBe(1500);
     expect(nextWakeAt(waiting(null))).toBeNull();
-    expect(nextWakeAt({ phase: "shown", showAt: 1, hideAt: 9500 })).toBe(9500);
+    expect(nextWakeAt(shown(false))).toBe(4500);
+    expect(nextWakeAt(shown(true))).toBe(9500);
     expect(nextWakeAt(initialHint())).toBeNull();
     expect(
-      nextWakeAt({ phase: "done", showAt: null, hideAt: null }),
+      nextWakeAt({
+        phase: "done",
+        showAt: null,
+        hideAt: null,
+        seenAt: null,
+        seen: true,
+      }),
     ).toBeNull();
+  });
+});
+
+describe("nudgeKeyframes", () => {
+  const frames = nudgeKeyframes("E");
+  it("is two 12px pulses with a pause at rest", () => {
+    expect(frames.map((f) => f.translate)).toEqual([
+      "0px 0px",
+      "12px 0px",
+      "0px 0px",
+      "0px 0px",
+      "12px 0px",
+      "0px 0px",
+    ]);
+    const want = [0, 150 / 720, 300 / 720, 420 / 720, 570 / 720, 1];
+    frames.forEach((f, i) => expect(f.offset).toBeCloseTo(want[i]!, 6));
+  });
+  it("is monotonic, eased per segment, never outside 0..12", () => {
+    for (let i = 1; i < frames.length; i++) {
+      expect(frames[i]!.offset!).toBeGreaterThan(frames[i - 1]!.offset!);
+    }
+    for (const f of frames) {
+      expect(f.easing).toBe("E");
+      const x = parseFloat(String(f.translate));
+      expect(x).toBeGreaterThanOrEqual(0);
+      expect(x).toBeLessThanOrEqual(12);
+    }
+    expect(frames.filter((f) => f.translate === "12px 0px")).toHaveLength(2);
+  });
+  it("returns a fresh array each call", () => {
+    expect(nudgeKeyframes("E")).not.toBe(nudgeKeyframes("E"));
   });
 });

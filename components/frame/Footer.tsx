@@ -26,8 +26,8 @@ export function Footer({ current }: FooterProps) {
   return (
     <footer className={`grid t-label ${styles.footer}`}>
       <span className={`tnum ${styles.counter}`}>{counterLabel(slug)}</span>
+      <span ref={hintRef} data-hint="" className={styles.hint} />
       <span className={styles.end}>
-        <span ref={hintRef} data-hint="" className={`c-dim ${styles.hint}`} />
         <a ref={nextRef} className={styles.next} href={next.href}>
           {next.label}
         </a>
