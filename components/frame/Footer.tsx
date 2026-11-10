@@ -1,10 +1,11 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useRef, type CSSProperties } from "react";
 import type { Slug } from "@/content/types";
 import { usePagerState } from "@/components/shell/PagerContext";
 import { counterLabel, indexOfSlug, nextLink, slugAt } from "@/lib/sections";
 import styles from "./frame.module.css";
+import { useHint } from "./useHint";
 
 interface FooterProps {
   /** Initial route; keeps first-paint HTML identical to the server render. */
@@ -18,13 +19,19 @@ export function Footer({ current }: FooterProps) {
   const next = nextLink(slug);
   // The animator owns --page-index after hydration (D-11); React keeps the
   // initial value so it never overwrites the animator's inline write.
+  const hintRef = useRef<HTMLSpanElement>(null);
+  const nextRef = useRef<HTMLAnchorElement>(null);
+  useHint(hintRef, nextRef);
   const barStyle = { "--page-index": indexOfSlug(current) } as CSSProperties;
   return (
     <footer className={`grid t-label ${styles.footer}`}>
       <span className={`tnum ${styles.counter}`}>{counterLabel(slug)}</span>
-      <a className={styles.next} href={next.href}>
-        {next.label}
-      </a>
+      <span className={styles.end}>
+        <span ref={hintRef} data-hint="" className={`c-dim ${styles.hint}`} />
+        <a ref={nextRef} className={styles.next} href={next.href}>
+          {next.label}
+        </a>
+      </span>
       <span
         aria-hidden="true"
         data-pager="bar"

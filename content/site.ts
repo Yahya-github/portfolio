@@ -14,6 +14,7 @@ export const site = {
     backToStart: "Back to the start",
     counterSeparator: " / ",
   },
+  hint: { fine: "Scroll or use the arrow keys", coarse: "Swipe sideways" },
   liveRegion: { template: "{name}, page {n} of {total}" },
   debug: {
     index: "Index",
