@@ -1,5 +1,5 @@
 // NAV-01 / D-04 / Pitfall 6: one wheel gesture = one page, both axes, ends swallowed.
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import {
   GESTURE_GAP_WAIT_MS,
   landId,
@@ -9,6 +9,33 @@ import {
 } from "./helpers/pager";
 
 const DESKTOP = { width: 1440, height: 900 };
+
+/** Pre-built in-page wheel stream: every event is constructed before any handler runs, so timestamps never include handler cost. */
+async function dispatchWheelStream(
+  page: Page,
+  dy: number,
+  count: number,
+): Promise<void> {
+  await page.evaluate(
+    ([d, n]) => {
+      const target = document.elementFromPoint(720, 450) ?? document.body;
+      const events = Array.from(
+        { length: n },
+        () =>
+          new WheelEvent("wheel", {
+            deltaY: d,
+            deltaMode: 0,
+            bubbles: true,
+            cancelable: true,
+            clientX: 720,
+            clientY: 450,
+          }),
+      );
+      for (const e of events) target.dispatchEvent(e);
+    },
+    [dy, count] as const,
+  );
+}
 
 test("a vertical wheel notch pages forward and back", async ({ page }) => {
   await open(page, "/", DESKTOP);
@@ -42,6 +69,7 @@ test("a horizontal wheel gesture pages too (D-04)", async ({ page }) => {
   expect(pathname(page)).toBe("/");
 });
 
+// 05-13 diagnosis: Playwright creates wheel event N+1 only after event N's handler is acked, so the slide-start cost became a timeStamp gap > GESTURE_GAP_MS. Pre-built in-page events (and a 16ms timer stream) never split; see deferred-items.md.
 test("a continuous stream of small deltas moves exactly one page", async ({
   page,
 }) => {
@@ -49,9 +77,7 @@ test("a continuous stream of small deltas moves exactly one page", async ({
   await page.mouse.move(720, 450);
 
   const before = await landId(page);
-  for (let i = 0; i < 12; i += 1) {
-    await page.mouse.wheel(0, 40);
-  }
+  await dispatchWheelStream(page, 40, 12);
   await waitForLanded(page, before);
   await page.waitForTimeout(GESTURE_GAP_WAIT_MS);
   await expect(page.locator('main#content[data-phase="idle"]')).toHaveCount(1);
