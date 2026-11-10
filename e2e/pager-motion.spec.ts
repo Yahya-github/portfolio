@@ -1,6 +1,7 @@
 // D-01 / D-03 / D-11 / WR-08: motion contract
 import { test, expect, type Page } from "@playwright/test";
 import { landId, open, pathname, waitForLanded } from "./helpers/pager";
+import { FRESH_VISITOR } from "./helpers/first-visit";
 import {
   LETTERS,
   letterAnimationCount,
@@ -286,4 +287,58 @@ test("leaving 00 the glide ends on the rail with nothing left behind", async ({
   await expect(
     page.locator(`${LETTERS} a[aria-current="page"]`),
   ).toHaveAttribute("href", "/achievements/");
+});
+
+async function footerState(page: Page) {
+  return {
+    counter: await page.locator("footer .tnum").textContent(),
+    next: await page.locator("footer a").last().getAttribute("href"),
+    bar: await page.evaluate(() =>
+      (
+        document.querySelector('[data-pager="bar"]') as HTMLElement
+      ).style.getPropertyValue("--page-index"),
+    ),
+  };
+}
+
+test("counter, Next and bar follow a retarget (NAV-05)", async ({ page }) => {
+  await open(page, "/", DESKTOP);
+  let before = await landId(page);
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("ArrowLeft");
+  await waitForLanded(page, before);
+  expect(await footerState(page)).toEqual({
+    counter: "00 / 05",
+    next: "/achievements/",
+    bar: "0",
+  });
+  before = await landId(page);
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("ArrowRight");
+  await waitForLanded(page, before);
+  expect(await footerState(page)).toEqual({
+    counter: "02 / 05",
+    next: "/experience/",
+    bar: "2",
+  });
+});
+
+test.describe("after a paged opening (D-03)", () => {
+  test.use({ storageState: FRESH_VISITOR });
+
+  test("the footer is right once the opening is done", async ({ page }) => {
+    await open(page, "/projects/", DESKTOP);
+    let before = await landId(page);
+    await page.keyboard.press("ArrowLeft");
+    await waitForLanded(page, before);
+    before = await landId(page);
+    await page.keyboard.press("ArrowLeft");
+    await waitForLanded(page, before);
+    await expect(page.locator("html[data-opening]")).toHaveCount(0);
+    expect(await footerState(page)).toEqual({
+      counter: "00 / 05",
+      next: "/achievements/",
+      bar: "0",
+    });
+  });
 });
