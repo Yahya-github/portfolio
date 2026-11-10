@@ -6,17 +6,29 @@
  * of the six routes are intercepted. Modifier and middle clicks, `target`,
  * `download`, hash links (the skip link) and external links stay with the browser.
  * T-04-22: unknown paths on popstate are ignored.
+ * WR-04: a popstate that keeps the pathname (fragment navigation) is ignored, even mid-slide.
  */
 import { useEffect } from "react";
 import { indexOfRoute } from "@/lib/sections";
 import { indexFromLocation, silenceNextAnnouncer } from "@/lib/pager/history";
 import type { PagerController } from "@/lib/pager/types";
 
-function popstateHandler(controller: PagerController): () => void {
+/**
+ * The URL only changes at landing, so during a slide it still names the page
+ * being left. `seen` tracks the pathname the pager last loaded, landed on or
+ * was popped to; a popstate that leaves it unchanged is a fragment navigation
+ * (the skip link, an in-page #hash link) and never a history move (WR-04).
+ */
+function popstateHandler(
+  controller: PagerController,
+  seen: { pathname: string },
+): () => void {
   return () => {
+    const pathname = window.location.pathname;
+    if (pathname === seen.pathname) return;
+    seen.pathname = pathname;
     const index = indexFromLocation();
     if (index === null) return;
-    // A fragment navigation (the skip link) also fires popstate: ignore it.
     if (index === controller.getSnapshot().target) return;
     silenceNextAnnouncer();
     controller.intent({ type: "goto", index, source: "history" });
@@ -69,12 +81,17 @@ function onScroll(): void {
 
 export function usePagerNavigation(controller: PagerController): void {
   useEffect(() => {
-    const onPop = popstateHandler(controller);
+    const seen = { pathname: window.location.pathname };
+    const offLanded = controller.signals.onLanded(() => {
+      seen.pathname = window.location.pathname;
+    });
+    const onPop = popstateHandler(controller, seen);
     const onClick = clickHandler(controller);
     window.addEventListener("popstate", onPop);
     document.addEventListener("click", onClick);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
+      offLanded();
       window.removeEventListener("popstate", onPop);
       document.removeEventListener("click", onClick);
       window.removeEventListener("scroll", onScroll);

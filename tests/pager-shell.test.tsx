@@ -223,6 +223,31 @@ describe("popstate", () => {
     expect(liveIds(container)).toEqual(["page-index"]);
   });
 
+  it("does not reverse a slide when a fragment navigation fires popstate mid-slide (WR-04)", async () => {
+    const { container } = render(<Shell current="index" />);
+    // The URL only changes at landing, so it still reads "/" while sliding.
+    expect(pagerCancelled(indexLink(container, "/achievements/"))).toBe(true);
+    window.history.replaceState(null, "", "/#content");
+    await act(async () => {
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    });
+    await settle();
+    expect(liveIds(container)).toEqual(["page-achievements"]);
+    expect(window.location.pathname).toBe("/achievements/");
+  });
+
+  it("still follows Back to the origin page mid-slide", async () => {
+    const { container } = render(<Shell current="index" />);
+    await act(async () => {
+      window.history.replaceState(null, "", "/projects/");
+      window.dispatchEvent(new PopStateEvent("popstate"));
+      window.history.replaceState(null, "", "/");
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    });
+    await settle();
+    expect(liveIds(container)).toEqual(["page-index"]);
+  });
+
   it("ignores unknown paths", async () => {
     const { container } = render(<Shell current="index" />);
     window.history.replaceState(null, "", "/nope/");
