@@ -16,7 +16,7 @@ export function useGlide(navRef: RefObject<HTMLElement | null>): void {
       glide.start({
         to: e.to,
         retarget: controller.getSnapshot().retarget,
-        heldScrollY: 0,
+        heldScrollY: e.heldScrollY,
       }),
     );
     const snap = () => glide.snapToRest();

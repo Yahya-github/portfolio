@@ -532,6 +532,30 @@ describe("scroll port", () => {
     expect(scrollTo).not.toHaveBeenCalled();
   });
 
+  it("reports the px reset by the latest beforeSlide (Pitfall 6)", () => {
+    page("achievements", { scrolls: false });
+    page("projects", { scrolls: false });
+    page("experience", { scrolls: false });
+    setWindowNumber("scrollY", 300);
+    const port = createScrollPort();
+    port.beforeSlide(1, 2, true);
+    expect(port.heldScrollY()).toBe(300);
+    port.beforeSlide(2, 3, false);
+    expect(port.heldScrollY()).toBe(0);
+  });
+
+  it("reports 0 at the top of the window or when the target scrolls itself", () => {
+    page("achievements", { scrolls: false });
+    page("projects", { scrolls: true });
+    const port = createScrollPort();
+    port.beforeSlide(1, 2, true);
+    expect(port.heldScrollY()).toBe(0);
+    setWindowNumber("scrollY", 300);
+    port.afterLand(2);
+    port.beforeSlide(1, 2, true);
+    expect(port.heldScrollY()).toBe(0);
+  });
+
   it("afterLand resets a horizontal window scroll (Pitfall 11)", () => {
     setWindowNumber("scrollX", 30);
     setWindowNumber("scrollY", 120);

@@ -44,11 +44,14 @@ export interface FocusPort {
 export interface ScrollPort {
   beforeSlide(from: number, to: number, fromRest: boolean): void;
   afterLand(index: number): void;
+  /** px the window was scrolled back by in the latest beforeSlide; 0 when it did not reset (Pitfall 6). */
+  heldScrollY(): number;
 }
 export interface SlideStartEvent {
   readonly from: number;
   readonly to: number;
   readonly source: Source;
+  readonly heldScrollY: number;
 }
 export interface PagerSignals {
   onSlideStart(listener: (e: SlideStartEvent) => void): () => void;

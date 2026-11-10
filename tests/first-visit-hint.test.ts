@@ -23,7 +23,11 @@ describe("hint constants", () => {
 
 describe("stepHint", () => {
   it("starts idle", () => {
-    expect(initialHint()).toEqual({ phase: "idle", showAt: null, hideAt: null });
+    expect(initialHint()).toEqual({
+      phase: "idle",
+      showAt: null,
+      hideAt: null,
+    });
   });
 
   it("load without an opening schedules the show", () => {
@@ -80,7 +84,9 @@ describe("stepHint", () => {
 
   it("page-change ends it from waiting or shown", () => {
     const shown = frozen({ phase: "shown", showAt: 1500, hideAt: 9500 });
-    expect(stepHint(waiting(1500), { type: "page-change", at: 5 }).phase).toBe("done");
+    expect(stepHint(waiting(1500), { type: "page-change", at: 5 }).phase).toBe(
+      "done",
+    );
     expect(stepHint(shown, { type: "page-change", at: 5 }).phase).toBe("done");
   });
 
@@ -88,7 +94,9 @@ describe("stepHint", () => {
     const done = frozen({ phase: "done", showAt: null, hideAt: null });
     expect(stepHint(done, { type: "tick", at: 1 })).toBe(done);
     expect(stepHint(done, { type: "page-change", at: 1 })).toBe(done);
-    expect(stepHint(done, { type: "load", at: 1, openingPending: false })).toBe(done);
+    expect(stepHint(done, { type: "load", at: 1, openingPending: false })).toBe(
+      done,
+    );
   });
 
   it("returns new objects and never mutates input", () => {
@@ -105,6 +113,8 @@ describe("nextWakeAt", () => {
     expect(nextWakeAt(waiting(null))).toBeNull();
     expect(nextWakeAt({ phase: "shown", showAt: 1, hideAt: 9500 })).toBe(9500);
     expect(nextWakeAt(initialHint())).toBeNull();
-    expect(nextWakeAt({ phase: "done", showAt: null, hideAt: null })).toBeNull();
+    expect(
+      nextWakeAt({ phase: "done", showAt: null, hideAt: null }),
+    ).toBeNull();
   });
 });

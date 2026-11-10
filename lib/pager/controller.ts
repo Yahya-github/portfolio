@@ -99,6 +99,7 @@ export function createPagerController(
       from: prev.target,
       to: next.target,
       source: i.source,
+      heldScrollY: deps.scroll.heldScrollY(),
     });
     return true;
   }

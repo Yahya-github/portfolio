@@ -15,13 +15,17 @@ function scrollWindow(top: number): void {
  * Target pages open at their top (D-06). Under document scroll (phones, 200% zoom)
  * the outgoing page is held in place with a transform while the window resets, and
  * a cancelled leave restores its scroll. Only one page is ever held: a chained
- * retarget keeps the original origin.
+ * retarget keeps the original origin. heldScrollY() reports the px the latest
+ * beforeSlide reset, so the letter glide can start from where the letters were
+ * on screen (Pitfall 6).
  */
 export function createScrollPort(): ScrollPort {
   let origin: Origin | null = null;
+  let lastReset = 0;
 
   return {
     beforeSlide(from, to, fromRest) {
+      lastReset = 0;
       if (fromRest) origin = { index: from, y: window.scrollY, held: false };
       if (origin && to === origin.index) return; // cancelled leave: keep the scroll
       const target = pageElement(to);
@@ -33,8 +37,11 @@ export function createScrollPort(): ScrollPort {
       const outgoing = pageElement(from);
       if (outgoing) outgoing.style.transform = `translateY(${-origin.y}px)`;
       origin = { ...origin, held: true };
+      lastReset = origin.y;
       scrollWindow(0);
     },
+
+    heldScrollY: () => lastReset,
 
     afterLand(index) {
       if (origin?.held) {
