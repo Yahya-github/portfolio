@@ -1,5 +1,5 @@
 ---
-status: diagnosed
+status: complete
 phase: 05-letter-navigation-and-motion
 source: [05-07-SUMMARY.md, 05-11 checkpoint (real-hardware feel check, still open)]
 started: 2026-11-10T00:00:00Z
@@ -18,14 +18,14 @@ awaiting: gap plan (issue reported)
 
 ### 1. First-visit hint is noticeable
 expected: With `yh-hint-seen` deleted, opening /projects/ shows "Scroll or use the arrow keys" about 1.5s in, where a visitor looking at the page would notice it.
-result: issue
+result: pass
 reported: "I don't even see where's the hint"
 severity: major
 resolved_by: 05-12 (user re-check: "Ok its good")
 
 ### 2. Next link nudge is perceptible
 expected: When the hint appears, the Next link visibly nudges once toward the hint's direction, so the eye is drawn to the Next control.
-result: issue
+result: pass
 reported: "I don't really see where's the nudging"
 severity: major
 resolved_by: 05-12 (user re-check: "Ok its good")
@@ -57,15 +57,16 @@ reported: \"Ok its good\" (user chose \"Everything is good\" for the whole feel 
 
 ### 8. A continuous wheel stream moves exactly one page
 expected: A continuous stream of small wheel deltas (one gesture) moves exactly one page, every run, in chromium and webkit.
-result: issue
+result: pass
+resolved_by: 05-13 (test hardened; pre-built in-page stream; 36/36 at 4, 12 and 24 workers)
 reported: "e2e/pager-wheel.spec.ts:45 fails in the full chromium run (3 occurrences) and in the container (chromium + webkit); 5 of 12 with --repeat-each=12; page lands on /projects/ instead of /achievements/. Passed 36/36 before Phase 5 (parent of 8cb24b4). User chose: plan a fix now."
 severity: major
 
 ## Summary
 
 total: 8
-passed: 5
-issues: 3
+passed: 8
+issues: 0
 pending: 0
 skipped: 0
 blocked: 0
@@ -74,7 +75,7 @@ blocked: 0
 
 <!-- YAML format for plan-phase --gaps consumption -->
 - truth: "With yh-hint-seen cleared, the first-visit hint is noticed by a visitor without hunting for it."
-  status: failed
+  status: resolved
   reason: "User reported: I don't even see where's the hint"
   severity: major
   test: 1
@@ -94,7 +95,7 @@ blocked: 0
     - "e2e: a reload before first paging still shows the hint."
   debug_session: ""
 - truth: "When the hint appears, the Next link nudge is perceptible."
-  status: failed
+  status: resolved
   reason: "User reported: I don't really see where's the nudging"
   severity: major
   test: 2
@@ -109,7 +110,7 @@ blocked: 0
     - "UI-SPEC 'Nudge' and 'Hint' rows updated to match."
   debug_session: ""
 - truth: "A continuous stream of small wheel deltas moves exactly one page, deterministically."
-  status: failed
+  status: resolved
   reason: "Test 1/12-repeat failure rate observed after Phase 5; see deferred-items.md. Passed 36/36 on the parent of 8cb24b4."
   severity: major
   test: 8
