@@ -7,4 +7,5 @@ export const about = {
   paragraph:
     "The first came from competitive Pokémon, which is like chess with more variables: bluffing, and working out damage fast on a clock. The second came from Minecraft automation packs like SkyFactory and StoneBlock, where the goal is a machine that keeps working without you.",
   portraitAlt: "Yahya Hallani at DevFest Montreal 2026",
+  portraitToggleSuffix: ", show in colour",
 } as const satisfies AboutContent;

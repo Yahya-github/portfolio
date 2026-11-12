@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { about } from "@/content/about";
 import { achievements } from "@/content/achievements";
 import { experience } from "@/content/experience";
+import { facturo } from "@/content/facturo";
 import { indexPage } from "@/content/index";
 import { projects } from "@/content/projects";
 import { sayHi } from "@/content/say-hi";
@@ -17,6 +18,7 @@ const ALL_CONTENT = {
   experience,
   about,
   sayHi,
+  facturo,
 };
 
 const FORBIDDEN: ReadonlyArray<readonly [string, RegExp]> = [
@@ -67,7 +69,7 @@ describe("experience dates", () => {
 
 describe("achievements", () => {
   it("leads with the CCC perfect score", () => {
-    expect(achievements.lines[0]).toEqual({
+    expect(achievements.lines[0]).toMatchObject({
       rank: "75/75",
       result: "Canadian Computing Competition, perfect score",
       detail: "2026",
@@ -110,5 +112,69 @@ describe("projects", () => {
       "02.5",
       "02.6",
     ]);
+  });
+});
+
+describe("phase 6 content", () => {
+  it("has exactly 10 walkthrough frames in order", () => {
+    const names = projects.flagship.walkthrough.frames.map((f) => f.frame);
+    expect(names).toEqual([
+      "facturo-01-accueil",
+      "facturo-02-historique",
+      "facturo-03-nouvelle-facture",
+      "facturo-04-paiements",
+      "facturo-05-parametres",
+      "facturo-06-palette",
+      "facturo-07-accueil-sombre",
+      "facturo-08-menu-reduit",
+      "facturo-09-mobile",
+      "facturo-10-clients",
+    ]);
+    expect(projects.flagship.imageAlt).toBe(
+      projects.flagship.walkthrough.frames[0].alt,
+    );
+  });
+
+  it("gives every achievement a preview, text only for 75/75", () => {
+    for (const line of achievements.lines) {
+      expect(line.preview).toBeDefined();
+    }
+    const text = achievements.lines.filter((l) => l.preview.kind === "text");
+    expect(text.map((l) => l.rank)).toEqual(["75/75"]);
+  });
+
+  it("puts marks on exactly the 7 listed rows", () => {
+    const marks = [
+      ...experience.work.map((w) => w.mark),
+      ...experience.involvement.map((i) => i.mark),
+    ];
+    expect(marks.filter((m) => m !== null)).toEqual([
+      "mame",
+      "mercor",
+      "facturo",
+      "crc",
+      "mcgill-robotics",
+      "gdg",
+      "icpc",
+    ]);
+    expect(experience.work[4].mark).toBeNull();
+  });
+
+  it("has one copy line and it is the mailto", () => {
+    const copying = sayHi.lines.filter((l) => l.copies);
+    expect(copying).toHaveLength(1);
+    expect(copying[0].href.startsWith("mailto:")).toBe(true);
+  });
+
+  it("keeps the Facturo deep dive complete and free of unverified claims", () => {
+    expect(facturo.meta.every((m) => m.length > 0)).toBe(true);
+    expect(facturo.sections.length).toBe(3);
+    expect(facturo.links.items.length).toBeGreaterThan(0);
+    const text = JSON.stringify(facturo);
+    expect(text).not.toMatch(/in production/i);
+    expect(text).not.toMatch(/users/i);
+    for (const item of facturo.links.items) {
+      expect(item.href).toMatch(SAFE_HREF);
+    }
   });
 });
