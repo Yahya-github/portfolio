@@ -15,7 +15,9 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "measure:js": "node scripts/measure-js.mjs out",
-    "media:build": "node scripts/build-media.mjs"
+    "media:build": "node scripts/build-media.mjs",
+    "favicon:build": "node scripts/build-favicon.mjs",
+    "card:build": "node scripts/build-share-card.mjs"
   },
   "dependencies": {
     "next": "16.4.5",
