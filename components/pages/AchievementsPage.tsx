@@ -1,12 +1,32 @@
 import type { CSSProperties } from "react";
 import { PageTitle } from "@/components/pages/Heading";
+import {
+  ProofPreview,
+  type ProofPreviewContent,
+} from "@/components/media/ProofPreview";
 import { achievements } from "@/content/achievements";
+import type { AchievementLine } from "@/content/types";
 import { displayFitStyle } from "@/lib/display-fit";
+import { media } from "@/lib/media/manifest";
 import styles from "./achievements-page.module.css";
+
+const PREVIEW_SIZES = "(max-width: 820px) 40vw, 17vw";
+
+function previewOf(l: AchievementLine): ProofPreviewContent {
+  const p = l.preview;
+  if (p.kind === "text") return p;
+  return {
+    kind: "photo",
+    grey: media[`achievements/${p.photo}-grey`],
+    colour: media[`achievements/${p.photo}`],
+    alt: p.alt,
+    caption: p.caption,
+  };
+}
 
 /**
  * 01 Achievements. Letter-pair title stack in cols 1-2, five lines on a
- * subgrid in cols 3-10. Cols 11-12 stay empty (previews arrive in Phase 6).
+ * subgrid in cols 3-10. Cols 11-12 hold the proof previews (CONT-10).
  */
 export function AchievementsPage() {
   return (
@@ -49,19 +69,33 @@ export function AchievementsPage() {
             </>
           );
           return (
-            <li key={l.result} className={styles.item}>
+            <li key={l.result} className={styles.item} data-preview-item="">
               {l.href ? (
                 <a
                   className={styles.line}
                   href={l.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-preview-trigger=""
+                  data-cursor-tag={l.cursorTag ?? undefined}
                 >
                   {body}
                 </a>
               ) : (
-                <div className={styles.line}>{body}</div>
+                <div
+                  className={styles.line}
+                  tabIndex={0}
+                  data-cursor-snap=""
+                  data-preview-trigger=""
+                >
+                  {body}
+                </div>
               )}
+              <ProofPreview
+                className={styles.preview}
+                sizes={PREVIEW_SIZES}
+                preview={previewOf(l)}
+              />
             </li>
           );
         })}
