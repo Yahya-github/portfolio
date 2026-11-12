@@ -48,7 +48,6 @@ const POSTER_SIZES = [
 ];
 
 // The Facturo walkthrough ([data-walk], 20 imgs) is covered by walkthrough.spec.ts and excluded here.
-const VISIBLE_IMG_ROUTES = new Set(["/about/"]);
 
 const label = (v: Viewport) => `${v.width}x${v.height}`;
 
@@ -139,20 +138,16 @@ for (const s of sections) {
     expect(columns.split(/\s+/).filter((c) => /px$/.test(c))).toHaveLength(12);
   });
 
-  test(`${s.route} has no ornament: no svg, one img outside the walkthrough, the right one visible`, async ({
+  // Phase 6 puts real content images (proof previews, org marks, the portrait twin) inside pages, so the
+  // old per-page img count no longer applies. What still holds: no svg ornament and no img outside main.
+  test(`${s.route} has no ornament: no svg and no decorative img outside main`, async ({
     page,
   }) => {
     await open(page, s.route, VIEWPORTS.desktop);
     await expect(page.locator("svg")).toHaveCount(0);
-    await expect(page.locator("img:not([data-walk] img)")).toHaveCount(1);
-    // Off-screen inert pages render their images with JS, so count the current page plus anything outside main.
-    const onPage = await page
-      .locator(`#page-${s.slug} img:not([data-walk] img):visible`)
-      .count();
-    const outsideMain = await page
-      .locator("body img:not(main img):not([data-walk] img):visible")
-      .count();
-    expect(onPage + outsideMain).toBe(VISIBLE_IMG_ROUTES.has(s.route) ? 1 : 0);
+    await expect(
+      page.locator("body img:not(main img):not([data-walk] img):visible"),
+    ).toHaveCount(0);
   });
 
   test(`${s.route} deep link paints its page in place at 1440x900`, async ({
@@ -222,11 +217,12 @@ test("portrait resolves to the 1200 or 1512 source at 1440x900", async ({
   page,
 }) => {
   await open(page, "/about/", VIEWPORTS.desktop);
-  const img = page.locator("#page-about img");
+  // The portrait is a grey/colour twin (two stacked imgs); the grey layer is the one at rest.
+  const img = page.locator("#page-about img").first();
   await expect(img).toBeVisible();
   await expect
     .poll(() => img.evaluate((i: HTMLImageElement) => i.currentSrc))
-    .toMatch(/portrait-(1200|1512)/);
+    .toMatch(/portrait-devfest-2026-(grey|color)-(1200|1512)/);
 });
 
 test("exactly one accent letter after any paging sequence (LTR-05)", async ({
