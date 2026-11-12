@@ -1,13 +1,11 @@
-import p800 from "@/assets/portrait-800.webp";
-import p1200 from "@/assets/portrait-1200.webp";
-import p1512 from "@/assets/portrait-1512.webp";
 import { Photo } from "@/components/media/Photo";
 import { about } from "@/content/about";
+import { media } from "@/lib/media/manifest";
 import { PageTitle } from "./Heading";
 import type { PageProps } from "./types";
 import styles from "./about-page.module.css";
 
-const PORTRAIT_SOURCES = [p800, p1200, p1512] as const;
+const PORTRAIT_SOURCES = media["portrait/portrait-devfest-2026-grey"];
 
 // Pitfall 3 / user decision 2026-11-08: describe the drawn width
 // (object-fit: cover in a tall column), not the slot width.

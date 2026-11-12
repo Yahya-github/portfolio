@@ -1,9 +1,9 @@
 import { render } from "@testing-library/react";
-import type { StaticImageData } from "next/image";
 import { describe, expect, it } from "vitest";
 import { Photo } from "@/components/media/Photo";
+import type { MediaVariant } from "@/lib/media/types";
 
-const SOURCES: readonly StaticImageData[] = [
+const SOURCES: readonly MediaVariant[] = [
   { src: "a.webp", width: 800, height: 656 },
   { src: "b.webp", width: 1200, height: 984 },
   { src: "c.webp", width: 1512, height: 1240 },
@@ -61,5 +61,24 @@ describe("Photo", () => {
     expect(img.getAttribute("alt")).toBe("Yahya, greyscale");
     expect(img.getAttribute("sizes")).toBe("100vw");
     expect(img).toHaveClass("photo");
+  });
+
+  it("marks deferred images with data-defer", () => {
+    const img = renderImg({ defer: true });
+    expect(img).toHaveAttribute("data-defer", "");
+    expect(img.getAttribute("src")).toBe("c.webp");
+  });
+
+  it("renders no src, srcset or sizes when on demand", () => {
+    const img = renderImg({ onDemand: true, sizes: "50vw" });
+    expect(img.hasAttribute("src")).toBe(false);
+    expect(img.hasAttribute("srcset")).toBe(false);
+    expect(img.hasAttribute("sizes")).toBe(false);
+    expect(img.getAttribute("data-src")).toBe("c.webp");
+    expect(img.getAttribute("data-srcset")).toBe(
+      "a.webp 800w, b.webp 1200w, c.webp 1512w",
+    );
+    expect(img.getAttribute("data-sizes")).toBe("50vw");
+    expect(img).toHaveAttribute("data-defer", "");
   });
 });
