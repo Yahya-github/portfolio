@@ -82,9 +82,14 @@
 /* Cols 7-8, bottom on the Facturo lead's last line. .root is the containing block. */
 @media (hover: hover) and (min-width: 821px) {
   .mamePreview {
-    left: calc(6 * ((100% - 11 * var(--grid-gutter)) / 12 + var(--grid-gutter)));
-    width: calc(2 * ((100% - 11 * var(--grid-gutter)) / 12) + var(--grid-gutter));
-    bottom: var(--space-lg);
+    left: calc(
+      6 * ((100% - 11 * var(--grid-gutter)) / 12 + var(--grid-gutter))
+    );
+    width: calc(
+      2 * ((100% - 11 * var(--grid-gutter)) / 12) + var(--grid-gutter)
+    );
+    /* Lead padding + deep-dive margin + its label line (1.3 x --text-label) puts the bottom on the last lead line. */
+    bottom: calc(var(--space-lg) + var(--space-md) + var(--text-label) * 1.3);
     top: auto;
   }
 
