@@ -1,5 +1,4 @@
-/* 03 Experience. Cols 9-12 under Involvement stay empty: the cropped "03"
-   still waits for its device plan. Organisation marks (CONT-12) sit flush
+/* 03 Experience. Cols 9-12 under Involvement hold the cropped "03" (EdgeNumber). Organisation marks (CONT-12) sit flush
    with each column's right edge. */
 .root {
   align-content: start;
