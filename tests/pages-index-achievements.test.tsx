@@ -68,6 +68,15 @@ describe("IndexPage", () => {
     );
   });
 
+  it("renders the landscape hint once as static text", () => {
+    render(
+      <PageLevelProvider level={1}>
+        <IndexPage />
+      </PageLevelProvider>,
+    );
+    expect(screen.getAllByText(indexPage.landscapeHint)).toHaveLength(1);
+  });
+
   it("renders no svg and no img", () => {
     const { container } = render(
       <PageLevelProvider level={1}>
