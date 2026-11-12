@@ -27,6 +27,7 @@ export const site = {
     swipe: "Swipe",
     motion: "Motion",
   },
+  motion: { pause: "Pause motion", play: "Play motion" },
   contact: {
     email: "yahya.hallani.email@gmail.com",
     linkedin: "https://www.linkedin.com/in/yahya-hallani",
