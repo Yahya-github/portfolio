@@ -9,6 +9,7 @@ const ONLY_FAMILY = "var(--font-sans)";
 const RAW_HEX = /#[0-9a-fA-F]{3,8}\b/g;
 const FONT_FAMILY = /font-family\s*:\s*([^;}]+)/g;
 const FONT_SHORTHAND = /(?:^|[\s;{])font\s*:/g;
+const FILTER_DECL = /(^|[;{\s])(-webkit-)?filter\s*:/m;
 const COMMENT = /\/\*[\s\S]*?\*\//g;
 
 // process.cwd(): jsdom breaks import.meta.url (see tests/vercel-config.test.ts).
@@ -49,5 +50,16 @@ describe("css-guard", () => {
     expect(
       offenders((css) => [...css.matchAll(FONT_SHORTHAND)].map((m) => m[0])),
     ).toEqual([]);
+  });
+
+  it("uses no CSS filter for greyscale (DSGN-05)", () => {
+    expect(
+      offenders((css) => (FILTER_DECL.test(css) ? ["filter"] : [])),
+    ).toEqual([]);
+  });
+
+  it("detects filter declarations (pattern self-test)", () => {
+    expect(FILTER_DECL.test("a { filter: grayscale(1); }")).toBe(true);
+    expect(FILTER_DECL.test("a { --x: 1; }")).toBe(false);
   });
 });
