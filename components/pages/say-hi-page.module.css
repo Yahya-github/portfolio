@@ -1,5 +1,5 @@
-/* 05 Say hi (v7 .hi, without the spiral and clip variables: Phase 6).
-   Cols 7-12 stay empty. */
+/* 05 Say hi (v7 .hi). Cols 7-12 hold the say-hi spiral (device 5, absolute to the section on
+   desktop; a band after .side on phones). */
 .root {
   --col: calc(
     (

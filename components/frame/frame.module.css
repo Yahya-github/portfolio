@@ -141,6 +141,13 @@
     display: none;
   }
 }
+/* D-06: on phones Pause motion shows on Say hi only, where the spiral band runs (cut with the spiral) */
+@media (max-width: 820px) and (prefers-reduced-motion: no-preference) {
+  :global(html[data-motion-ready]:has(#page-say-hi:not([inert]))) .motion {
+    display: inline-flex;
+    align-items: center;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   :global(html[data-motion-ready]) .motion {
     display: none;

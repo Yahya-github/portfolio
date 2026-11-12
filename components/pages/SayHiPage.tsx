@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import { sayHi } from "@/content/say-hi";
 import { site } from "@/content/site";
 import { displayFitStyle } from "@/lib/display-fit";
+import { SayHiSpiral } from "@/components/devices/SayHiSpiral";
 import { PageTitle } from "./Heading";
 import styles from "./say-hi-page.module.css";
 
@@ -39,6 +40,7 @@ export function SayHiPage() {
           {sayHi.copy.description}
         </span>
       </p>
+      <SayHiSpiral />
     </div>
   );
 }
