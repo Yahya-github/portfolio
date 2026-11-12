@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Share card</title>
+    <link rel="stylesheet" href="../../styles/tokens.css" />
+    <style>
+      @font-face {
+        font-family: "Instrument Sans";
+        src: url("../../app/fonts/InstrumentSans-wdth-wght.woff2")
+          format("woff2");
+        font-weight: 400 700;
+        font-stretch: 75% 100%;
+        font-display: block;
+      }
+      :root {
+        --font-sans: "Instrument Sans";
+      }
+      html,
+      body {
+        margin: 0;
+      }
+      body {
+        position: relative;
+        width: 600px;
+        height: 315px;
+        overflow: hidden;
+        background: var(--color-ground);
+        color: var(--color-ink);
+        font-family: var(--font-sans);
+      }
+      .yahya {
+        position: absolute;
+        left: 24px;
+        top: 24px;
+        display: flex;
+        font-size: 252px;
+        line-height: 0.76;
+        font-weight: 700;
+        font-stretch: var(--wdth-display);
+        letter-spacing: var(--yahya-track);
+        white-space: nowrap;
+      }
+      .yahya span {
+        display: block;
+        flex: none;
+        height: 0.76em;
+      }
+      .yahya .y {
+        width: var(--adv-y);
+        margin-right: var(--yahya-kern);
+      }
+      .yahya .a {
+        width: var(--adv-a);
+      }
+      .yahya .h {
+        width: var(--adv-h);
+      }
+      .row {
+        position: absolute;
+        left: 24px;
+        right: 24px;
+        bottom: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+      .role {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.015em;
+        line-height: 1.2;
+        font-stretch: 100%;
+      }
+      .domain {
+        margin: 0;
+        font-size: 12px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        line-height: 1.3;
+        font-stretch: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="yahya" aria-hidden="true">
+      <span class="y">Y</span><span class="a">A</span><span class="h">H</span
+      ><span class="y">Y</span><span class="a">A</span>
+    </div>
+    <div class="row">
+      <p class="role">Software Engineering at McGill</p>
+      <p class="domain">yahya-hallani.dev</p>
+    </div>
+  </body>
+</html>
