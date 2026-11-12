@@ -49,6 +49,20 @@
   text-transform: none;
 }
 
+/* copy status: real case; the address hides while "Copied" shows, stays under a failure */
+.status {
+  display: block;
+  text-transform: none;
+}
+
+.status:empty {
+  display: none;
+}
+
+[data-copy="copied"] .addr {
+  display: none;
+}
+
 @media (max-width: 820px) {
   .root {
     padding: var(--space-lg) 0;

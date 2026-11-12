@@ -135,6 +135,23 @@ describe("SayHiPage", () => {
     }
   });
 
+  it("hooks the Email line for the copy feature", () => {
+    const { container } = render(
+      <PageLevelProvider level={1}>
+        <SayHiPage />
+      </PageLevelProvider>,
+    );
+    const email = screen.getByRole("link", { name: "Email" });
+    expect(email).toHaveAttribute("data-copy-email", EMAIL);
+    expect(email).toHaveAttribute("href", `mailto:${EMAIL}`);
+    expect(container.querySelectorAll("[data-copy-email]")).toHaveLength(1);
+    expect(container.querySelector("[data-copy-status]")).toHaveAttribute(
+      "aria-live",
+      "polite",
+    );
+    expect(container.querySelector("#copy-email-description")).not.toBeNull();
+  });
+
   it("renders the underlined address mailto link", () => {
     render(
       <PageLevelProvider level={1}>
