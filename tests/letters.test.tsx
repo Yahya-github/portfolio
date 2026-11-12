@@ -180,3 +180,18 @@ describe("LetterNav follows the pager (Phase 5 glide, D-10)", () => {
     expect(nav).not.toHaveAttribute("data-enter");
   });
 });
+
+describe("LetterNav currentMarker", () => {
+  it('marks the Projects letter aria-current="true", never "page"', () => {
+    const { container } = render(
+      <LetterNav current="projects" currentMarker="true" />,
+    );
+    const links = [...container.querySelectorAll("a")];
+    const marked = links.filter(
+      (a) => a.getAttribute("aria-current") === "true",
+    );
+    expect(marked).toHaveLength(1);
+    expect(marked[0]?.getAttribute("href")).toBe("/projects/");
+    expect(container.querySelector('[aria-current="page"]')).toBeNull();
+  });
+});

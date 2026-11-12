@@ -16,6 +16,8 @@ import { useGlide } from "./useGlide";
 interface LetterNavProps {
   /** Initial route; keeps first-paint HTML identical to the server render. */
   readonly current: Slug;
+  /** "true" marks the section, not the page (deep dive, UI-SPEC accent rule 1). */
+  readonly currentMarker?: "page" | "true";
 }
 
 /**
@@ -23,7 +25,7 @@ interface LetterNavProps {
  * a vertical rail elsewhere, gliding between the two (LTR-03). Never inert.
  * The accent comes only from aria-current (the pager target).
  */
-export function LetterNav({ current }: LetterNavProps) {
+export function LetterNav({ current, currentMarker = "page" }: LetterNavProps) {
   const state = usePagerState(indexOfSlug(current));
   const navRef = useRef<HTMLElement>(null);
   useGlide(navRef);
@@ -46,7 +48,7 @@ export function LetterNav({ current }: LetterNavProps) {
           data-glyph={s.letter ?? undefined}
           data-cursor-tag={`${s.number} ${s.name}`}
           className={styles.letter}
-          aria-current={s.slug === targetSlug ? "page" : undefined}
+          aria-current={s.slug === targetSlug ? currentMarker : undefined}
         >
           <span aria-hidden="true" className={styles.glyph}>
             {s.letter}

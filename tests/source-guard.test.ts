@@ -23,6 +23,7 @@ const CLIENT_ALLOWLIST: readonly string[] = [
   join("components", "shell", "PageSection.tsx"),
   join("components", "shell", "LiveRegion.tsx"),
   join("components", "shell", "DebugOverlay.tsx"),
+  join("components", "deep-dive", "StandaloneClient.tsx"),
 ];
 
 function listTsx(): readonly string[] {
@@ -57,7 +58,7 @@ describe("source guard (CONT-09, T-03-12, T-03-13)", () => {
     expect(offenders(LITERAL_A11Y_ATTR)).toEqual([]);
   });
 
-  it("has exactly the Phase 4 client components", () => {
+  it("has exactly the allowed client components", () => {
     expect([...offenders(USE_CLIENT)].sort()).toEqual(
       [...CLIENT_ALLOWLIST].sort(),
     );

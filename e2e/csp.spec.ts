@@ -52,12 +52,12 @@ async function runUnderCsp(
   return { violations, errors };
 }
 
-for (const s of sections) {
-  test(`${s.route} runs under the production CSP with zero violations`, async ({
+for (const route of [...sections.map((s) => s.route), "/projects/facturo/"]) {
+  test(`${route} runs under the production CSP with zero violations`, async ({
     page,
   }) => {
     expect(localCsp).toContain("default-src 'self'");
-    const { violations, errors } = await runUnderCsp(page, localCsp, s.route);
+    const { violations, errors } = await runUnderCsp(page, localCsp, route);
     expect(violations).toEqual([]);
     expect(errors).toEqual([]);
   });

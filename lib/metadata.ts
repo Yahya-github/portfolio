@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { facturo } from "@/content/facturo";
 import { site } from "@/content/site";
 import type { Slug } from "@/content/types";
 import { sectionBySlug } from "@/lib/sections";
@@ -17,5 +18,13 @@ export function pageMetadata(slug: Slug): Metadata {
     title: s.title,
     description: s.description,
     alternates: { canonical: s.route },
+  };
+}
+
+export function deepDiveMetadata(): Metadata {
+  return {
+    title: facturo.metaTitle,
+    description: facturo.metaDescription,
+    alternates: { canonical: facturo.route },
   };
 }
