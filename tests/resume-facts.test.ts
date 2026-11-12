@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 
 // After a re-export: rerun pdftotext -layout, update this hash, re-check 07-FACT-CHECK.md.
 const RESUME_SHA256 =
-  "5943fdad1f8295afe2e43f3be353b710ef4c1befb6135740a30488cbe6674ee5";
+  "b925e3374f0ad8b06b60e863f73bf8a016aa039416344f46219927cefb900f37";
 
 // Resolve from the Vitest root: jsdom gives import.meta.url a non-file scheme.
 const PUBLIC_PDF = join(process.cwd(), "public", "yahya-hallani-resume.pdf");

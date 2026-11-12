@@ -91,3 +91,7 @@ None. The two new anchors are external links with `rel="noopener noreferrer"`; n
 ## Self-Check: PASSED
 
 Commits 3609cd6, 90ad7c4, 123085b exist; public and docs resume PDFs identical; tests, typecheck, lint and build pass.
+
+## Follow-up (2026-11-12)
+
+Yahya approved a PDF-only wording change to the MAME Tool Rental entry: "Booking Platform" to "Booking System" and "rental platform" to "rental system". Same export method and scratch reverts; text diff against the previous PDF is exactly those two lines, no phone. New SHA-256 `b925e3374f0ad8b06b60e863f73bf8a016aa039416344f46219927cefb900f37`, pinned in tests/resume-facts.test.ts. C-38 (About meta description) confirmed. Yahya also decided the public PDF stays as is regarding JobOps drift (no website header, no Involvement, Grasset stays hidden, freelance "(90% + faster)" kept), which closes the open drift question above.

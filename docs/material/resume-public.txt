@@ -44,8 +44,8 @@ Facturo - Local-First Invoicing App                                             
    distance and leaving uncertain fields blank rather than guessing.
  • Engineered a release pipeline (GitHub Actions, PyInstaller) with SHA-256-verified in-app updates and automatic rollback,
    backed by 700+ tests (pytest, Playwright e2e, Python/JS parity checks on discount math).
-MAME Tool Rental - Tool & Machine Booking Platform                                                             Nov 2026 - Present
- • Built a full-stack rental platform for the McGill Association of Mechanical Engineers (FastAPI, SQLite, Next.js, React):
+MAME Tool Rental - Tool & Machine Booking System                                                               Nov 2026 - Present
+ • Built a full-stack rental system for the McGill Association of Mechanical Engineers (FastAPI, SQLite, Next.js, React):
    students book tools and machines with drawing uploads; admins review requests, track pickups and returns, and manage
    inventory from a stats dashboard.
  • Shipped a CI/CD pipeline (GitHub Actions, Render, Vercel) gated by 1,300+ tests (pytest, Vitest, Playwright), with per-visitor
