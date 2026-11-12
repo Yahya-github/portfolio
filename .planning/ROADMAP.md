@@ -183,8 +183,17 @@ Plans:
   1. About ("Two habits") and all other text are Yahya's final, approved copy in the data files, and every fact on the site has been checked against a real source
   2. Each page has its own title, description and canonical URL, and a search engine sees Person structured data
   3. Pasting yahya-hallani.dev into LinkedIn shows a branded preview card; the tab shows the favicon; a mistyped URL shows an on-brand 404 that leads back into the site
-  4. A five-second test with someone new shows they can say who Yahya is, one proof point and how to contact him; axe, Lighthouse budgets and a VoiceOver or NVDA pass are clean
-**Plans**: TBD
+  4. A five-second test with someone new shows they can say who Yahya is, one proof point and how to contact him; axe, Lighthouse budgets and a VoiceOver or NVDA pass are clean (amended by 07 D-12: the five-second test and screen-reader pass are optional and non-blocking; axe, Lighthouse CI, keyboard/reduced-motion runs and the PDF fact check block)
+**Plans**: 8 plans
+Plans:
+- [ ] 07-01-PLAN.md — Fact inventory, resume SHA-256 pin and fact-string test, Yahya confirms numbers and mismatches (checkpoint)
+- [ ] 07-02-PLAN.md — Shared Open Graph base, twitter card, 404 metadata and strings, Person JSON-LD, e2e SEO head spec
+- [ ] 07-03-PLAN.md — Favicon from the real Y glyph and the 1200x630 share card (dev-only scripts, committed assets)
+- [ ] 07-04-PLAN.md — On-brand 404 outside the pager with e2e (status, keyboard, reduced motion, no JS) and axe
+- [ ] 07-05-PLAN.md — Lighthouse CI config, baseline run and `lighthouse` CI job
+- [ ] 07-06-PLAN.md — Yahya's final copy placed and verified, resume re-export pinned, 50-160 char descriptions (checkpoint)
+- [ ] 07-07-PLAN.md — Final visual baselines, full gate, HUMAN-UAT, ship Phases 3-7 with noindex, lighthouse required, live checks (checkpoint)
+- [ ] 07-08-PLAN.md — Launch: remove noindex, robots.txt and sitemap.xml, SEO 100, Yahya merges (checkpoint)
 **UI hint**: yes
 
 ### Phase 8: Interactive Proof
@@ -211,7 +220,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 4. Horizontal Pager and Input | 14/15 | Complete    | 2026-11-10 |
 | 5. Letter Navigation and Motion | 13/13 | Complete    | 2026-11-10 |
 | 6. Page Compositions and Content | 17/17 | Complete    | 2026-11-12 |
-| 7. Copy, Sharing and Launch | 0/TBD | Not started | - |
+| 7. Copy, Sharing and Launch | 0/8 | Planned | - |
 | 8. Interactive Proof | 0/TBD | Not started | - |
 
 ## Research Flags
