@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Static Design System and Pages** - Tokens, grid, giant YAHYA letter links and all six pages server-rendered at their own routes, fully usable without JavaScript (completed 2026-11-09)
 - [x] **Phase 4: Horizontal Pager and Input** - One page per gesture by wheel, trackpad, keys and swipe, with real URLs, Back history and accessible page hand-off
 - [x] **Phase 5: Letter Navigation and Motion** - Letters glide from the hero into the left rail, footer pager, first-visit hint, opening animation and reduced-motion versions (completed 2026-11-10)
-- [ ] **Phase 6: Page Compositions and Content** - Each page gets its distinct composition: 75/75, Facturo flagship plus deep dive, Experience, Say hi with resume, phone portrait layouts
+- [x] **Phase 6: Page Compositions and Content** - Each page gets its distinct composition: 75/75, Facturo flagship plus deep dive, Experience, Say hi with resume, phone portrait layouts (completed 2026-11-12)
 - [ ] **Phase 7: Copy, Sharing and Launch** - Yahya's final copy, per-page SEO metadata, LinkedIn share card, favicon, 404 and launch verification
 - [ ] **Phase 8: Interactive Proof** - Playable Atlantis in the browser and a rotatable 3D model of the robot (parallel track, does not gate launch)
 
@@ -172,7 +172,7 @@ Plans:
 - [x] 06-14-PLAN.md — Wave 7: device 3, About quarter rings
 - [x] 06-15-PLAN.md — Wave 8: device 4, margin section names + footer Pause motion + hint flag (D-06)
 - [x] 06-16-PLAN.md — Wave 9: device 5, Say hi spiral (first cut)
-- [ ] 06-17-PLAN.md — Wave 10: layout-signature test, axe states, 34 visual baselines, Yahya review checkpoint
+- [x] 06-17-PLAN.md — Wave 10: layout-signature test, axe states, 34 visual baselines, Yahya review checkpoint
 **UI hint**: yes
 
 ### Phase 7: Copy, Sharing and Launch
@@ -210,7 +210,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 3. Static Design System and Pages | 10/10 | Complete   | 2026-11-09 |
 | 4. Horizontal Pager and Input | 14/15 | Complete    | 2026-11-10 |
 | 5. Letter Navigation and Motion | 13/13 | Complete    | 2026-11-10 |
-| 6. Page Compositions and Content | 16/17 | In Progress|  |
+| 6. Page Compositions and Content | 17/17 | Complete   | 2026-11-12 |
 | 7. Copy, Sharing and Launch | 0/TBD | Not started | - |
 | 8. Interactive Proof | 0/TBD | Not started | - |
 
