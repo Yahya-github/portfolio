@@ -154,7 +154,25 @@ Plans:
   4. No two of the six pages share a layout, side by side, each matching its approved composition from Phase 1
   5. On a phone in portrait every page has a designed layout and swipes to the next; an optional, never-blocking hint says landscape shows the full posters
   6. Hovering or focusing an Achievements line shows its proof photo and one line inside the viewport, and the DIRO and game-competition lines open their articles; Facturo plays as a pausable walkthrough of its screenshots that always resumes after hover (a stepper under reduced motion); the About portrait and the Experience organisation marks show their true colours on hover or tap
-**Plans**: TBD
+**Plans**: 17 plans
+Plans:
+- [ ] 06-01-PLAN.md — Wave 1: sharp media script, committed WebP set + generated manifest; Photo/Twin on the manifest, assets/ removed
+- [ ] 06-02-PLAN.md — Wave 1: measure-js per route (150 kB) and per lazy chunk (12 kB) gate in CI
+- [ ] 06-03-PLAN.md — Wave 1: Phase 6 content types and strings, content/facturo.ts (D-03), tokens, no-filter guard
+- [ ] 06-04-PLAN.md — Wave 1: lazy feature loader (registry + useFeatures), decodeImages exemption, cursor autoload
+- [ ] 06-05-PLAN.md — Wave 2: Achievements proof previews (CONT-02, CONT-10)
+- [ ] 06-06-PLAN.md — Wave 2: Facturo walkthrough (CONT-11)
+- [ ] 06-07-PLAN.md — Wave 2: Experience organisation marks and About portrait twin (CONT-12, CONT-05)
+- [ ] 06-08-PLAN.md — Wave 2: Say hi copy email (CONT-07)
+- [ ] 06-09-PLAN.md — Wave 2: Facturo deep-dive route /projects/facturo/ (CONT-04, CONT-08)
+- [ ] 06-10-PLAN.md — Wave 3: Projects deep-dive link, MAME mark and preview (CONT-03)
+- [ ] 06-11-PLAN.md — Wave 4: designed phone portrait layouts and the landscape hint (EXP-02)
+- [ ] 06-12-PLAN.md — Wave 5: device 1, Index grid lines
+- [ ] 06-13-PLAN.md — Wave 6: device 2, Experience edge-cropped "03"
+- [ ] 06-14-PLAN.md — Wave 7: device 3, About quarter rings
+- [ ] 06-15-PLAN.md — Wave 8: device 4, margin section names + footer Pause motion + hint flag (D-06)
+- [ ] 06-16-PLAN.md — Wave 9: device 5, Say hi spiral (first cut)
+- [ ] 06-17-PLAN.md — Wave 10: layout-signature test, axe states, 34 visual baselines, Yahya review checkpoint
 **UI hint**: yes
 
 ### Phase 7: Copy, Sharing and Launch
