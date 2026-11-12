@@ -38,7 +38,13 @@ test("/ loads the font and the PDF, is noindex, and fetches no hidden image", as
 
   // Lazy images inside inert, display: none sections are never fetched.
   expect(
-    requested.filter((u) => u.includes("portrait-") || u.includes("facturo-")),
+    requested.filter(
+      (u) =>
+        u.includes("portrait-") ||
+        u.includes("portrait-devfest-2026-color") ||
+        u.includes("facturo-") ||
+        u.includes("/media/facturo/"),
+    ),
   ).toEqual([]);
 
   // /say-hi/ has a second Resume link, so scope to the header.
@@ -59,7 +65,8 @@ test("/ loads the font and the PDF, is noindex, and fetches no hidden image", as
 // Pitfall 7: the portrait lives in the About section, hidden on every other route.
 test("/about/ shows the portrait, decoded", async ({ page }) => {
   await page.goto("/about/", { waitUntil: "networkidle" });
-  const img = page.getByRole("img", { name: about.portraitAlt });
+  // The portrait is a button now (presentational children), so locate the grey image directly.
+  const img = page.locator(`img[data-twin="grey"][alt="${about.portraitAlt}"]`);
   await expect(img).toBeVisible();
   await expect
     .poll(() =>
