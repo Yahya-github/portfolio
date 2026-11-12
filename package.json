@@ -14,6 +14,7 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "lhci": "lhci autorun",
     "measure:js": "node scripts/measure-js.mjs out",
     "media:build": "node scripts/build-media.mjs",
     "favicon:build": "node scripts/build-favicon.mjs",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
+    "@lhci/cli": "0.16.1",
     "@playwright/test": "1.65.0",
     "@testing-library/jest-dom": "7.0.1",
     "@testing-library/react": "16.3.3",
