@@ -22,6 +22,7 @@ for (const s of sections) {
             const target = (a.effect as KeyframeEffect | null)?.target;
             return !(
               target?.hasAttribute("data-names-strip") ||
+              target?.closest("[data-say-hi-spiral-layer]") ||
               /(^|\s|_)fr(\s|$)/.test(target?.className?.toString() ?? "")
             );
           }).length,

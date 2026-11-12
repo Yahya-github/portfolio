@@ -75,6 +75,8 @@ for (const s of sections) {
           .filter((el) => !el.matches("svg[data-quarter-rings] *"))
           // The edge-cropped page number is cut by the right edge by design (D-05 device 2); the document scrollWidth check still guards it.
           .filter((el) => !el.matches("[data-edge-number]"))
+          // The say-hi spiral enters from past the right edge by design (D-04 device 5); its layer clips it.
+          .filter((el) => !el.closest("[data-say-hi-spiral-layer]"))
           .filter((el) => el.checkVisibility())
           .map((el) => ({ el, r: el.getBoundingClientRect() }))
           .filter(({ r }) => r.width > 1 && r.right > innerWidth + 0.5)
@@ -149,7 +151,15 @@ for (const s of sections) {
   }) => {
     await open(page, s.route, VIEWPORTS.desktop);
     // The only svg allowed is the intentional aria-hidden quarter-rings device on /about/ (D-05).
-    await expect(page.locator("svg:not([data-quarter-rings])")).toHaveCount(0);
+    await expect(
+      page.locator("svg:not([data-quarter-rings]):not([data-say-hi-spiral])"),
+    ).toHaveCount(0);
+    // Plus the aria-hidden say-hi spiral (06-16): its defs svg and 22 word svgs, inside #page-say-hi only
+    // (every page is in the DOM on every route, like the quarter rings).
+    await expect(page.locator("svg[data-say-hi-spiral]")).toHaveCount(23);
+    await expect(
+      page.locator("svg[data-say-hi-spiral]:not(#page-say-hi svg)"),
+    ).toHaveCount(0);
     await expect(page.locator("svg[data-quarter-rings]")).toHaveCount(1);
     await expect(
       page.locator("body img:not(main img):not([data-walk] img):visible"),
