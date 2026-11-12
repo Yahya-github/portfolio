@@ -147,6 +147,12 @@
     display: inline-flex;
     align-items: center;
   }
+  /* The phone footer is a flex row: a merely hidden button would still take its width and
+     squeeze the hint until it is skipped, so it leaves the row while the hint is pending. */
+  :global(html[data-hint][data-motion-ready]:has(#page-say-hi:not([inert])))
+    .motion {
+    display: none;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   :global(html[data-motion-ready]) .motion {
