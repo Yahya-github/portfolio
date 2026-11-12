@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, type CSSProperties } from "react";
+import { site } from "@/content/site";
 import type { Slug } from "@/content/types";
 import { usePagerState } from "@/components/shell/PagerContext";
 import { counterLabel, indexOfSlug, nextLink, slugAt } from "@/lib/sections";
@@ -27,6 +28,10 @@ export function Footer({ current }: FooterProps) {
     <footer className={`grid t-label ${styles.footer}`}>
       <span className={`tnum ${styles.counter}`}>{counterLabel(slug)}</span>
       <span ref={hintRef} data-hint="" className={styles.hint} />
+      <button type="button" data-motion-toggle="" className={styles.motion}>
+        <span className={styles.motionPause}>{site.motion.pause}</span>
+        <span className={styles.motionPlay}>{site.motion.play}</span>
+      </button>
       <span className={styles.end}>
         <a ref={nextRef} className={styles.next} href={next.href}>
           {next.label}

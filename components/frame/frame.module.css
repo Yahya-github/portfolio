@@ -64,6 +64,7 @@
   text-align: right;
 }
 .hint {
+  grid-row: 1;
   grid-column: 4 / 10;
   justify-self: center;
   align-self: end;
@@ -82,6 +83,68 @@
 }
 .hint[data-state="shown"] {
   opacity: 1;
+}
+/* D-06 Pause motion (WCAG 2.2.2): shown by the lazy motion module via html[data-motion-ready];
+   never with the hint (same footer cells), on the Index, on phones or under reduced motion. */
+.motion {
+  grid-row: 1;
+  grid-column: 4 / 7;
+  justify-self: start;
+  align-self: end;
+  display: none;
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  font-family: var(--font-sans);
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+:global(html[data-motion-ready]) .motion {
+  display: inline-flex;
+  align-items: center;
+}
+:global(html[data-hint]) .motion,
+:global(html:has(#page-index:not([inert]))) .motion {
+  visibility: hidden;
+}
+.motionPlay {
+  display: none;
+}
+:global(html[data-motion="off"]) .motionPause {
+  display: none;
+}
+:global(html[data-motion="off"]) .motionPlay {
+  display: inline;
+}
+.motion:focus-visible,
+.motion:active {
+  color: var(--color-accent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .motion:hover {
+    color: var(--color-accent);
+  }
+}
+@media (pointer: coarse) {
+  .motion {
+    min-height: var(--hit-min);
+  }
+}
+@media (max-width: 820px) {
+  :global(html[data-motion-ready]) .motion {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :global(html[data-motion-ready]) .motion {
+    display: none;
+  }
 }
 .bar {
   position: absolute;
