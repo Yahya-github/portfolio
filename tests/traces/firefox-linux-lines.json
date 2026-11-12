@@ -1,0 +1,10 @@
+{
+  "device": "Linux mouse wheel in line mode, two notches",
+  "browser": "Firefox",
+  "os": "Linux",
+  "samples": [
+    { "t": 1000, "dx": 0, "dy": 3, "mode": 1 },
+    { "t": 1300, "dx": 0, "dy": 3, "mode": 1 }
+  ],
+  "expectPages": 2
+}

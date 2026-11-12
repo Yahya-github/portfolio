@@ -1,0 +1,31 @@
+/* CONT-12: mono at rest, true colours on fine-pointer hover or a touch tap. */
+.mark {
+  position: relative;
+  display: block;
+  height: var(--mark-h);
+}
+
+.mono,
+.colour {
+  display: block;
+  height: var(--mark-h);
+  width: auto;
+}
+
+.colour {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  transition: opacity var(--dur-fade) var(--ease-ui);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :global([data-tap-colour]):hover .colour {
+    opacity: 1;
+  }
+}
+
+:global([data-tap-colour][data-colour]) .colour {
+  opacity: 1;
+}

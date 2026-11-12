@@ -1,0 +1,388 @@
+/* Measured one-offs from design doc 4.2 item 2 / v7 lines 321-333 and 384-388; keyframes copied verbatim. */
+.layer {
+  --col: calc(
+    (
+        100vw - 2 * var(--grid-margin) - var(--rail-col) - 11 *
+          var(--grid-gutter)
+      ) /
+      12
+  );
+  --clipx: calc(
+    var(--grid-margin) + var(--rail-col) + 6 *
+      (var(--col) + var(--grid-gutter)) - var(--grid-gutter) / 2
+  );
+  --u: calc((100vw - var(--clipx) - 12px) / 162.5);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--clipx);
+  right: 0;
+  overflow: clip;
+  pointer-events: none;
+  user-select: none;
+  color: var(--color-ink);
+}
+.defs {
+  position: absolute;
+}
+.centre {
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: calc(8px + var(--u) * 91.77);
+  top: calc(
+    var(--frame-top) + (100svh - var(--frame-top) - var(--frame-bottom)) / 2
+  );
+  font-family: var(--font-sans);
+  font-weight: var(--weight-bold);
+  font-stretch: var(--wdth-body);
+}
+.w {
+  position: absolute;
+  overflow: visible;
+  fill: currentColor;
+  left: calc(var(--u) * 72.7);
+  top: calc(var(--u) * -67);
+  width: calc(var(--u) * 71.5);
+  height: calc(var(--u) * 133.7);
+  transform-origin: calc(var(--u) * -72.7) calc(var(--u) * 67);
+  will-change: transform, opacity;
+  animation: spiral calc(var(--spiral-step) * 22) linear infinite paused;
+  animation-delay: calc(var(--i) * var(--spiral-step) * -1);
+}
+/* Runs only under the shared gate: module ready, motion on, hint done, tab visible, current page. */
+:global(
+    html[data-motion-ready]:not([data-motion="off"]):not([data-hint]):not(
+        [data-tab-hidden]
+      )
+  )
+  :global(section:not([inert]))
+  .w {
+  animation-play-state: running;
+}
+@media (prefers-reduced-motion: reduce) {
+  .w {
+    animation-play-state: paused !important;
+  }
+}
+@keyframes spiral {
+  0% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.22;
+  }
+  2.273% {
+    transform: rotate(40deg) scale(0.9151);
+    opacity: 0.215;
+  }
+  4.545% {
+    transform: rotate(80deg) scale(0.83741);
+    opacity: 0.21;
+  }
+  6.818% {
+    transform: rotate(120deg) scale(0.76631);
+    opacity: 0.205;
+  }
+  9.091% {
+    transform: rotate(160deg) scale(0.70125);
+    opacity: 0.2;
+  }
+  11.364% {
+    transform: rotate(200deg) scale(0.64171);
+    opacity: 0.195;
+  }
+  13.636% {
+    transform: rotate(240deg) scale(0.58723);
+    opacity: 0.19;
+  }
+  15.909% {
+    transform: rotate(280deg) scale(0.53737);
+    opacity: 0.185;
+  }
+  18.182% {
+    transform: rotate(320deg) scale(0.49175);
+    opacity: 0.18;
+  }
+  20.455% {
+    transform: rotate(360deg) scale(0.45);
+    opacity: 0.175;
+  }
+  22.727% {
+    transform: rotate(400deg) scale(0.41179);
+    opacity: 0.17;
+  }
+  25% {
+    transform: rotate(440deg) scale(0.37683);
+    opacity: 0.165;
+  }
+  27.273% {
+    transform: rotate(480deg) scale(0.34484);
+    opacity: 0.16;
+  }
+  29.545% {
+    transform: rotate(520deg) scale(0.31556);
+    opacity: 0.155;
+  }
+  31.818% {
+    transform: rotate(560deg) scale(0.28877);
+    opacity: 0.15;
+  }
+  34.091% {
+    transform: rotate(600deg) scale(0.26425);
+    opacity: 0.145;
+  }
+  36.364% {
+    transform: rotate(640deg) scale(0.24182);
+    opacity: 0.14;
+  }
+  38.636% {
+    transform: rotate(680deg) scale(0.22129);
+    opacity: 0.135;
+  }
+  40.909% {
+    transform: rotate(720deg) scale(0.2025);
+    opacity: 0.13;
+  }
+  43.182% {
+    transform: rotate(760deg) scale(0.18531);
+    opacity: 0.125;
+  }
+  45.455% {
+    transform: rotate(800deg) scale(0.16957);
+    opacity: 0.12;
+  }
+  47.727% {
+    transform: rotate(840deg) scale(0.15518);
+    opacity: 0.115;
+  }
+  50% {
+    transform: rotate(880deg) scale(0.142);
+    opacity: 0.11;
+  }
+  52.273% {
+    transform: rotate(920deg) scale(0.12995);
+    opacity: 0.105;
+  }
+  54.545% {
+    transform: rotate(960deg) scale(0.11891);
+    opacity: 0.1;
+  }
+  56.818% {
+    transform: rotate(1000deg) scale(0.10882);
+    opacity: 0.095;
+  }
+  59.091% {
+    transform: rotate(1040deg) scale(0.09958);
+    opacity: 0.09;
+  }
+  61.364% {
+    transform: rotate(1080deg) scale(0.09113);
+    opacity: 0.085;
+  }
+  63.636% {
+    transform: rotate(1120deg) scale(0.08339);
+    opacity: 0.08;
+  }
+  65.909% {
+    transform: rotate(1160deg) scale(0.07631);
+    opacity: 0.075;
+  }
+  68.182% {
+    transform: rotate(1200deg) scale(0.06983);
+    opacity: 0.07;
+  }
+  70.455% {
+    transform: rotate(1240deg) scale(0.0639);
+    opacity: 0.065;
+  }
+  72.727% {
+    transform: rotate(1280deg) scale(0.05848);
+    opacity: 0.06;
+  }
+  75% {
+    transform: rotate(1320deg) scale(0.05351);
+    opacity: 0.055;
+  }
+  77.273% {
+    transform: rotate(1360deg) scale(0.04897);
+    opacity: 0.05;
+  }
+  79.545% {
+    transform: rotate(1400deg) scale(0.04481);
+    opacity: 0.045;
+  }
+  81.818% {
+    transform: rotate(1440deg) scale(0.04101);
+    opacity: 0.04;
+  }
+  84.091% {
+    transform: rotate(1480deg) scale(0.03752);
+    opacity: 0.035;
+  }
+  86.364% {
+    transform: rotate(1520deg) scale(0.03434);
+    opacity: 0.03;
+  }
+  88.636% {
+    transform: rotate(1560deg) scale(0.03142);
+    opacity: 0.025;
+  }
+  90.909% {
+    transform: rotate(1600deg) scale(0.02876);
+    opacity: 0.02;
+  }
+  93.182% {
+    transform: rotate(1640deg) scale(0.02631);
+    opacity: 0.015;
+  }
+  95.455% {
+    transform: rotate(1680deg) scale(0.02408);
+    opacity: 0.01;
+  }
+  97.727% {
+    transform: rotate(1720deg) scale(0.02204);
+    opacity: 0.005;
+  }
+  100% {
+    transform: rotate(1760deg) scale(0.02016);
+    opacity: 0;
+  }
+}
+@keyframes spiral14 {
+  0% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.22;
+  }
+  3.571% {
+    transform: rotate(40deg) scale(0.9151);
+    opacity: 0.212;
+  }
+  7.143% {
+    transform: rotate(80deg) scale(0.83741);
+    opacity: 0.204;
+  }
+  10.714% {
+    transform: rotate(120deg) scale(0.76631);
+    opacity: 0.196;
+  }
+  14.286% {
+    transform: rotate(160deg) scale(0.70125);
+    opacity: 0.189;
+  }
+  17.857% {
+    transform: rotate(200deg) scale(0.64171);
+    opacity: 0.181;
+  }
+  21.429% {
+    transform: rotate(240deg) scale(0.58723);
+    opacity: 0.173;
+  }
+  25% {
+    transform: rotate(280deg) scale(0.53737);
+    opacity: 0.165;
+  }
+  28.571% {
+    transform: rotate(320deg) scale(0.49175);
+    opacity: 0.157;
+  }
+  32.143% {
+    transform: rotate(360deg) scale(0.45);
+    opacity: 0.149;
+  }
+  35.714% {
+    transform: rotate(400deg) scale(0.41179);
+    opacity: 0.141;
+  }
+  39.286% {
+    transform: rotate(440deg) scale(0.37683);
+    opacity: 0.134;
+  }
+  42.857% {
+    transform: rotate(480deg) scale(0.34484);
+    opacity: 0.126;
+  }
+  46.429% {
+    transform: rotate(520deg) scale(0.31556);
+    opacity: 0.118;
+  }
+  50% {
+    transform: rotate(560deg) scale(0.28877);
+    opacity: 0.11;
+  }
+  53.571% {
+    transform: rotate(600deg) scale(0.26425);
+    opacity: 0.102;
+  }
+  57.143% {
+    transform: rotate(640deg) scale(0.24182);
+    opacity: 0.094;
+  }
+  60.714% {
+    transform: rotate(680deg) scale(0.22129);
+    opacity: 0.086;
+  }
+  64.286% {
+    transform: rotate(720deg) scale(0.2025);
+    opacity: 0.079;
+  }
+  67.857% {
+    transform: rotate(760deg) scale(0.18531);
+    opacity: 0.071;
+  }
+  71.429% {
+    transform: rotate(800deg) scale(0.16957);
+    opacity: 0.063;
+  }
+  75% {
+    transform: rotate(840deg) scale(0.15518);
+    opacity: 0.055;
+  }
+  78.571% {
+    transform: rotate(880deg) scale(0.142);
+    opacity: 0.047;
+  }
+  82.143% {
+    transform: rotate(920deg) scale(0.12995);
+    opacity: 0.039;
+  }
+  85.714% {
+    transform: rotate(960deg) scale(0.11891);
+    opacity: 0.031;
+  }
+  89.286% {
+    transform: rotate(1000deg) scale(0.10882);
+    opacity: 0.024;
+  }
+  92.857% {
+    transform: rotate(1040deg) scale(0.09958);
+    opacity: 0.016;
+  }
+  96.429% {
+    transform: rotate(1080deg) scale(0.09113);
+    opacity: 0.008;
+  }
+  100% {
+    transform: rotate(1120deg) scale(0.08339);
+    opacity: 0;
+  }
+}
+@media (max-width: 820px) {
+  .layer {
+    position: relative;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    margin: var(--space-xl) calc(-1 * var(--grid-margin)) 0 0;
+    height: calc(var(--u) * 187.2 + 24px);
+    --u: calc((100vw - var(--grid-margin) - var(--rail-col) - 12px) / 162.5);
+  }
+  .centre {
+    top: calc(8px + var(--u) * 75.16);
+  }
+  .w:nth-child(n + 15) {
+    display: none;
+  }
+  .w {
+    animation-name: spiral14;
+    animation-duration: calc(var(--spiral-step) * 14);
+  }
+}

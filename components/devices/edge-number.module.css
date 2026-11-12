@@ -1,0 +1,36 @@
+/* Measured one-offs from design doc 4.2 / v7 line 345. */
+.edge {
+  position: absolute;
+  right: -0.14em;
+  bottom: calc(var(--frame-bottom) - 0.035em);
+  pointer-events: none;
+  user-select: none;
+  color: var(--color-ink);
+  font-weight: var(--weight-bold);
+  font-stretch: var(--wdth-display);
+  letter-spacing: var(--display-track);
+  font-size: clamp(160px, calc((100svh - 568px) / 0.72), 480px);
+  line-height: 0.72;
+  /* The font's content area is taller than the 0.72 line box; keep that spill out of the page's scrollable overflow. */
+  contain: paint;
+  overflow: clip;
+  overflow-clip-margin: 0.06em;
+}
+
+/* The margin names (plan 06-15) stop above the number. */
+:global(#page-experience):has(.edge) {
+  --names-end: calc(
+    var(--frame-bottom) + clamp(115.2px, 100svh - 568px, 345.6px) +
+      var(--space-lg)
+  );
+}
+
+@media (max-width: 820px) {
+  .edge {
+    display: none;
+  }
+
+  :global(#page-experience):has(.edge) {
+    --names-end: initial;
+  }
+}

@@ -1,0 +1,58 @@
+                                             YAHYA HALLANI
+                                                         Montreal, QC
+                    yahya.hallani.email@gmail.com | linkedin.com/in/yahya-hallani | github.com/Yahya-github
+EDUCATION
+McGill University                                                                                     May 2026 - May 2030 (Expected)
+Bachelor of Engineering, Software Engineering (Co-op) / Montreal, QC
+Collège André-Grasset                                                                                             Sep 2024 - May 2026
+Diploma of College Studies (DCS), Mathematics, Science & Informatics / Montreal, QC
+ • Lead Programmer, Grasset Robotics Team - Canadian Robotics Competition (CRC)
+AWARDS & COMPETITIONS
+Perfect Score - 75/75, Canadian Computing Competition, University of Waterloo                                                    2026
+1st Place - DIRO Hackathon, Université de Montréal (1st of 18 teams from 9 CEGEPs; $2,500 team scholarship)                      2026
+1st Place - Intercollegiate Video Game Creation Competition (Atlantis, 2D game built in Godot 4)                                 2026
+1st Place - Canadian Robotics Competition, Programming (lead programmer); 2nd Place the next year                           2025, 2026
+TECHNICAL SKILLS
+Programming Languages: Python, C, C++, Rust, GDScript, SQL, JavaScript, Java
+Frameworks & Libraries: FastAPI, Flask, PySide6/Qt, NumPy, pytest, Playwright, Godot 4, React
+Tools & Platforms: Git, GitHub Actions, SQLite, Linux, Bash, VS Code, Docker
+Spoken Languages: French (native), English (fluent), Arabic (fluent), Spanish (intermediate)
+EXPERIENCE
+Mercor                                                                                                              Sep 2026 - Present
+Coding Agent Evaluator (Contractor) / Remote | Contract: Exceptional Software Engineers (Coding Agent Experience)
+ • Earned a promotion and a 100% approval rate on submitted evaluations for a leading AI lab by comparing 2 coding agents per
+   task on enterprise-scale public repositories, delivering 2 detailed reports (4 model outputs) per day during sprints.
+ • Caught recurring verification failures, hallucinations and false success claims by scoring agents on instruction
+   following, code quality, thoroughness and speed, documenting each issue with a specific in-context example from the codebase.
+Canadian Robotics Competition (CRC)                                                                           Feb 2026 - Present
+Software Developer & Problem Set Designer (Volunteer) / Montreal, QC
+ • Authored 12 algorithmic problems (graph traversal, dynamic programming, greedy) for the upcoming CRC 2027 provincial
+    programming competition, writing reference solutions and 20+ edge-case tests per problem in C++ and Python.
+Self-Employed                                                                                                 May 2025 - Present
+Freelance Software Developer / Montreal, QC
+ • Delivered 12 projects for 9 clients (web apps, automation, desktop GUIs), owning scoping, architecture, and deployment.
+ • Shipped a cross-platform desktop application in PySide6/Qt under a 6-day deadline, self-onboarding the framework from
+    zero and delivering with no post-launch defects.
+ • Engineered a Python automation pipeline that cut a client’s weekly workflow from about 8 hours to under 30 minutes (90%
+    + faster).
+PROJECTS
+Facturo - Local-First Invoicing App                                                                             Jun 2026 - Oct 2026
+ • Client project for a Québec trucking company (public demo, fictional data): built a local-first invoicing app that turns paper
+   work tickets into tax-correct invoices (TPS/TVQ, Excel/PDF) and reconciles supplier payments by auto-matching statement
+   rows to billed tickets and flagging duplicates.
+ • Added AI extraction of handwritten tickets with a local vision model (Ollama), snapping misreads to known values by edit
+   distance and leaving uncertain fields blank rather than guessing.
+ • Engineered a release pipeline (GitHub Actions, PyInstaller) with SHA-256-verified in-app updates and automatic rollback,
+   backed by 700+ tests (pytest, Playwright e2e, Python/JS parity checks on discount math).
+MAME Tool Rental - Tool & Machine Booking System                                                               Nov 2026 - Present
+ • Built a full-stack rental system for the McGill Association of Mechanical Engineers (FastAPI, SQLite, Next.js, React):
+   students book tools and machines with drawing uploads; admins review requests, track pickups and returns, and manage
+   inventory from a stats dashboard.
+ • Shipped a CI/CD pipeline (GitHub Actions, Render, Vercel) gated by 1,300+ tests (pytest, Vitest, Playwright), with per-visitor
+   rate limiting and direct-to-API drawing uploads (up to 20 MB) past Vercel’s proxy limit.
+Atlantis - 2D Submarine Exploration Game                                                                      1st Place | Jan 2026
+ • Architected 6 gameplay systems and rebuilt save and inventory in the final 4 hours after a state-corruption bug.
+CRC 2026 Competition Robot - Control Firmware                                                 1st Place | Sep 2025 - Feb 2026
+ • Built the robot’s embedded state machine in C/C++ as lead programmer, tuned PID control loops, and debugged hardware
+   and software integration live between matches.
+

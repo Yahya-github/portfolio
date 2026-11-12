@@ -1,0 +1,57 @@
+/* EXP-03 / D-19: square and dot share one fixed root; the blend sits on that root itself so it reaches the page (Pitfall 11). */
+.root {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  z-index: 40;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  opacity: 0;
+}
+
+.root[data-visible] {
+  opacity: 1;
+}
+
+.dot {
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  width: 4px;
+  height: 4px;
+  background: var(--color-ink);
+}
+
+/* Four 1px hairlines sized with scaleX/scaleY: transform-only, edges stay crisp. */
+.line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  background: var(--color-ink);
+  transform-origin: 0 0;
+}
+
+/* Pitfall 14: transitions only during a snap or unsnap, never while following the pointer. */
+.root[data-snapping] .line {
+  transition: transform var(--dur-ui) var(--ease-ui);
+}
+
+/* The tag is a separate root without blend (UI-SPEC); its look comes from the global .t-tag. */
+.tag {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 41;
+  pointer-events: none;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--dur-ui) var(--ease-ui);
+}
+
+.tag[data-visible] {
+  opacity: 1;
+}

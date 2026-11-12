@@ -1,0 +1,54 @@
+.root {
+  align-content: start;
+}
+
+.intro {
+  position: relative;
+  grid-column: 1 / 5;
+  padding-top: var(--space-lg);
+}
+
+.meta {
+  position: relative;
+  grid-column: 7 / 13;
+  padding-top: var(--space-lg);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+}
+
+/* Phone section list (Phase 1 P06 decision): hidden on desktop. */
+.list {
+  display: none;
+}
+
+.landscape {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  .list {
+    display: block;
+    margin-top: var(--space-xl);
+  }
+
+  .list a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: var(--hit-min);
+    width: max-content;
+  }
+
+  .meta {
+    display: none;
+  }
+}
+
+/* D-10: static, CSS-only, never blocks; independent of the footer "Swipe sideways" hint */
+@media (max-width: 820px) and (orientation: portrait) and (pointer: coarse) {
+  .landscape {
+    display: block;
+    margin-top: var(--space-md);
+  }
+}

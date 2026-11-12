@@ -1,0 +1,205 @@
+/* Fixed em-width letter boxes: the wordmark geometry never depends on the active font face (Pitfall 1). */
+.letter {
+  position: relative;
+  display: block;
+  flex: none;
+  width: var(--adv);
+  height: 0.76em;
+  pointer-events: none;
+  color: var(--color-ink);
+}
+.letter[data-glyph="Y"] {
+  --adv: var(--adv-y);
+}
+.letter[data-glyph="A"] {
+  --adv: var(--adv-a);
+}
+.letter[data-glyph="H"] {
+  --adv: var(--adv-h);
+}
+.letter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+}
+.glyph {
+  display: block;
+  line-height: 0.76;
+  /* Chromium counts the font's full ascent/descent as scrollable overflow, which
+     made the Index document ~0.03em taller than the viewport (a stray scrollbar
+     that also narrowed every 100vw page). Clip it; the margin keeps the ink. */
+  height: 0.76em;
+  overflow: clip;
+  overflow-clip-margin: 0.06em;
+}
+
+/* Hero: absolute, so the row stays on the first screen when the phone document scrolls. */
+.nav[data-mode="hero"] {
+  position: absolute;
+  z-index: 6;
+  left: var(--grid-margin);
+  bottom: calc(var(--frame-bottom) + var(--hero-bottom-gap));
+  display: flex;
+  white-space: nowrap;
+  font-weight: var(--weight-bold);
+  line-height: 0.76;
+  font-stretch: var(--wdth-display);
+  letter-spacing: var(--yahya-track);
+  font-size: min(
+    calc((100vw - 2 * var(--grid-margin)) / var(--yahya-fit)),
+    calc((100svh - var(--hero-reserve)) / 0.76)
+  );
+}
+/* YA kern on both Y letters (Pitfall 2). */
+.nav[data-mode="hero"] .letter[data-glyph="Y"] {
+  margin-right: var(--yahya-kern);
+}
+.nav[data-mode="hero"] .caption {
+  position: absolute;
+  left: 0;
+  top: calc(100% + var(--space-md));
+  white-space: nowrap;
+  pointer-events: auto;
+  transition: opacity var(--dur-ui) var(--ease-ui);
+}
+.nav[data-mode="hero"] .letter:focus-visible .num,
+.nav[data-mode="hero"] .letter:active .num {
+  color: var(--color-accent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav[data-mode="hero"] .letter:hover .num {
+    color: var(--color-accent);
+  }
+}
+/* Phones: captions stay as accessible names; IndexPage shows the visible list. */
+@media (max-width: 820px) {
+  .nav[data-mode="hero"] .caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* Rail */
+.nav[data-mode="rail"] {
+  position: fixed;
+  z-index: 4;
+  left: var(--grid-margin);
+  top: calc(var(--frame-top) + var(--space-lg));
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  font-size: var(--rail-size);
+  font-weight: var(--weight-bold);
+  line-height: 0.76;
+  font-stretch: var(--wdth-display);
+  letter-spacing: var(--yahya-track);
+}
+.nav[data-mode="rail"] .caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.nav[data-mode="rail"] .letter::before {
+  inset: calc(var(--rail-gap) / -2) auto calc(var(--rail-gap) / -2) 0;
+  width: calc(var(--rail-col) - var(--space-sm));
+}
+@media (pointer: coarse) {
+  .nav[data-mode="rail"] .letter::before {
+    min-width: var(--hit-min);
+    min-height: var(--hit-min);
+  }
+}
+/* DSGN-01 accent rule 1: only the route colours a rail letter; hover and focus never do. */
+.nav[data-mode="rail"] .letter,
+.nav[data-mode="rail"] .letter:hover,
+.nav[data-mode="rail"] .letter:focus-visible,
+.nav[data-mode="rail"] .letter:active {
+  color: var(--color-ink);
+}
+.nav[data-mode="rail"] .letter[aria-current="page"],
+.nav[data-mode="rail"] .letter[aria-current="page"]:hover,
+.nav[data-mode="rail"] .letter[aria-current="page"]:focus-visible,
+.nav[data-mode="rail"] .letter[aria-current="page"]:active {
+  color: var(--color-accent);
+}
+.nav[data-mode="rail"] .letter:focus-visible {
+  outline-color: var(--color-ink);
+}
+.now {
+  margin-top: var(--space-md);
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+}
+/* Phones: 24px inset (design doc section 6). */
+@media (max-width: 820px) {
+  .nav[data-mode="rail"] {
+    left: var(--space-lg);
+  }
+}
+
+/* Phase 5 glide: letters fly in hero geometry, scaled from their top-left corner (RESEARCH Pattern 1). */
+.nav[data-flight] .letter {
+  transform-origin: 0 0;
+}
+/* Pitfall 15: an invisible caption must not catch the pointer. */
+.nav[data-flight] .caption {
+  pointer-events: none;
+}
+/* D-14: captions fade out at slide start ... */
+.nav[data-flight="out"] .caption {
+  opacity: 0;
+}
+/* ... and wait, hidden with no transition, until the letters have landed (Pitfall 5). */
+.nav[data-flight="in"] .caption {
+  opacity: 0;
+  transition: none;
+}
+.nav[data-mode="hero"] .now {
+  display: none;
+}
+/* Accent arrives with the move (UI-SPEC accent timing). */
+.nav[data-flight="out"] .letter[aria-current="page"],
+.nav[data-flight="out"] .letter[aria-current="page"]:hover,
+.nav[data-flight="out"] .letter[aria-current="page"]:focus-visible,
+.nav[data-flight="out"] .letter[aria-current="page"]:active {
+  color: var(--color-accent);
+}
+/* LTR-04, D-18: the rail caption un-clips into a tag right of the rail on keyboard focus. */
+.nav[data-mode="rail"] .caption {
+  opacity: 0;
+  transition: opacity var(--dur-ui) var(--ease-ui);
+}
+.nav[data-mode="rail"] .letter:focus-visible .caption {
+  left: calc(var(--rail-col) + var(--space-sm));
+  top: 50%;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  translate: 0 -50%;
+  opacity: 1;
+}
+/* Pitfall 12: mouse users without the custom cursor get the same tag on hover. */
+@media (hover: hover) and (pointer: fine) {
+  :global(html:not([data-cursor]))
+    .nav[data-mode="rail"]
+    .letter:hover
+    .caption {
+    left: calc(var(--rail-col) + var(--space-sm));
+    top: 50%;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    translate: 0 -50%;
+    opacity: 1;
+  }
+}

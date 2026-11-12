@@ -14,10 +14,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Design Gate** - Updated design doc approved for the dark Swiss horizontal direction, final font chosen, six page compositions defined, real material collected (completed 2026-11-07)
 - [x] **Phase 2: Live Deploy Spike** - Scaffolded Next.js static export live on Vercel at yahya-hallani.dev over HTTPS with self-hosted font, image and PDF (completed 2026-11-08)
-- [ ] **Phase 3: Static Design System and Pages** - Tokens, grid, giant YAHYA letter links and all six pages server-rendered at their own routes, fully usable without JavaScript
-- [ ] **Phase 4: Horizontal Pager and Input** - One page per gesture by wheel, trackpad, keys and swipe, with real URLs, Back history and accessible page hand-off
-- [ ] **Phase 5: Letter Navigation and Motion** - Letters glide from the hero into the left rail, footer pager, first-visit hint, opening animation and reduced-motion versions
-- [ ] **Phase 6: Page Compositions and Content** - Each page gets its distinct composition: 75/75, Facturo flagship plus deep dive, Experience, Say hi with resume, phone portrait layouts
+- [x] **Phase 3: Static Design System and Pages** - Tokens, grid, giant YAHYA letter links and all six pages server-rendered at their own routes, fully usable without JavaScript (completed 2026-11-09)
+- [x] **Phase 4: Horizontal Pager and Input** - One page per gesture by wheel, trackpad, keys and swipe, with real URLs, Back history and accessible page hand-off
+- [x] **Phase 5: Letter Navigation and Motion** - Letters glide from the hero into the left rail, footer pager, first-visit hint, opening animation and reduced-motion versions (completed 2026-11-10)
+- [x] **Phase 6: Page Compositions and Content** - Each page gets its distinct composition: 75/75, Facturo flagship plus deep dive, Experience, Say hi with resume, phone portrait layouts (completed 2026-11-12)
 - [ ] **Phase 7: Copy, Sharing and Launch** - Yahya's final copy, per-page SEO metadata, LinkedIn share card, favicon, 404 and launch verification
 - [ ] **Phase 8: Interactive Proof** - Playable Atlantis in the browser and a rotatable 3D model of the robot (parallel track, does not gate launch)
 
@@ -73,7 +73,18 @@ Plans:
   3. With JavaScript disabled, all page text is present and clicking any letter (Y Achievements, A Projects, H Experience, Y About, A Say hi) reaches that page's own route
   4. A keyboard user's first Tab reveals a skip link, and every control shows a visible focus state
   5. An automated contrast check passes WCAG AA for every text token on the dark ground (no grey text darker than #8a8a8a), and all site text comes from typed data files
-**Plans**: TBD
+**Plans**: 10 plans
+Plans:
+- [x] 03-01-PLAN.md — Folded todo: rewrite the portfolio-design and voice-and-facts skills to design rev 5 (outside the repo, Yahya approves, not committed)
+- [x] 03-02-PLAN.md — styles/tokens.css + base.css, font display block, contrast and CSS-guard tests
+- [x] 03-03-PLAN.md — Typed content files (all copy verbatim), lib/sections + lib/metadata, fact-guard tests
+- [x] 03-04-PLAN.md — Portrait/Facturo WebP assets, Photo/Heading/PageProps primitives, phone Display fit, jsx-no-literals + source guard
+- [x] 03-05-PLAN.md — SkipLink, Header, Footer and LetterNav (hero with fixed-width letters, rail with route-only accent)
+- [x] 03-06-PLAN.md — Index, Achievements and Projects page compositions
+- [x] 03-07-PLAN.md — Experience, About and Say hi page compositions
+- [x] 03-08-PLAN.md — Shell + Track (six inert sections per route), six routes with metadata, layout, trailingSlash, placeholder and build-info removed
+- [x] 03-09-PLAN.md — E2E: JS-off routing, focus, layout/accent/overflow, font-shift, axe/CSP/assets on all six routes
+- [x] 03-10-PLAN.md — Visual baselines in the Playwright container, CI e2e in the container, Yahya's visual sign-off, Vercel 308 preview check
 **UI hint**: yes
 
 ### Phase 4: Horizontal Pager and Input
@@ -86,7 +97,23 @@ Plans:
   3. Opening yahya-hallani.dev/projects/ lands directly on Projects; the URL updates on every page change, and the browser Back button steps back through the visited pages
   4. Every page fits one screen at 1366x768; at 200% zoom or on a short screen the page scrolls vertically, and paging happens only once the visitor reaches its edge
   5. Keyboard and screen-reader users only reach the current page; after a page change focus moves to the new page's heading and a live region announces the page
-**Plans**: TBD
+**Plans**: 15 plans
+Plans:
+- [x] 04-01-PLAN.md — Pager contracts, pure reducer, live-region/debug copy, client allowlist and jsdom stubs (W1)
+- [x] 04-02-PLAN.md — JS-on track layout at rest: data-js flag, track CSS, root overscroll/touch-action, title ring rules, e2e selector updates (W1)
+- [x] 04-03-PLAN.md — Wheel/trackpad gesture FSM with trace replay tests (TDD, W2)
+- [x] 04-04-PLAN.md — Key map (WR-04, scroll-first) and touch-swipe recogniser (TDD, W2)
+- [x] 04-05-PLAN.md — Pager controller, slide/landed signals, React context hooks (TDD, W2)
+- [x] 04-06-PLAN.md — DOM ports: WAAPI animator, history (announcer, scroll restoration), focus, scroll hold, edge probe (W2)
+- [x] 04-07-PLAN.md — PageLevel heading context and focusable page titles (W2)
+- [x] 04-08-PLAN.md — PagerProvider, PageSection, LiveRegion, link/popstate paging, history e2e (W3)
+- [x] 04-09-PLAN.md — Header/Footer/LetterNav projections and the letters stand-in (W3)
+- [x] 04-10-PLAN.md — Wheel/key/swipe listeners, Playwright projects, wheel and key e2e (W4)
+- [x] 04-11-PLAN.md — ?debug overlay and trace recorder, exact client allowlist (W5)
+- [x] 04-12-PLAN.md — Accessibility-after-paging and overflow-edge e2e (W5)
+- [x] 04-13-PLAN.md — Swipe and motion-contract e2e, CI cross-browser switch (W5)
+- [x] 04-14-PLAN.md — Label letter-gap fix and baseline regeneration (checkpoint, W6)
+- [ ] 04-15-PLAN.md — PR preview and D-12 real-device checklist, trace-backed tuning (checkpoint, W7)
 **UI hint**: yes
 
 ### Phase 5: Letter Navigation and Motion
@@ -99,7 +126,21 @@ Plans:
   3. The footer shows a 00 / 05 counter, a "Next" control and a progress bar that track the current page; a first-time visitor sees a quiet hint that the site moves sideways
   4. A first-time visitor sees an opening animation under about 1 second, with content already loaded underneath; any click or key skips it, and it never plays again
   5. Every motion moves on the horizontal axis, fast with no bounce; with reduced motion enabled every animation (opening, paging, letters, hint) becomes an instant change
-**Plans**: TBD
+**Plans**: 13 plans
+Plans:
+- [x] 05-01-PLAN.md — Foundations: motion tokens + guard, safe storage, Playwright returning-visitor seeding, shared tag/cursor CSS, e2e letter helpers
+- [x] 05-02-PLAN.md — Glide engine: pure geometry, shared WAAPI helpers, events, createGlide runner
+- [x] 05-03-PLAN.md — Cursor maths and CSS: snap targets, tag text, hairline box, placeTag
+- [x] 05-04-PLAN.md — Replace the D-09 stand-in with the glide: animator cleanup, useGlide, LetterNav, flight and rail-tag CSS, stand-in e2e rewritten
+- [x] 05-05-PLAN.md — First-visit rules (TDD): before-paint script, skip keys, opening timing, hint state machine
+- [x] 05-06-PLAN.md — Reducer stand-in state removed; heldScrollY for the phone scroll offset
+- [x] 05-07-PLAN.md — First-visit hint in the footer with device wording, Next nudge and e2e
+- [x] 05-08-PLAN.md — Custom cursor mount, lazy load, Resume tag and cursor e2e
+- [x] 05-09-PLAN.md — Opening runtime (fresh and paged), inline script, hide CSS and e2e
+- [x] 05-10-PLAN.md — Glide, phone rail and rail-label e2e (sampler, convergence, resize, accent)
+- [x] 05-11-PLAN.md — Reduced-motion and NAV-05 e2e, container baselines, todo close, real-hardware check
+- [x] 05-12-PLAN.md — Gap closure: noticeable first-visit hint (ink, 16px, footer centre, remembered after paging or 3s) and a two-pulse 12px Next nudge
+- [x] 05-13-PLAN.md — Gap closure: diagnose and fix the load-sensitive wheel-stream double page (UAT test 8), 36x repeat proof
 **UI hint**: yes
 
 ### Phase 6: Page Compositions and Content
@@ -113,7 +154,25 @@ Plans:
   4. No two of the six pages share a layout, side by side, each matching its approved composition from Phase 1
   5. On a phone in portrait every page has a designed layout and swipes to the next; an optional, never-blocking hint says landscape shows the full posters
   6. Hovering or focusing an Achievements line shows its proof photo and one line inside the viewport, and the DIRO and game-competition lines open their articles; Facturo plays as a pausable walkthrough of its screenshots that always resumes after hover (a stepper under reduced motion); the About portrait and the Experience organisation marks show their true colours on hover or tap
-**Plans**: TBD
+**Plans**: 17 plans
+Plans:
+- [x] 06-01-PLAN.md — Wave 1: sharp media script, committed WebP set + generated manifest; Photo/Twin on the manifest, assets/ removed
+- [x] 06-02-PLAN.md — Wave 1: measure-js per route (150 kB) and per lazy chunk (12 kB) gate in CI
+- [x] 06-03-PLAN.md — Wave 1: Phase 6 content types and strings, content/facturo.ts (D-03), tokens, no-filter guard
+- [x] 06-04-PLAN.md — Wave 1: lazy feature loader (registry + useFeatures), decodeImages exemption, cursor autoload
+- [x] 06-05-PLAN.md — Wave 2: Achievements proof previews (CONT-02, CONT-10)
+- [x] 06-06-PLAN.md — Wave 2: Facturo walkthrough (CONT-11)
+- [x] 06-07-PLAN.md — Wave 2: Experience organisation marks and About portrait twin (CONT-12, CONT-05)
+- [x] 06-08-PLAN.md — Wave 2: Say hi copy email (CONT-07)
+- [x] 06-09-PLAN.md — Wave 2: Facturo deep-dive route /projects/facturo/ (CONT-04, CONT-08)
+- [x] 06-10-PLAN.md — Wave 3: Projects deep-dive link, MAME mark and preview (CONT-03)
+- [x] 06-11-PLAN.md — Wave 4: designed phone portrait layouts and the landscape hint (EXP-02)
+- [x] 06-12-PLAN.md — Wave 5: device 1, Index grid lines
+- [x] 06-13-PLAN.md — Wave 6: device 2, Experience edge-cropped "03"
+- [x] 06-14-PLAN.md — Wave 7: device 3, About quarter rings
+- [x] 06-15-PLAN.md — Wave 8: device 4, margin section names + footer Pause motion + hint flag (D-06)
+- [x] 06-16-PLAN.md — Wave 9: device 5, Say hi spiral (first cut)
+- [x] 06-17-PLAN.md — Wave 10: layout-signature test, axe states, 34 visual baselines, Yahya review checkpoint
 **UI hint**: yes
 
 ### Phase 7: Copy, Sharing and Launch
@@ -124,8 +183,17 @@ Plans:
   1. About ("Two habits") and all other text are Yahya's final, approved copy in the data files, and every fact on the site has been checked against a real source
   2. Each page has its own title, description and canonical URL, and a search engine sees Person structured data
   3. Pasting yahya-hallani.dev into LinkedIn shows a branded preview card; the tab shows the favicon; a mistyped URL shows an on-brand 404 that leads back into the site
-  4. A five-second test with someone new shows they can say who Yahya is, one proof point and how to contact him; axe, Lighthouse budgets and a VoiceOver or NVDA pass are clean
-**Plans**: TBD
+  4. A five-second test with someone new shows they can say who Yahya is, one proof point and how to contact him; axe, Lighthouse budgets and a VoiceOver or NVDA pass are clean (amended by 07 D-12: the five-second test and screen-reader pass are optional and non-blocking; axe, Lighthouse CI, keyboard/reduced-motion runs and the PDF fact check block)
+**Plans**: 8 plans
+Plans:
+- [x] 07-01-PLAN.md — Fact inventory, resume SHA-256 pin and fact-string test, Yahya confirms numbers and mismatches (checkpoint)
+- [x] 07-02-PLAN.md — Shared Open Graph base, twitter card, 404 metadata and strings, Person JSON-LD, e2e SEO head spec
+- [x] 07-03-PLAN.md — Favicon from the real Y glyph and the 1200x630 share card (dev-only scripts, committed assets)
+- [x] 07-04-PLAN.md — On-brand 404 outside the pager with e2e (status, keyboard, reduced motion, no JS) and axe
+- [x] 07-05-PLAN.md — Lighthouse CI config, baseline run and `lighthouse` CI job
+- [x] 07-06-PLAN.md — Yahya's final copy placed and verified, resume re-export pinned, 50-160 char descriptions (checkpoint)
+- [ ] 07-07-PLAN.md — Final visual baselines, full gate, HUMAN-UAT, ship Phases 3-7 with noindex, lighthouse required, live checks (checkpoint)
+- [ ] 07-08-PLAN.md — Launch: remove noindex, robots.txt and sitemap.xml, SEO 100, Yahya merges (checkpoint)
 **UI hint**: yes
 
 ### Phase 8: Interactive Proof
@@ -148,11 +216,11 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 |-------|----------------|--------|-----------|
 | 1. Design Gate | 8/8 | Complete   | 2026-11-07 |
 | 2. Live Deploy Spike | 6/6 | Complete   | 2026-11-08 |
-| 3. Static Design System and Pages | 0/TBD | Not started | - |
-| 4. Horizontal Pager and Input | 0/TBD | Not started | - |
-| 5. Letter Navigation and Motion | 0/TBD | Not started | - |
-| 6. Page Compositions and Content | 0/TBD | Not started | - |
-| 7. Copy, Sharing and Launch | 0/TBD | Not started | - |
+| 3. Static Design System and Pages | 10/10 | Complete   | 2026-11-09 |
+| 4. Horizontal Pager and Input | 14/15 | Complete    | 2026-11-10 |
+| 5. Letter Navigation and Motion | 13/13 | Complete    | 2026-11-10 |
+| 6. Page Compositions and Content | 17/17 | Complete    | 2026-11-12 |
+| 7. Copy, Sharing and Launch | 6/8 | In Progress|  |
 | 8. Interactive Proof | 0/TBD | Not started | - |
 
 ## Research Flags

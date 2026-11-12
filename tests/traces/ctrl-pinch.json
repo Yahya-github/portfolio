@@ -1,0 +1,28 @@
+{
+  "device": "Trackpad pinch zoom (ctrlKey)",
+  "browser": "Chrome",
+  "os": "macOS",
+  "samples": [
+    { "t": 1000, "dx": 0, "dy": 3, "mode": 0, "ctrl": true },
+    { "t": 1016, "dx": 0, "dy": 6, "mode": 0, "ctrl": true },
+    { "t": 1032, "dx": 0, "dy": 12, "mode": 0, "ctrl": true },
+    { "t": 1048, "dx": 0, "dy": 24, "mode": 0, "ctrl": true },
+    { "t": 1064, "dx": 0, "dy": 40, "mode": 0, "ctrl": true },
+    { "t": 1080, "dx": 0, "dy": 60, "mode": 0, "ctrl": true },
+    { "t": 1096, "dx": 0, "dy": 72, "mode": 0, "ctrl": true },
+    { "t": 1112, "dx": 0, "dy": 60, "mode": 0, "ctrl": true },
+    { "t": 1128, "dx": 0, "dy": 40, "mode": 0, "ctrl": true },
+    { "t": 1144, "dx": 0, "dy": 20, "mode": 0, "ctrl": true },
+    { "t": 1160, "dx": 0, "dy": -4, "mode": 0, "ctrl": true },
+    { "t": 1176, "dx": 0, "dy": -12, "mode": 0, "ctrl": true },
+    { "t": 1192, "dx": 0, "dy": -30, "mode": 0, "ctrl": true },
+    { "t": 1208, "dx": 0, "dy": -60, "mode": 0, "ctrl": true },
+    { "t": 1224, "dx": 0, "dy": -80, "mode": 0, "ctrl": true },
+    { "t": 1240, "dx": 0, "dy": -60, "mode": 0, "ctrl": true },
+    { "t": 1256, "dx": 0, "dy": -30, "mode": 0, "ctrl": true },
+    { "t": 1272, "dx": 0, "dy": -12, "mode": 0, "ctrl": true },
+    { "t": 1288, "dx": 0, "dy": -4, "mode": 0, "ctrl": true },
+    { "t": 1304, "dx": 0, "dy": -1, "mode": 0, "ctrl": true }
+  ],
+  "expectPages": 0
+}
