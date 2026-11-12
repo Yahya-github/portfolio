@@ -3,11 +3,13 @@
 }
 
 .intro {
+  position: relative;
   grid-column: 1 / 5;
   padding-top: var(--space-lg);
 }
 
 .meta {
+  position: relative;
   grid-column: 7 / 13;
   padding-top: var(--space-lg);
   display: grid;

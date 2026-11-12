@@ -1,3 +1,4 @@
+import { GridLines } from "@/components/devices/GridLines";
 import { PageTitle } from "@/components/pages/Heading";
 import { indexPage } from "@/content/index";
 import { site } from "@/content/site";
@@ -12,6 +13,7 @@ import styles from "./index-page.module.css";
 export function IndexPage() {
   return (
     <div className={`grid ${styles.root}`}>
+      <GridLines />
       <PageTitle slug="index" text={indexPage.title} />
       <div className={styles.intro}>
         <p className="t-body measure">{site.roleLine}</p>
