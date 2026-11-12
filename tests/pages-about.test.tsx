@@ -14,9 +14,11 @@ function renderAbout(isCurrent: boolean) {
       <AboutPage isCurrent={isCurrent} />
     </PageLevelProvider>,
   );
-  const imgs = view.container.querySelectorAll("img");
-  expect(imgs).toHaveLength(1);
-  return { ...view, img: imgs[0] };
+  const img = view.container.querySelector<HTMLImageElement>(
+    'img[data-twin="grey"]',
+  )!;
+  expect(img).not.toBeNull();
+  return { ...view, img };
 }
 
 describe("AboutPage", () => {
@@ -62,14 +64,23 @@ describe("AboutPage", () => {
     expect(screen.getByText(about.paragraph).tagName).toBe("P");
   });
 
-  it("does not make the portrait interactive (colour twin is Phase 6)", () => {
-    const { container, img } = renderAbout(true);
-    expect(container.querySelector("button")).toBeNull();
-    // The title is script-focusable (tabindex -1, A11Y-01); nothing is Tab-reachable.
+  it("renders the portrait as a disabled pressed-state button with a colour twin", () => {
+    const { container } = renderAbout(true);
+    const button = screen.getByRole("button");
+    expect(button).toHaveAttribute("aria-pressed", "false");
+    expect(button).toBeDisabled();
+    expect(button.textContent).toContain(", show in colour");
+    const grey = container.querySelector('img[data-twin="grey"]')!;
+    const colour = container.querySelector('img[data-twin="colour"]')!;
+    expect(grey.getAttribute("src")).toBeTruthy();
+    expect(grey.getAttribute("alt")).toBe(about.portraitAlt);
+    expect(colour.getAttribute("src")).toBeNull();
+    expect(colour.getAttribute("data-src")).toContain(
+      "portrait-devfest-2026-color",
+    );
+    // The title is script-focusable (tabindex -1, A11Y-01); nothing else is Tab-reachable.
     expect(
       container.querySelector('[tabindex]:not([tabindex="-1"])'),
     ).toBeNull();
-    expect(img.closest("[tabindex]")).toBeNull();
-    expect(img.closest("button, a")).toBeNull();
   });
 });

@@ -1,27 +1,14 @@
-import { Photo } from "@/components/media/Photo";
+import { PortraitToggle } from "@/components/media/PortraitToggle";
 import { about } from "@/content/about";
-import { media } from "@/lib/media/manifest";
 import { PageTitle } from "./Heading";
 import type { PageProps } from "./types";
 import styles from "./about-page.module.css";
-
-const PORTRAIT_SOURCES = media["portrait/portrait-devfest-2026-grey"];
-
-// Pitfall 3 / user decision 2026-11-08: describe the drawn width
-// (object-fit: cover in a tall column), not the slot width.
-const PORTRAIT_SIZES = "(max-width: 820px) 100vw, calc((100vh - 128px) * 1.22)";
 
 export function AboutPage({ isCurrent }: PageProps) {
   return (
     <div className={`grid ${styles.root}`}>
       <div className={styles.portrait}>
-        <Photo
-          sources={PORTRAIT_SOURCES}
-          sizes={PORTRAIT_SIZES}
-          alt={about.portraitAlt}
-          eager={isCurrent}
-          className={styles.img}
-        />
+        <PortraitToggle eager={isCurrent} />
       </div>
       <PageTitle
         slug="about"
