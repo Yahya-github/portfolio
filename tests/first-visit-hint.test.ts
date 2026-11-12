@@ -259,7 +259,7 @@ describe("useHint html[data-hint] flag", () => {
     expect(document.documentElement.dataset.hint).toBe("pending");
     vi.advanceTimersByTime(1600);
     expect(document.documentElement.dataset.hint).toBe("pending");
-    vi.advanceTimersByTime(9000);
+    vi.advanceTimersByTime(9100);
     expect(document.documentElement.dataset.hint).toBeUndefined();
     expect(done).toHaveBeenCalledTimes(1);
     unmount();

@@ -340,6 +340,7 @@ test("html[data-hint] is set until the hint is done, then removed", async ({
   await showHint(page);
   await expect(page.locator("html")).toHaveAttribute("data-hint", "pending");
   await page.clock.fastForward(8000);
+  await page.clock.fastForward(300);
   await expect(page.locator("html")).not.toHaveAttribute("data-hint", /.*/);
 });
 

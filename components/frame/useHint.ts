@@ -81,10 +81,11 @@ export function useHint(
     const hide = (): void => {
       nudge?.cancel();
       hint.dataset.state = "done";
-      clearFlag();
+      // The flag outlives the 150ms fade so the control never shares the footer with the text.
       clearTimer = setTimeout(
         () => {
           hint.textContent = "";
+          clearFlag();
         },
         reduced() ? 0 : HINT_FADE_MS,
       );
