@@ -320,7 +320,8 @@ gs = inst.getGlyphSet(); name = inst.getBestCmap()[ord("Y")]
         "http://localhost:4174/projects/facturo/",
         "http://localhost:4174/this-page-does-not-exist/"
       ],
-      "numberOfRuns": 3
+      "numberOfRuns": 3,
+      "settings": { "ignoreStatusCode": true }
     },
     "assert": {
       "assertMatrix": [
@@ -549,18 +550,18 @@ test("share card is a 1200x630 PNG", async ({ request }) => {
 | A7 | pnpm 12 may enforce a minimum release age on new installs | Deprecated note | Install 0.16.0 instead |
 | A8 | Browsers without SVG favicon support fall back to requesting `/favicon.ico` | Pattern 6 | A 404 on that request in old browsers only |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Facturo end date: site or resume?**
+1. **Facturo end date: site or resume?** RESOLVED: 07-01 Task 3 checkpoint item F-1 (Yahya decides; 07-06 Task 2 applies it and pins the range in tests/resume-facts.test.ts).
    - What we know: the site says Jun to Oct 2026 (ended); the resume says Jun 2026 - Present.
    - Recommendation: a blocking checkpoint for Yahya in the fact-check plan; most likely he re-exports the resume (D-02 already plans a re-export).
-2. **Freelance month.**
+2. **Freelance month.** RESOLVED: 07-01 Task 3 checkpoint item F-2 (Yahya confirms "May 2025" and picks the site wording; 07-06 Task 2 updates content and tests/content.test.ts).
    - What we know: the PDF already says May 2025, so D-02's premise (that the resume says 2023) is stale.
    - Recommendation: Yahya confirms "May 2025". The site keeps "Since 2025" or adopts "Since May 2025", his call.
-3. **How Phases 3 to 7 reach production.**
+3. **How Phases 3 to 7 reach production.** RESOLVED: 07-07 Task 2 (pre-launch PR from local `main`, noindex still on, required checks plus `lighthouse` green, production verified); 07-08 is the separate launch PR Yahya merges.
    - What we know: `origin/main` is at Phase 2, `main` is protected (PR + 4 checks, `enforce_admins` false), and `branching_strategy: none`.
    - Recommendation: the plan before launch opens a PR from a branch at local `main` (noindex still on), lets the four checks plus `lighthouse` pass, and verifies the preview or production. The launch plan is a second, small PR that Yahya merges deliberately.
-4. **Lighthouse baseline.**
+4. **Lighthouse baseline.** RESOLVED: 07-05 Task 1 step 5 (baseline measured and recorded; any under-budget route is a Rule 4 blocker, never a lowered threshold).
    - Recommendation: a Wave 0 measurement task; escalate if under budget.
 
 ## Environment Availability
