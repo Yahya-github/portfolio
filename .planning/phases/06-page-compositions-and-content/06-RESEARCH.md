@@ -390,11 +390,11 @@ const lazy = readdirSync("out/_next/static/chunks").filter(n => n.endsWith(".js"
 | A4 | Mutating `dataset` on server-component DOM nodes is never overwritten, because page bodies do not re-render | Patterns 2, 4 | Medium. Verified by design (PageSection comment "never re-renders"), but an e2e test after paging away and back should assert the state survives |
 | A5 | Headless Chromium in the Playwright container allows `clipboard.writeText` once permissions are granted | Pitfall 8 | Medium. Fall back to stubbing `writeText` for the success path too and asserting the call argument |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **JS-off colour for "on demand" twins.** UI-SPEC says "JS off: CSS hover previews/crossfades still work". With `data-src` twins (D-09 "load on demand"), JS-off visitors get no colour on the About portrait or the marks. Recommendation: honour D-09 (data-src) for the portrait and walkthrough. For marks (1-13 kB, lossless, tiny), use a real `src` with `loading="lazy"` + `data-defer` so CSS hover works without JS. Flag this in the plan for Yahya's review.
-2. **Lazy-chunk naming in measure output.** Hashed names make failures hard to read. Recommendation: map each lazy chunk to its module by searching the chunk text for a known marker string per feature (e.g. an exported constant name), or print hashes plus sizes. This is the planner's call and is not blocking.
-3. **Margin names on Experience stop above the "03".** If the "03" device is cut, the names must extend to `--space-lg` above the footer. Make the stop a CSS variable that the "03" plan sets, so cutting either plan needs no edit to the other.
+1. **(RESOLVED: plans 06-01, 06-04, 06-06 build the recommendation; Yahya reviews it at the 06-17 checkpoint) JS-off colour for "on demand" twins.** UI-SPEC says "JS off: CSS hover previews/crossfades still work". With `data-src` twins (D-09 "load on demand"), JS-off visitors get no colour on the About portrait or the marks. Recommendation: honour D-09 (data-src) for the portrait and walkthrough. For marks (1-13 kB, lossless, tiny), use a real `src` with `loading="lazy"` + `data-defer` so CSS hover works without JS. Flag this in the plan for Yahya's review.
+2. **(RESOLVED: plan 06-02 names each chunk by its first module id) Lazy-chunk naming in measure output.** Hashed names make failures hard to read. Recommendation: map each lazy chunk to its module by searching the chunk text for a known marker string per feature (e.g. an exported constant name), or print hashes plus sizes. This is the planner's call and is not blocking.
+3. **(RESOLVED: plans 06-13 and 06-15 via the `--names-end` variable) Margin names on Experience stop above the "03".** If the "03" device is cut, the names must extend to `--space-lg` above the footer. Make the stop a CSS variable that the "03" plan sets, so cutting either plan needs no edit to the other.
 
 ## Environment Availability
 
