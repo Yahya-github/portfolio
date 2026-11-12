@@ -15,6 +15,7 @@ const VIEWPORTS = [
 const ROUTES = [
   ...sections.map((s) => ({ name: s.slug, route: s.route })),
   { name: "facturo-deep-dive", route: "/projects/facturo/" },
+  { name: "not-found", route: "/this-page-does-not-exist/" },
 ];
 
 const SHOT = {
