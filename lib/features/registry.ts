@@ -14,6 +14,7 @@ export const FEATURE_LOADERS: Readonly<
   walkthrough: () => import("@/lib/walkthrough/mount"),
   toggles: () => import("@/lib/toggles/mount"),
   "copy-email": () => import("@/lib/copy-email/mount"),
+  motion: () => import("@/lib/motion/devices"),
 };
 
 export const PAGE_FEATURES: Readonly<Record<Slug, readonly FeatureKey[]>> = {
@@ -25,8 +26,8 @@ export const PAGE_FEATURES: Readonly<Record<Slug, readonly FeatureKey[]>> = {
   "say-hi": ["copy-email"],
 };
 
-/** Mounted once on load with root = document.documentElement (plan 06-15 adds "motion"). */
-export const GLOBAL_FEATURES: readonly FeatureKey[] = [];
+/** Mounted once on load with root = document.documentElement. */
+export const GLOBAL_FEATURES: readonly FeatureKey[] = ["motion"];
 
 /** Slugs of target-1..target+1, clamped to the sections. */
 export function neighbourSlugs(target: number): readonly Slug[] {

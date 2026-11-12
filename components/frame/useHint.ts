@@ -4,6 +4,9 @@
  * constants only (T-05-13); storage access never throws (T-05-14).
  * Memory is written when the visitor pages or after 3000ms visible; the nudge is two
  * 12px pulses 200ms after showing (05-12 gap closure).
+ * Phase 6: publishes html[data-hint] while the hint is pending or shown (and fires
+ * HINT_DONE_EVENT when it ends) so the Pause motion control and the margin names never
+ * share the footer or move with the hint (UI-SPEC footer collision rule).
  */
 import { useEffect, type RefObject } from "react";
 import { usePagerController } from "@/components/shell/PagerContext";
@@ -19,7 +22,7 @@ import {
   type HintState,
 } from "@/lib/first-visit/hint";
 import { HINT_KEY, markSeen, seenState } from "@/lib/first-visit/storage";
-import { OPENING_DONE_EVENT } from "@/lib/motion/events";
+import { HINT_DONE_EVENT, OPENING_DONE_EVENT } from "@/lib/motion/events";
 import { FALLBACK_EASE, canAnimate, readEase } from "@/lib/motion/waapi";
 
 const HINT_FADE_MS = 150;
@@ -38,6 +41,16 @@ export function useHint(
     const seen = seenState(HINT_KEY);
     if (seen === "seen" || (seen === "unavailable" && shownThisLoad)) return;
 
+    const html = document.documentElement;
+    html.dataset.hint = "pending";
+    let flagged = true;
+    const clearFlag = (): void => {
+      if (!flagged) return;
+      flagged = false;
+      delete html.dataset.hint;
+      document.dispatchEvent(new Event(HINT_DONE_EVENT));
+    };
+
     const reduced = (): boolean => controller?.isReducedMotion() ?? false;
     let timer: ReturnType<typeof setTimeout> | undefined;
     let clearTimer: ReturnType<typeof setTimeout> | undefined;
@@ -53,6 +66,7 @@ export function useHint(
       if (hint.scrollWidth > hint.clientWidth) {
         hint.dataset.state = "done";
         hint.textContent = "";
+        clearFlag();
         return;
       }
       const next = nextRef.current;
@@ -67,9 +81,11 @@ export function useHint(
     const hide = (): void => {
       nudge?.cancel();
       hint.dataset.state = "done";
+      // The flag outlives the 150ms fade so the control never shares the footer with the text.
       clearTimer = setTimeout(
         () => {
           hint.textContent = "";
+          clearFlag();
         },
         reduced() ? 0 : HINT_FADE_MS,
       );
@@ -82,6 +98,7 @@ export function useHint(
       if (state.phase !== prev.phase) {
         if (state.phase === "shown") show();
         else if (state.phase === "done" && prev.phase === "shown") hide();
+        else if (state.phase === "done") clearFlag();
       }
       if (timer !== undefined) clearTimeout(timer);
       timer = undefined;
@@ -108,6 +125,7 @@ export function useHint(
     });
 
     return () => {
+      clearFlag();
       nudge?.cancel();
       if (timer !== undefined) clearTimeout(timer);
       if (clearTimer !== undefined) clearTimeout(clearTimer);

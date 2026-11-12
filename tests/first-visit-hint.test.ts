@@ -1,4 +1,5 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { HINT_DONE_EVENT } from "@/lib/motion/events";
 import {
   HINT_DELAY_AFTER_OPENING_MS,
   HINT_DELAY_NO_OPENING_MS,
@@ -218,5 +219,58 @@ describe("nudgeKeyframes", () => {
   });
   it("returns a fresh array each call", () => {
     expect(nudgeKeyframes("E")).not.toBe(nudgeKeyframes("E"));
+  });
+});
+
+describe("useHint html[data-hint] flag", () => {
+  const mountHint = async (): Promise<{ unmount: () => void }> => {
+    const { renderHook } = await import("@testing-library/react");
+    const { useHint } = await import("@/components/frame/useHint");
+    const hint = document.createElement("span");
+    const next = document.createElement("a");
+    const { unmount } = renderHook(() =>
+      useHint({ current: hint }, { current: next }),
+    );
+    return { unmount };
+  };
+
+  beforeEach(() => {
+    vi.resetModules();
+    window.localStorage.clear();
+    delete document.documentElement.dataset.hint;
+  });
+  afterEach(() => {
+    vi.useRealTimers();
+    delete document.documentElement.dataset.hint;
+  });
+
+  it("never flags a seen visitor", async () => {
+    window.localStorage.setItem("yh-hint-seen", "1");
+    const { unmount } = await mountHint();
+    expect(document.documentElement.dataset.hint).toBeUndefined();
+    unmount();
+  });
+
+  it("flags a fresh visitor at mount and clears it with one done event", async () => {
+    vi.useFakeTimers();
+    const done = vi.fn();
+    document.addEventListener(HINT_DONE_EVENT, done);
+    const { unmount } = await mountHint();
+    expect(document.documentElement.dataset.hint).toBe("pending");
+    vi.advanceTimersByTime(1600);
+    expect(document.documentElement.dataset.hint).toBe("pending");
+    vi.advanceTimersByTime(9100);
+    expect(document.documentElement.dataset.hint).toBeUndefined();
+    expect(done).toHaveBeenCalledTimes(1);
+    unmount();
+    expect(done).toHaveBeenCalledTimes(1);
+    document.removeEventListener(HINT_DONE_EVENT, done);
+  });
+
+  it("removes the flag on unmount while pending", async () => {
+    const { unmount } = await mountHint();
+    expect(document.documentElement.dataset.hint).toBe("pending");
+    unmount();
+    expect(document.documentElement.dataset.hint).toBeUndefined();
   });
 });

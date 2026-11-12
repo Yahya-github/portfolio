@@ -89,6 +89,14 @@ describe("Footer", () => {
     ).toHaveAttribute("href", "/");
   });
 
+  it("renders one Pause motion button carrying both labels", () => {
+    const { container } = render(<Footer current="index" />);
+    const buttons = container.querySelectorAll("button[data-motion-toggle]");
+    expect(buttons).toHaveLength(1);
+    expect(buttons[0].textContent).toContain("Pause motion");
+    expect(buttons[0].textContent).toContain("Play motion");
+  });
+
   it("server HTML carries neither hint string and an empty inert hint span", () => {
     const html = renderToString(<Footer current="index" />);
     expect(html).not.toContain("Scroll or use the arrow keys");

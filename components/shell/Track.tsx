@@ -1,4 +1,5 @@
 import type { ComponentType, CSSProperties } from "react";
+import { MarginNames } from "@/components/devices/MarginNames";
 import { AboutPage } from "@/components/pages/AboutPage";
 import { AchievementsPage } from "@/components/pages/AchievementsPage";
 import { ExperiencePage } from "@/components/pages/ExperiencePage";
@@ -50,6 +51,7 @@ export function Track({ current }: TrackProps) {
             initialIndex={indexOfSlug(current)}
           >
             <Body isCurrent={isCurrent} />
+            {s.slug !== "index" ? <MarginNames slug={s.slug} /> : null}
           </PageSection>
         );
       })}

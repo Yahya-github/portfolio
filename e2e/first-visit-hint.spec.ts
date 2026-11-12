@@ -332,6 +332,27 @@ test("footer still tracks the page (NAV-05)", async ({ page }) => {
   expect(index).toBe("3");
 });
 
+test("html[data-hint] is set until the hint is done, then removed", async ({
+  page,
+}) => {
+  await openFresh(page);
+  await expect(page.locator("html")).toHaveAttribute("data-hint", "pending");
+  await showHint(page);
+  await expect(page.locator("html")).toHaveAttribute("data-hint", "pending");
+  await page.clock.fastForward(8000);
+  await page.clock.fastForward(300);
+  await expect(page.locator("html")).not.toHaveAttribute("data-hint", /.*/);
+});
+
+test("a seeded visitor never gets html[data-hint]", async ({ page }) => {
+  await page.addInitScript(
+    ([k, v]) => localStorage.setItem(k as string, v as string),
+    [HINT_KEY, SEEN_VALUE],
+  );
+  await open(page, "/projects/", DESKTOP);
+  await expect(page.locator("html")).not.toHaveAttribute("data-hint", /.*/);
+});
+
 test("axe finds no footer violations with the hint shown", async ({ page }) => {
   await openFresh(page);
   await showHint(page);
