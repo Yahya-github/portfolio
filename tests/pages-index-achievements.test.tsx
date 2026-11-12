@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { PageLevelProvider } from "@/components/pages/PageLevel";
@@ -136,12 +137,52 @@ describe("AchievementsPage", () => {
     );
   });
 
-  it("renders no svg and no img", () => {
+  it("renders five preview items and no svg", () => {
     const { container } = render(
       <PageLevelProvider level={1}>
         <AchievementsPage />
       </PageLevelProvider>,
     );
-    expect(container.querySelector("svg, img")).toBeNull();
+    expect(container.querySelectorAll("li[data-preview-item]")).toHaveLength(5);
+    expect(container.querySelector("svg")).toBeNull();
+  });
+
+  it("renders the 75/75 line as a focusable non-link with a text-only preview", () => {
+    const { container } = render(
+      <PageLevelProvider level={1}>
+        <AchievementsPage />
+      </PageLevelProvider>,
+    );
+    const line = screen.getByText("75/75").closest("[data-preview-trigger]");
+    expect(line?.tagName).toBe("DIV");
+    expect(line).toHaveAttribute("tabindex", "0");
+    expect(line).toHaveAttribute("data-cursor-snap");
+    expect(line).not.toHaveAttribute("href");
+    const text = container.querySelectorAll("figure[data-preview-text]");
+    expect(text).toHaveLength(1);
+    expect(text[0]).toHaveAttribute("aria-hidden", "true");
+  });
+
+  it("renders one image per photo line with the content alt text", () => {
+    const { container } = render(
+      <PageLevelProvider level={1}>
+        <AchievementsPage />
+      </PageLevelProvider>,
+    );
+    const imgs = [...container.querySelectorAll("img")];
+    const alts = achievements.lines.flatMap((l) =>
+      l.preview.kind === "photo" ? [l.preview.alt] : [],
+    );
+    expect(imgs).toHaveLength(4);
+    expect(imgs.map((i) => i.getAttribute("alt"))).toEqual(alts);
+  });
+
+  it("never uses :focus-within in the preview or page CSS", () => {
+    for (const f of [
+      "components/media/proof-preview.module.css",
+      "components/pages/achievements-page.module.css",
+    ]) {
+      expect(readFileSync(f, "utf8")).not.toContain("focus-within");
+    }
   });
 });
