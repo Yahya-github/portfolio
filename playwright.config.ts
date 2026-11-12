@@ -41,7 +41,11 @@ export default defineConfig({
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
-      testIgnore: [/visual\.spec\.ts/, /pager-swipe\.spec\.ts/],
+      testIgnore: [
+        /visual\.spec\.ts/,
+        /pager-swipe\.spec\.ts/,
+        /phone\.spec\.ts/,
+      ],
     },
     // A11Y-05: the same routes with JavaScript off.
     {
@@ -58,6 +62,17 @@ export default defineConfig({
         hasTouch: true,
       },
       testMatch: /pager-swipe\.spec\.ts/,
+    },
+    // EXP-02: phone portrait layouts, coarse pointer and touch.
+    {
+      name: "chromium-phone",
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 390, height: 844 },
+        hasTouch: true,
+        isMobile: true,
+      },
+      testMatch: /phone\.spec\.ts/,
     },
     ...(process.env.ALL_BROWSERS === "1"
       ? [
