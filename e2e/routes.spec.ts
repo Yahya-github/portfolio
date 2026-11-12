@@ -117,3 +117,35 @@ for (const route of ["/achievements/", "/projects/", "/say-hi/"]) {
     }
   });
 }
+
+// CONT-08 / CONT-04: the standalone deep dive keeps resume, contact and safe external links (also JS-off).
+const DEEP_DIVE = "/projects/facturo/";
+
+test(`${DEEP_DIVE} header links the resume and Say hi`, async ({ page }) => {
+  await page.goto(DEEP_DIVE);
+  const nav = page.locator("header nav");
+  await expect(
+    nav.getByRole("link", { name: site.resume.label, exact: true }),
+  ).toHaveAttribute("href", site.resume.href);
+  await expect(nav.getByRole("link", { name: "Say hi" })).toHaveAttribute(
+    "href",
+    "/say-hi/",
+  );
+});
+
+test(`${DEEP_DIVE} external links are https with noopener noreferrer`, async ({
+  page,
+}) => {
+  await page.goto(DEEP_DIVE);
+  const links = page.locator('a[target="_blank"]');
+  const count = await links.count();
+  expect(count).toBeGreaterThan(0);
+  for (let i = 0; i < count; i++) {
+    const link = links.nth(i);
+    const href = (await link.getAttribute("href")) ?? "";
+    const rel = ((await link.getAttribute("rel")) ?? "").split(/\s+/);
+    expect(rel, href).toContain("noopener");
+    expect(rel, href).toContain("noreferrer");
+    expect(href).toMatch(/^https:\/\//);
+  }
+});

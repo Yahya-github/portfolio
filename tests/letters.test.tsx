@@ -187,7 +187,9 @@ describe("LetterNav currentMarker", () => {
       <LetterNav current="projects" currentMarker="true" />,
     );
     const links = [...container.querySelectorAll("a")];
-    const marked = links.filter((a) => a.getAttribute("aria-current") === "true");
+    const marked = links.filter(
+      (a) => a.getAttribute("aria-current") === "true",
+    );
     expect(marked).toHaveLength(1);
     expect(marked[0]?.getAttribute("href")).toBe("/projects/");
     expect(container.querySelector('[aria-current="page"]')).toBeNull();

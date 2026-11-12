@@ -9,11 +9,13 @@ const VIEWPORTS = [
   { name: "phone", width: 390, height: 844 },
 ] as const;
 
-for (const s of sections) {
+const ROUTES = [...sections.map((s) => s.route), "/projects/facturo/"];
+
+for (const route of ROUTES) {
   for (const vp of VIEWPORTS) {
-    test(`axe ${s.route} ${vp.name}`, async ({ page }) => {
+    test(`axe ${route} ${vp.name}`, async ({ page }) => {
       await page.setViewportSize({ width: vp.width, height: vp.height });
-      await page.goto(s.route);
+      await page.goto(route);
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
         .analyze();
