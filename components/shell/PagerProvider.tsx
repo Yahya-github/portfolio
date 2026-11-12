@@ -26,9 +26,12 @@ import {
   setManualScrollRestoration,
 } from "@/lib/pager/history";
 import { pageElement } from "@/lib/pager/input/edge";
+import { autoloadCursor } from "@/lib/cursor/autoload";
+import { decodeImages } from "@/lib/media/decode";
 import { createScrollPort } from "@/lib/pager/scroll";
 import { PAGER_SELECTORS, type PagerDeps } from "@/lib/pager/types";
 import { PagerContext } from "./PagerContext";
+import { useFeatures } from "./useFeatures";
 import { usePagerInput } from "./usePagerInput";
 import { usePagerNavigation } from "./usePagerNavigation";
 
@@ -49,15 +52,6 @@ function createDomDeps(): PagerDeps {
   };
 }
 
-/** Pitfall 13: target page images decode before they slide into view. */
-function decodeImages(page: HTMLElement | null): void {
-  if (!page) return;
-  for (const img of Array.from(page.querySelectorAll("img"))) {
-    img.loading = "eager";
-    img.decode?.().catch(() => {});
-  }
-}
-
 interface PagerProviderProps {
   readonly initial: number;
   readonly children: ReactNode;
@@ -69,6 +63,7 @@ export function PagerProvider({ initial, children }: PagerProviderProps) {
   );
   usePagerInput(controller);
   usePagerNavigation(controller);
+  useFeatures(controller);
   const state = useSyncExternalStore(
     controller.subscribe,
     controller.getSnapshot,
@@ -97,41 +92,7 @@ export function PagerProvider({ initial, children }: PagerProviderProps) {
   }, [controller]);
 
   // EXP-03: the cursor chunk loads only for a fine hovering pointer outside forced colours; a failed load keeps the native cursor (WR-07).
-  useEffect(() => {
-    const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const forced = window.matchMedia("(forced-colors: active)");
-    let alive = true;
-    let loading = false;
-    let unmount: (() => void) | null = null;
-    const wanted = () => fine.matches && !forced.matches;
-    const sync = () => {
-      if (wanted() && !unmount && !loading) {
-        loading = true;
-        import("@/lib/cursor/mount")
-          .then((m) => {
-            loading = false;
-            if (alive && wanted() && !unmount) {
-              unmount = m.mountCursor(controller.signals);
-            }
-          })
-          .catch(() => {
-            loading = false;
-          });
-      } else if (!wanted() && unmount) {
-        unmount();
-        unmount = null;
-      }
-    };
-    sync();
-    fine.addEventListener("change", sync);
-    forced.addEventListener("change", sync);
-    return () => {
-      alive = false;
-      fine.removeEventListener("change", sync);
-      forced.removeEventListener("change", sync);
-      unmount?.();
-    };
-  }, [controller]);
+  useEffect(() => autoloadCursor(controller.signals), [controller]);
 
   useEffect(
     () =>
