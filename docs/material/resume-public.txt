@@ -36,7 +36,7 @@ Freelance Software Developer / Montreal, QC
  • Engineered a Python automation pipeline that cut a client’s weekly workflow from about 8 hours to under 30 minutes (90%
     + faster).
 PROJECTS
-Facturo - Local-First Invoicing App                                                                               Jun 2026 - Present
+Facturo - Local-First Invoicing App                                                                             Jun 2026 - Oct 2026
  • Client project for a Québec trucking company (public demo, fictional data): built a local-first invoicing app that turns paper
    work tickets into tax-correct invoices (TPS/TVQ, Excel/PDF) and reconciles supplier payments by auto-matching statement
    rows to billed tickets and flagging duplicates.
@@ -44,9 +44,14 @@ Facturo - Local-First Invoicing App                                             
    distance and leaving uncertain fields blank rather than guessing.
  • Engineered a release pipeline (GitHub Actions, PyInstaller) with SHA-256-verified in-app updates and automatic rollback,
    backed by 700+ tests (pytest, Playwright e2e, Python/JS parity checks on discount math).
-Atlantis - 2D Submarine Exploration Game                                                                    1st Place | Jan 2026
- • Architected 6 gameplay systems and wrote the largest share of the team’s GDScript (about 770 of 1,900 lines); rebuilt save
-   and inventory in the final 4 hours after a state-corruption bug.
+MAME Tool Rental - Tool & Machine Booking Platform                                                             Nov 2026 - Present
+ • Built a full-stack rental platform for the McGill Association of Mechanical Engineers (FastAPI, SQLite, Next.js, React):
+   students book tools and machines with drawing uploads; admins review requests, track pickups and returns, and manage
+   inventory from a stats dashboard.
+ • Shipped a CI/CD pipeline (GitHub Actions, Render, Vercel) gated by 1,300+ tests (pytest, Vitest, Playwright), with per-visitor
+   rate limiting and direct-to-API drawing uploads (up to 20 MB) past Vercel’s proxy limit.
+Atlantis - 2D Submarine Exploration Game                                                                      1st Place | Jan 2026
+ • Architected 6 gameplay systems and rebuilt save and inventory in the final 4 hours after a state-corruption bug.
 CRC 2026 Competition Robot - Control Firmware                                                 1st Place | Sep 2025 - Feb 2026
  • Built the robot’s embedded state machine in C/C++ as lead programmer, tuned PID control loops, and debugged hardware
    and software integration live between matches.

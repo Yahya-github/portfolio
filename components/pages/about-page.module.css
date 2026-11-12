@@ -48,12 +48,12 @@
     height: 40svh;
   }
 
-  /* TWO is 1.49em, the widest row */
+  /* PASS is 1.63em, the widest row (measured at 390 wide); 1.64 leaves a hair of slack */
   .title {
     margin-top: var(--space-xl);
     font-size: min(
       var(--text-display-phone),
-      calc((100vw - var(--phone-inset)) / 1.49)
+      calc((100vw - var(--phone-inset)) / 1.64)
     );
   }
 

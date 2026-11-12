@@ -89,7 +89,7 @@ export const sections = [
     name: "About",
     title: "About, Yahya Hallani",
     description:
-      "Two habits: I decide fast under pressure, and I build things that run themselves.",
+      "Two passions, strategy and automations: competitive Pokemon, Chess and Minecraft automation modpacks.",
   },
   {
     slug: "say-hi",

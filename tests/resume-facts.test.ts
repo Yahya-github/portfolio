@@ -6,14 +6,14 @@ import { describe, expect, it } from "vitest";
 
 // After a re-export: rerun pdftotext -layout, update this hash, re-check 07-FACT-CHECK.md.
 const RESUME_SHA256 =
-  "b7b7bf90a32d40d4df12f83c4f052d641f8ecf1740dfa2c6d01cb313efa6dbfa";
+  "5943fdad1f8295afe2e43f3be353b710ef4c1befb6135740a30488cbe6674ee5";
 
 // Resolve from the Vitest root: jsdom gives import.meta.url a non-file scheme.
 const PUBLIC_PDF = join(process.cwd(), "public", "yahya-hallani-resume.pdf");
 const DOCS_PDF = join(process.cwd(), "docs", "material", "resume-public.pdf");
 const EXTRACT = join(process.cwd(), "docs", "material", "resume-public.txt");
 
-// Resume substrings that back site facts. The F-1 range is added in plan 07-06.
+// Resume substrings that back site facts. The F-1 range and MAME entry were added in plan 07-06.
 const FACT_STRINGS: readonly string[] = [
   "May 2025 - Present",
   "12 projects for 9 clients",
@@ -21,6 +21,9 @@ const FACT_STRINGS: readonly string[] = [
   "Sep 2026 - Present",
   "Feb 2026 - Present",
   "75/75",
+  "Jun 2026 - Oct 2026",
+  "MAME Tool Rental",
+  "Nov 2026 - Present",
 ];
 
 const PHONE_PATTERN = /\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}/;
@@ -44,6 +47,10 @@ describe("public resume", () => {
   it.each(FACT_STRINGS)("extract contains %s", (fact) => {
     const text = normalise(readFileSync(EXTRACT, "utf8"));
     expect(text).toContain(fact);
+  });
+
+  it("extract has no Atlantis line counts", () => {
+    expect(readFileSync(EXTRACT, "utf8")).not.toMatch(/1,900|770 of/);
   });
 
   it("extract contains no phone number", () => {

@@ -198,6 +198,11 @@ export interface AboutContent {
   readonly titleRows: readonly string[];
   readonly lead: string;
   readonly paragraph: string;
+  /** Words inside `paragraph` rendered as external links, in text order. */
+  readonly paragraphLinks: readonly {
+    readonly text: string;
+    readonly href: string;
+  }[];
   readonly portraitAlt: string;
   readonly portraitToggleSuffix: string;
 }
