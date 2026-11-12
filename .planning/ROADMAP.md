@@ -165,7 +165,7 @@ Plans:
 - [x] 06-07-PLAN.md — Wave 2: Experience organisation marks and About portrait twin (CONT-12, CONT-05)
 - [x] 06-08-PLAN.md — Wave 2: Say hi copy email (CONT-07)
 - [x] 06-09-PLAN.md — Wave 2: Facturo deep-dive route /projects/facturo/ (CONT-04, CONT-08)
-- [ ] 06-10-PLAN.md — Wave 3: Projects deep-dive link, MAME mark and preview (CONT-03)
+- [x] 06-10-PLAN.md — Wave 3: Projects deep-dive link, MAME mark and preview (CONT-03)
 - [ ] 06-11-PLAN.md — Wave 4: designed phone portrait layouts and the landscape hint (EXP-02)
 - [ ] 06-12-PLAN.md — Wave 5: device 1, Index grid lines
 - [ ] 06-13-PLAN.md — Wave 6: device 2, Experience edge-cropped "03"
@@ -210,7 +210,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 3. Static Design System and Pages | 10/10 | Complete   | 2026-11-09 |
 | 4. Horizontal Pager and Input | 14/15 | Complete    | 2026-11-10 |
 | 5. Letter Navigation and Motion | 13/13 | Complete    | 2026-11-10 |
-| 6. Page Compositions and Content | 9/17 | In Progress|  |
+| 6. Page Compositions and Content | 10/17 | In Progress|  |
 | 7. Copy, Sharing and Launch | 0/TBD | Not started | - |
 | 8. Interactive Proof | 0/TBD | Not started | - |
 
