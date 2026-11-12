@@ -29,20 +29,52 @@ describe("ProjectsPage", () => {
     expect(container.firstElementChild).toHaveClass("grid");
   });
 
-  it("renders the Facturo still eagerly on its own route", () => {
+  it("renders ten frames, only frame 1 grey loaded eagerly", () => {
     const { container } = renderPage(1, true);
-    const imgs = container.querySelectorAll("img");
-    expect(imgs).toHaveLength(1);
-    const img = imgs[0];
-    expect(img).toHaveAttribute("alt", projects.flagship.imageAlt);
-    expect(img).toHaveAttribute("loading", "eager");
-    expect(img).toHaveAttribute("sizes", "(max-width: 820px) 100vw, 60vw");
-    expect(img.getAttribute("srcset")?.split(", ")).toHaveLength(2);
+    const frames = container.querySelectorAll("[data-frame]");
+    expect(frames).toHaveLength(10);
+    frames.forEach((fr, i) => {
+      const grey = fr.querySelector('img[data-twin="grey"]');
+      const colour = fr.querySelector('img[data-twin="colour"]');
+      expect(colour).toHaveAttribute("alt", "");
+      expect(colour).toHaveAttribute("data-src");
+      expect(colour).toHaveAttribute("data-defer");
+      expect(colour).not.toHaveAttribute("src");
+      if (i === 0) {
+        expect(grey).toHaveAttribute("src");
+        expect(grey).toHaveAttribute("loading", "eager");
+        expect(grey).toHaveAttribute("alt", expect.stringMatching(/Facturo/));
+      } else {
+        expect(grey).not.toHaveAttribute("src");
+        expect(grey).toHaveAttribute("data-src");
+        expect(grey).toHaveAttribute("data-defer");
+        expect(fr).toHaveAttribute("aria-hidden", "true");
+      }
+    });
+  });
+
+  it("exposes the walkthrough group, three named controls and the counter", () => {
+    const { container } = renderPage();
+    const group = container.querySelector("[data-walk]");
+    expect(group).toHaveAttribute("role", "group");
+    expect(group).toHaveAttribute("aria-roledescription", "walkthrough");
+    expect(group).toHaveAttribute("tabindex", "0");
+    const c = projects.flagship.walkthrough.controls;
+    const buttons = container.querySelectorAll("button");
+    expect(buttons).toHaveLength(3);
+    expect(
+      Array.from(buttons).map((b) => b.getAttribute("aria-label")),
+    ).toEqual([c.pauseName, c.previousName, c.nextName]);
+    expect(container.querySelector("[data-walk-counter]")).toHaveTextContent(
+      "01 / 10, Home",
+    );
   });
 
   it("loads lazily when not current and shifts heading levels down", () => {
     const { container } = renderPage(2, false);
-    expect(container.querySelector("img")).toHaveAttribute("loading", "lazy");
+    expect(
+      container.querySelector('[data-frame="0"] img[data-twin="grey"]'),
+    ).toHaveAttribute("loading", "lazy");
     expect(screen.queryByRole("heading", { level: 1 })).toBeNull();
     expect(screen.getByRole("heading", { level: 2 })).toHaveAttribute(
       "id",
@@ -95,10 +127,10 @@ describe("ProjectsPage", () => {
     expect(within(items[4] as HTMLElement).queryByRole("link")).toBeNull(); // Showdown AI
   });
 
-  it("has no deep-dive link, no controls and no svg", () => {
+  it("has no deep-dive link and no svg", () => {
     const { container } = renderPage();
     expect(screen.getAllByRole("link")).toHaveLength(3);
     expect(container.textContent ?? "").not.toMatch(/deep dive/i);
-    expect(container.querySelector("button, svg")).toBeNull();
+    expect(container.querySelector("svg")).toBeNull();
   });
 });

@@ -1,17 +1,14 @@
 import type { CSSProperties } from "react";
-import { Photo } from "@/components/media/Photo";
 import { Heading, PageTitle } from "@/components/pages/Heading";
 import type { PageProps } from "@/components/pages/types";
 import { projects } from "@/content/projects";
 import { displayFitStyle } from "@/lib/display-fit";
-import { media } from "@/lib/media/manifest";
+import { Walkthrough } from "@/components/walkthrough/Walkthrough";
 import styles from "./projects-page.module.css";
 
-const FACTURO_SIZES = "(max-width: 820px) 100vw, 60vw";
-
 /**
- * 02 Projects. Greyscale Facturo still and lead in cols 1-8, five compact
- * ruled rows in cols 9-12. The case-study link and walkthrough wait for Phase 6 (D-13).
+ * 02 Projects. Facturo walkthrough and lead in cols 1-8, five compact
+ * ruled rows in cols 9-12. The walkthrough is lazy (CONT-11).
  */
 export function ProjectsPage({ isCurrent }: PageProps) {
   return (
@@ -22,15 +19,7 @@ export function ProjectsPage({ isCurrent }: PageProps) {
         className={styles.title}
       />
       <div className={styles.lead}>
-        <div className={styles.still}>
-          <Photo
-            sources={media["facturo/facturo-01-accueil-grey"]}
-            sizes={FACTURO_SIZES}
-            alt={projects.flagship.imageAlt}
-            eager={isCurrent}
-            className={styles.img}
-          />
-        </div>
+        <Walkthrough isCurrent={isCurrent} />
         <Heading offset={1} className={`t-display ${styles.name}`}>
           <span
             style={displayFitStyle(projects.flagship.name) as CSSProperties}
