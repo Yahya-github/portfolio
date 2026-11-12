@@ -13,7 +13,20 @@ for (const s of sections) {
     page,
   }) => {
     await open(page, s.route);
-    expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
+    // Pager motion only: the margin-names strips (06-15, paused off the current page) and the
+    // Projects walkthrough frames (06-0x, their own fade/loop) are page-local, not the pager in flight.
+    expect(
+      await page.evaluate(
+        () =>
+          document.getAnimations().filter((a) => {
+            const target = (a.effect as KeyframeEffect | null)?.target;
+            return !(
+              target?.hasAttribute("data-names-strip") ||
+              /(^|\s|_)fr(\s|$)/.test(target?.className?.toString() ?? "")
+            );
+          }).length,
+      ),
+    ).toBe(0);
     const live = page.locator("main#content > section:not([inert])");
     await expect(live).toHaveCount(1);
     await expect(live).toHaveId(`page-${s.slug}`);
