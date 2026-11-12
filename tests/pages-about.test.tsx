@@ -1,20 +1,8 @@
 import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { PageLevelProvider } from "@/components/pages/PageLevel";
 import { AboutPage } from "@/components/pages/AboutPage";
 import { about } from "@/content/about";
-
-// The test image loader stubs every asset at 1000x800; give the portraits
-// their real dimensions so srcset and the intrinsic size can be asserted.
-vi.mock("@/assets/portrait-800.webp", () => ({
-  default: { src: "/_test/portrait-800.webp", width: 800, height: 656 },
-}));
-vi.mock("@/assets/portrait-1200.webp", () => ({
-  default: { src: "/_test/portrait-1200.webp", width: 1200, height: 984 },
-}));
-vi.mock("@/assets/portrait-1512.webp", () => ({
-  default: { src: "/_test/portrait-1512.webp", width: 1512, height: 1240 },
-}));
 
 afterEach(cleanup);
 
@@ -53,9 +41,9 @@ describe("AboutPage", () => {
     );
     const candidates = (img.getAttribute("srcset") ?? "").split(", ");
     expect(candidates).toEqual([
-      "/_test/portrait-800.webp 800w",
-      "/_test/portrait-1200.webp 1200w",
-      "/_test/portrait-1512.webp 1512w",
+      "/media/portrait/portrait-devfest-2026-grey-800.webp 800w",
+      "/media/portrait/portrait-devfest-2026-grey-1200.webp 1200w",
+      "/media/portrait/portrait-devfest-2026-grey-1512.webp 1512w",
     ]);
     expect(img).toHaveAttribute("width", "1512");
     expect(img).toHaveAttribute("height", "1240");

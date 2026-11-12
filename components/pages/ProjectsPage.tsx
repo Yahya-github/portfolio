@@ -1,11 +1,10 @@
 import type { CSSProperties } from "react";
-import f960 from "@/assets/facturo-01-960.webp";
-import f1440 from "@/assets/facturo-01-1440.webp";
 import { Photo } from "@/components/media/Photo";
 import { Heading, PageTitle } from "@/components/pages/Heading";
 import type { PageProps } from "@/components/pages/types";
 import { projects } from "@/content/projects";
 import { displayFitStyle } from "@/lib/display-fit";
+import { media } from "@/lib/media/manifest";
 import styles from "./projects-page.module.css";
 
 const FACTURO_SIZES = "(max-width: 820px) 100vw, 60vw";
@@ -25,7 +24,7 @@ export function ProjectsPage({ isCurrent }: PageProps) {
       <div className={styles.lead}>
         <div className={styles.still}>
           <Photo
-            sources={[f960, f1440]}
+            sources={media["facturo/facturo-01-accueil-grey"]}
             sizes={FACTURO_SIZES}
             alt={projects.flagship.imageAlt}
             eager={isCurrent}
