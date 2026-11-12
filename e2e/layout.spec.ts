@@ -47,7 +47,8 @@ const POSTER_SIZES = [
   { viewport: VIEWPORTS.phone, px: 164 },
 ];
 
-const VISIBLE_IMG_ROUTES = new Set(["/about/", "/projects/"]);
+// The Facturo walkthrough ([data-walk], 20 imgs) is covered by walkthrough.spec.ts and excluded here.
+const VISIBLE_IMG_ROUTES = new Set(["/about/"]);
 
 const label = (v: Viewport) => `${v.width}x${v.height}`;
 
@@ -138,16 +139,18 @@ for (const s of sections) {
     expect(columns.split(/\s+/).filter((c) => /px$/.test(c))).toHaveLength(12);
   });
 
-  test(`${s.route} has no ornament: no svg, two img, the right ones visible`, async ({
+  test(`${s.route} has no ornament: no svg, one img outside the walkthrough, the right one visible`, async ({
     page,
   }) => {
     await open(page, s.route, VIEWPORTS.desktop);
     await expect(page.locator("svg")).toHaveCount(0);
-    await expect(page.locator("img")).toHaveCount(2);
+    await expect(page.locator("img:not([data-walk] img)")).toHaveCount(1);
     // Off-screen inert pages render their images with JS, so count the current page plus anything outside main.
-    const onPage = await page.locator(`#page-${s.slug} img:visible`).count();
+    const onPage = await page
+      .locator(`#page-${s.slug} img:not([data-walk] img):visible`)
+      .count();
     const outsideMain = await page
-      .locator("body img:not(main img):visible")
+      .locator("body img:not(main img):not([data-walk] img):visible")
       .count();
     expect(onPage + outsideMain).toBe(VISIBLE_IMG_ROUTES.has(s.route) ? 1 : 0);
   });
