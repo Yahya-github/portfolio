@@ -5,6 +5,7 @@ import { achievements } from "@/content/achievements";
 import { experience } from "@/content/experience";
 import { facturo } from "@/content/facturo";
 import { indexPage } from "@/content/index";
+import { notFound } from "@/content/not-found";
 import { projects } from "@/content/projects";
 import { sayHi } from "@/content/say-hi";
 import { sections, site } from "@/content/site";
@@ -19,6 +20,7 @@ const ALL_CONTENT = {
   about,
   sayHi,
   facturo,
+  notFound,
 };
 
 const FORBIDDEN: ReadonlyArray<readonly [string, RegExp]> = [
