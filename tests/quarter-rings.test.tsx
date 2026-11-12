@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { cleanup, render } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import {
@@ -46,5 +47,19 @@ describe("QuarterRings", () => {
     const { container } = render(<QuarterRings />);
     expect(container.firstElementChild).toHaveAttribute("aria-hidden", "true");
     expect(container.innerHTML).not.toMatch(/#[0-9a-fA-F]{3,6}/);
+  });
+
+  it("hovers per circle, hover-capable pointers only, stroke hit-testing", () => {
+    const css = readFileSync(
+      "components/devices/quarter-rings.module.css",
+      "utf8",
+    );
+    const media = css.split("@media (hover: hover) and (pointer: fine)")[1];
+    expect(media).toContain(".rings circle:hover");
+    expect(media).toContain("pointer-events: stroke");
+    expect(media).toContain("stroke-opacity: 1");
+    expect(css).not.toMatch(
+      /^\s*\.rings\s*\{[^}]*pointer-events: (auto|stroke)/m,
+    );
   });
 });

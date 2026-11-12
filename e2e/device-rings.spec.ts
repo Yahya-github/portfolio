@@ -17,7 +17,10 @@ for (const viewport of SIZES) {
     const shape = page.locator(SHAPE);
     await expect(shape).toHaveAttribute("aria-hidden", "true");
     await expect(shape).toHaveCSS("pointer-events", "none");
-    await expect(shape).toHaveCSS("opacity", "0.22");
+    await expect(shape).toHaveCSS("opacity", "1");
+    await expect(
+      page.locator("svg[data-quarter-rings] circle").first(),
+    ).toHaveCSS("stroke-opacity", "0.22");
 
     const m = await page.evaluate(() => {
       const svg = document.querySelector(
@@ -68,4 +71,34 @@ for (const viewport of SIZES) {
 test("quarter rings are hidden on phones", async ({ page }) => {
   await open(page, "/about/", { width: 390, height: 844 });
   await expect(page.locator(SHAPE)).toBeHidden();
+});
+
+test("each ring circle turns white on hover and its siblings stay dim", async ({
+  page,
+}) => {
+  await open(page, "/about/", { width: 1440, height: 900 });
+  const circles = page.locator("svg[data-quarter-rings] circle");
+  const n = await circles.count();
+  expect(n).toBe(14);
+  // Point on the stroke of circle i: centre (100,0) in a 100-unit viewBox, so
+  // the point straight left of the corner at radius r.
+  const point = (i: number) =>
+    page.evaluate((idx) => {
+      const svg = document.querySelector("svg[data-quarter-rings]")!;
+      const c = svg.querySelectorAll("circle")[idx];
+      const b = svg.getBoundingClientRect();
+      const k = b.width / 100;
+      const r = Number(c.getAttribute("r"));
+      return { x: b.left + (100 - r) * k, y: b.top + 1 };
+    }, i);
+  for (const i of [2, 7]) {
+    const p = await point(i);
+    await page.mouse.move(p.x, p.y);
+    await expect(circles.nth(i)).toHaveCSS("stroke-opacity", "1");
+    await expect(circles.nth(i + 1)).toHaveCSS("stroke-opacity", "0.22");
+    await expect(circles.nth(i - 1)).toHaveCSS("stroke-opacity", "0.22");
+    await expect(circles.nth(i)).toHaveCSS("stroke", "rgb(240, 240, 240)");
+  }
+  await page.mouse.move(5, 5);
+  await expect(circles.nth(7)).toHaveCSS("stroke-opacity", "0.22");
 });
