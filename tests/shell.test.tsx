@@ -29,7 +29,7 @@ describe("Shell on /about/", () => {
     render(<Shell current="about" />);
     const h1s = screen.getAllByRole("heading", { level: 1 });
     expect(h1s).toHaveLength(1);
-    expect(h1s[0]).toHaveAccessibleName("Two habits");
+    expect(h1s[0]).toHaveAccessibleName("Two passions");
   });
 
   it("renders six sections, five of them inert", () => {

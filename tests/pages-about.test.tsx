@@ -22,17 +22,33 @@ function renderAbout(isCurrent: boolean) {
 }
 
 describe("AboutPage", () => {
-  it("renders a visually hidden h1 named Two habits with aria-hidden letter rows", () => {
+  it("renders a visually hidden h1 named Two passions with aria-hidden letter rows", () => {
     const { container } = renderAbout(true);
     const h1 = screen.getByRole("heading", { level: 1 });
     expect(h1).toHaveAttribute("id", "title-about");
-    expect(h1).toHaveAccessibleName("Two habits");
+    expect(h1).toHaveAccessibleName("Two passions");
     const hidden = h1.querySelector('[aria-hidden="true"]');
     expect(hidden).not.toBeNull();
     expect([...(hidden as Element).children].map((c) => c.textContent)).toEqual(
-      ["TWO", "HAB", "ITS"],
+      ["TWO", "PASS", "IONS"],
     );
     expect(container.firstElementChild).toHaveClass("grid");
+  });
+
+  it("links the two games inside the paragraph with the external-link convention", () => {
+    renderAbout(true);
+    const links = screen
+      .getAllByRole("link")
+      .filter((a) => a.closest("p") !== null);
+    expect(links.map((a) => [a.textContent, a.getAttribute("href")])).toEqual([
+      ["Pokemon Showdown", "https://pokemonshowdown.com"],
+      ["Minecraft", "https://www.minecraft.net"],
+    ]);
+    for (const a of links) {
+      expect(a).toHaveAttribute("target", "_blank");
+      expect(a).toHaveAttribute("rel", "noopener noreferrer");
+      expect(a).toHaveClass("ulink");
+    }
   });
 
   it("serves the portrait with three sources and the approved sizes", () => {
@@ -61,7 +77,9 @@ describe("AboutPage", () => {
   it("renders the lead and paragraph from content as two paragraphs", () => {
     renderAbout(true);
     expect(screen.getByText(about.lead).tagName).toBe("P");
-    expect(screen.getByText(about.paragraph).tagName).toBe("P");
+    const paragraph = screen.getByText(about.lead).nextElementSibling!;
+    expect(paragraph.tagName).toBe("P");
+    expect(paragraph.textContent).toBe(about.paragraph);
   });
 
   it("renders the portrait as a disabled pressed-state button with a colour twin", () => {

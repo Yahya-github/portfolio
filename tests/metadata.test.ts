@@ -109,3 +109,31 @@ describe("notFoundMetadata", () => {
     expect(m.openGraph).toMatchObject({ images: [SHARE_IMAGE] });
   });
 });
+
+describe("description length", () => {
+  const MIN = 50;
+  const MAX = 160;
+  // Accepted deviation (Yahya, 2026-11-12, D-09 / UI-SPEC Surface 4): the Achievements
+  // description is 184 characters and ships unchanged; search snippets may truncate it.
+  const OVER_MAX_EXCEPTIONS = new Set(["achievements"]);
+
+  it.each(sections.map((s) => [s.slug, s.description] as const))(
+    "keeps the %s description between 50 and 160 characters",
+    (slug, description) => {
+      expect(description.length).toBeGreaterThanOrEqual(MIN);
+      if (!OVER_MAX_EXCEPTIONS.has(slug)) {
+        expect(description.length).toBeLessThanOrEqual(MAX);
+      }
+    },
+  );
+
+  it("keeps the Facturo description between 50 and 160 characters", () => {
+    expect(facturo.metaDescription.length).toBeGreaterThanOrEqual(MIN);
+    expect(facturo.metaDescription.length).toBeLessThanOrEqual(MAX);
+  });
+
+  it("keeps the Achievements exception to 200 characters at most", () => {
+    const { description } = sectionBySlug("achievements");
+    expect(description.length).toBeLessThanOrEqual(200);
+  });
+});
