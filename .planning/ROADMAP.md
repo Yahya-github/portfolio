@@ -160,11 +160,11 @@ Plans:
 - [x] 06-02-PLAN.md — Wave 1: measure-js per route (150 kB) and per lazy chunk (12 kB) gate in CI
 - [x] 06-03-PLAN.md — Wave 1: Phase 6 content types and strings, content/facturo.ts (D-03), tokens, no-filter guard
 - [x] 06-04-PLAN.md — Wave 1: lazy feature loader (registry + useFeatures), decodeImages exemption, cursor autoload
-- [ ] 06-05-PLAN.md — Wave 2: Achievements proof previews (CONT-02, CONT-10)
-- [ ] 06-06-PLAN.md — Wave 2: Facturo walkthrough (CONT-11)
-- [ ] 06-07-PLAN.md — Wave 2: Experience organisation marks and About portrait twin (CONT-12, CONT-05)
-- [ ] 06-08-PLAN.md — Wave 2: Say hi copy email (CONT-07)
-- [ ] 06-09-PLAN.md — Wave 2: Facturo deep-dive route /projects/facturo/ (CONT-04, CONT-08)
+- [x] 06-05-PLAN.md — Wave 2: Achievements proof previews (CONT-02, CONT-10)
+- [x] 06-06-PLAN.md — Wave 2: Facturo walkthrough (CONT-11)
+- [x] 06-07-PLAN.md — Wave 2: Experience organisation marks and About portrait twin (CONT-12, CONT-05)
+- [x] 06-08-PLAN.md — Wave 2: Say hi copy email (CONT-07)
+- [x] 06-09-PLAN.md — Wave 2: Facturo deep-dive route /projects/facturo/ (CONT-04, CONT-08)
 - [ ] 06-10-PLAN.md — Wave 3: Projects deep-dive link, MAME mark and preview (CONT-03)
 - [ ] 06-11-PLAN.md — Wave 4: designed phone portrait layouts and the landscape hint (EXP-02)
 - [ ] 06-12-PLAN.md — Wave 5: device 1, Index grid lines
@@ -210,7 +210,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 3. Static Design System and Pages | 10/10 | Complete   | 2026-11-09 |
 | 4. Horizontal Pager and Input | 14/15 | Complete    | 2026-11-10 |
 | 5. Letter Navigation and Motion | 13/13 | Complete    | 2026-11-10 |
-| 6. Page Compositions and Content | 4/17 | In Progress|  |
+| 6. Page Compositions and Content | 9/17 | In Progress|  |
 | 7. Copy, Sharing and Launch | 0/TBD | Not started | - |
 | 8. Interactive Proof | 0/TBD | Not started | - |
 
