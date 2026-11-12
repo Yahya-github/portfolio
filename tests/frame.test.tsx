@@ -34,6 +34,13 @@ describe("SkipLink", () => {
 });
 
 describe("Header", () => {
+  it("shows an overridden label and keeps both nav links", () => {
+    render(<Header current="projects" label="02.1 Facturo" />);
+    expect(screen.getByText("02.1 Facturo")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Resume (PDF)" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Say hi" })).toBeInTheDocument();
+  });
+
   it("on index shows name, Index label, resume and Say hi links", () => {
     render(<Header current="index" />);
     expect(screen.getByText("Yahya Hallani")).toBeInTheDocument();

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { pageMetadata, rootMetadata } from "@/lib/metadata";
+import { deepDiveMetadata, pageMetadata, rootMetadata } from "@/lib/metadata";
 
 describe("rootMetadata", () => {
   it("sets the canonical origin", () => {
@@ -26,5 +26,13 @@ describe("pageMetadata", () => {
 
   it("uses the root canonical for the index", () => {
     expect(pageMetadata("index").alternates).toEqual({ canonical: "/" });
+  });
+});
+
+describe("deepDiveMetadata", () => {
+  it("builds the Facturo title and canonical", () => {
+    const m = deepDiveMetadata();
+    expect(m.title).toBe("Facturo, Yahya Hallani");
+    expect(m.alternates).toEqual({ canonical: "/projects/facturo/" });
   });
 });
