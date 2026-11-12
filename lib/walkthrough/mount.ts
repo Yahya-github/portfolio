@@ -8,6 +8,7 @@
 import { projects } from "@/content/projects";
 import type { FeatureMount } from "@/lib/features/types";
 import { loadDeferred } from "@/lib/media/defer";
+import { parseDurationMs } from "@/lib/motion/duration";
 import { canAnimate } from "@/lib/motion/waapi";
 import { contains, visibleBox } from "@/lib/walkthrough/geometry";
 import { running, showColour } from "@/lib/walkthrough/hold";
@@ -24,11 +25,20 @@ const PANS = [
   "translate(-1%, 0)",
 ];
 
-function readToken(name: string, fallback: number): number {
-  const raw = getComputedStyle(document.documentElement)
+function rawToken(name: string): string {
+  return getComputedStyle(document.documentElement)
     .getPropertyValue(name)
     .trim();
-  const n = parseFloat(raw);
+}
+
+function readToken(name: string, fallback: number): number {
+  const n = parseFloat(rawToken(name));
+  return Number.isFinite(n) && n > 0 ? n : fallback;
+}
+
+/** A time token in ms; the built CSS stores 5000ms as `5s`. */
+function readTime(name: string, fallback: number): number {
+  const n = parseDurationMs(rawToken(name));
   return Number.isFinite(n) && n > 0 ? n : fallback;
 }
 
@@ -50,9 +60,9 @@ export const mount: FeatureMount = (root, ctx) => {
   const data = projects.flagship.walkthrough;
   const count = frames.length;
   const reduced = ctx.controller.isReducedMotion();
-  const holdMs = readToken("--walk-hold", FALLBACK_HOLD_MS);
+  const holdMs = readTime("--walk-hold", FALLBACK_HOLD_MS);
   const scale = readToken("--walk-scale", FALLBACK_SCALE);
-  const fadeMs = readToken("--dur-frame", FALLBACK_FADE_MS);
+  const fadeMs = readTime("--dur-frame", FALLBACK_FADE_MS);
 
   let index = 0;
   let seq = 0;

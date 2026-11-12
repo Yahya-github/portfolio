@@ -10,6 +10,7 @@
  * landed and the letters have settled (Pitfall 13). Tag text is textContent
  * only (T-05-15).
  */
+import { parseDurationMs } from "@/lib/motion/duration";
 import { GLIDE_SETTLED_EVENT } from "@/lib/motion/events";
 import type { PagerSignals } from "@/lib/pager/types";
 import { placeTag } from "./place-tag";
@@ -38,7 +39,7 @@ function snapDurationMs(): number {
   const raw = getComputedStyle(document.documentElement)
     .getPropertyValue("--dur-ui")
     .trim();
-  const ms = parseFloat(raw);
+  const ms = parseDurationMs(raw);
   return Number.isFinite(ms) ? ms : FALLBACK_SNAP_MS;
 }
 
