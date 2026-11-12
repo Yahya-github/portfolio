@@ -3,11 +3,7 @@ import type { Slug } from "@/content/types";
 import type { PagerController } from "@/lib/pager/types";
 
 export type FeatureKey =
-  | "previews"
-  | "walkthrough"
-  | "toggles"
-  | "copy-email"
-  | "motion";
+  "previews" | "walkthrough" | "toggles" | "copy-email" | "motion";
 
 export interface FeatureContext {
   readonly controller: PagerController;

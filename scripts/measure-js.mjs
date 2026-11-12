@@ -54,7 +54,9 @@ const failures = [];
 // Initial JS per route.
 const routeRows = listFiles(outDir, "index.html").map((file) => {
   const srcs = scriptsOf(readText(file));
-  const bufs = srcs.map((src) => readFileSync(join(outDir, src.replace(/^\//, ""))));
+  const bufs = srcs.map((src) =>
+    readFileSync(join(outDir, src.replace(/^\//, ""))),
+  );
   return {
     route: routeOf(file),
     files: srcs.length,
@@ -74,7 +76,9 @@ for (const row of routeRows.sort((a, b) => a.route.localeCompare(b.route))) {
 
 // Lazy chunks: in the chunk dir but referenced by no HTML page.
 const referenced = new Set(
-  listFiles(outDir, ".html").flatMap((file) => referencedChunks(readText(file))),
+  listFiles(outDir, ".html").flatMap((file) =>
+    referencedChunks(readText(file)),
+  ),
 );
 const allChunks = listFiles(join(outDir, CHUNK_DIR), ".js").map(
   (rel) => `/${CHUNK_DIR}/${rel}`,

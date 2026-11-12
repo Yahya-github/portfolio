@@ -77,7 +77,12 @@ describe("useFeatures", () => {
     const { controller, signals } = setup(2);
     render(<Probe controller={controller} />);
     await flush();
-    signals.emitSlideStart({ from: 2, to: 1, source: "key", heldScrollY: 0 } as never);
+    signals.emitSlideStart({
+      from: 2,
+      to: 1,
+      source: "key",
+      heldScrollY: 0,
+    } as never);
     await flush();
     expect(mounts.walkthrough).toHaveBeenCalledTimes(1);
     expect(mounts.previews).toHaveBeenCalledTimes(2);
@@ -92,7 +97,12 @@ describe("useFeatures", () => {
     const s = document.createElement("section");
     s.id = "page-experience";
     document.body.append(s);
-    signals.emitSlideStart({ from: 2, to: 3, source: "key", heldScrollY: 0 } as never);
+    signals.emitSlideStart({
+      from: 2,
+      to: 3,
+      source: "key",
+      heldScrollY: 0,
+    } as never);
     await flush();
     expect(mounts.toggles).toHaveBeenCalledTimes(2);
   });
@@ -103,7 +113,12 @@ describe("useFeatures", () => {
     render(<Probe controller={controller} />);
     await flush();
     expect(mounts.walkthrough).not.toHaveBeenCalled();
-    signals.emitSlideStart({ from: 2, to: 2, source: "key", heldScrollY: 0 } as never);
+    signals.emitSlideStart({
+      from: 2,
+      to: 2,
+      source: "key",
+      heldScrollY: 0,
+    } as never);
     await flush();
     expect(mounts.walkthrough).toHaveBeenCalledTimes(1);
   });
@@ -113,7 +128,8 @@ describe("useFeatures", () => {
     const { unmount } = render(<Probe controller={controller} />);
     await flush();
     unmount();
-    for (const c of cleanups) expect(c.mock.calls.length).toBeGreaterThanOrEqual(0);
+    for (const c of cleanups)
+      expect(c.mock.calls.length).toBeGreaterThanOrEqual(0);
     expect(cleanups[0]).toHaveBeenCalledTimes(2);
     expect(cleanups[1]).toHaveBeenCalledTimes(1);
   });

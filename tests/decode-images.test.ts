@@ -18,7 +18,9 @@ describe("decodeImages", () => {
     decodeImages(page);
 
     expect(page.querySelector<HTMLImageElement>("#a")!.loading).toBe("eager");
-    expect(page.querySelector<HTMLImageElement>("#b")!.getAttribute("loading")).toBe("lazy");
+    expect(
+      page.querySelector<HTMLImageElement>("#b")!.getAttribute("loading"),
+    ).toBe("lazy");
     expect(decode).toHaveBeenCalledTimes(1);
   });
 

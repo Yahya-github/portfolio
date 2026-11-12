@@ -31,7 +31,9 @@
   }
 
   :global([data-preview-item]):hover .figure,
-  :global([data-preview-item]):has(:global([data-preview-trigger]):focus-visible)
+  :global([data-preview-item]):has(
+      :global([data-preview-trigger]):focus-visible
+    )
     .figure {
     opacity: 1;
   }
