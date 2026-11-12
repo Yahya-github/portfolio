@@ -20,6 +20,10 @@
   display: none;
 }
 
+.landscape {
+  display: none;
+}
+
 @media (max-width: 820px) {
   .list {
     display: block;
@@ -36,5 +40,13 @@
 
   .meta {
     display: none;
+  }
+}
+
+/* D-10: static, CSS-only, never blocks; independent of the footer "Swipe sideways" hint */
+@media (max-width: 820px) and (orientation: portrait) and (pointer: coarse) {
+  .landscape {
+    display: block;
+    margin-top: var(--space-md);
   }
 }

@@ -7,40 +7,7 @@ import {
   pathname,
   waitForLanded,
 } from "./helpers/pager";
-
-interface Point {
-  readonly x: number;
-  readonly y: number;
-}
-
-/** A real touch gesture via CDP. The per-step wait sets the finger speed (input timing, not a landing wait). */
-async function swipe(
-  page: Page,
-  from: Point,
-  to: Point,
-  steps = 8,
-  stepMs = 16,
-): Promise<void> {
-  const cdp = await page.context().newCDPSession(page);
-  await cdp.send("Input.dispatchTouchEvent", {
-    type: "touchStart",
-    touchPoints: [{ x: from.x, y: from.y }],
-  });
-  for (let i = 1; i <= steps; i += 1) {
-    const x = from.x + ((to.x - from.x) * i) / steps;
-    const y = from.y + ((to.y - from.y) * i) / steps;
-    await cdp.send("Input.dispatchTouchEvent", {
-      type: "touchMove",
-      touchPoints: [{ x, y }],
-    });
-    await page.waitForTimeout(stepMs);
-  }
-  await cdp.send("Input.dispatchTouchEvent", {
-    type: "touchEnd",
-    touchPoints: [],
-  });
-  await cdp.detach();
-}
+import { swipe } from "./helpers/swipe";
 
 const SWIPE_LEFT = { from: { x: 300, y: 400 }, to: { x: 120, y: 405 } };
 

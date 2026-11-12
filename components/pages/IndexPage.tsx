@@ -24,6 +24,9 @@ export function IndexPage() {
             </li>
           ))}
         </ul>
+        <p className={`t-label c-dim ${styles.landscape}`}>
+          {indexPage.landscapeHint}
+        </p>
       </div>
       <ul className={`t-label c-dim ${styles.meta}`}>
         {indexPage.metaLabels.map((m) => (
