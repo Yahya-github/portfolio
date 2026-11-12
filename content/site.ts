@@ -33,6 +33,11 @@ export const site = {
     linkedin: "https://www.linkedin.com/in/yahya-hallani",
     github: "https://github.com/Yahya-github",
   },
+  shareCardAlt: "Yahya Hallani, Software Engineering at McGill",
+  person: {
+    jobTitle: "Software Engineering student",
+    affiliation: "McGill University",
+  },
 } as const satisfies Site;
 
 export const sections = [

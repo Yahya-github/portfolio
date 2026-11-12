@@ -86,6 +86,19 @@ export interface Site {
     readonly linkedin: string;
     readonly github: string;
   };
+  readonly shareCardAlt: string;
+  readonly person: {
+    readonly jobTitle: string;
+    readonly affiliation: string;
+  };
+}
+
+export interface NotFoundContent {
+  readonly display: string;
+  readonly headingRest: string;
+  readonly line: string;
+  readonly headerLabel: string;
+  readonly metaTitle: string;
 }
 
 export interface IndexContent {
