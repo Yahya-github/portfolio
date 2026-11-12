@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { EdgeNumber } from "@/components/devices/EdgeNumber";
 import { OrgMark } from "@/components/media/OrgMark";
 import { experience } from "@/content/experience";
 import { displayFitStyle } from "@/lib/display-fit";
@@ -62,6 +63,7 @@ export function ExperiencePage({ isCurrent = false }: Partial<PageProps>) {
           ))}
         </ul>
       </div>
+      <EdgeNumber slug="experience" />
     </div>
   );
 }
