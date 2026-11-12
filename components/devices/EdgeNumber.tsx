@@ -11,7 +11,7 @@ import styles from "./edge-number.module.css";
  */
 export function EdgeNumber({ slug }: { readonly slug: Slug }) {
   return (
-    <span aria-hidden="true" className={`tnum ${styles.edge}`}>
+    <span aria-hidden="true" className={`tnum ${styles.edge}`} data-edge-number>
       {sectionBySlug(slug).number}
     </span>
   );

@@ -73,6 +73,8 @@ for (const s of sections) {
           .filter((el) => !el.matches("main#content"))
           // Ring circles are geometry clipped by their svg viewport; the svg itself is still checked.
           .filter((el) => !el.matches("svg[data-quarter-rings] *"))
+          // The edge-cropped page number is cut by the right edge by design (D-05 device 2); the document scrollWidth check still guards it.
+          .filter((el) => !el.matches("[data-edge-number]"))
           .filter((el) => el.checkVisibility())
           .map((el) => ({ el, r: el.getBoundingClientRect() }))
           .filter(({ r }) => r.width > 1 && r.right > innerWidth + 0.5)

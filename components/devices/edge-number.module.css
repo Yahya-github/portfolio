@@ -11,6 +11,10 @@
   letter-spacing: var(--display-track);
   font-size: clamp(160px, calc((100svh - 568px) / 0.72), 480px);
   line-height: 0.72;
+  /* The font's content area is taller than the 0.72 line box; keep that spill out of the page's scrollable overflow. */
+  contain: paint;
+  overflow: clip;
+  overflow-clip-margin: 0.06em;
 }
 
 /* The margin names (plan 06-15) stop above the number. */
