@@ -37,7 +37,10 @@ test.describe("axe with interaction states", () => {
 
   test("achievements with a preview shown", async ({ page }) => {
     await open(page, "/achievements/");
-    await page.locator("#page-achievements [data-preview-trigger]").first().focus();
+    await page
+      .locator("#page-achievements [data-preview-trigger]")
+      .first()
+      .focus();
     await expectClean(page);
   });
 
@@ -71,9 +74,14 @@ test.describe("axe with interaction states", () => {
     });
     await page.goto("/say-hi/");
     const email = page.locator("#page-say-hi a[data-copy-email]");
-    await expect(email).toHaveAttribute("aria-describedby", "copy-email-description");
+    await expect(email).toHaveAttribute(
+      "aria-describedby",
+      "copy-email-description",
+    );
     await email.click();
-    await expect(page.locator("#page-say-hi [data-copy-status]")).not.toBeEmpty();
+    await expect(
+      page.locator("#page-say-hi [data-copy-status]"),
+    ).not.toBeEmpty();
     await expectClean(page);
   });
 });

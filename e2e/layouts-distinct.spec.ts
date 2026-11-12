@@ -34,19 +34,28 @@ async function signature(page: Page, rootSelector: string): Promise<string> {
   return JSON.stringify(placements);
 }
 
-test("six pages and the deep dive have pairwise different layouts", async ({ page }) => {
+test("six pages and the deep dive have pairwise different layouts", async ({
+  page,
+}) => {
   const signatures: string[] = [];
   for (const s of sections) {
     await open(page, s.route);
-    const mode = await page.locator("[data-mode]").first().getAttribute("data-mode");
+    const mode = await page
+      .locator("[data-mode]")
+      .first()
+      .getAttribute("data-mode");
     const sig = `${mode}|${await signature(page, "main section:not([inert]) > .grid")}`;
-    test.info().annotations.push({ type: `signature ${s.slug}`, description: sig });
+    test
+      .info()
+      .annotations.push({ type: `signature ${s.slug}`, description: sig });
     signatures.push(sig);
   }
   expect(new Set(signatures).size).toBe(6);
 
   await page.goto("/projects/facturo/");
   const deep = await signature(page, "main article");
-  test.info().annotations.push({ type: "signature deep-dive", description: deep });
+  test
+    .info()
+    .annotations.push({ type: "signature deep-dive", description: deep });
   for (const sig of signatures) expect(sig.split("|")[1]).not.toBe(deep);
 });
