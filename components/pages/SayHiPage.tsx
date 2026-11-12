@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { sayHi } from "@/content/say-hi";
+import { site } from "@/content/site";
 import { displayFitStyle } from "@/lib/display-fit";
 import { PageTitle } from "./Heading";
 import styles from "./say-hi-page.module.css";
@@ -16,6 +17,7 @@ export function SayHiPage() {
             key={l.label}
             className={`t-display ${styles.line}`}
             href={l.href}
+            data-copy-email={l.copies ? site.contact.email : undefined}
             style={displayFitStyle(l.label) as CSSProperties}
             target={l.external ? "_blank" : undefined}
             rel={l.external ? EXTERNAL_REL : undefined}
@@ -24,10 +26,18 @@ export function SayHiPage() {
           </a>
         ))}
       </div>
-      <p className={`t-label ${styles.side}`}>
+      <p className={`t-label ${styles.side}`} data-copy-line="">
+        <span
+          data-copy-status=""
+          aria-live="polite"
+          className={styles.status}
+        />
         <a className={`ulink ${styles.addr}`} href={sayHi.address.href}>
           {sayHi.address.label}
         </a>
+        <span id="copy-email-description" hidden>
+          {sayHi.copy.description}
+        </span>
       </p>
     </div>
   );
