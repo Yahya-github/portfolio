@@ -171,7 +171,7 @@ Plans:
 - [x] 06-13-PLAN.md — Wave 6: device 2, Experience edge-cropped "03"
 - [x] 06-14-PLAN.md — Wave 7: device 3, About quarter rings
 - [x] 06-15-PLAN.md — Wave 8: device 4, margin section names + footer Pause motion + hint flag (D-06)
-- [ ] 06-16-PLAN.md — Wave 9: device 5, Say hi spiral (first cut)
+- [x] 06-16-PLAN.md — Wave 9: device 5, Say hi spiral (first cut)
 - [ ] 06-17-PLAN.md — Wave 10: layout-signature test, axe states, 34 visual baselines, Yahya review checkpoint
 **UI hint**: yes
 
@@ -210,7 +210,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 3. Static Design System and Pages | 10/10 | Complete   | 2026-11-09 |
 | 4. Horizontal Pager and Input | 14/15 | Complete    | 2026-11-10 |
 | 5. Letter Navigation and Motion | 13/13 | Complete    | 2026-11-10 |
-| 6. Page Compositions and Content | 15/17 | In Progress|  |
+| 6. Page Compositions and Content | 16/17 | In Progress|  |
 | 7. Copy, Sharing and Launch | 0/TBD | Not started | - |
 | 8. Interactive Proof | 0/TBD | Not started | - |
 
