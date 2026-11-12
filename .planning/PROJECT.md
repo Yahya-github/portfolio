@@ -30,23 +30,22 @@ Phase 3 (Static Design System and Pages) complete 2026-11-09: six server-rendere
 
 Phase 4 (Horizontal Pager and Input) complete 2026-11-10: hand-written pager (pure reducer, wheel/swipe recognisers, WAAPI slide, history, inert pages, focus hand-off, live region), 453 unit + 227 Chromium e2e tests, JS 140.3 kB gzip. Code review: 0 critical, 4 warnings fixed, 6 info items open. Plan 04-15 (real-device checks) was skipped by choice; NAV-01, NAV-03 and A11Y-01 stay Active until the 10 items in 04-HUMAN-UAT.md (trackpads, wheels, iPhone/LinkedIn/Android, VoiceOver/NVDA, Firefox/WebKit specs) are checked.
 
+- [x] Achievements (75/75 plus four first places as one list) with hover/focus proof previews and article links (CONT-02, CONT-10); Projects with Facturo flagship, MAME row, Atlantis, CRC problems, robot firmware and Showdown AI (CONT-03); Facturo deep-dive page /projects/facturo/ (CONT-04); Facturo pausable walkthrough (CONT-11) — Validated in Phase 6: Page Compositions and Content (desktop and emulated touch)
+- [x] Experience Work and Involvement with organisation marks, About with true-colour portrait on hover/tap, Say hi email/LinkedIn/GitHub/Resume with copy-email, resume and contact reachable from every page (CONT-05, CONT-07, CONT-08, CONT-12) — Validated in Phase 6
+- [x] Six pages with distinct compositions, proven by a layout-signature test; five decorative devices (Index grid lines, Experience "03", About quarter rings, margin names, Say hi spiral) with a footer Pause motion control (DSGN-03) — Validated in Phase 6
+
+Phase 6 (Page Compositions and Content) complete 2026-11-12: 17 plans in 10 waves, 662 unit + 442 Playwright tests, 34 visual baselines regenerated in the Podman container, JS 143.9 kB gzip per route (budget 150) and a 12 kB per-lazy-chunk gate in CI. Code review: 0 critical, 5 warnings and 3 info open (06-REVIEW.md). Verification status human_needed: no code gaps. EXP-02 (phone portrait layouts) and the touch parts of CONT-10/11/12 stay unconfirmed until the real-device checks in 06-HUMAN-UAT.md are done (iPhone Safari, LinkedIn in-app, Android Chrome), as do the content claims Yahya must confirm. Recommended before launch: WR-01 (copy-email failure path) and WR-03 (walkthrough lazy-frame stall). Review defects found and fixed in 06-17: walkthrough raced at 5 ms per frame because the minifier ships `5s`/`.9s` tokens; Say hi hint was skipped on phones.
+
 ### Active
 
 - [ ] Six full-screen pages switched horizontally: Index (hero), Achievements, Projects, Experience, About, Say hi (pages exist as static routes since Phase 3; horizontal switching is Phase 4)
 - [ ] Page switching by wheel/trackpad (one gesture = one page, inertia ignored), arrow keys, Page Up/Down, Space, Home/End, and swipe
 - [ ] Leaving the hero, the five letters shrink and glide into a vertical rail on the left that stays as the navigation, current section in the accent colour
-- [ ] Achievements: variant (b), letter-pair title with five equal lines (CCC 75/75 included, not dominant) and hover photo previews linking to public sources (chosen in Phase 1)
 - [ ] Custom cursor that sits exactly on the pointer (EXP-03), form (a) square outline that snaps to the hovered item (chosen in Phase 1)
-- [ ] Projects: Facturo, MAME Tool Rental, Atlantis, CRC problems, robot firmware, Showdown AI
-- [ ] Experience: Work and Involvement lists
-- [ ] About ("Two habits") and Say hi (email, LinkedIn, GitHub)
 - [ ] Footer pager (00 / 05), "Next" control, progress bar
-- [ ] Real photos (portrait on About, project screenshots) in one plain greyscale treatment
 - [ ] Interactive proof: playable Atlantis in the browser and a rotatable 3D model of the robot
 - [ ] Accessible: keyboard navigation, focus states, inactive pages inert, reduced-motion versions of every animation, works without the pointer
-- [ ] Works on phones (swipe paging, letter rail scaled down)
-- [ ] Resume PDF (self-hosted) on Say hi and reachable from every page
-- [ ] Contact visible from every page
+- [ ] Works on phones (swipe paging, letter rail scaled down): built and emulated in Phase 6, awaiting real-device confirmation (EXP-02)
 - [ ] First-visit hint and visible Next control
 - [ ] SEO and sharing: titles, description, canonical, Person JSON-LD, Open Graph card, favicon, on-brand 404
 - [ ] Skip link, live region announcing page changes, contrast-tested tokens (small grey text no lighter than #8a8a8a on black)
@@ -130,4 +129,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-11-10 after Phase 4 (Horizontal Pager and Input) completion*
+*Last updated: 2026-11-12 after Phase 6 (Page Compositions and Content) completion*
