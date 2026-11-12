@@ -10,7 +10,11 @@ const VIEWPORTS = [
   { name: "phone", width: 390, height: 844 },
 ] as const;
 
-const ROUTES = [...sections.map((s) => s.route), "/projects/facturo/"];
+const ROUTES = [
+  ...sections.map((s) => s.route),
+  "/projects/facturo/",
+  "/this-page-does-not-exist/",
+];
 
 for (const route of ROUTES) {
   for (const vp of VIEWPORTS) {
