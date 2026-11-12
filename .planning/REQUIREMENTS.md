@@ -7,7 +7,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 ### Design system (DSGN)
 - [x] **DSGN-01**: Visitor sees a dark ground with white type and one green accent (nature/terminal green) used consistently for emphasis and the current section
 - [x] **DSGN-02**: All text uses one sans family on a modular type scale and a 12-column grid (final family chosen in the design phase)
-- [ ] **DSGN-03**: Each of the six pages has its own distinct composition on the shared grid (no two pages share the same layout)
+- [x] **DSGN-03**: Each of the six pages has its own distinct composition on the shared grid (no two pages share the same layout)
 - [x] **DSGN-04**: Every motion follows one rule: movement on the horizontal axis, fast and decisive, no bounce
 - [ ] **DSGN-05**: Real photos and screenshots of Yahya's work are shown with one plain treatment: greyscale, hard crops on the 12-column grid, no filters or effects (his face stays clearly visible); exceptions that show their own true colours on hover or tap (instant under reduced motion), never as an accent use: the About portrait (also on keyboard press) the organisation marks on Experience (mono by default) the Facturo walkthrough frames (colour while the visitor holds it paused) and the Achievements and Projects (MAME) hover and focus previews (inline phone thumbnails stay greyscale)
 - [x] **DSGN-06**: No ornament: no cartoon illustrations, pixel stickers, decorative HUD marks or skill bars (the real organisation marks on Experience identify where Yahya worked and took part; they are content, not ornament)
@@ -31,17 +31,17 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 
 ### Content (CONT)
 - [x] **CONT-01**: Hero shows a role line beside the name, readable without any interaction (the proof line was dropped by Yahya, 2026-11-07)
-- [ ] **CONT-02**: Achievements shows 75/75 with "Canadian Computing Competition, perfect score" in one typographic list with the four first places, at the same weight as the other results
-- [ ] **CONT-03**: Projects presents Facturo as the flagship with the most space; the other five (MAME Tool Rental first, then Atlantis, CRC problems, Robot firmware, Showdown AI) show problem, role, result and links; the MAME row previews its admin overview screenshot on hover and keyboard focus
-- [ ] **CONT-04**: Facturo has a deep-dive page (problem, what was built, result, screenshots, links)
-- [ ] **CONT-05**: Experience shows Work and Involvement
+- [x] **CONT-02**: Achievements shows 75/75 with "Canadian Computing Competition, perfect score" in one typographic list with the four first places, at the same weight as the other results
+- [x] **CONT-03**: Projects presents Facturo as the flagship with the most space; the other five (MAME Tool Rental first, then Atlantis, CRC problems, Robot firmware, Showdown AI) show problem, role, result and links; the MAME row previews its admin overview screenshot on hover and keyboard focus
+- [x] **CONT-04**: Facturo has a deep-dive page (problem, what was built, result, screenshots, links)
+- [x] **CONT-05**: Experience shows Work and Involvement
 - [ ] **CONT-06**: About is written in Yahya's own voice (personality lives here)
-- [ ] **CONT-07**: Say hi offers email, LinkedIn, GitHub and a Resume (PDF)
-- [ ] **CONT-08**: Resume and contact are reachable from every page
+- [x] **CONT-07**: Say hi offers email, LinkedIn, GitHub and a Resume (PDF)
+- [x] **CONT-08**: Resume and contact are reachable from every page
 - [x] **CONT-09**: All site text lives in typed data files; only verified facts ship
-- [ ] **CONT-10**: Each Achievements line previews its proof on hover and keyboard focus only, never held by a mouse click (a small photo in its colours and one line, kept inside the viewport); a line with a public source (an article or a post) opens it in a new tab; on touch the thumbnail shows inline under its line, in greyscale; a result with no photo or public source shows a description only
-- [ ] **CONT-11**: Projects shows Facturo as a walkthrough of its greyscale screenshots (slow push-in and crossfade, transform and opacity only, frames lazy-loaded) with a visible pause control; it pauses on hover and keyboard focus (over the visible frame and its controls only), off-page and offscreen and always resumes once none of these holds (a mouse-clicked control does not hold it), while the visitor holds it paused (hover, keyboard focus, or a tap on touch) the current frame shows its colour original, portrait screenshots are shown whole and centred, and it becomes a manual previous/next stepper under reduced motion
-- [ ] **CONT-12**: Experience rows show the real mark of their organisation (MAME, Mercor, Facturo, CRC, McGill Robotics, Google Developer Groups, ICPC) small and flush with the column edge, in one mono colour by default, with its true colours on row hover or tap; marks are decorative (the text names the organisation) and only attach to entries that exist; the MAME mark also sits on its Projects row under the same rule; Work rows run newest first (MAME Developer since Nov 2026 leads); an ended role shows its date range, never "since"
+- [x] **CONT-10**: Each Achievements line previews its proof on hover and keyboard focus only, never held by a mouse click (a small photo in its colours and one line, kept inside the viewport); a line with a public source (an article or a post) opens it in a new tab; on touch the thumbnail shows inline under its line, in greyscale; a result with no photo or public source shows a description only
+- [x] **CONT-11**: Projects shows Facturo as a walkthrough of its greyscale screenshots (slow push-in and crossfade, transform and opacity only, frames lazy-loaded) with a visible pause control; it pauses on hover and keyboard focus (over the visible frame and its controls only), off-page and offscreen and always resumes once none of these holds (a mouse-clicked control does not hold it), while the visitor holds it paused (hover, keyboard focus, or a tap on touch) the current frame shows its colour original, portrait screenshots are shown whole and centred, and it becomes a manual previous/next stepper under reduced motion
+- [x] **CONT-12**: Experience rows show the real mark of their organisation (MAME, Mercor, Facturo, CRC, McGill Robotics, Google Developer Groups, ICPC) small and flush with the column edge, in one mono colour by default, with its true colours on row hover or tap; marks are decorative (the text names the organisation) and only attach to entries that exist; the MAME mark also sits on its Projects row under the same rule; Work rows run newest first (MAME Developer since Nov 2026 leads); an ended role shows its date range, never "since"
 
 ### Interactive proof (PROOF)
 - [ ] **PROOF-01**: Visitor can play Atlantis in the browser on its project page (single-thread Godot web export, loaded only on that page, with a screenshot and link fallback if too heavy; asset licences and teammates' consent checked first)
@@ -49,7 +49,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 
 ### Opening and phones (EXP)
 - [x] **EXP-01**: First-time visitor sees an opening animation under about 1 second that any click or key skips; content is already loaded underneath; it never repeats
-- [ ] **EXP-02**: Phone visitor gets a designed portrait layout of every page and swipes between them; an optional hint says landscape shows the full posters (never blocking)
+- [x] **EXP-02**: Phone visitor gets a designed portrait layout of every page and swipes between them; an optional hint says landscape shows the full posters (never blocking)
 - [x] **EXP-03**: On devices with a fine pointer, a custom cursor sits exactly on the pointer (1:1, no lag or spring; only its shape changes) and guides navigation; touch devices and forced-colours mode keep the native cursor; under reduced motion shape changes are instant (form: variant a, a hard-edged ink square that snaps around the hovered letter or link with a Label tag that always stays inside the viewport, picked in Phase 1)
 
 ### Discoverability (SEO)
@@ -91,7 +91,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 |-------------|-------|--------|
 | DSGN-01 | Phase 3 | Complete |
 | DSGN-02 | Phase 3 | Complete |
-| DSGN-03 | Phase 6 | Pending |
+| DSGN-03 | Phase 6 | Complete |
 | DSGN-04 | Phase 5 | Complete |
 | DSGN-05 | Phase 6 | Pending |
 | DSGN-06 | Phase 3 | Complete |
@@ -109,19 +109,19 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | LTR-05 | Phase 5 | Complete |
 | LTR-06 | Phase 5 | Complete |
 | CONT-01 | Phase 3 | Complete |
-| CONT-02 | Phase 6 | Pending |
-| CONT-03 | Phase 6 | Pending |
-| CONT-04 | Phase 6 | Pending |
-| CONT-05 | Phase 6 | Pending |
+| CONT-02 | Phase 6 | Complete |
+| CONT-03 | Phase 6 | Complete |
+| CONT-04 | Phase 6 | Complete |
+| CONT-05 | Phase 6 | Complete |
 | CONT-06 | Phase 7 | Pending |
-| CONT-07 | Phase 6 | Pending |
-| CONT-08 | Phase 6 | Pending |
+| CONT-07 | Phase 6 | Complete |
+| CONT-08 | Phase 6 | Complete |
 | CONT-09 | Phase 3 | Complete |
-| CONT-10 | Phase 6 | Pending |
-| CONT-11 | Phase 6 | Pending |
-| CONT-12 | Phase 6 | Pending |
+| CONT-10 | Phase 6 | Complete |
+| CONT-11 | Phase 6 | Complete |
+| CONT-12 | Phase 6 | Complete |
 | EXP-01 | Phase 5 | Complete |
-| EXP-02 | Phase 6 | Pending |
+| EXP-02 | Phase 6 | Complete |
 | EXP-03 | Phase 5 | Complete |
 | SEO-01 | Phase 7 | Pending |
 | SEO-02 | Phase 7 | Pending |
