@@ -19,11 +19,9 @@ const OG_BASE = {
   images: [SHARE_IMAGE],
 };
 
-// Phase 2 D-12: stay out of search indexes until launch.
 export const rootMetadata: Metadata = {
   metadataBase: new URL(site.origin),
   title: site.name,
-  robots: { index: false, follow: false },
   openGraph: { ...OG_BASE, url: "/" },
   twitter: { card: "summary_large_image", images: [SHARE_IMAGE] },
 };

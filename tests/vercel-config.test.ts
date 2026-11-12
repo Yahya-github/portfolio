@@ -25,8 +25,8 @@ function headerValue(key: string): string | undefined {
 }
 
 describe("vercel-config", () => {
-  it("sends X-Robots-Tag noindex on every path", () => {
-    expect(headerValue("X-Robots-Tag")).toContain("noindex");
+  it("sends no X-Robots-Tag after launch (D-10)", () => {
+    expect(headerValue("X-Robots-Tag")).toBeUndefined();
   });
 
   it("sends a first-party-only CSP with the key directives", () => {
