@@ -127,10 +127,40 @@ describe("ProjectsPage", () => {
     expect(within(items[4] as HTMLElement).queryByRole("link")).toBeNull(); // Showdown AI
   });
 
-  it("has no deep-dive link and no svg", () => {
+  it("links the Facturo deep dive once", () => {
+    renderPage();
+    const link = screen.getByRole("link", { name: "Read the deep dive" });
+    expect(link).toHaveAttribute("href", "/projects/facturo/");
+    expect(screen.getAllByRole("link")).toHaveLength(4);
+  });
+
+  it("gives the MAME row its mark, trigger and preview", () => {
     const { container } = renderPage();
-    expect(screen.getAllByRole("link")).toHaveLength(3);
-    expect(container.textContent ?? "").not.toMatch(/deep dive/i);
-    expect(container.querySelector("svg")).toBeNull();
+    const items = container.querySelectorAll("ol > li");
+    const mame = items[0] as HTMLElement;
+    expect(mame).toHaveAttribute("data-preview-item");
+    expect(mame).toHaveAttribute("data-tap-colour");
+    expect(mame.querySelectorAll('[data-mark="mame"]')).toHaveLength(1);
+    const live = within(mame).getByRole("link", { name: "Live site" });
+    expect(live).toHaveAttribute("data-preview-trigger");
+    expect(live).toHaveAttribute("target", "_blank");
+    expect(live).toHaveAttribute("rel", "noopener noreferrer");
+    expect(live).toHaveAttribute("data-cursor-tag", "Live site");
+    const img = mame.querySelector("[data-preview] img");
+    expect(img).toHaveAttribute("alt", projects.rows[0].preview?.alt);
+    for (let i = 1; i < items.length; i++) {
+      expect(items[i].querySelector("[data-preview]")).toBeNull();
+      expect(items[i].querySelector("[data-mark]")).toBeNull();
+    }
+  });
+
+  it("names all six projects and keeps three lines per row", () => {
+    const { container } = renderPage();
+    for (const r of projects.rows) {
+      expect(screen.getByRole("heading", { name: r.name })).toBeInTheDocument();
+    }
+    container.querySelectorAll("ol > li").forEach((li) => {
+      expect(li.querySelectorAll(":scope > p")).toHaveLength(3);
+    });
   });
 });

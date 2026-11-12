@@ -1,5 +1,6 @@
 .root {
   grid-template-rows: 100%;
+  position: relative;
 }
 
 /* The page title is visually hidden; keep it out of grid flow so it does not take the 100% row. */
@@ -28,6 +29,15 @@
   );
 }
 
+.deep {
+  margin-top: var(--space-md);
+  align-self: flex-start;
+}
+
+.mark {
+  align-self: center;
+}
+
 .rows {
   grid-column: 9 / 13;
   align-self: start;
@@ -48,6 +58,40 @@
 .link {
   margin-left: auto;
   white-space: nowrap;
+}
+
+.mark + .link {
+  margin-left: 0;
+}
+
+.mark {
+  margin-left: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .deep:hover {
+    color: var(--color-accent);
+  }
+}
+
+.deep:focus-visible,
+.deep:active {
+  color: var(--color-accent);
+}
+
+/* Cols 7-8, bottom on the Facturo lead's last line. .root is the containing block. */
+@media (hover: hover) and (min-width: 821px) {
+  .mamePreview {
+    left: calc(6 * ((100% - 11 * var(--grid-gutter)) / 12 + var(--grid-gutter)));
+    width: calc(2 * ((100% - 11 * var(--grid-gutter)) / 12) + var(--grid-gutter));
+    bottom: var(--space-lg);
+    top: auto;
+  }
+
+  .mamePreview img {
+    aspect-ratio: auto;
+    height: auto;
+  }
 }
 
 /* --row-pad already drops to 8px at this height (tokens.css). */
