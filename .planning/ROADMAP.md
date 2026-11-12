@@ -156,10 +156,10 @@ Plans:
   6. Hovering or focusing an Achievements line shows its proof photo and one line inside the viewport, and the DIRO and game-competition lines open their articles; Facturo plays as a pausable walkthrough of its screenshots that always resumes after hover (a stepper under reduced motion); the About portrait and the Experience organisation marks show their true colours on hover or tap
 **Plans**: 17 plans
 Plans:
-- [ ] 06-01-PLAN.md — Wave 1: sharp media script, committed WebP set + generated manifest; Photo/Twin on the manifest, assets/ removed
-- [ ] 06-02-PLAN.md — Wave 1: measure-js per route (150 kB) and per lazy chunk (12 kB) gate in CI
-- [ ] 06-03-PLAN.md — Wave 1: Phase 6 content types and strings, content/facturo.ts (D-03), tokens, no-filter guard
-- [ ] 06-04-PLAN.md — Wave 1: lazy feature loader (registry + useFeatures), decodeImages exemption, cursor autoload
+- [x] 06-01-PLAN.md — Wave 1: sharp media script, committed WebP set + generated manifest; Photo/Twin on the manifest, assets/ removed
+- [x] 06-02-PLAN.md — Wave 1: measure-js per route (150 kB) and per lazy chunk (12 kB) gate in CI
+- [x] 06-03-PLAN.md — Wave 1: Phase 6 content types and strings, content/facturo.ts (D-03), tokens, no-filter guard
+- [x] 06-04-PLAN.md — Wave 1: lazy feature loader (registry + useFeatures), decodeImages exemption, cursor autoload
 - [ ] 06-05-PLAN.md — Wave 2: Achievements proof previews (CONT-02, CONT-10)
 - [ ] 06-06-PLAN.md — Wave 2: Facturo walkthrough (CONT-11)
 - [ ] 06-07-PLAN.md — Wave 2: Experience organisation marks and About portrait twin (CONT-12, CONT-05)
@@ -210,7 +210,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 3. Static Design System and Pages | 10/10 | Complete   | 2026-11-09 |
 | 4. Horizontal Pager and Input | 14/15 | Complete    | 2026-11-10 |
 | 5. Letter Navigation and Motion | 13/13 | Complete    | 2026-11-10 |
-| 6. Page Compositions and Content | 0/TBD | Not started | - |
+| 6. Page Compositions and Content | 4/17 | In Progress|  |
 | 7. Copy, Sharing and Launch | 0/TBD | Not started | - |
 | 8. Interactive Proof | 0/TBD | Not started | - |
 
