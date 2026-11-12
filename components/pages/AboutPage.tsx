@@ -1,3 +1,4 @@
+import { QuarterRings } from "@/components/devices/QuarterRings";
 import { PortraitToggle } from "@/components/media/PortraitToggle";
 import { about } from "@/content/about";
 import { PageTitle } from "./Heading";
@@ -10,6 +11,7 @@ export function AboutPage({ isCurrent }: PageProps) {
       <div className={styles.portrait}>
         <PortraitToggle eager={isCurrent} />
       </div>
+      <QuarterRings />
       <PageTitle
         slug="about"
         text={about.title}

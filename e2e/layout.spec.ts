@@ -71,6 +71,8 @@ for (const s of sections) {
         const offenders = [...document.querySelectorAll("body *")]
           .filter((el) => !el.closest("[inert]"))
           .filter((el) => !el.matches("main#content"))
+          // Ring circles are geometry clipped by their svg viewport; the svg itself is still checked.
+          .filter((el) => !el.matches("svg[data-quarter-rings] *"))
           .filter((el) => el.checkVisibility())
           .map((el) => ({ el, r: el.getBoundingClientRect() }))
           .filter(({ r }) => r.width > 1 && r.right > innerWidth + 0.5)
@@ -144,7 +146,9 @@ for (const s of sections) {
     page,
   }) => {
     await open(page, s.route, VIEWPORTS.desktop);
-    await expect(page.locator("svg")).toHaveCount(0);
+    // The only svg allowed is the intentional aria-hidden quarter-rings device on /about/ (D-05).
+    await expect(page.locator("svg:not([data-quarter-rings])")).toHaveCount(0);
+    await expect(page.locator("svg[data-quarter-rings]")).toHaveCount(1);
     await expect(
       page.locator("body img:not(main img):not([data-walk] img):visible"),
     ).toHaveCount(0);

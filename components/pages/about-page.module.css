@@ -1,4 +1,4 @@
-/* 04 About. Cols 9-12 above the text stay empty (quarter rings still wait).
+/* 04 About. Cols 9-12 above the text stay empty hold the quarter rings (QuarterRings).
    The portrait is a pressed-state button with a colour twin (PortraitToggle). */
 .root {
   grid-template-rows: auto 1fr auto;
