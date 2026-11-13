@@ -204,7 +204,25 @@ Plans:
   1. Atlantis runs in the browser on its project page as a single-thread Godot web export, loaded only there; its asset licences and teammates' consent are confirmed before publishing; if too heavy, screenshots plus a link replace it
   2. The robot project shows a rotatable 3D model built from the real CAD file, lazy-loaded with a static image first; the page works fully without it
   3. Neither piece adds JavaScript or requests to any other page; both respect reduced motion and keyboard use
-**Plans**: TBD
+**Plans**: 17 plans
+Plans:
+- [ ] 08-01-PLAN.md — Decisions checkpoint (threshold, D-06 scope, fork, music, French, row label, per-project accents, pictures) and consent request
+- [ ] 08-02-PLAN.md — Shared contracts, clearance gate, generalised footer/metadata, per-project accent tokens (Facturo yellow)
+- [ ] 08-03-PLAN.md — TDD: game state machine and postMessage guard
+- [ ] 08-04-PLAN.md — TDD: orbit maths, auto-rotate gate, easing, RBT1 mesh format
+- [ ] 08-05-PLAN.md — Disjoint Vercel headers (/games/ only gets wasm), unit pins, path-aware CSP e2e, wasm negative control
+- [ ] 08-06-PLAN.md — Fork web branch, first-party Godot shell, export script with measured sizes, binary ignores
+- [ ] 08-07-PLAN.md — Real boot under game CSP, screenshots, timing, embed decision checkpoint
+- [ ] 08-08-PLAN.md — CAD-to-RBT1 mesh pipeline (placeholder), model size gate in measure-js
+- [ ] 08-09-PLAN.md — Atlantis static route (blue accent, screenshots + team photo, stage markup)
+- [ ] 08-10-PLAN.md — Atlantis lazy controller, stub game, play/Esc/Exit/Mute/touch e2e
+- [ ] 08-11-PLAN.md — Robot static route (red accent, still + trophies photo)
+- [ ] 08-12-PLAN.md — Raw WebGL2 viewer, motion control on the route, robot e2e
+- [ ] 08-13-PLAN.md — Projects row links, sitemap 9, robots /games/, e2e route lists, isolation audit
+- [ ] 08-14-PLAN.md — Row-to-deep-dive cross-document View Transitions for all three deep dives
+- [ ] 08-15-PLAN.md — Atlantis consent gate, publish or fallback, visual baselines
+- [ ] 08-16-PLAN.md — Robot CAD consent and real mesh, matching still, baselines
+- [ ] 08-17-PLAN.md — Publish guard, PR, preview header checks, Yahya merges
 **UI hint**: yes
 
 ## Progress
@@ -221,7 +239,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 5. Letter Navigation and Motion | 13/13 | Complete    | 2026-11-10 |
 | 6. Page Compositions and Content | 17/17 | Complete    | 2026-11-12 |
 | 7. Copy, Sharing and Launch | 8/8 | Complete   | 2026-11-13 |
-| 8. Interactive Proof | 0/TBD | Not started | - |
+| 8. Interactive Proof | 0/17 | Not started | - |
 
 ## Research Flags
 

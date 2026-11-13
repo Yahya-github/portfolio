@@ -2,7 +2,7 @@
 phase: 08
 slug: interactive-proof
 status: draft
-nyquist_compliant: false
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-11-12
 ---
@@ -53,6 +53,10 @@ created: 2026-11-12
 | D-17/18 | View-transition focus, reduced motion, interruption, VT-disabled fallback | e2e | `pnpm test:e2e -- e2e/dive-transition.spec.ts` | ❌ W0 |
 | All | axe on both new routes; CSP zero violations | e2e | `pnpm test:e2e -- e2e/a11y.spec.ts e2e/csp.spec.ts` | ✅ extend |
 | All | Sitemap 9 URLs; robots disallows `/games/` | unit | `pnpm test -- tests/robots-sitemap.test.ts` | ✅ extend |
+| All | Per-project accents (Facturo yellow, Atlantis blue, Robot red) meet AA on ground | unit | `pnpm test -- tests/contrast.test.ts` (plan 08-02) | ✅ extend |
+| All | Accents applied only to deep-dive main/footer; axe colour-contrast on all three deep dives | e2e | `pnpm test:e2e -- e2e/a11y.spec.ts` (plans 08-02, 08-13) | ✅ extend |
+| All | Deep dives show project pictures (Atlantis screenshots + team photo, Robot still + trophies photo) with width/height, JS off too | unit + e2e | `pnpm test -- tests/proof-route.test.tsx`, `routes.spec.ts` nojs (plans 08-09, 08-11, 08-13) | ❌ W0 |
+| All | Publish guard: no pending clearance, no cleared placeholder | unit | `pnpm test -- tests/proof-gate.test.ts` (plans 08-02, 08-17) | ❌ W0 |
 | All | New `"use client"` files on allowlist | unit | `pnpm test -- tests/source-guard.test.ts` | ✅ extend |
 
 *Status tracking happens per plan during execution.*
@@ -65,7 +69,9 @@ created: 2026-11-12
 - [ ] `tests/proof-game-state.test.ts`, `tests/proof-game-protocol.test.ts`, `tests/proof-orbit.test.ts`, `tests/proof-mesh.test.ts` (+ tiny fixture `.bin`)
 - [ ] `e2e/proof-isolation.spec.ts`, `e2e/atlantis.spec.ts`, `e2e/atlantis-real.spec.ts` (slow), `e2e/robot.spec.ts`, `e2e/dive-transition.spec.ts`
 - [ ] `e2e/csp.spec.ts` path-specific CSP injection + game-path negative control
-- [ ] ESLint and Prettier ignores for `public/games/**` and `public/models/**`
+- [ ] ESLint and Prettier ignores for `public/games/**` and `public/models/**` (plan 08-06)
+
+Wave 0 mapping: stub fixture and atlantis specs (08-10), unit tests (08-03, 08-04), proof-isolation (08-13), atlantis-real (08-07), robot specs (08-12), dive-transition (08-14), csp path injection (08-05). Mesh fixture is produced in memory by `encodeMesh` instead of a committed `.bin`. Touch fallback runs in `chromium-phone` (`e2e/atlantis-touch.spec.ts`) instead of `chromium-touch`.
 
 ---
 
