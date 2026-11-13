@@ -74,3 +74,14 @@ Route layout details, iframe sizing, per-chunk cap and load trigger, CAD pipelin
 ## Deferred Ideas
 
 None. Licences and consent: not discussed, recorded as plan-time gate.
+
+---
+
+## Added later: Projects to deep-dive transition
+
+| Question | Options | Selected |
+|----------|---------|----------|
+| Look | Horizontal slide like paging / Row grows into the page / Crossfade only | Row grows into the page (not the recommended slide; deviates from the horizontal-only rule, logged as D-19) |
+| Scope | All three: Facturo, Atlantis, Robot / Atlantis and Robot only | All three |
+
+**Notes:** Yahya's request: "an animation when going from the project tab to the deep dive tab, same thing with the robot and the game".
