@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { StandaloneClient } from "@/components/deep-dive/StandaloneClient";
 import { DeepDiveFooter } from "@/components/deep-dive/DeepDiveFooter";
 import styles from "@/components/deep-dive/deep-dive.module.css";
 import { Header } from "@/components/frame/Header";
 import { SkipLink } from "@/components/frame/SkipLink";
 import { LetterNav } from "@/components/letters/LetterNav";
 import { Photo } from "@/components/media/Photo";
+import { ProofClient } from "@/components/proof/ProofClient";
 import { ModelStage } from "@/components/proof/ModelStage";
 import { ProofRoute } from "@/components/proof/ProofRoute";
 import proof from "@/components/proof/proof.module.css";
@@ -69,7 +69,7 @@ export default function Page() {
         backLabel={robot.backLabel}
         motion={viewerOn}
       />
-      <StandaloneClient />
+      <ProofClient feature="model" />
     </>
   );
 }
