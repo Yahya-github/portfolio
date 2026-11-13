@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { atlantis } from "@/content/atlantis";
 import { facturo } from "@/content/facturo";
 import { sections, site } from "@/content/site";
 import {
@@ -92,6 +93,12 @@ describe("deepDiveMetadata", () => {
     expect(m.alternates).toEqual({ canonical: "/projects/facturo/" });
   });
 
+  it("builds the Atlantis title and canonical", () => {
+    const m = deepDiveMetadata(atlantis);
+    expect(m.title).toBe("Atlantis, Yahya Hallani");
+    expect(m.alternates).toEqual({ canonical: "/projects/atlantis/" });
+  });
+
   it("keeps the card and og:url", () => {
     expect(deepDiveMetadata(facturo).openGraph).toMatchObject({
       url: "/projects/facturo/",
@@ -130,6 +137,16 @@ describe("description length", () => {
   it("keeps the Facturo description between 50 and 160 characters", () => {
     expect(facturo.metaDescription.length).toBeGreaterThanOrEqual(MIN);
     expect(facturo.metaDescription.length).toBeLessThanOrEqual(MAX);
+  });
+
+  it("keeps both Atlantis descriptions between 50 and 160 characters", () => {
+    for (const d of [
+      atlantis.metaDescription,
+      atlantis.metaDescriptionFallback,
+    ]) {
+      expect(d.length).toBeGreaterThanOrEqual(MIN);
+      expect(d.length).toBeLessThanOrEqual(MAX);
+    }
   });
 
   it("keeps the Achievements exception to 200 characters at most", () => {
