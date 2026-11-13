@@ -559,14 +559,14 @@ The 9.4 MB `web_nothreads_release.zip` can be pulled from the 1.36 GB `.tpz` wit
 | A12 | Vercel's on-the-fly brotli for a 38 MB wasm is close to q5 and has no size cutoff | Measured Export | If not compressed, the transfer is 38 MB; **measure with `curl -sI -H 'Accept-Encoding: br'` on the preview** |
 | A13 | `DecompressionStream`, `wasm-unsafe-eval` and CSP fallback versions as stated | Stack / State of the Art | Low; all are widely shipped |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Music provenance.** What we know: a 37 MB WAV titled "Mermaids in Town" with no recorded source. Unclear: its licence. Recommendation: ask Yahya and the teammates at the gate; default to shipping the web build muted of music (keep the SFX MP3s) if unknown.
-2. **Who exports the robot CAD.** What we know: the owner is a teammate's account, and anonymous export is off. Unclear: whether Yahya has an account with access. Recommendation: the gate plan asks the owner for a glTF export of "Robot Assembly" plus consent in one message. Until then, build against a placeholder (a simple procedural box-and-wheels mesh or the thumbnail-only still).
-3. **Vercel compression of the 38 MB wasm.** Measure on the first preview deployment; it determines the honest size line and the threshold check.
-4. **Do fork changes go to `Yahya-github/atlantis` (public) or a portfolio-only branch?** Recommendation: a `web` branch in the fork with the scene fix, web preset, shell, mute autoload and exclusions. The built export is committed into the portfolio repo under a version folder, and the version string is the fork commit SHA.
-5. **The game is in French.** Should the Atlantis page say so (e.g. meta line "In French")? This is a copy decision for Yahya, and it is a verified fact.
-6. **D-06 header wording vs research.** Research recommends no header change on `/projects/atlantis/` itself (only `/games/**`). This needs the user's acknowledgement because D-06 named the route.
+1. **Music provenance.** What we know: a 37 MB WAV titled "Mermaids in Town" with no recorded source. Unclear: its licence. Recommendation: ask Yahya and the teammates at the gate; default to shipping the web build muted of music (keep the SFX MP3s) if unknown. RESOLVED: gate row MUSIC in plan 08-01, default excluded, confirmed at the 08-01 checkpoint.
+2. **Who exports the robot CAD.** What we know: the owner is a teammate's account, and anonymous export is off. Unclear: whether Yahya has an account with access. Recommendation: the gate plan asks the owner for a glTF export of "Robot Assembly" plus consent in one message. Until then, build against a placeholder (a simple procedural box-and-wheels mesh or the thumbnail-only still). RESOLVED: plan 08-16 checkpoint asks the owner for glTF plus consent; placeholder mesh until then (08-08).
+3. **Vercel compression of the 38 MB wasm.** Measure on the first preview deployment; it determines the honest size line and the threshold check. RESOLVED: measured via `curl -sI` on the preview in plan 08-17; threshold decided at the 08-07 checkpoint.
+4. **Do fork changes go to `Yahya-github/atlantis` (public) or a portfolio-only branch?** Recommendation: a `web` branch in the fork with the scene fix, web preset, shell, mute autoload and exclusions. The built export is committed into the portfolio repo under a version folder, and the version string is the fork commit SHA. RESOLVED: gate row FORK in 08-01 (default `web` branch in the fork), implemented in 08-06.
+5. **The game is in French.** Should the Atlantis page say so (e.g. meta line "In French")? This is a copy decision for Yahya, and it is a verified fact. RESOLVED: gate row FRENCH in 08-01, applied in 08-09.
+6. **D-06 header wording vs research.** Research recommends no header change on `/projects/atlantis/` itself (only `/games/**`). This needs the user's acknowledgement because D-06 named the route. RESOLVED: gate row D06 in 08-01; header split implemented in 08-05.
 
 ## Environment Availability
 
