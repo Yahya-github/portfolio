@@ -1,5 +1,18 @@
 import { achievements } from "./achievements";
-import type { AtlantisContent } from "./types";
+import { atlantisBuild } from "./generated/atlantis-build";
+import type { AtlantisContent, DeepDiveLink } from "./types";
+
+/** Licence notices ship inside the versioned export folder (plan 08-15). */
+const creditsLink: readonly DeepDiveLink[] = atlantisBuild
+  ? [
+      {
+        label: "Credits",
+        href: atlantisBuild.path.replace(/play\.html$/, "LICENSES.txt"),
+        source: "Licences for the art, font and addons",
+        external: false,
+      },
+    ]
+  : [];
 
 const teamPhotoAlt = ((): string => {
   for (const line of achievements.lines) {
@@ -64,6 +77,7 @@ export const atlantis = {
       source: "Article, neomedia.com",
       external: true,
     },
+    ...creditsLink,
   ],
   backLabel: "Back to Projects",
   game: {
@@ -88,5 +102,9 @@ export const atlantis = {
     frameTitle: "Atlantis game",
     posterCursorTag: "Play",
   },
-  credits: [],
+  credits: [
+    "Some art from Freepik.",
+    "Font: Black Ops One (SIL Open Font License).",
+    "Addons: Dialogic and Controller Icons (MIT).",
+  ],
 } as const satisfies AtlantisContent;

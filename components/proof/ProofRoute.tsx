@@ -9,10 +9,11 @@ interface ProofRouteProps {
   readonly content: ProofRouteContent<string>;
   readonly stage: ReactNode;
   readonly gallery?: ReactNode;
+  readonly credits?: readonly string[];
 }
 
 /** Shared lean layout for the proof routes: Display title, stage, side column (D-03). */
-export function ProofRoute({ content, stage, gallery }: ProofRouteProps) {
+export function ProofRoute({ content, stage, gallery, credits }: ProofRouteProps) {
   const [lead, ...rest] = content.lines;
   return (
     <article className={`grid dive-surface-${content.project} ${styles.body}`}>
@@ -48,6 +49,13 @@ export function ProofRoute({ content, stage, gallery }: ProofRouteProps) {
           ))}
         </ul>
         <ProofLinks links={content.links} className={styles.links} />
+        {credits && credits.length > 0 ? (
+          <ul className={`t-label c-dim ${styles.meta}`}>
+            {credits.map((c) => (
+              <li key={c}>{c}</li>
+            ))}
+          </ul>
+        ) : null}
       </div>
       {gallery ? <div className={styles.galleryCol}>{gallery}</div> : null}
     </article>

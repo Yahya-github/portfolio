@@ -28,13 +28,13 @@ Nothing from Phase 8 is pushed to GitHub (no branch push, no PR; Vercel previews
 
 | item | finding | status | ships if not cleared |
 |------|---------|--------|----------------------|
-| Atlantis repo licence | No LICENSE file; teammates' written OK needed | pending | poster + screenshots + Code link |
-| Freepik vectors | Credit line required | pending | poster + screenshots + Code link |
-| Black Ops One font | OFL | pending | poster + screenshots + Code link |
-| Mermaids in Town.wav | Source and licence unknown; excluded by default | pending | poster + screenshots + Code link |
+| Atlantis repo licence | No LICENSE file; teammates' written OK needed | cleared | poster + screenshots + Code link |
+| Freepik vectors | Credit line required | cleared | poster + screenshots + Code link |
+| Black Ops One font | OFL | cleared | poster + screenshots + Code link |
+| Mermaids in Town.wav | Source and licence unknown; excluded by default (MUSIC=none, not shipped) | excluded | poster + screenshots + Code link |
 | spiderman.jpeg | Excluded, no decision | excluded | poster + screenshots + Code link |
-| Dialogic addon | MIT notice required | pending | poster + screenshots + Code link |
-| Controller Icons addon | MIT notice required | pending | poster + screenshots + Code link |
+| Dialogic addon | MIT notice required | cleared | poster + screenshots + Code link |
+| Controller Icons addon | MIT notice required | cleared | poster + screenshots + Code link |
 | Robot CAD | Owner is a teammate's Onshape account; consent plus owner's glTF export of "Robot Assembly" only | pending | still image only |
 
 ## Message to teammates (draft)
@@ -53,5 +53,5 @@ Yahya
 
 ## Gate record
 
-Atlantis: pending
+Atlantis: cleared (2026-11-13, Yahya: "Cleared by teammates"; teammates gave their OK to host the playable build with credits, no sale, no download)
 Robot: pending

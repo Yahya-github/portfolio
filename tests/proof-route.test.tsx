@@ -68,7 +68,10 @@ describe("Atlantis route, playable", () => {
     const { container } = renderRoute(true);
     for (const el of container.querySelectorAll("[src], [href]")) {
       expect(el.getAttribute("src") ?? "").not.toContain("/games/");
-      expect(el.getAttribute("href") ?? "").not.toContain("/games/");
+      const href = el.getAttribute("href") ?? "";
+      // The Credits link is a user navigation to the licence text, not a request.
+      if (href.endsWith("/LICENSES.txt")) continue;
+      expect(href).not.toContain("/games/");
     }
   });
 });

@@ -18,6 +18,7 @@ test-results/
 .lighthouseci/
 .env*
 
-# Phase 8: game and model binaries stay local until the gate plans (08-15/08-16) un-ignore them
-public/games/
+# Phase 8: model binaries stay local until 08-16 un-ignores them; the Atlantis build was cleared in 08-15
+# (atlantis-demo is a local measuring build, never committed)
+public/games/atlantis-demo/
 public/models/

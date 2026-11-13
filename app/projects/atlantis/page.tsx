@@ -41,6 +41,7 @@ export default function Page() {
       >
         <ProofRoute
           content={atlantis}
+          credits={playable ? atlantis.credits : []}
           stage={
             <GameStage
               content={atlantis}

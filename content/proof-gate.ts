@@ -6,6 +6,6 @@ import type { ProofGate } from "@/content/types";
  * `embed` is set by plan 08-07 after measuring (D-08).
  */
 export const proofGate: ProofGate = {
-  atlantis: { clearance: "pending", embed: true },
+  atlantis: { clearance: "cleared", embed: true },
   robot: { clearance: "pending" },
 } satisfies ProofGate;
