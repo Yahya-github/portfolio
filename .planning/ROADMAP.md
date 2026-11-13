@@ -207,11 +207,11 @@ Plans:
 **Plans**: 17 plans
 Plans:
 - [x] 08-01-PLAN.md — Decisions checkpoint (threshold, D-06 scope, fork, music, French, row label, per-project accents, pictures) and consent request
-- [ ] 08-02-PLAN.md — Shared contracts, clearance gate, generalised footer/metadata, per-project accent tokens (Facturo yellow)
+- [x] 08-02-PLAN.md — Shared contracts, clearance gate, generalised footer/metadata, per-project accent tokens (Facturo yellow)
 - [x] 08-03-PLAN.md — TDD: game state machine and postMessage guard
 - [x] 08-04-PLAN.md — TDD: orbit maths, auto-rotate gate, easing, RBT1 mesh format
-- [ ] 08-05-PLAN.md — Disjoint Vercel headers (/games/ only gets wasm), unit pins, path-aware CSP e2e, wasm negative control
-- [ ] 08-06-PLAN.md — Fork web branch, first-party Godot shell, export script with measured sizes, binary ignores
+- [x] 08-05-PLAN.md — Disjoint Vercel headers (/games/ only gets wasm), unit pins, path-aware CSP e2e, wasm negative control
+- [x] 08-06-PLAN.md — Fork web branch, first-party Godot shell, export script with measured sizes, binary ignores
 - [ ] 08-07-PLAN.md — Real boot under game CSP, screenshots, timing, embed decision checkpoint
 - [ ] 08-08-PLAN.md — CAD-to-RBT1 mesh pipeline (placeholder), model size gate in measure-js
 - [ ] 08-09-PLAN.md — Atlantis static route (blue accent, screenshots + team photo, stage markup)
@@ -239,7 +239,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 5. Letter Navigation and Motion | 13/13 | Complete    | 2026-11-10 |
 | 6. Page Compositions and Content | 17/17 | Complete    | 2026-11-12 |
 | 7. Copy, Sharing and Launch | 8/8 | Complete   | 2026-11-13 |
-| 8. Interactive Proof | 3/17 | In Progress|  |
+| 8. Interactive Proof | 6/17 | In Progress|  |
 
 ## Research Flags
 
