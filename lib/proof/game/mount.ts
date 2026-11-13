@@ -173,7 +173,9 @@ export function mount(root: ParentNode = document): () => void {
     if (el.play) on(el.play, type, warm);
   }
   if (el.play) on(el.play, "click", start);
-  if (el.poster) on(el.poster, "click", start);
+  // The slot overlays the poster, so the click lands on their shared parent.
+  const pad = el.poster?.parentElement;
+  if (pad) on(pad, "click", start);
   if (el.retry) on(el.retry, "click", start);
   if (el.exit) on(el.exit, "click", leave);
   if (el.mute) on(el.mute, "click", toggleMute);
