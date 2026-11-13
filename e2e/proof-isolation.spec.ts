@@ -105,35 +105,35 @@ test.describe("proof isolation", () => {
   test("Atlantis controller chunk loads only on its own route, no wasm or pck before Play", async ({
     page,
   }) => {
-    test.skip(!atlantisPlayable(proofGate, atlantisBuild), "embed off");
+    // No test.skip: serial mode would skip the later tests and hide the isolation check.
     await stubGame(page);
     const urls = record(page);
     await page.goto(atlantis.route);
     await page.waitForTimeout(IDLE_MS);
     expect(urls.filter((u) => /\.(wasm|pck)(\?|$)/.test(u))).toEqual([]);
-    const before = scriptsOf(urls);
-    await page.getByRole("button", { name: "Play Atlantis" }).click();
-    await expect(page.locator("[data-game]")).toHaveAttribute(
-      "data-game-state",
-      "playing",
-    );
-    const after = scriptsOf(urls);
-    for (const n of after) if (!before.has(n)) own.add(n);
-    // Chunks the route needs that no other route loads (route page plus controller).
-    for (const n of after) if (!(baseline ?? new Set()).has(n)) own.add(n);
+    if (atlantisPlayable(proofGate, atlantisBuild)) {
+      await page.getByRole("button", { name: "Play Atlantis" }).click();
+      await expect(page.locator("[data-game]")).toHaveAttribute(
+        "data-game-state",
+        "playing",
+      );
+    }
+    // Chunks this route needs that no other route loads (route page plus controller).
+    for (const n of scriptsOf(urls)) if (!baseline?.has(n)) own.add(n);
   });
 
   test("robot viewer chunk loads only on its own route", async ({ page }) => {
-    test.skip(!robotViewerOn(proofGate, robotModel), "viewer off");
     await stubMesh(page);
     const urls = record(page);
     await page.goto(robot.route);
-    await expect(page.locator("[data-model]")).toHaveAttribute(
-      "data-model-state",
-      "live",
-    );
-    const after = scriptsOf(urls);
-    for (const n of after) if (!(baseline ?? new Set()).has(n)) own.add(n);
+    if (robotViewerOn(proofGate, robotModel)) {
+      await expect(page.locator("[data-model]")).toHaveAttribute(
+        "data-model-state",
+        "live",
+      );
+    }
+    await page.waitForTimeout(IDLE_MS);
+    for (const n of scriptsOf(urls)) if (!baseline?.has(n)) own.add(n);
   });
 
   test("none of the proof chunks appear on the other routes", async ({
@@ -141,6 +141,7 @@ test.describe("proof isolation", () => {
   }) => {
     const proofRoutes = new Set<string>([atlantis.route, robot.route]);
     const gameChunks = [...own];
+    expect(gameChunks.length).toBeGreaterThan(0);
     for (const route of ROUTES) {
       if (proofRoutes.has(route)) continue;
       const urls = record(page);
