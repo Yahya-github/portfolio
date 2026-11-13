@@ -23,11 +23,25 @@ export function referencedChunks(html) {
   return [...new Set(html.match(CHUNK_PATH) ?? [])];
 }
 
-/** "projects/x/index.html" -> "/projects/x/". */
+const MODEL_FILE = /(?:^|\/)models\/.+\/robot\.bin$/;
+const GAME_DIR = /(?:^|\/)games\//;
+
+/** "projects/x/index.html" -> "/projects/x/"; null for anything that is not a route page (game pages, other html). */
 export function routeOf(htmlPath) {
   const parts = htmlPath.replaceAll("\\", "/").split("/");
-  parts.pop();
+  const file = parts.pop();
+  if (file !== "index.html" || parts[0] === "games") return null;
   return parts.length === 0 ? "/" : `/${parts.join("/")}/`;
+}
+
+/** Robot mesh binaries (models/<version>/robot.bin). */
+export function modelFiles(paths) {
+  return paths.filter((p) => MODEL_FILE.test(p.replaceAll("\\", "/")));
+}
+
+/** Everything under games/ (reported, never gated). */
+export function gameFiles(paths) {
+  return paths.filter((p) => GAME_DIR.test(p.replaceAll("\\", "/")));
 }
 
 /** Chunks that no HTML page references. */
