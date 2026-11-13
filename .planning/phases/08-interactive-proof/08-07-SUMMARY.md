@@ -43,3 +43,10 @@ Status: Tasks 1 and 2 done and committed. Task 3 (embed / custom-template / fall
 - A level-1-only demo (fork branch `web-demo`, local) saved only ~0.9 MB / 0.25 s and was dropped: "Ok so nevermind just leave all the game".
 - Decision: **embed** the full game. `content/proof-gate.ts` atlantis.embed = true (clearance still pending; playable only after 08-15).
 - Open: cold load 0.5 s over THRESHOLD; remaining lever is a custom Godot template (smaller engine).
+
+## Final optimised numbers (orchestrator, 25 Mbps / 20 ms RTT, Chromium, `serve`)
+- Pck 24.2 -> 7.9 MB (lossy WebP q0.5, mono 48k sfx, unreferenced assets excluded, boot splash shrunk).
+- Custom Godot 4.5.1 web template (scripts/godot-template-build.sh): wasm brotli 7.6 -> 5.1 MB. `deprecated=no` breaks Dialogic/ControllerIcons: do not use.
+- Transfer 13.7 MB (limit 25), cold Play-to-title 10.4 s (limit 12). Warm 7.9 s is a no-cache-header artefact of `serve`, not measured on Vercel.
+- Fork `web` branch HEAD 68a6876b9a1e (not pushed). Dialogic example-asset exclusion bug fixed (tutorial dialogue now renders).
+- Idea for 08-10: prefetch wasm/pck on Play hover/focus/touchstart (intent-gated).
