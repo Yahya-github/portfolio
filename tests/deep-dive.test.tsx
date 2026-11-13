@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { DeepDiveFooter } from "@/components/deep-dive/DeepDiveFooter";
 import { FacturoDeepDive } from "@/components/deep-dive/FacturoDeepDive";
 import { facturo } from "@/content/facturo";
+import { site } from "@/content/site";
 
 afterEach(cleanup);
 
@@ -39,12 +40,29 @@ describe("FacturoDeepDive", () => {
 
 describe("DeepDiveFooter", () => {
   it("has only a Back to Projects link and no pager chrome", () => {
-    const { container } = render(<DeepDiveFooter />);
+    const { container } = render(
+      <DeepDiveFooter project="facturo" backLabel="Back to Projects" />,
+    );
     const links = screen.getAllByRole("link");
     expect(links).toHaveLength(1);
     expect(links[0]).toHaveTextContent("Back to Projects");
     expect(links[0]).toHaveAttribute("href", "/projects/");
+    expect(container.querySelector("footer")).toHaveAttribute(
+      "data-dive",
+      "facturo",
+    );
     expect(container.querySelector("[data-pager]")).toBeNull();
     expect(container.querySelector("[data-hint]")).toBeNull();
+    expect(container.querySelector("[data-motion-toggle]")).toBeNull();
+  });
+
+  it("renders one motion toggle when motion is on", () => {
+    const { container } = render(
+      <DeepDiveFooter project="robot" backLabel="Back to Projects" motion />,
+    );
+    const buttons = container.querySelectorAll("button[data-motion-toggle]");
+    expect(buttons).toHaveLength(1);
+    expect(buttons[0]).toHaveTextContent(site.motion.pause);
+    expect(buttons[0]).toHaveTextContent(site.motion.play);
   });
 });

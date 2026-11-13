@@ -3,7 +3,15 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
-const TEXT_TOKENS = ["ink", "dim", "accent"] as const;
+const TEXT_TOKENS = [
+  "ink",
+  "dim",
+  "accent",
+  "accent-facturo",
+  "accent-atlantis",
+  "accent-robot",
+] as const;
+const DIVE_PROJECTS = ["facturo", "atlantis", "robot"] as const;
 const AA_NORMAL = 4.5;
 const MIN_GREY = 0x8a;
 const MAX_RATIO = 21;
@@ -51,5 +59,15 @@ describe("text tokens on the ground", () => {
     const hex = token(t);
     const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
     expect(r === g && g === b ? r : MIN_GREY).toBeGreaterThanOrEqual(MIN_GREY);
+  });
+});
+
+describe("per-project accent overrides", () => {
+  const base = readFileSync(join(process.cwd(), "styles/base.css"), "utf8");
+  it.each(DIVE_PROJECTS)("base.css sets the %s accent on [data-dive]", (p) => {
+    const re = new RegExp(
+      `\\[data-dive="${p}"\\]\\s*\\{[^}]*--color-accent:\\s*var\\(--color-accent-${p}\\)`,
+    );
+    expect(base).toMatch(re);
   });
 });
