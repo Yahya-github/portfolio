@@ -5,6 +5,9 @@
   --color-dim: #8e8e8e;
   --color-hair: #2e2e2e;
   --color-accent: #5fae84;
+  --color-accent-facturo: #e8c547; /* about oklch(83% 0.15 92), 11.72:1 on ground */
+  --color-accent-atlantis: #5fa8f0; /* about oklch(71% 0.13 250), 7.82:1 */
+  --color-accent-robot: #f2685c; /* about oklch(68% 0.17 28), 6.48:1 */
 
   --wdth-display: 75%;
   --wdth-body: 100%;
