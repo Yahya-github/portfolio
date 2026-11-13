@@ -64,7 +64,7 @@ jobs:
         with: { node-version-file: .nvmrc }
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - run: pnpm measure:js -- --max-gzip-kb 150 --max-chunk-kb 12
+      - run: pnpm measure:js -- --max-gzip-kb 150 --max-chunk-kb 12 --max-model-kb 700
       - run: pnpm test:e2e
       - if: failure()
         uses: actions/upload-artifact@v7
