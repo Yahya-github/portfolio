@@ -62,17 +62,30 @@ export function ProjectsPage({ isCurrent }: PageProps) {
                   <OrgMark name={r.mark} eager={isCurrent} />
                 </span>
               ) : null}
-              {r.link ? (
-                <a
-                  className={`t-label ulink ${styles.link}`}
-                  href={r.link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-preview-trigger={r.preview ? "" : undefined}
-                  data-cursor-tag={r.linkCursorTag ?? undefined}
-                >
-                  {r.link.label}
-                </a>
+              {r.dive || r.link ? (
+                <span className={styles.links}>
+                  {r.dive ? (
+                    <a
+                      className={`t-label ulink ${styles.link}`}
+                      href={r.dive.href}
+                      data-cursor-tag={r.diveCursorTag ?? undefined}
+                    >
+                      {r.dive.label}
+                    </a>
+                  ) : null}
+                  {r.link ? (
+                    <a
+                      className={`t-label ulink ${styles.link}`}
+                      href={r.link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-preview-trigger={r.preview ? "" : undefined}
+                      data-cursor-tag={r.linkCursorTag ?? undefined}
+                    >
+                      {r.link.label}
+                    </a>
+                  ) : null}
+                </span>
               ) : null}
             </div>
             <p className="t-body c-dim">{r.lines[0]}</p>

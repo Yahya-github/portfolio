@@ -2,7 +2,15 @@
 // Direct loads only; the same axe pass after real page changes (inert pages excluded) lives in pager-a11y.spec.ts.
 import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { atlantisBuild } from "../content/generated/atlantis-build";
+import { robotModel } from "../content/generated/robot-model";
+import { proofGate } from "../content/proof-gate";
 import { sections } from "../content/site";
+import { atlantisPlayable, robotViewerOn } from "../lib/proof/gate";
+import { encodeMesh, placeholderMesh } from "../scripts/lib/robot-mesh.mjs";
+import { cspForPath } from "./helpers/csp";
 import { open } from "./helpers/pager";
 
 const VIEWPORTS = [
@@ -13,6 +21,8 @@ const VIEWPORTS = [
 const ROUTES = [
   ...sections.map((s) => s.route),
   "/projects/facturo/",
+  "/projects/atlantis/",
+  "/projects/robot/",
   "/this-page-does-not-exist/",
 ];
 
@@ -89,3 +99,70 @@ test.describe("axe with interaction states", () => {
     await expectClean(page);
   });
 });
+
+// PROOF-01 / PROOF-02: the live states of the two proof routes (stubbed game, placeholder mesh).
+const STUB_DIR = join("e2e", "fixtures", "game-stub");
+
+for (const vp of VIEWPORTS) {
+  test.describe(`proof route live states ${vp.name}`, () => {
+    test.use({ viewport: { width: vp.width, height: vp.height } });
+
+    test(`axe atlantis playing ${vp.name}`, async ({ page }) => {
+      test.skip(
+        !atlantisPlayable(proofGate, atlantisBuild),
+        "embed off or withheld",
+      );
+      await page.route("**/games/atlantis/**", async (route) => {
+        const file = new URL(route.request().url()).pathname.split("/").pop();
+        if (file === "play.html") {
+          await route.fulfill({
+            contentType: "text/html",
+            headers: {
+              "content-security-policy": cspForPath(
+                "/games/atlantis/play.html",
+              ),
+            },
+            body: readFileSync(join(STUB_DIR, "play.html"), "utf8"),
+          });
+        } else if (file === "shell.js") {
+          await route.fulfill({
+            contentType: "text/javascript",
+            body: readFileSync(join(STUB_DIR, "shell.js"), "utf8"),
+          });
+        } else {
+          await route.fulfill({
+            contentType: "application/octet-stream",
+            body: "stub",
+          });
+        }
+      });
+      await page.goto("/projects/atlantis/");
+      await page.getByRole("button", { name: "Play Atlantis" }).click();
+      await expect(page.locator("[data-game]")).toHaveAttribute(
+        "data-game-state",
+        "playing",
+      );
+      const results = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+        .analyze();
+      expect(results.violations).toEqual([]);
+    });
+
+    test(`axe robot live ${vp.name}`, async ({ page }) => {
+      test.skip(!robotViewerOn(proofGate, robotModel), "viewer off");
+      const body = Buffer.from(encodeMesh(placeholderMesh()));
+      await page.route("**/models/robot/**", (route) =>
+        route.fulfill({ contentType: "application/octet-stream", body }),
+      );
+      await page.goto("/projects/robot/");
+      await expect(page.locator("[data-model]")).toHaveAttribute(
+        "data-model-state",
+        "live",
+      );
+      const results = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+        .analyze();
+      expect(results.violations).toEqual([]);
+    });
+  });
+}

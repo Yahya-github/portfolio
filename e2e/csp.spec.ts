@@ -48,7 +48,12 @@ async function runUnderCsp(
   return { violations, errors };
 }
 
-for (const route of [...sections.map((s) => s.route), "/projects/facturo/"]) {
+for (const route of [
+  ...sections.map((s) => s.route),
+  "/projects/facturo/",
+  "/projects/atlantis/",
+  "/projects/robot/",
+]) {
   test(`${route} runs under the production CSP with zero violations`, async ({
     page,
   }) => {
