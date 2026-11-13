@@ -219,7 +219,7 @@ Plans:
 - [x] 08-11-PLAN.md — Robot static route (red accent, still + trophies photo)
 - [x] 08-12-PLAN.md — Raw WebGL2 viewer, motion control on the route, robot e2e
 - [x] 08-13-PLAN.md — Projects row links, sitemap 9, robots /games/, e2e route lists, isolation audit
-- [ ] 08-14-PLAN.md — Row-to-deep-dive cross-document View Transitions for all three deep dives
+- [x] 08-14-PLAN.md — Row-to-deep-dive cross-document View Transitions for all three deep dives
 - [ ] 08-15-PLAN.md — Atlantis consent gate, publish or fallback, visual baselines
 - [ ] 08-16-PLAN.md — Robot CAD consent and real mesh, matching still, baselines
 - [ ] 08-17-PLAN.md — Publish guard, PR, preview header checks, Yahya merges
@@ -239,7 +239,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 5. Letter Navigation and Motion | 13/13 | Complete    | 2026-11-10 |
 | 6. Page Compositions and Content | 17/17 | Complete    | 2026-11-12 |
 | 7. Copy, Sharing and Launch | 8/8 | Complete   | 2026-11-13 |
-| 8. Interactive Proof | 13/17 | In Progress|  |
+| 8. Interactive Proof | 14/17 | In Progress|  |
 
 ## Research Flags
 
