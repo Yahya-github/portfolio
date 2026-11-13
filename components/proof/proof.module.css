@@ -76,6 +76,22 @@
   display: none;
 }
 
+/* UA button chrome off; zero specificity so .play, .control and the type classes still win. */
+:where(.controls button, .modelControls button) {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: inherit;
+  font-weight: inherit;
+  font-stretch: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
 .play {
   color: var(--color-accent);
 }
