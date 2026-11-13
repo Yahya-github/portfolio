@@ -29,11 +29,11 @@ function Shot({ image, eager, className }: ShotProps) {
 /** Facturo deep dive body (CONT-04): title, lead, meta and ruled sections (D-02). */
 export function FacturoDeepDive() {
   return (
-    <article className={`grid ${styles.body}`}>
+    <article className={`grid dive-surface-facturo ${styles.body}`}>
       <h1 className={`t-display ${styles.title}`}>
         <span
           style={displayFitStyle(facturo.title) as CSSProperties}
-          className={styles.titleWord}
+          className={`dive-title-facturo ${styles.titleWord}`}
         >
           {facturo.title}
         </span>
