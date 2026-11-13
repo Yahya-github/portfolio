@@ -506,6 +506,13 @@ export const media = {
       height: 1240,
     },
   ],
+  "robot/robot-still-grey": [
+    {
+      src: "/media/robot/robot-still-grey-600.webp",
+      width: 600,
+      height: 340,
+    },
+  ],
 } as const satisfies Readonly<Record<string, readonly MediaVariant[]>>;
 
 export type MediaKey = keyof typeof media;
