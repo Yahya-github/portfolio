@@ -87,13 +87,13 @@ describe("pageMetadata", () => {
 
 describe("deepDiveMetadata", () => {
   it("builds the Facturo title and canonical", () => {
-    const m = deepDiveMetadata();
+    const m = deepDiveMetadata(facturo);
     expect(m.title).toBe(facturo.metaTitle);
     expect(m.alternates).toEqual({ canonical: "/projects/facturo/" });
   });
 
   it("keeps the card and og:url", () => {
-    expect(deepDiveMetadata().openGraph).toMatchObject({
+    expect(deepDiveMetadata(facturo).openGraph).toMatchObject({
       url: "/projects/facturo/",
       images: [SHARE_IMAGE],
     });
