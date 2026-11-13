@@ -58,6 +58,78 @@ export const media = {
       height: 207,
     },
   ],
+  "atlantis/atlantis-01": [
+    {
+      src: "/media/atlantis/atlantis-01-960.webp",
+      width: 960,
+      height: 540,
+    },
+    {
+      src: "/media/atlantis/atlantis-01-1280.webp",
+      width: 1280,
+      height: 720,
+    },
+  ],
+  "atlantis/atlantis-01-grey": [
+    {
+      src: "/media/atlantis/atlantis-01-grey-960.webp",
+      width: 960,
+      height: 540,
+    },
+    {
+      src: "/media/atlantis/atlantis-01-grey-1280.webp",
+      width: 1280,
+      height: 720,
+    },
+  ],
+  "atlantis/atlantis-02": [
+    {
+      src: "/media/atlantis/atlantis-02-960.webp",
+      width: 960,
+      height: 540,
+    },
+    {
+      src: "/media/atlantis/atlantis-02-1280.webp",
+      width: 1280,
+      height: 720,
+    },
+  ],
+  "atlantis/atlantis-02-grey": [
+    {
+      src: "/media/atlantis/atlantis-02-grey-960.webp",
+      width: 960,
+      height: 540,
+    },
+    {
+      src: "/media/atlantis/atlantis-02-grey-1280.webp",
+      width: 1280,
+      height: 720,
+    },
+  ],
+  "atlantis/atlantis-03": [
+    {
+      src: "/media/atlantis/atlantis-03-960.webp",
+      width: 960,
+      height: 540,
+    },
+    {
+      src: "/media/atlantis/atlantis-03-1280.webp",
+      width: 1280,
+      height: 720,
+    },
+  ],
+  "atlantis/atlantis-03-grey": [
+    {
+      src: "/media/atlantis/atlantis-03-grey-960.webp",
+      width: 960,
+      height: 540,
+    },
+    {
+      src: "/media/atlantis/atlantis-03-grey-1280.webp",
+      width: 1280,
+      height: 720,
+    },
+  ],
   "facturo/facturo-01-accueil": [
     {
       src: "/media/facturo/facturo-01-accueil-960.webp",

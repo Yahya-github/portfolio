@@ -40,6 +40,7 @@ const FACTURO_FRAMES = [
   "09-mobile",
   "10-clients",
 ];
+const ATLANTIS_FRAMES = ["01", "02", "03"];
 const PNG_MARKS = ["gdg", "icpc", "mame", "mcgill-robotics", "mercor"];
 const SVG_MARKS = ["crc", "facturo"];
 
@@ -85,6 +86,16 @@ for (const f of FACTURO_FRAMES) {
     widths,
     quality: 82,
   });
+}
+for (const n of ATLANTIS_FRAMES) {
+  for (const suffix of ["-grey", ""]) {
+    JOBS.push({
+      key: `atlantis/atlantis-${n}${suffix}`,
+      input: `screenshots/atlantis-${n}${suffix}.png`,
+      widths: [960, 1280],
+      quality: 82,
+    });
+  }
 }
 for (const t of ["grey", "color"]) {
   JOBS.push({
