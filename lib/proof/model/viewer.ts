@@ -181,7 +181,7 @@ function setupGl(gl: WebGL2RenderingContext, mesh: ParsedMesh): Renderer {
       gl.uniform2f(u("uScale"), f / aspect, f);
       gl.uniform3f(
         u("uDepth"),
-        -dist,
+        dist,
         Math.max(dist - radius * 1.2, 0.01),
         dist + radius * 1.2,
       );
@@ -418,6 +418,7 @@ function start(
 
   return () => {
     disposed = true;
+    delete html.dataset.modelTouched;
     cancelAnimationFrame(raf);
     io.disconnect();
     mo.disconnect();
