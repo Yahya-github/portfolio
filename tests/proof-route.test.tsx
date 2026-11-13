@@ -2,7 +2,9 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { GameStage } from "@/components/proof/GameStage";
 import { ProofRoute } from "@/components/proof/ProofRoute";
+import { ModelStage } from "@/components/proof/ModelStage";
 import { atlantis } from "@/content/atlantis";
+import { robot } from "@/content/robot";
 import { atlantisBuild } from "@/content/generated/atlantis-build";
 
 afterEach(cleanup);
@@ -78,6 +80,67 @@ describe("Atlantis route, not playable", () => {
     expect(screen.queryByText(/Loads .* MB/)).toBeNull();
     expect(container.querySelector("[data-game-poster] img")).not.toBeNull();
     expect(screen.getByRole("link", { name: "Article" })).toBeInTheDocument();
+  });
+});
+
+function renderRobot(viewerOn: boolean) {
+  return render(
+    <ProofRoute
+      content={robot}
+      stage={
+        <ModelStage
+          content={robot}
+          viewerOn={viewerOn}
+          src={viewerOn ? "/models/robot/x/robot.bin" : null}
+        />
+      }
+    />,
+  );
+}
+
+describe("Robot route, viewer on", () => {
+  it("renders the model hooks, still, hint, reset button and description", () => {
+    const { container } = renderRobot(true);
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+    const figures = container.querySelectorAll("figure[data-model]");
+    expect(figures).toHaveLength(1);
+    expect(figures[0]).toHaveAttribute(
+      "data-model-src",
+      "/models/robot/x/robot.bin",
+    );
+    const img = container.querySelector("[data-model-still] img");
+    expect(img).toHaveAttribute("width");
+    expect(img).toHaveAttribute("height");
+    expect(img).toHaveAttribute("alt", robot.still.alt);
+    expect(container.querySelector("[data-model-hint]")).toHaveTextContent(
+      "Drag to rotate",
+    );
+    expect(
+      screen.getByRole("button", { name: "Reset view" }),
+    ).toBeInTheDocument();
+    expect(container.querySelector("#robot-viewer-desc")).toHaveTextContent(
+      robot.viewer.description,
+    );
+  });
+
+  it("splits the title into two fitted spans", () => {
+    const { container } = renderRobot(true);
+    const spans = container.querySelectorAll("h1 span");
+    expect(spans).toHaveLength(2);
+    expect(spans[0]).toHaveTextContent("Robot");
+    expect(spans[1]).toHaveTextContent("firmware");
+  });
+});
+
+describe("Robot route, viewer off", () => {
+  it("keeps the still and caption with no viewer source or buttons", () => {
+    const { container } = renderRobot(false);
+    expect(container.querySelector("[data-model-still] img")).not.toBeNull();
+    expect(screen.getAllByText(robot.still.caption).length).toBeGreaterThan(0);
+    expect(container.querySelector("[data-model]")).not.toHaveAttribute(
+      "data-model-src",
+    );
+    expect(screen.queryByRole("button")).toBeNull();
   });
 });
 
