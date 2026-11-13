@@ -17,3 +17,7 @@ playwright-report/
 test-results/
 .lighthouseci/
 .env*
+
+# Phase 8: game and model binaries stay local until the gate plans (08-15/08-16) un-ignore them
+public/games/
+public/models/
