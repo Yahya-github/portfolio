@@ -8,6 +8,7 @@ import { indexPage } from "@/content/index";
 import { notFound } from "@/content/not-found";
 import { projects } from "@/content/projects";
 import { atlantis } from "@/content/atlantis";
+import { robot } from "@/content/robot";
 import { sayHi } from "@/content/say-hi";
 import { sections, site } from "@/content/site";
 
@@ -22,6 +23,7 @@ const ALL_CONTENT = {
   sayHi,
   facturo,
   atlantis,
+  robot,
   notFound,
 };
 

@@ -97,6 +97,13 @@ for (const n of ATLANTIS_FRAMES) {
     });
   }
 }
+// placeholder source until 08-16 renders photos/robot-still.png at 960/1440
+JOBS.push({
+  key: "robot/robot-still-grey",
+  input: "photos/robot-cad-01-grey.png",
+  widths: ["native"],
+  quality: 82,
+});
 for (const t of ["grey", "color"]) {
   JOBS.push({
     key: `portrait/portrait-devfest-2026-${t}`,
