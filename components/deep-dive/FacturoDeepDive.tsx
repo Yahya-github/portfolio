@@ -30,7 +30,7 @@ function Shot({ image, eager, className }: ShotProps) {
 export function FacturoDeepDive() {
   return (
     <article className={`grid dive-surface-facturo ${styles.body}`}>
-      <h1 className={`t-display ${styles.title}`}>
+      <h1 tabIndex={-1} className={`t-display ${styles.title}`}>
         <span
           style={displayFitStyle(facturo.title) as CSSProperties}
           className={`dive-title-facturo ${styles.titleWord}`}
