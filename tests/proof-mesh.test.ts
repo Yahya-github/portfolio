@@ -23,7 +23,9 @@ describe("RBT1 round trip", () => {
   it("is 40 + 12v + 2i bytes for the placeholder", () => {
     const m = placeholderMesh();
     const v = m.positions.length / 3;
-    expect(encoded().byteLength).toBe(HEADER_BYTES + 12 * v + 2 * m.indices.length);
+    expect(encoded().byteLength).toBe(
+      HEADER_BYTES + 12 * v + 2 * m.indices.length,
+    );
     expect(HEADER_BYTES).toBe(40);
   });
 
