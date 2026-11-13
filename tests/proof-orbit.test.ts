@@ -124,9 +124,9 @@ describe("cubicBezier", () => {
     }
   });
   it("matches reference values at t = 0.5", () => {
-    // Reference values from solving the curve independently (bisection on x).
-    expect(page(0.5)).toBeCloseTo(0.7107, 3);
-    expect(ui(0.5)).toBeCloseTo(0.9546, 3);
+    // Reference values from an independent bisection solve (ease-page is not symmetric).
+    expect(page(0.5)).toBeCloseTo(0.58714, 3);
+    expect(ui(0.5)).toBeCloseTo(0.97178, 3);
   });
   it("parses css strings", () => {
     expect(parseCubicBezier("cubic-bezier(0.77, 0, 0.18, 1)")).toEqual([
