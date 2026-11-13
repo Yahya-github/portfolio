@@ -1,0 +1,107 @@
+/*
+ * Row-to-deep-dive transition (Phase 8 D-17 to D-19): cross-document View Transitions.
+ * Opt-in only with motion allowed; the inline handler skips it for paused motion, an
+ * off-screen source or a non-dive pair. Snapshots animate with transform, opacity and
+ * clip-path only, on the 600 ms page token, no overshoot. Unsupported browsers ignore
+ * all of this and navigate instantly.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  /* Persistent chrome stays put instead of cross-fading. */
+  body > header {
+    view-transition-name: site-header;
+  }
+
+  [data-pager="letters"] {
+    view-transition-name: site-rail;
+  }
+
+  .dive-title-facturo {
+    view-transition-name: dive-title-facturo;
+  }
+
+  .dive-title-atlantis {
+    view-transition-name: dive-title-atlantis;
+  }
+
+  .dive-title-robot {
+    view-transition-name: dive-title-robot;
+  }
+
+  .dive-surface-facturo {
+    view-transition-name: dive-surface-facturo;
+  }
+
+  .dive-surface-atlantis {
+    view-transition-name: dive-surface-atlantis;
+  }
+
+  .dive-surface-robot {
+    view-transition-name: dive-surface-robot;
+  }
+
+  ::view-transition-group(*) {
+    animation-duration: var(--dur-page);
+    animation-timing-function: var(--ease-page);
+  }
+
+  ::view-transition-old(root) {
+    animation: vt-fade-out var(--dur-ui) var(--ease-page) both;
+  }
+
+  ::view-transition-new(root) {
+    animation: vt-fade-in var(--dur-fade) var(--ease-page) both;
+    animation-delay: calc(var(--dur-page) - var(--dur-fade));
+  }
+
+  /* Titles: the group moves and scales; the two snapshots cross-fade quickly. */
+  ::view-transition-old(dive-title-facturo),
+  ::view-transition-old(dive-title-atlantis),
+  ::view-transition-old(dive-title-robot) {
+    animation: vt-fade-out var(--dur-ui) var(--ease-page) both;
+  }
+
+  ::view-transition-new(dive-title-facturo),
+  ::view-transition-new(dive-title-atlantis),
+  ::view-transition-new(dive-title-robot) {
+    animation: vt-fade-in var(--dur-ui) var(--ease-page) both;
+  }
+
+  /* Surfaces: reveal with clip-path, never a width or height animation. */
+  ::view-transition-old(dive-surface-facturo),
+  ::view-transition-old(dive-surface-atlantis),
+  ::view-transition-old(dive-surface-robot) {
+    animation: vt-fade-out var(--dur-page) var(--ease-page) both;
+  }
+
+  ::view-transition-new(dive-surface-facturo),
+  ::view-transition-new(dive-surface-atlantis),
+  ::view-transition-new(dive-surface-robot) {
+    animation: vt-reveal var(--dur-page) var(--ease-page) both;
+  }
+
+  @keyframes vt-fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes vt-fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes vt-reveal {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+
+    to {
+      clip-path: inset(0);
+    }
+  }
+}

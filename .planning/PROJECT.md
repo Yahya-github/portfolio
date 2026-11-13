@@ -89,6 +89,10 @@ Phase 7 (Copy, Sharing and Launch) complete 2026-11-13: 8 plans in 4 waves, 726 
 | YAHYA letters are the nav, shrink to a left rail | His request; the "name is the map" idea carried over from the light design | — Pending |
 | Instrument Sans as the single family | Chosen by Yahya after the Phase 1 side-by-side trial on the giant YAHYA (2026-11-07); SIL Open Font License 1.1, self-hosted; 700 at wdth 75 for display, wdth 100 for body | — Pending |
 | Remove Icons8 illustrations | "Remove those cartoonish assets" | ✓ Good |
+| Row grows into the deep dive (scale) breaks the one-motion rule on purpose; 600 ms, no bounce, transform/opacity/clip-path only (Phase 8 D-19a, user choice) | He wanted the row to become the page; cross-document View Transitions keep it progressive and inside the JS budget | — Pending |
+| "Drag to rotate" is an accent cue on the robot page (Phase 8 D-12) | The affordance must be seen; accent marks it as the one interactive hint | — Pending |
+| Per-project accents on deep dives: Facturo yellow #e8c547, Atlantis blue #5fa8f0, Robot red #f2685c; main and footer only, header and rail keep green | Coordinator requirement 2026-11-12, flagged against UI-SPEC Color | — Pending |
+| Atlantis CSP split (D06): only `/games/(.*)` gets `'wasm-unsafe-eval'`, `img-src blob:`, `frame-ancestors 'self'`, `X-Frame-Options: SAMEORIGIN`; `/projects/atlantis/` keeps the site CSP and `X-Frame-Options: DENY` | Smallest relaxation: the route itself needs no change, only the iframe target (docs/material/proof-clearance.md) | — Pending |
 | Design before copy | "getting the design is the most important" | — Pending |
 | Real URLs per page, Back steps through pages | Shareable links, per-page metadata, no load flash (research Decision 1) | — Pending |
 | Letters-to-rail FLIP with the native Web Animations API, no library | 0 kB, interruptible; swap to GSAP Flip only if bugs cost over a day (Decision 2) | — Pending |

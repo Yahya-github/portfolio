@@ -15,8 +15,12 @@ interface ProofRouteProps {
 export function ProofRoute({ content, stage, gallery }: ProofRouteProps) {
   const [lead, ...rest] = content.lines;
   return (
-    <article className={`grid ${styles.body}`}>
-      <h1 className={`t-display ${dive.title}`}>
+    <article className={`grid dive-surface-${content.project} ${styles.body}`}>
+      {/* The name sits on the h1: a two-word title must still be one transition name. */}
+      <h1
+        tabIndex={-1}
+        className={`t-display dive-title-${content.project} ${dive.title}`}
+      >
         {content.titleWords.map((word) => (
           <span
             key={word}
