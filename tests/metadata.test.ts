@@ -18,8 +18,8 @@ describe("rootMetadata", () => {
     );
   });
 
-  it("keeps the site out of search indexes until launch", () => {
-    expect(rootMetadata.robots).toEqual({ index: false, follow: false });
+  it("is indexable after launch (D-10)", () => {
+    expect(rootMetadata.robots).toBeUndefined();
   });
 
   it("carries the share card on openGraph and twitter", () => {

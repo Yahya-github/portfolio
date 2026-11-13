@@ -192,7 +192,7 @@ Plans:
 - [x] 07-04-PLAN.md — On-brand 404 outside the pager with e2e (status, keyboard, reduced motion, no JS) and axe
 - [x] 07-05-PLAN.md — Lighthouse CI config, baseline run and `lighthouse` CI job
 - [x] 07-06-PLAN.md — Yahya's final copy placed and verified, resume re-export pinned, 50-160 char descriptions (checkpoint)
-- [ ] 07-07-PLAN.md — Final visual baselines, full gate, HUMAN-UAT, ship Phases 3-7 with noindex, lighthouse required, live checks (checkpoint)
+- [x] 07-07-PLAN.md — Final visual baselines, full gate, HUMAN-UAT, ship Phases 3-7 with noindex, lighthouse required, live checks (checkpoint)
 - [ ] 07-08-PLAN.md — Launch: remove noindex, robots.txt and sitemap.xml, SEO 100, Yahya merges (checkpoint)
 **UI hint**: yes
 
@@ -220,7 +220,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 4. Horizontal Pager and Input | 14/15 | Complete    | 2026-11-10 |
 | 5. Letter Navigation and Motion | 13/13 | Complete    | 2026-11-10 |
 | 6. Page Compositions and Content | 17/17 | Complete    | 2026-11-12 |
-| 7. Copy, Sharing and Launch | 6/8 | In Progress|  |
+| 7. Copy, Sharing and Launch | 7/8 | In Progress|  |
 | 8. Interactive Proof | 0/TBD | Not started | - |
 
 ## Research Flags
