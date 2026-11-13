@@ -1,10 +1,11 @@
 ---
 phase: 8
 slug: interactive-proof
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: 2026-11-12
+reviewed_at: 2026-11-12
 ---
 
 # Phase 8 — UI Design Contract
@@ -332,11 +333,13 @@ Third-party runtime assets: none. The Godot export, model, screenshots and still
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
+- [x] Dimension 1 Copywriting: FLAG (non-blocking: Projects row link "Play" is a bare verb; consider "Play Atlantis")
+- [x] Dimension 2 Visuals: PASS
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS
+- [x] Dimension 5 Spacing: PASS
+- [x] Dimension 6 Registry Safety: PASS
 
-**Approval:** pending
+**Planner notes:** D-10 "Esc returns focus to the Play button" is read as: Esc moves focus to the control bar's first control ("Exit game" while playing, "Play Atlantis" after exit). Every [research] default must be replaced by a measured value; the "Loads {size} MB" line is build-generated.
+
+**Approval:** approved 2026-11-12
