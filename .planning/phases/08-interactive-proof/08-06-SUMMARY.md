@@ -45,3 +45,9 @@ Status: PARTIAL. Task 1 (minus one file) and the code half of Task 3 are done. T
 Do Task 2 in the fork, install the template, add the eslint ignores, run `pnpm game:export`, record the table and fork SHA, commit the regenerated module.
 
 ## Self-Check: PASSED for delivered files (all listed files exist, commits bf11755 and 5cd0c94 exist). Plan overall NOT complete.
+
+## Completion addendum (orchestrator, inline)
+- eslint globalIgnores added by user-authorised edit (hook blocked the agent); lint clean.
+- Fork `~/dev/forks/atlantis` branch `web` (not pushed), HEAD eac8e099aaf5: ship.tscn fix, play.html copy, WebBridge autoload, Web preset, music stream removed (MUSIC=none), landing image caps.
+- Real export via `pnpm game:export`: wasm gzip 9,255,922 / brotli 7,614,806, pck 24,243,492, js gzip 77,201, total 33,576,615 bytes (33.6 MB). Exceeds THRESHOLD first-play 25 MB; embed decision deferred to 08-07.
+- Generated module committed (be43776).
