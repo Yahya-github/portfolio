@@ -4,11 +4,11 @@ import type { AtlantisBuild } from "../types";
 export const atlantisBuild: AtlantisBuild | null = {
   version: "68a6876b9a1e",
   path: "/games/atlantis/68a6876b9a1e/play.html",
-  wasmRaw: 38034280,
-  wasmGzip: 9255922,
-  wasmBrotli5: 7614806,
+  wasmRaw: 27488111,
+  wasmGzip: 6291889,
+  wasmBrotli5: 5115269,
   pck: 7948620,
-  jsGzip: 77201,
-  totalBytes: 17281743,
-  totalMB: "17.3",
+  jsGzip: 69421,
+  totalBytes: 14309930,
+  totalMB: "14.3",
 };
