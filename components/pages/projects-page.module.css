@@ -51,21 +51,44 @@
 .head {
   display: flex;
   align-items: baseline;
+  flex-wrap: wrap;
   gap: var(--space-sm);
   margin-bottom: var(--space-xs);
 }
 
-.link {
+.links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
   margin-left: auto;
+}
+
+.link {
   white-space: nowrap;
 }
 
-.mark + .link {
+.mark + .links {
   margin-left: 0;
 }
 
 .mark {
   margin-left: auto;
+}
+
+/* Phones: the link group wraps under the name as one left-aligned unit. */
+@media (max-width: 820px) {
+  .links {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+}
+
+@media (pointer: coarse) {
+  .link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {

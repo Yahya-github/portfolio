@@ -135,8 +135,10 @@ export interface ProjectRow {
     readonly caption: readonly [string, string];
   } | null;
   readonly linkCursorTag: string | null;
-  /** Internal same-tab link to a deep dive; plan 08-13 sets the real values. */
-  readonly dive?: LabelledLink | null;
+  /** Internal same-tab link to the row's deep dive (Atlantis, Robot firmware). */
+  readonly dive: LabelledLink | null;
+  /** Custom cursor tag shown over the dive link. */
+  readonly diveCursorTag: string | null;
 }
 
 export interface WalkthroughContent {
