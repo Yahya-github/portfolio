@@ -212,8 +212,8 @@ Plans:
 - [x] 08-04-PLAN.md — TDD: orbit maths, auto-rotate gate, easing, RBT1 mesh format
 - [x] 08-05-PLAN.md — Disjoint Vercel headers (/games/ only gets wasm), unit pins, path-aware CSP e2e, wasm negative control
 - [x] 08-06-PLAN.md — Fork web branch, first-party Godot shell, export script with measured sizes, binary ignores
-- [ ] 08-07-PLAN.md — Real boot under game CSP, screenshots, timing, embed decision checkpoint
-- [ ] 08-08-PLAN.md — CAD-to-RBT1 mesh pipeline (placeholder), model size gate in measure-js
+- [x] 08-07-PLAN.md — Real boot under game CSP, screenshots, timing, embed decision checkpoint
+- [x] 08-08-PLAN.md — CAD-to-RBT1 mesh pipeline (placeholder), model size gate in measure-js
 - [ ] 08-09-PLAN.md — Atlantis static route (blue accent, screenshots + team photo, stage markup)
 - [ ] 08-10-PLAN.md — Atlantis lazy controller, stub game, play/Esc/Exit/Mute/touch e2e
 - [ ] 08-11-PLAN.md — Robot static route (red accent, still + trophies photo)
@@ -239,7 +239,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 5. Letter Navigation and Motion | 13/13 | Complete    | 2026-11-10 |
 | 6. Page Compositions and Content | 17/17 | Complete    | 2026-11-12 |
 | 7. Copy, Sharing and Launch | 8/8 | Complete   | 2026-11-13 |
-| 8. Interactive Proof | 6/17 | In Progress|  |
+| 8. Interactive Proof | 8/17 | In Progress|  |
 
 ## Research Flags
 
