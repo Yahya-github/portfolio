@@ -139,7 +139,11 @@
 
 /* Controls need JavaScript; visibility per state. */
 :global(html[data-js]) .game[data-game-state="ready"] [data-game-action="play"],
+:global(html[data-js])
+  .game[data-game-state="exited"]
+  [data-game-action="play"],
 :global(html[data-js]) .game[data-game-state="ready"] [data-game-size],
+:global(html[data-js]) .game[data-game-state="exited"] [data-game-size],
 :global(html[data-js]) .game[data-game-state="loading"] [data-game-status],
 :global(html[data-js])
   .game[data-game-state="loading"]

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { StandaloneClient } from "@/components/deep-dive/StandaloneClient";
+import { ProofClient } from "@/components/proof/ProofClient";
 import { DeepDiveFooter } from "@/components/deep-dive/DeepDiveFooter";
 import styles from "@/components/deep-dive/deep-dive.module.css";
 import { Header } from "@/components/frame/Header";
@@ -68,7 +68,7 @@ export default function Page() {
         />
       </main>
       <DeepDiveFooter project="atlantis" backLabel={atlantis.backLabel} />
-      <StandaloneClient />
+      <ProofClient feature="game" />
     </>
   );
 }

@@ -45,6 +45,8 @@ export default defineConfig({
         /visual\.spec\.ts/,
         /pager-swipe\.spec\.ts/,
         /phone\.spec\.ts/,
+        /atlantis-touch\.spec\.ts/,
+        /robot-touch\.spec\.ts/,
       ],
     },
     // A11Y-05: the same routes with JavaScript off.
@@ -72,7 +74,7 @@ export default defineConfig({
         hasTouch: true,
         isMobile: true,
       },
-      testMatch: /phone\.spec\.ts/,
+      testMatch: /(phone|atlantis-touch|robot-touch)\.spec\.ts/,
     },
     ...(process.env.ALL_BROWSERS === "1"
       ? [
