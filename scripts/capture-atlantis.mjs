@@ -24,13 +24,8 @@ const THROTTLE = {
   latency: 20,
 };
 
-// `--variant demo` times the level-1-only build; it never writes the colour/grey frames.
-const IS_DEMO =
-  process.argv.includes("--variant") &&
-  process.argv[process.argv.indexOf("--variant") + 1] === "demo";
-const SLUG = IS_DEMO ? "atlantis-demo" : "atlantis";
-const version = readdirSync(`public/games/${SLUG}`)[0];
-const PLAY_URL = `${ORIGIN}/games/${SLUG}/${version}/play.html`;
+const version = readdirSync("public/games/atlantis")[0];
+const PLAY_URL = `${ORIGIN}/games/atlantis/${version}/play.html`;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -121,8 +116,6 @@ try {
   const browser = await chromium.launch();
   try {
     if (process.argv.includes("--timing")) await timing(browser);
-    else if (IS_DEMO)
-      throw new Error("capture frames from the full build, not the demo");
     else await capture(browser);
   } finally {
     await browser.close();

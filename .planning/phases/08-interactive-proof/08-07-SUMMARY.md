@@ -37,3 +37,9 @@ Status: Tasks 1 and 2 done and committed. Task 3 (embed / custom-template / fall
 - first-play transfer <= 25 MB: FAIL (32.8 MB)
 - play-to-title <= 12 s: FAIL (17.9 s)
 - warm replay <= 4 s: FAIL as measured (18.6 s), caveat above
+
+## Checkpoint resolution (orchestrator)
+- Yahya first answered "Optimize Atlantis to the max": lossy WebP textures (q0.65), pck 24.2 -> 10.7 MB, transfer 19.2 MB, cold 12.5 s on 25 Mbps / 20 ms (limit 12 s, 0.5 s over); Dialogic example-asset exclusion bug fixed (fork `web` a0f2483).
+- A level-1-only demo (fork branch `web-demo`, local) saved only ~0.9 MB / 0.25 s and was dropped: "Ok so nevermind just leave all the game".
+- Decision: **embed** the full game. `content/proof-gate.ts` atlantis.embed = true (clearance still pending; playable only after 08-15).
+- Open: cold load 0.5 s over THRESHOLD; remaining lever is a custom Godot template (smaller engine).
