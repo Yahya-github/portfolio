@@ -16,9 +16,16 @@ import { measureBuild, renderBuildModule } from "./lib/atlantis-build.mjs";
 
 const HOME = homedir();
 const ROOT = resolve(import.meta.dirname, "..");
-const GAMES_DIR = join(ROOT, "public", "games", "atlantis");
+// `--variant demo` exports the fork's `web-demo` branch (level 1 only) next to the full build.
+const IS_DEMO = process.argv.includes("--variant")
+  ? process.argv[process.argv.indexOf("--variant") + 1] === "demo"
+  : false;
+const SLUG = IS_DEMO ? "atlantis-demo" : "atlantis";
+const BRANCH = IS_DEMO ? "web-demo" : "web";
+const GAMES_ROOT = join(ROOT, "public", "games");
+const GAMES_DIR = join(GAMES_ROOT, SLUG);
 const SHELL_DIR = join(ROOT, "godot", "shell");
-const MODULE_PATH = join(ROOT, "content", "generated", "atlantis-build.ts");
+const MODULE_PATH = join(ROOT, "content", "generated", `${SLUG}-build.ts`);
 const TEMPLATE_VERSION = "4.5.1.stable";
 const TEMPLATE_ZIP = "web_nothreads_release.zip";
 const PRESET = "Web";
@@ -39,8 +46,8 @@ const godot = resolve(flag("godot", join(HOME, "apps", "godot-4.5.1")));
 const git = (...args) =>
   execFileSync("git", args, { cwd: fork, encoding: "utf8" }).trim();
 
-if (git("rev-parse", "--abbrev-ref", "HEAD") !== "web") {
-  fail("the fork must be on branch `web`.");
+if (git("rev-parse", "--abbrev-ref", "HEAD") !== BRANCH) {
+  fail(`the fork must be on branch \`${BRANCH}\`.`);
 }
 if (git("status", "--porcelain") !== "")
   fail("the fork working tree is dirty.");
@@ -109,8 +116,21 @@ const stray = existsSync(join(ROOT, "public", "games"))
   : [];
 if (stray.length > 0) fail(`index.html must not exist: ${stray.join(", ")}`);
 
-const build = measureBuild(outDir, version);
-writeFileSync(MODULE_PATH, renderBuildModule(build));
+const measured = measureBuild(outDir, version);
+const build = {
+  ...measured,
+  path: `/games/${SLUG}/${version}/play.html`,
+};
+const moduleSource = renderBuildModule(build);
+writeFileSync(
+  MODULE_PATH,
+  IS_DEMO
+    ? moduleSource.replace(
+        "export const atlantisBuild",
+        "export const atlantisDemoBuild",
+      )
+    : moduleSource,
+);
 
 console.table({
   "wasm raw": build.wasmRaw,
