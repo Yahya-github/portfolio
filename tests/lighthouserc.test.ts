@@ -1,4 +1,4 @@
-// D-11: Lighthouse CI covers every route and stays pre-launch shaped until 07-08.
+// D-11: Lighthouse CI covers every route and is launch shaped (07-08).
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -37,7 +37,7 @@ describe("lighthouserc.json", () => {
     expect(rc.ci.collect.settings.ignoreStatusCode).toBe(true);
   });
 
-  it("keeps page routes pre-launch shaped with the D-11 budgets", () => {
+  it("asserts crawlability and SEO 100 on page routes with the D-11 budgets", () => {
     const a = pageBlock.assertions;
     expect(a["categories:performance"]).toEqual(["error", { minScore: 0.95 }]);
     expect(a["categories:accessibility"]).toEqual(["error", { minScore: 1 }]);
@@ -45,8 +45,8 @@ describe("lighthouserc.json", () => {
       "error",
       { minScore: 0.95 },
     ]);
-    expect(a["is-crawlable"]).toBe("off");
-    expect(a).not.toHaveProperty("categories:seo");
+    expect(a["is-crawlable"]).toBe("error");
+    expect(a["categories:seo"]).toEqual(["error", { minScore: 1 }]);
   });
 
   it("skips the status and description audits on the 404 only", () => {

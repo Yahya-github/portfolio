@@ -33,7 +33,8 @@
             "image-alt": "error",
             "hreflang": "error",
             "canonical": "error",
-            "is-crawlable": "off"
+            "is-crawlable": "error",
+            "categories:seo": ["error", { "minScore": 1 }]
           }
         },
         {

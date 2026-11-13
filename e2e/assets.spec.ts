@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { sections, site } from "../content/site";
 import { about } from "../content/about";
 
-// DEP-02 / D-13: every request is first-party; the font, image and PDF load; the page is noindex.
+// DEP-02 / D-13: every request is first-party; the font, image and PDF load; the page is indexable.
 
 for (const s of sections) {
   test(`${s.route} makes first-party requests only`, async ({
@@ -20,7 +20,7 @@ for (const s of sections) {
   });
 }
 
-test("/ loads the font and the PDF, is noindex, and fetches no hidden image", async ({
+test("/ loads the font and the PDF, is indexable, and fetches no hidden image", async ({
   page,
 }) => {
   const requested: string[] = [];
@@ -56,10 +56,7 @@ test("/ loads the font and the PDF, is noindex, and fetches no hidden image", as
   expect(pdf.status()).toBe(200);
   expect(pdf.headers()["content-type"]).toContain("application/pdf");
 
-  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
-    "content",
-    /noindex/,
-  );
+  await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
 });
 
 // Pitfall 7: the portrait lives in the About section, hidden on every other route.

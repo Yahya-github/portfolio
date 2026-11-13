@@ -36,10 +36,7 @@ test.describe("deep dive", () => {
     expect(
       await page.evaluate(() => document.documentElement.dataset.opening),
     ).toBeUndefined();
-    await expect(page.locator("meta[name=robots]")).toHaveAttribute(
-      "content",
-      /noindex/,
-    );
+    await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
   });
 
   test("it scrolls vertically and keys do not page", async ({ page }) => {

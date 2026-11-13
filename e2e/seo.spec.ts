@@ -78,3 +78,41 @@ test("404 carries the card and Person data but no canonical", async ({
   ).toHaveCount(1);
   await expect(page.locator("head link[rel=canonical]")).toHaveCount(0);
 });
+
+const SEVEN_URLS = PAGES.map((p) => `${site.origin}${p.route}`);
+
+test("robots.txt allows all and points to the sitemap", async ({ request }) => {
+  const res = await request.get("/robots.txt");
+  expect(res.status()).toBe(200);
+  const body = await res.text();
+  expect(body).toContain("Allow: /");
+  expect(body).toContain(`Sitemap: ${site.origin}/sitemap.xml`);
+});
+
+test("sitemap.xml lists exactly the seven page URLs and no 404", async ({
+  request,
+}) => {
+  const res = await request.get("/sitemap.xml");
+  expect(res.status()).toBe(200);
+  const locs = [...(await res.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map(
+    (m) => m[1],
+  );
+  expect(locs).toEqual(SEVEN_URLS);
+  expect(locs.some((l) => /404|not-found|does-not-exist/.test(l))).toBe(false);
+});
+
+for (const { route } of PAGES) {
+  test(`${route} carries no robots meta`, async ({ page }) => {
+    await page.goto(route);
+    await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
+  });
+}
+
+test("404 robots meta is noindex", async ({ page }) => {
+  await page.goto("/this-page-does-not-exist/");
+  const robots = await page
+    .locator('meta[name="robots"]')
+    .evaluateAll((els) => els.map((e) => e.getAttribute("content") ?? ""));
+  expect(robots.length).toBeGreaterThan(0);
+  expect(robots.every((c) => c.includes("noindex"))).toBe(true);
+});

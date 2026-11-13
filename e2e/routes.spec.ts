@@ -28,10 +28,7 @@ for (const s of sections) {
       "content",
       s.description,
     );
-    await expect(page.locator("meta[name=robots]")).toHaveAttribute(
-      "content",
-      /noindex/,
-    );
+    await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
   });
 
   test(`${s.route} header links the resume`, async ({ page }) => {
