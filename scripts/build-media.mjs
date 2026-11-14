@@ -98,12 +98,14 @@ for (const n of ATLANTIS_FRAMES) {
   }
 }
 // rendered by scripts/render-robot-still.mjs (pnpm model:still) from the viewer's own start pose
-JOBS.push({
-  key: "robot/robot-still-grey",
-  input: "photos/robot-still.png",
-  widths: [960, "native"],
-  quality: 82,
-});
+for (const suffix of ["-grey", ""]) {
+  JOBS.push({
+    key: `robot/robot-still${suffix}`,
+    input: `photos/robot-still${suffix}.png`,
+    widths: [960, "native"],
+    quality: 82,
+  });
+}
 for (const t of ["grey", "color"]) {
   JOBS.push({
     key: `portrait/portrait-devfest-2026-${t}`,

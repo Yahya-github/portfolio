@@ -42,8 +42,8 @@ export const robot = {
   ],
   backLabel: "Back to Projects",
   still: {
-    key: "robot/robot-still-grey",
-    alt: "The CRC 2026 robot, a grey render of its CAD model",
+    key: "robot/robot-still",
+    alt: "The CRC 2026 robot, a colour render of its CAD model",
     caption: "The robot, rendered from its Onshape CAD",
   },
   gallery: [
