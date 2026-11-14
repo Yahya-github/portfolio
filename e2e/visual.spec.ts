@@ -18,6 +18,7 @@ const ROUTES = [
   ...sections.map((s) => ({ name: s.slug, route: s.route })),
   { name: "facturo-deep-dive", route: "/projects/facturo/" },
   { name: "atlantis", route: "/projects/atlantis/" },
+  { name: "robot", route: "/projects/robot/" },
   { name: "not-found", route: "/this-page-does-not-exist/" },
 ];
 
@@ -50,12 +51,18 @@ async function settle(page: Page): Promise<void> {
 for (const r of ROUTES) {
   for (const vp of VIEWPORTS) {
     test(`${r.route} at ${vp.name} matches its baseline`, async ({ page }) => {
+      // The live canvas is not baselined: without the mesh the robot page stays on its still.
+      if (r.name === "robot")
+        await page.route("**/models/robot/**", (route) => route.abort());
       await page.setViewportSize({ width: vp.width, height: vp.height });
       await page.goto(r.route);
       await settle(page);
       await expect(page).toHaveScreenshot(`${r.name}-${vp.name}.png`, {
         ...SHOT,
-        fullPage: r.name === "facturo-deep-dive" || r.name === "atlantis",
+        fullPage:
+          r.name === "facturo-deep-dive" ||
+          r.name === "atlantis" ||
+          r.name === "robot",
       });
     });
   }
@@ -190,5 +197,39 @@ test.describe("proof states at 1440x900", () => {
       .first()
       .focus();
     await expect(page).toHaveScreenshot("state-projects-play-focus.png", SHOT);
+  });
+});
+
+// PROOF-02: robot viewer focused (ring and key hint; the canvas is masked) and the
+// Projects "3D model" link focused (08-16).
+test.describe("robot states at 1440x900", () => {
+  test.use({ viewport: { width: 1440, height: 900 } });
+
+  test("robot viewer focus", async ({ page }) => {
+    await page.goto("/projects/robot/");
+    await settle(page);
+    await expect(page.locator("[data-model]")).toHaveAttribute(
+      "data-model-state",
+      "live",
+    );
+    await page.locator("[data-model]").focus();
+    await expect(page.locator("[data-model-hint]")).toHaveText(
+      "Arrow keys rotate",
+    );
+    await page.locator("[data-model-hint]").scrollIntoViewIfNeeded();
+    await expect(page).toHaveScreenshot("state-robot-viewer-focus.png", {
+      ...SHOT,
+      mask: [page.locator("[data-model-slot]")],
+    });
+  });
+
+  test("projects robot 3D model link focus", async ({ page }) => {
+    await page.goto("/projects/");
+    await settle(page);
+    await page
+      .locator('#page-projects a[href="/projects/robot/"]')
+      .first()
+      .focus();
+    await expect(page).toHaveScreenshot("state-projects-robot-focus.png", SHOT);
   });
 });
