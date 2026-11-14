@@ -138,3 +138,20 @@ describe("vercel-config rule disjointness", () => {
     ]);
   });
 });
+
+describe("vercel-config game entry", () => {
+  // On Vercel the trailing-slash static export serves play.html only at .../play/,
+  // so the .html URL the iframe uses must be rewritten to it (URL kept, so the
+  // game's relative files still resolve next to play.html).
+  it("rewrites the game's play.html to its served path", () => {
+    const config = JSON.parse(loadConfigText()) as {
+      rewrites?: { source: string; destination: string }[];
+    };
+    expect(config.rewrites).toEqual([
+      {
+        source: "/games/atlantis/:version/play.html",
+        destination: "/games/atlantis/:version/play/",
+      },
+    ]);
+  });
+});
