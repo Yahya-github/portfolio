@@ -45,7 +45,11 @@ let browser;
 try {
   await waitForServer();
   browser = await chromium.launch({
-    args: ["--use-gl=angle", "--use-angle=swiftshader", "--ignore-gpu-blocklist"],
+    args: [
+      "--use-gl=angle",
+      "--use-angle=swiftshader",
+      "--ignore-gpu-blocklist",
+    ],
   });
   const context = await browser.newContext({
     viewport: VIEWPORT,

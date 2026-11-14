@@ -13,7 +13,12 @@ interface ProofRouteProps {
 }
 
 /** Shared lean layout for the proof routes: Display title, stage, side column (D-03). */
-export function ProofRoute({ content, stage, gallery, credits }: ProofRouteProps) {
+export function ProofRoute({
+  content,
+  stage,
+  gallery,
+  credits,
+}: ProofRouteProps) {
   const [lead, ...rest] = content.lines;
   return (
     <article className={`grid dive-surface-${content.project} ${styles.body}`}>

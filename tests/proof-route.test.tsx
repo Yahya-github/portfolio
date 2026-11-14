@@ -40,12 +40,8 @@ describe("Atlantis route, playable", () => {
       screen.getByRole("button", { name: "Play Atlantis" }),
     ).toBeInTheDocument();
     expect(screen.getByText("Loads 14.3 MB of game files")).toBeInTheDocument();
-    expect(
-      container.querySelector('[data-game-action="exit"]'),
-    ).not.toBeNull();
-    expect(
-      container.querySelector('[data-game-action="mute"]'),
-    ).not.toBeNull();
+    expect(container.querySelector('[data-game-action="exit"]')).not.toBeNull();
+    expect(container.querySelector('[data-game-action="mute"]')).not.toBeNull();
     expect(container.querySelector("noscript")).not.toBeNull();
   });
 

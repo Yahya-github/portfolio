@@ -10,12 +10,7 @@
  * No React, no DOM, no clock.
  */
 export type GamePhase =
-  | "ready"
-  | "loading"
-  | "playing"
-  | "exited"
-  | "error"
-  | "fallback";
+  "ready" | "loading" | "playing" | "exited" | "error" | "fallback";
 
 export interface GameState {
   readonly phase: GamePhase;
