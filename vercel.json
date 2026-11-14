@@ -1,6 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": false,
+  "rewrites": [
+    {
+      "source": "/games/atlantis/:version/play.html",
+      "destination": "/games/atlantis/:version/play/"
+    }
+  ],
   "headers": [
     {
       "source": "/((?!games/).*)",
