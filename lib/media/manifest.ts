@@ -508,9 +508,14 @@ export const media = {
   ],
   "robot/robot-still-grey": [
     {
-      src: "/media/robot/robot-still-grey-600.webp",
-      width: 600,
-      height: 340,
+      src: "/media/robot/robot-still-grey-960.webp",
+      width: 960,
+      height: 600,
+    },
+    {
+      src: "/media/robot/robot-still-grey-996.webp",
+      width: 996,
+      height: 623,
     },
   ],
 } as const satisfies Readonly<Record<string, readonly MediaVariant[]>>;

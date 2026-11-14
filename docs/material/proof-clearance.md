@@ -35,7 +35,7 @@ Nothing from Phase 8 is pushed to GitHub (no branch push, no PR; Vercel previews
 | spiderman.jpeg | Excluded, no decision | excluded | poster + screenshots + Code link |
 | Dialogic addon | MIT notice required | cleared | poster + screenshots + Code link |
 | Controller Icons addon | MIT notice required | cleared | poster + screenshots + Code link |
-| Robot CAD | Owner is a teammate's Onshape account; consent plus owner's glTF export of "Robot Assembly" only | pending | still image only |
+| Robot CAD | Owner is a teammate's Onshape account; consent plus owner's glTF export of "Robot Assembly" only | cleared | still image only |
 
 ## Message to teammates (draft)
 
@@ -54,4 +54,4 @@ Yahya
 ## Gate record
 
 Atlantis: cleared (2026-11-13, Yahya: "Cleared by teammates"; teammates gave their OK to host the playable build with credits, no sale, no download)
-Robot: pending
+Robot: cleared (2026-11-13, Yahya: "I have the consent but you can export it from the cad website"; consent as Yahya reported it, no written message seen; Yahya then supplied the "Robot Assembly" glTF export himself as docs/material/robot.gltf, kept local and never committed; the site ships only the decimated grey mesh, no CAD download link)

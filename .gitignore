@@ -18,7 +18,5 @@ test-results/
 .lighthouseci/
 .env*
 
-# Phase 8: model binaries stay local until 08-16 un-ignores them; the Atlantis build was cleared in 08-15
-# (atlantis-demo is a local measuring build, never committed)
+# Phase 8: atlantis-demo is a local measuring build, never committed (the cleared Atlantis build and robot model are committed)
 public/games/atlantis-demo/
-public/models/

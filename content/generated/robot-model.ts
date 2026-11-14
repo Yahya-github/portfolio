@@ -2,11 +2,11 @@
 import type { RobotModel } from "@/content/types";
 
 export const robotModel: RobotModel | null = {
-  version: "d6835fc8af0e",
-  src: "/models/robot/d6835fc8af0e/robot.bin",
-  placeholder: true,
-  triangles: 268,
-  vertices: 288,
-  bytes: 5104,
-  gzipBytes: 1613,
+  version: "c28756aa3fe3",
+  src: "/models/robot/c28756aa3fe3/robot.bin",
+  placeholder: false,
+  triangles: 24499,
+  vertices: 13131,
+  bytes: 304606,
+  gzipBytes: 194956,
 };

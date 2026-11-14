@@ -9,6 +9,7 @@
     "dev": "next dev",
     "game:export": "node scripts/export-atlantis.mjs",
     "model:build": "node scripts/build-robot-mesh.mjs",
+    "model:still": "node scripts/render-robot-still.mjs",
     "build": "next build",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",

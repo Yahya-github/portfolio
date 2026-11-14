@@ -21,9 +21,10 @@ const DEFAULT_INPUTS = ["docs/material/robot.glb", "docs/material/robot.gltf"];
 const BYTES_PER_KB = 1024;
 const HASH_CHARS = 12;
 const GZIP_LEVEL = 9;
-const MAX_SIMPLIFY_PASSES = 6;
+const MAX_SIMPLIFY_PASSES = 14;
 const SIMPLIFY_ERROR = 0.001;
-const RATIO_STEP = 0.8;
+const RATIO_STEP = 0.6;
+const ERROR_GROWTH = 1.8;
 const TRIANGLES_MODE = 4;
 
 const fail = (message) => {
@@ -149,8 +150,17 @@ async function loadGltfMesh(path) {
 
   const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
   const doc = await io.read(path);
-  await doc.transform(dedup(), flatten(), joinPrims(), weld());
   const root = doc.getRoot();
+  // Only POSITION matters here (normals are recomputed below); other attributes
+  // differ at hard edges and stop the simplifier from collapsing anything.
+  for (const meshNode of root.listMeshes()) {
+    for (const prim of meshNode.listPrimitives()) {
+      for (const semantic of prim.listSemantics()) {
+        if (semantic !== "POSITION") prim.setAttribute(semantic, null);
+      }
+    }
+  }
+  await doc.transform(dedup(), flatten(), joinPrims(), weld());
 
   let ratio = Math.min(1, TARGET_TRIANGLES / (triangleCount(root) || 1));
   for (let pass = 0; pass < MAX_SIMPLIFY_PASSES; pass++) {
@@ -159,10 +169,11 @@ async function loadGltfMesh(path) {
         simplify({
           simplifier: MeshoptSimplifier,
           ratio,
-          error: SIMPLIFY_ERROR,
+          error: SIMPLIFY_ERROR * ERROR_GROWTH ** pass,
         }),
       );
     }
+    console.log(`simplify pass ${pass}: ${triangleCount(root)} triangles`);
     if (triangleCount(root) <= MAX_TRIANGLES) break;
     ratio = (ratio < 1 ? ratio : 1) * RATIO_STEP;
   }

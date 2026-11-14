@@ -7,5 +7,5 @@ import type { ProofGate } from "@/content/types";
  */
 export const proofGate: ProofGate = {
   atlantis: { clearance: "cleared", embed: true },
-  robot: { clearance: "pending" },
+  robot: { clearance: "cleared" },
 } satisfies ProofGate;

@@ -97,11 +97,11 @@ for (const n of ATLANTIS_FRAMES) {
     });
   }
 }
-// placeholder source until 08-16 renders photos/robot-still.png at 960/1440
+// rendered by scripts/render-robot-still.mjs (pnpm model:still) from the viewer's own start pose
 JOBS.push({
   key: "robot/robot-still-grey",
-  input: "photos/robot-cad-01-grey.png",
-  widths: ["native"],
+  input: "photos/robot-still.png",
+  widths: [960, "native"],
   quality: 82,
 });
 for (const t of ["grey", "color"]) {
