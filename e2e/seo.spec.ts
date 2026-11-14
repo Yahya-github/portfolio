@@ -1,6 +1,12 @@
 // SEO-01 / SEO-02: per-route head metadata and Person JSON-LD in the built HTML.
 import { test, expect } from "@playwright/test";
+import { atlantis } from "../content/atlantis";
+import { atlantisBuild } from "../content/generated/atlantis-build";
+import { robotModel } from "../content/generated/robot-model";
 import { facturo } from "../content/facturo";
+import { proofGate } from "../content/proof-gate";
+import { robot } from "../content/robot";
+import { atlantisPlayable, robotViewerOn } from "../lib/proof/gate";
 import { sections, site } from "../content/site";
 
 const CARD = `${site.origin}/share-card.png`;
@@ -15,6 +21,20 @@ const PAGES = [
     route: facturo.route,
     title: facturo.metaTitle,
     description: facturo.metaDescription,
+  },
+  {
+    route: atlantis.route,
+    title: atlantis.metaTitle,
+    description: atlantisPlayable(proofGate, atlantisBuild)
+      ? atlantis.metaDescription
+      : atlantis.metaDescriptionFallback,
+  },
+  {
+    route: robot.route,
+    title: robot.metaTitle,
+    description: robotViewerOn(proofGate, robotModel)
+      ? robot.metaDescription
+      : robot.metaDescriptionStill,
   },
 ];
 

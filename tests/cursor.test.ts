@@ -3,9 +3,11 @@ import {
   IDLE_SIZE_PX,
   SNAP_INFLATE_PX,
   SNAP_SELECTOR,
+  hairThickness,
   hairlineTransforms,
   idleBox,
   inflate,
+  snapBox,
   snapTargetOf,
   tagTextOf,
 } from "@/lib/cursor/targets";
@@ -100,6 +102,33 @@ describe("box maths", () => {
       "translate(43px, 16px) scaleY(48)",
       "translate(6px, 63px) scaleX(38)",
       "translate(6px, 16px) scaleY(48)",
+    ]);
+  });
+
+  it("snaps every edge to a whole device pixel so the corners meet", () => {
+    const raw = { x: 1182.4, y: 677.3, w: 49.7, h: 21.2 };
+    for (const dpr of [1, 1.25, 1.5, 2]) {
+      const b = snapBox(raw, dpr);
+      for (const v of [b.x, b.y, b.x + b.w, b.y + b.h]) {
+        expect(Math.abs(v * dpr - Math.round(v * dpr))).toBeLessThan(1e-9);
+      }
+    }
+  });
+
+  it("uses a whole number of device pixels for the hairline thickness", () => {
+    expect(hairThickness(1)).toBe(1);
+    expect(hairThickness(2)).toBe(1);
+    expect(hairThickness(1.25) * 1.25).toBeCloseTo(1);
+    expect(hairThickness(1.5) * 1.5).toBeCloseTo(2);
+    expect(hairThickness(0.75) * 0.75).toBeCloseTo(1);
+  });
+
+  it("draws the edges inside the snapped box with the given thickness", () => {
+    expect(hairlineTransforms({ x: 10, y: 20, w: 40, h: 30 }, 0.5)).toEqual([
+      "translate(10px, 20px) scaleX(80)",
+      "translate(49.5px, 20px) scaleY(60)",
+      "translate(10px, 49.5px) scaleX(80)",
+      "translate(10px, 20px) scaleY(60)",
     ]);
   });
 });

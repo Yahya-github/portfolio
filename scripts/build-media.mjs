@@ -28,6 +28,7 @@ const ACHIEVEMENT_NAMES = [
   "diro-hackathon-2026-award",
   "game-competition-2026-team",
 ];
+const PROJECT_PAGE_PHOTOS = ["crc-2026-trophies", "game-competition-2026-team"];
 const FACTURO_FRAMES = [
   "01-accueil",
   "02-historique",
@@ -40,6 +41,7 @@ const FACTURO_FRAMES = [
   "09-mobile",
   "10-clients",
 ];
+const ATLANTIS_FRAMES = ["01", "02", "03"];
 const PNG_MARKS = ["gdg", "icpc", "mame", "mcgill-robotics", "mercor"];
 const SVG_MARKS = ["crc", "facturo"];
 
@@ -55,7 +57,8 @@ for (const n of ACHIEVEMENT_NAMES) {
   JOBS.push({
     key: `achievements/${n}`,
     input: `photos/${n}.jpg`,
-    widths: [480],
+    // the two project-page photos (team, trophies) also render in colour at 25vw on desktop
+    widths: PROJECT_PAGE_PHOTOS.includes(n) ? [480, 960] : [480],
     quality: 78,
   });
 }
@@ -83,6 +86,25 @@ for (const f of FACTURO_FRAMES) {
     key: `facturo/facturo-${f}`,
     input: `screenshots/facturo-${f}.png`,
     widths,
+    quality: 82,
+  });
+}
+for (const n of ATLANTIS_FRAMES) {
+  for (const suffix of ["-grey", ""]) {
+    JOBS.push({
+      key: `atlantis/atlantis-${n}${suffix}`,
+      input: `screenshots/atlantis-${n}${suffix}.png`,
+      widths: [960, 1280],
+      quality: 82,
+    });
+  }
+}
+// rendered by scripts/render-robot-still.mjs (pnpm model:still) from the viewer's own start pose
+for (const suffix of ["-grey", ""]) {
+  JOBS.push({
+    key: `robot/robot-still${suffix}`,
+    input: `photos/robot-still${suffix}.png`,
+    widths: [960, "native"],
     quality: 82,
   });
 }

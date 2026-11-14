@@ -177,3 +177,14 @@ html[data-opening="pending"] nav[data-pager="letters"] .t-label {
 html[data-opening="pending"] nav[data-pager="letters"] > a {
   translate: calc(100vw + var(--space-lg)) 0;
 }
+
+/* Per-project accent on deep-dive main and footer only; header and rail keep the site green (coordinator requirement 2026-11-12, flagged against UI-SPEC Color). */
+[data-dive="facturo"] {
+  --color-accent: var(--color-accent-facturo);
+}
+[data-dive="atlantis"] {
+  --color-accent: var(--color-accent-atlantis);
+}
+[data-dive="robot"] {
+  --color-accent: var(--color-accent-robot);
+}

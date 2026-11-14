@@ -91,7 +91,7 @@ test.describe("deep dive", () => {
     );
   });
 
-  test("screenshots are greyscale and lazy", async ({ page }) => {
+  test("screenshots are colour and lazy", async ({ page }) => {
     // Chromium's lazy-load margin can fetch a short page early, so assert the loading policy, not request timing.
     await page.goto(ROUTE, { waitUntil: "load" });
     const loading = await page
@@ -107,7 +107,7 @@ test.describe("deep dive", () => {
         .poll(() =>
           imgs.nth(i).evaluate((el) => (el as HTMLImageElement).currentSrc),
         )
-        .toContain("-grey");
+        .not.toContain("-grey");
     }
   });
 

@@ -103,6 +103,8 @@ export const projects = {
         ],
       },
       linkCursorTag: "Live site",
+      dive: null,
+      diveCursorTag: null,
     },
     {
       number: "02.3",
@@ -116,6 +118,8 @@ export const projects = {
       mark: null,
       preview: null,
       linkCursorTag: null,
+      dive: { label: "Play", href: "/projects/atlantis/" },
+      diveCursorTag: "Play Atlantis",
     },
     {
       number: "02.4",
@@ -129,6 +133,8 @@ export const projects = {
       mark: null,
       preview: null,
       linkCursorTag: null,
+      dive: null,
+      diveCursorTag: null,
     },
     {
       number: "02.5",
@@ -145,6 +151,8 @@ export const projects = {
       mark: null,
       preview: null,
       linkCursorTag: null,
+      dive: { label: "3D model", href: "/projects/robot/" },
+      diveCursorTag: "Rotate the robot",
     },
     {
       number: "02.6",
@@ -158,6 +166,8 @@ export const projects = {
       mark: null,
       preview: null,
       linkCursorTag: null,
+      dive: null,
+      diveCursorTag: null,
     },
   ],
 } as const satisfies ProjectsContent;

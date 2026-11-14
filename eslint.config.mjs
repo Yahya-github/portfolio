@@ -13,6 +13,8 @@ export default defineConfig([
     "playwright-report/**",
     "test-results/**",
     "docs/**",
+    "public/games/**",
+    "public/models/**",
     ".planning/**",
   ]),
 ]);

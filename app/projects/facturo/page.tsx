@@ -9,7 +9,7 @@ import { LetterNav } from "@/components/letters/LetterNav";
 import { facturo } from "@/content/facturo";
 import { deepDiveMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = deepDiveMetadata();
+export const metadata: Metadata = deepDiveMetadata(facturo);
 
 /** Standalone vertical page outside the pager shell (D-01). The document scrolls. */
 export default function Page() {
@@ -18,10 +18,15 @@ export default function Page() {
       <SkipLink />
       <Header current="projects" label={facturo.headerLabel} />
       <LetterNav current="projects" currentMarker="true" />
-      <main id="content" tabIndex={-1} className={styles.main}>
+      <main
+        id="content"
+        tabIndex={-1}
+        data-dive="facturo"
+        className={styles.main}
+      >
         <FacturoDeepDive />
       </main>
-      <DeepDiveFooter />
+      <DeepDiveFooter project="facturo" backLabel={facturo.backLabel} />
       <StandaloneClient />
     </>
   );

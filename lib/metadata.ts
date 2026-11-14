@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { facturo } from "@/content/facturo";
 import { notFound } from "@/content/not-found";
 import { site } from "@/content/site";
 import type { Slug } from "@/content/types";
@@ -42,16 +41,18 @@ export function pageMetadata(slug: Slug): Metadata {
   };
 }
 
-export function deepDiveMetadata(): Metadata {
+export function deepDiveMetadata(
+  c: Readonly<{ route: string; metaTitle: string; metaDescription: string }>,
+): Metadata {
   return {
-    title: facturo.metaTitle,
-    description: facturo.metaDescription,
-    alternates: { canonical: facturo.route },
+    title: c.metaTitle,
+    description: c.metaDescription,
+    alternates: { canonical: c.route },
     openGraph: {
       ...OG_BASE,
-      title: facturo.metaTitle,
-      description: facturo.metaDescription,
-      url: facturo.route,
+      title: c.metaTitle,
+      description: c.metaDescription,
+      url: c.route,
     },
   };
 }

@@ -9,6 +9,10 @@ import { media } from "@/lib/media/manifest";
 import { Walkthrough } from "@/components/walkthrough/Walkthrough";
 import styles from "./projects-page.module.css";
 
+/** "/projects/atlantis/" -> "atlantis": the shared View Transition name suffix. */
+const diveSlug = (href: string): string =>
+  href.split("/").filter(Boolean).pop() ?? "";
+
 /**
  * 02 Projects. Facturo walkthrough and lead in cols 1-8, five compact
  * ruled rows in cols 9-12. The walkthrough is lazy (CONT-11).
@@ -21,12 +25,15 @@ export function ProjectsPage({ isCurrent }: PageProps) {
         text={projects.title}
         className={styles.title}
       />
-      <div className={styles.lead}>
+      <div
+        className={`dive-surface-facturo ${styles.lead}`}
+        data-dive-source={projects.flagship.deepDive.href}
+      >
         <Walkthrough isCurrent={isCurrent} />
         <Heading offset={1} className={`t-display ${styles.name}`}>
           <span
             style={displayFitStyle(projects.flagship.name) as CSSProperties}
-            className={styles.nameWord}
+            className={`dive-title-facturo ${styles.nameWord}`}
           >
             {projects.flagship.name}
           </span>
@@ -45,54 +52,78 @@ export function ProjectsPage({ isCurrent }: PageProps) {
         </a>
       </div>
       <ol className={styles.rows}>
-        {projects.rows.map((r) => (
-          <li
-            key={r.number}
-            className={styles.row}
-            data-preview-item={r.preview ? "" : undefined}
-            data-tap-colour={r.mark ? "" : undefined}
-          >
-            <div className={styles.head}>
-              <span className="t-label c-dim tnum">{r.number}</span>
-              <Heading offset={1} className="t-heading">
-                {r.name}
-              </Heading>
-              {r.mark ? (
-                <span className={styles.mark}>
-                  <OrgMark name={r.mark} eager={isCurrent} />
-                </span>
-              ) : null}
-              {r.link ? (
-                <a
-                  className={`t-label ulink ${styles.link}`}
-                  href={r.link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-preview-trigger={r.preview ? "" : undefined}
-                  data-cursor-tag={r.linkCursorTag ?? undefined}
+        {projects.rows.map((r) => {
+          const dive = r.dive ? diveSlug(r.dive.href) : null;
+          return (
+            <li
+              key={r.number}
+              className={
+                dive ? `dive-surface-${dive} ${styles.row}` : styles.row
+              }
+              data-dive-source={r.dive?.href}
+              data-preview-item={r.preview ? "" : undefined}
+              data-tap-colour={r.mark ? "" : undefined}
+            >
+              <div className={styles.head}>
+                <span className="t-label c-dim tnum">{r.number}</span>
+                <Heading
+                  offset={1}
+                  className={
+                    dive ? `t-heading dive-title-${dive}` : "t-heading"
+                  }
                 >
-                  {r.link.label}
-                </a>
+                  {r.name}
+                </Heading>
+                {r.mark ? (
+                  <span className={styles.mark}>
+                    <OrgMark name={r.mark} eager={isCurrent} />
+                  </span>
+                ) : null}
+                {r.dive || r.link ? (
+                  <span className={styles.links}>
+                    {r.dive ? (
+                      <a
+                        className={`t-label ulink ${styles.link}`}
+                        href={r.dive.href}
+                        data-cursor-tag={r.diveCursorTag ?? undefined}
+                      >
+                        {r.dive.label}
+                      </a>
+                    ) : null}
+                    {r.link ? (
+                      <a
+                        className={`t-label ulink ${styles.link}`}
+                        href={r.link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-preview-trigger={r.preview ? "" : undefined}
+                        data-cursor-tag={r.linkCursorTag ?? undefined}
+                      >
+                        {r.link.label}
+                      </a>
+                    ) : null}
+                  </span>
+                ) : null}
+              </div>
+              <p className="t-body c-dim">{r.lines[0]}</p>
+              <p className={`t-body c-dim ${styles.mid}`}>{r.lines[1]}</p>
+              <p className="t-body c-dim">{r.lines[2]}</p>
+              {r.preview ? (
+                <ProofPreview
+                  className={styles.mamePreview}
+                  sizes="(max-width: 820px) 40vw, 17vw"
+                  preview={{
+                    kind: "photo",
+                    grey: media[`mame/${r.preview.image}-grey`],
+                    colour: media[`mame/${r.preview.image}`],
+                    alt: r.preview.alt,
+                    caption: r.preview.caption,
+                  }}
+                />
               ) : null}
-            </div>
-            <p className="t-body c-dim">{r.lines[0]}</p>
-            <p className={`t-body c-dim ${styles.mid}`}>{r.lines[1]}</p>
-            <p className="t-body c-dim">{r.lines[2]}</p>
-            {r.preview ? (
-              <ProofPreview
-                className={styles.mamePreview}
-                sizes="(max-width: 820px) 40vw, 17vw"
-                preview={{
-                  kind: "photo",
-                  grey: media[`mame/${r.preview.image}-grey`],
-                  colour: media[`mame/${r.preview.image}`],
-                  alt: r.preview.alt,
-                  caption: r.preview.caption,
-                }}
-              />
-            ) : null}
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ol>
     </div>
   );

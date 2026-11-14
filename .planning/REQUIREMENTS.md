@@ -35,7 +35,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [x] **CONT-03**: Projects presents Facturo as the flagship with the most space; the other five (MAME Tool Rental first, then Atlantis, CRC problems, Robot firmware, Showdown AI) show problem, role, result and links; the MAME row previews its admin overview screenshot on hover and keyboard focus
 - [x] **CONT-04**: Facturo has a deep-dive page (problem, what was built, result, screenshots, links)
 - [x] **CONT-05**: Experience shows Work and Involvement
-- [ ] **CONT-06**: About is written in Yahya's own voice (personality lives here)
+- [x] **CONT-06**: About is written in Yahya's own voice (personality lives here)
 - [x] **CONT-07**: Say hi offers email, LinkedIn, GitHub and a Resume (PDF)
 - [x] **CONT-08**: Resume and contact are reachable from every page
 - [x] **CONT-09**: All site text lives in typed data files; only verified facts ship
@@ -53,8 +53,8 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 - [x] **EXP-03**: On devices with a fine pointer, a custom cursor sits exactly on the pointer (1:1, no lag or spring; only its shape changes) and guides navigation; touch devices and forced-colours mode keep the native cursor; under reduced motion shape changes are instant (form: variant a, a hard-edged ink square that snaps around the hovered letter or link with a Label tag that always stays inside the viewport, picked in Phase 1)
 
 ### Discoverability (SEO)
-- [ ] **SEO-01**: Each page has its own title and description; canonical URLs; Person structured data
-- [ ] **SEO-02**: Sharing the link on LinkedIn shows a branded preview card; site has a favicon and an on-brand 404 page
+- [x] **SEO-01**: Each page has its own title and description; canonical URLs; Person structured data
+- [x] **SEO-02**: Sharing the link on LinkedIn shows a branded preview card; site has a favicon and an on-brand 404 page
 
 ### Accessibility (A11Y)
 - [ ] **A11Y-01**: Keyboard and screen-reader users only reach the current page; focus moves to the new page heading; page changes are announced
@@ -113,7 +113,7 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | CONT-03 | Phase 6 | Complete |
 | CONT-04 | Phase 6 | Complete |
 | CONT-05 | Phase 6 | Complete |
-| CONT-06 | Phase 7 | Pending |
+| CONT-06 | Phase 7 | Complete |
 | CONT-07 | Phase 6 | Complete |
 | CONT-08 | Phase 6 | Complete |
 | CONT-09 | Phase 3 | Complete |
@@ -123,8 +123,8 @@ Version 1 scope. Design comes first; final copy is written by Yahya later (conte
 | EXP-01 | Phase 5 | Complete |
 | EXP-02 | Phase 6 | Complete |
 | EXP-03 | Phase 5 | Complete |
-| SEO-01 | Phase 7 | Pending |
-| SEO-02 | Phase 7 | Pending |
+| SEO-01 | Phase 7 | Complete |
+| SEO-02 | Phase 7 | Complete |
 | A11Y-01 | Phase 4 | Pending |
 | A11Y-02 | Phase 3 | Complete |
 | A11Y-03 | Phase 3 | Complete |

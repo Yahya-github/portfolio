@@ -15,9 +15,11 @@ import { GLIDE_SETTLED_EVENT } from "@/lib/motion/events";
 import type { PagerSignals } from "@/lib/pager/types";
 import { placeTag } from "./place-tag";
 import {
+  hairThickness,
   hairlineTransforms,
   idleBox,
   inflate,
+  snapBox,
   snapTargetOf,
   tagTextOf,
   type CursorBox,
@@ -63,7 +65,10 @@ export function mountCursor(signals: PagerSignals): () => void {
   let snapTimer: ReturnType<typeof setTimeout> | null = null;
 
   const drawBox = (b: CursorBox) => {
-    const t = hairlineTransforms(b);
+    const dpr = window.devicePixelRatio || 1;
+    const hair = hairThickness(dpr);
+    root.style.setProperty("--hair", `${hair}px`);
+    const t = hairlineTransforms(snapBox(b, dpr), hair);
     lines.forEach((line, i) => {
       line.style.transform = t[i];
     });

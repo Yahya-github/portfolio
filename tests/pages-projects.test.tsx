@@ -105,20 +105,19 @@ describe("ProjectsPage", () => {
     expect(items[4]).toHaveTextContent("02.6");
   });
 
-  it("links rows with a link in a new tab and leaves the others unlinked", () => {
+  it("links rows with an external link in a new tab and the rest unlinked", () => {
     const { container } = renderPage();
     const items = container.querySelectorAll("ol > li");
     const labels: string[] = [];
     items.forEach((li, i) => {
       const row = projects.rows[i];
-      const links = li.querySelectorAll("a");
+      const links = li.querySelectorAll('a[target="_blank"]');
       if (row.link === null) {
         expect(links).toHaveLength(0);
         return;
       }
       expect(links).toHaveLength(1);
       expect(links[0]).toHaveAttribute("href", row.link.href);
-      expect(links[0]).toHaveAttribute("target", "_blank");
       expect(links[0]).toHaveAttribute("rel", "noopener noreferrer");
       labels.push(links[0].textContent ?? "");
     });
@@ -127,11 +126,42 @@ describe("ProjectsPage", () => {
     expect(within(items[4] as HTMLElement).queryByRole("link")).toBeNull(); // Showdown AI
   });
 
+  it("links Atlantis and Robot firmware to their routes in the same tab, before the external link", () => {
+    const { container } = renderPage();
+    const items = container.querySelectorAll("ol > li");
+    const cases: [number, string, string, string][] = [
+      [1, "Play", "/projects/atlantis/", "Code"],
+      [3, "3D model", "/projects/robot/", "Team site"],
+    ];
+    for (const [idx, label, href, ext] of cases) {
+      const links = items[idx].querySelectorAll("a");
+      expect(links).toHaveLength(2);
+      expect(links[0]).toHaveTextContent(label);
+      expect(links[0]).toHaveAttribute("href", href);
+      expect(links[0]).not.toHaveAttribute("target");
+      expect(links[0]).not.toHaveAttribute("rel");
+      expect(links[1]).toHaveTextContent(ext);
+      expect(links[1]).toHaveAttribute("target", "_blank");
+    }
+    expect(items[1].querySelector("a")).toHaveAttribute(
+      "data-cursor-tag",
+      "Play Atlantis",
+    );
+    expect(items[3].querySelector("a")).toHaveAttribute(
+      "data-cursor-tag",
+      "Rotate the robot",
+    );
+    for (const idx of [0, 2, 4]) {
+      expect(projects.rows[idx].dive).toBeNull();
+      expect(items[idx].querySelector('a:not([target="_blank"])')).toBeNull();
+    }
+  });
+
   it("links the Facturo deep dive once", () => {
     renderPage();
     const link = screen.getByRole("link", { name: "Read the deep dive" });
     expect(link).toHaveAttribute("href", "/projects/facturo/");
-    expect(screen.getAllByRole("link")).toHaveLength(4);
+    expect(screen.getAllByRole("link")).toHaveLength(6);
   });
 
   it("gives the MAME row its mark, trigger and preview", () => {
