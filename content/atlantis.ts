@@ -104,6 +104,7 @@ export const atlantis = {
   },
   credits: [
     "Some art from Freepik.",
+    "Music: Mermaids in Town, original track by the team.",
     "Font: Black Ops One (SIL Open Font License).",
     "Addons: Dialogic and Controller Icons (MIT).",
   ],
