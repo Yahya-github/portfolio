@@ -1,6 +1,6 @@
 /**
  * Robot WebGL2 viewer (PROOF-02; D-11, D-13, D-14). Lazy and React-free.
- * Raw WebGL2, one Lambert pass, no libraries. The still stays under the canvas
+ * Raw WebGL2, one Lambert pass over per-vertex palette colours, no libraries. The still stays under the canvas
  * and is restored on any failure, so no path here logs anything.
  * Input: mouse/pen drag (yaw + pitch), touch drag (yaw only, horizontal-first so
  * vertical swipes scroll the page), arrow keys, Home and Reset view. The page
@@ -27,15 +27,23 @@ const MAX_DT_MS = 100;
 const TAU = Math.PI * 2;
 const GROUND_FALLBACK: readonly [number, number, number] = [11, 11, 11];
 
+const MAX_PALETTE = 64;
+const AMBIENT = "0.32";
+const KEY = "0.68";
+const FILL = "0.08";
+
 const VERT = `#version 300 es
 layout(location = 0) in vec4 aPos;
 layout(location = 1) in vec4 aNrm;
+layout(location = 2) in uint aCol;
+uniform vec3 uPal[${MAX_PALETTE}];
 uniform vec3 uMin;
 uniform vec3 uMax;
 uniform vec2 uYawPitch;
 uniform vec2 uScale;
 uniform vec3 uDepth;
 out vec3 vN;
+out vec3 vC;
 vec3 rot(vec3 v) {
   float cy = cos(uYawPitch.x), sy = sin(uYawPitch.x);
   float cp = cos(uYawPitch.y), sp = sin(uYawPitch.y);
@@ -46,6 +54,7 @@ void main() {
   vec3 p = uMin + (aPos.xyz + 1.0) * 0.5 * (uMax - uMin);
   vec3 c = rot(p - (uMin + uMax) * 0.5);
   vN = rot(aNrm.xyz);
+  vC = pow(uPal[aCol], vec3(2.2));
   float z = c.z - uDepth.x;
   float near = uDepth.y, far = uDepth.z;
   gl_Position = vec4(
@@ -59,11 +68,14 @@ void main() {
 const FRAG = `#version 300 es
 precision mediump float;
 in vec3 vN;
+in vec3 vC;
 uniform vec3 uLight;
 out vec4 outColor;
 void main() {
   float l = max(dot(normalize(vN), uLight), 0.0);
-  outColor = vec4(vec3(mix(0.290, 0.878, l)), 1.0);
+  float fill = max(dot(normalize(vN), -uLight), 0.0);
+  float lit = ${AMBIENT} + ${KEY} * l + ${FILL} * fill;
+  outColor = vec4(pow(vC * lit, vec3(1.0 / 2.2)), 1.0);
 }`;
 
 interface Renderer {
@@ -148,6 +160,9 @@ function uploadMesh(
   gl.enableVertexAttribArray(1);
   gl.vertexAttribPointer(1, 4, gl.BYTE, true, 4, 0);
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idx);
+  // The normal buffer's 4th byte is the palette index.
+  gl.enableVertexAttribArray(2);
+  gl.vertexAttribIPointer(2, 1, gl.UNSIGNED_BYTE, 4, 3);
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, mesh.indices, gl.STATIC_DRAW);
   return { vao, buffers: [pos, nrm, idx] };
 }
@@ -165,6 +180,7 @@ function setupGl(gl: WebGL2RenderingContext, mesh: ParsedMesh): Renderer {
   const [r, g, b] = groundColor();
   const lightYaw = (-45 * Math.PI) / 180;
   const lightUp = (35 * Math.PI) / 180;
+  const palette = Float32Array.from(mesh.palette, (c) => c / 255);
   gl.disable(gl.CULL_FACE);
   gl.enable(gl.DEPTH_TEST);
   gl.clearColor(r / 255, g / 255, b / 255, 1);
@@ -175,6 +191,7 @@ function setupGl(gl: WebGL2RenderingContext, mesh: ParsedMesh): Renderer {
       gl.viewport(0, 0, width, height);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       gl.useProgram(program);
+      gl.uniform3fv(u("uPal"), palette);
       gl.uniform3f(u("uMin"), lo[0], lo[1], lo[2]);
       gl.uniform3f(u("uMax"), hi[0], hi[1], hi[2]);
       gl.uniform2f(u("uYawPitch"), pose.yaw, pose.pitch);

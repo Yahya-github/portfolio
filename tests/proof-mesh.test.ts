@@ -5,7 +5,7 @@ import { encodeMesh, placeholderMesh } from "../scripts/lib/robot-mesh.mjs";
 const encoded = (): Uint8Array => encodeMesh(placeholderMesh());
 const copy = (u: Uint8Array): ArrayBuffer => u.slice().buffer as ArrayBuffer;
 
-describe("RBT1 round trip", () => {
+describe("RBT2 round trip", () => {
   it("parses the placeholder", () => {
     const m = placeholderMesh();
     const parsed = parseMesh(copy(encoded()));
@@ -20,11 +20,35 @@ describe("RBT1 round trip", () => {
     expect(parsed.indices.length).toBe(m.indices.length);
   });
 
-  it("is 40 + 12v + 2i bytes for the placeholder", () => {
+  it("carries the palette and a per-vertex colour index", () => {
+    const m = placeholderMesh();
+    const parsed = parseMesh(copy(encoded()));
+    expect(parsed).not.toBeNull();
+    if (!parsed) return;
+    expect(parsed.paletteCount).toBe(m.palette.length / 3);
+    expect(Array.from(parsed.palette)).toEqual(Array.from(m.palette));
+    const idx = new Uint8Array(
+      parsed.normals.buffer,
+      parsed.normals.byteOffset,
+      parsed.normals.length,
+    );
+    for (let i = 0; i < m.colors.length; i++) {
+      expect(idx[i * 4 + 3]).toBe(m.colors[i]);
+    }
+  });
+
+  it("rejects an old RBT1 file", () => {
+    const b = encoded();
+    b[3] = 0x31;
+    expect(parseMesh(copy(b))).toBeNull();
+  });
+
+  it("is 40 + palette + 12v + 2i bytes for the placeholder", () => {
     const m = placeholderMesh();
     const v = m.positions.length / 3;
+    const paletteBytes = Math.ceil(m.palette.length / 4) * 4;
     expect(encoded().byteLength).toBe(
-      HEADER_BYTES + 12 * v + 2 * m.indices.length,
+      HEADER_BYTES + paletteBytes + 12 * v + 2 * m.indices.length,
     );
     expect(HEADER_BYTES).toBe(40);
   });
@@ -53,14 +77,16 @@ describe("RBT1 round trip", () => {
     const positions = new Float32Array(v * 3).map((_, i) => i % 97);
     const normals = new Float32Array(v * 3).fill(0.5);
     const indices = new Uint32Array([0, 1, v - 1]);
-    const bytes = encodeMesh({ positions, normals, indices });
+    const colors = new Uint8Array(v);
+    const palette = new Uint8Array([10, 20, 30]);
+    const bytes = encodeMesh({ positions, normals, indices, colors, palette });
     const parsed = parseMesh(copy(bytes));
     expect(parsed?.indexType).toBe(4);
     expect(parsed?.indices[2]).toBe(v - 1);
   });
 });
 
-describe("RBT1 rejects corrupt input", () => {
+describe("RBT2 rejects corrupt input", () => {
   const view = (b: Uint8Array): DataView =>
     new DataView(b.buffer, b.byteOffset, b.byteLength);
 
@@ -91,7 +117,8 @@ describe("RBT1 rejects corrupt input", () => {
     const b = encoded();
     const dv = view(b);
     const v = dv.getUint32(4, true);
-    dv.setUint16(HEADER_BYTES + 12 * v, v, true);
+    const paletteBytes = Math.ceil((dv.getUint8(13) * 3) / 4) * 4;
+    dv.setUint16(HEADER_BYTES + paletteBytes + 12 * v, v, true);
     expect(parseMesh(copy(b))).toBeNull();
   });
   it("rejects a non-finite bbox", () => {
@@ -102,6 +129,21 @@ describe("RBT1 rejects corrupt input", () => {
   it("rejects bbox min above max", () => {
     const b = encoded();
     view(b).setFloat32(16, 1e6, true);
+    expect(parseMesh(copy(b))).toBeNull();
+  });
+  it("rejects a colour index outside the palette", () => {
+    const b = encoded();
+    const dv = view(b);
+    const paletteBytes = Math.ceil((dv.getUint8(13) * 3) / 4) * 4;
+    b[HEADER_BYTES + paletteBytes + 8 * dv.getUint32(4, true) + 3] = 200;
+    expect(parseMesh(copy(b))).toBeNull();
+  });
+  it("rejects an empty or oversized palette", () => {
+    const a = encoded();
+    a[13] = 0;
+    expect(parseMesh(copy(a))).toBeNull();
+    const b = encoded();
+    b[13] = 65;
     expect(parseMesh(copy(b))).toBeNull();
   });
   it("rejects zero vertices and an index count not divisible by 3", () => {
