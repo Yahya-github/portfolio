@@ -188,6 +188,17 @@ test.describe("robot standalone", () => {
       ).toBeHidden();
     });
 
+    test("auto-rotate resumes after a few idle seconds", async ({ page }) => {
+      await live(page);
+      await page.locator(canvas).click();
+      await page.waitForTimeout(200);
+      const paused = await shot(page);
+      await page.waitForTimeout(4200);
+      await shot(page);
+      await page.waitForTimeout(SETTLE_MS);
+      expect((await shot(page)).equals(paused)).toBe(false);
+    });
+
     test("Pause motion freezes rotation before any touch", async ({ page }) => {
       await live(page);
       await expect(page.locator("html[data-motion-ready]")).toHaveCount(1);

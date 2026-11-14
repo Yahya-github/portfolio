@@ -226,8 +226,8 @@
   position: relative;
   aspect-ratio: 16 / 10;
   width: 100%;
-  /* Keep the whole robot above the fold: the title band takes about 26rem. */
-  max-height: max(20rem, calc(100svh - 29rem));
+  /* Fit the space between the title band and the fixed footer (header 72px + gaps + footer 56px). */
+  max-height: max(16rem, calc(100svh - var(--dive-band) - 10.5rem));
   overflow: hidden;
 }
 

@@ -21,7 +21,10 @@ import {
 
 const LOST_EVENT = "webglcontextlost";
 const FOV = (30 * Math.PI) / 180;
-const TURN_FALLBACK_MS = 24000;
+const TURN_FALLBACK_MS = 18000;
+const IDLE_RESUME_MS = 3500;
+/** Breathing room around the fitted robot. */
+const FRAME_MARGIN = 1.08;
 const MAX_DPR = 2;
 const MAX_DT_MS = 100;
 const TAU = Math.PI * 2;
@@ -175,6 +178,12 @@ function setupGl(gl: WebGL2RenderingContext, mesh: ParsedMesh): Renderer {
   const radius =
     Math.hypot(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]) / 2 || 1;
   const f = 1 / Math.tan(FOV / 2);
+  const tanHalf = Math.tan(FOV / 2);
+  const halfH = (hi[1] - lo[1]) / 2;
+  const halfXZ = Math.hypot(hi[0] - lo[0], hi[2] - lo[2]) / 2;
+  // Vertical reach includes some depth swing from the pitch; horizontal is the yaw footprint.
+  const fitV = Math.hypot(halfH, halfXZ * 0.45) || 1;
+  const fitH = halfXZ || 1;
   const elementType =
     mesh.indexType === 2 ? gl.UNSIGNED_SHORT : gl.UNSIGNED_INT;
   const [r, g, b] = groundColor();
@@ -187,7 +196,10 @@ function setupGl(gl: WebGL2RenderingContext, mesh: ParsedMesh): Renderer {
   return {
     draw(pose, width, height) {
       const aspect = width / Math.max(height, 1);
-      const dist = (radius / Math.sin(FOV / 2)) * Math.max(1, 1 / aspect);
+      // Fit height first (a wide stage is short), then the turning footprint for width.
+      const dist =
+        Math.max(fitV / tanHalf, fitH / (tanHalf * Math.min(aspect, 1.6))) *
+        FRAME_MARGIN;
       gl.viewport(0, 0, width, height);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       gl.useProgram(program);
@@ -285,6 +297,7 @@ function start(
   let last = 0;
   let disposed = false;
   let fadeTimer = 0;
+  let idleTimer = 0;
 
   const draw = (): void => renderer.draw(pose, canvas.width, canvas.height);
   const autoOn = (): boolean =>
@@ -313,10 +326,16 @@ function start(
   const kick = (): void => {
     if (!raf && !disposed) raf = requestAnimationFrame(frame);
   };
+  // Any interaction pauses the turn; it resumes after a short idle (not forever).
   const touch = (): void => {
-    if (flags.touched) return;
     flags.touched = true;
     html.dataset.modelTouched = "";
+    window.clearTimeout(idleTimer);
+    idleTimer = window.setTimeout(() => {
+      flags.touched = false;
+      last = 0;
+      kick();
+    }, IDLE_RESUME_MS);
   };
   const animateTo = (to: Pose, durToken: string, easeToken: string): void => {
     const ms = reduce.matches ? 0 : tokenMs(durToken, 0);
@@ -436,6 +455,7 @@ function start(
   return () => {
     disposed = true;
     delete html.dataset.modelTouched;
+    window.clearTimeout(idleTimer);
     cancelAnimationFrame(raf);
     io.disconnect();
     mo.disconnect();
