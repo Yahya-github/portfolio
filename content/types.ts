@@ -314,6 +314,7 @@ export type ProofMediaKey =
   | "atlantis/atlantis-02"
   | "atlantis/atlantis-03"
   | "robot/robot-still-grey"
+  | "robot/robot-still"
   | "achievements/game-competition-2026-team-grey"
   | "achievements/game-competition-2026-team"
   | "achievements/crc-2026-trophies-grey"

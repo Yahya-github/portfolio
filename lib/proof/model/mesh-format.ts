@@ -1,17 +1,20 @@
 /**
- * RBT1 binary mesh decoder (PROOF-02; threat T-08-09).
+ * RBT2 binary mesh decoder (PROOF-02; threat T-08-09).
  * Little-endian. Header 40 bytes:
- *   0 magic "RBT1" | 4 vertexCount u32 | 8 indexCount u32 | 12 indexType u8 (2|4)
- *   13-15 zero | 16..39 bboxMin xyz, bboxMax xyz (f32)
- * Body: positions Int16 x4 (w = 0), normals Int8 x4, indices (indexType bytes).
+ *   0 magic "RBT2" | 4 vertexCount u32 | 8 indexCount u32 | 12 indexType u8 (2|4)
+ *   13 paletteCount u8 (1..64) | 14-15 zero | 16..39 bboxMin xyz, bboxMax xyz (f32)
+ * Body: palette (3 sRGB bytes per entry, padded to 4), positions Int16 x4 (w = 0),
+ * normals Int8 x4 (w = palette index, u8), indices (indexType bytes).
+ * RBT1 files (no colour) are rejected by the magic check.
  * Every length is checked before any typed-array view is created.
  */
-export const MESH_MAGIC = "RBT1";
+export const MESH_MAGIC = "RBT2";
 export const HEADER_BYTES = 40;
 
 const POSITION_BYTES = 8;
 const NORMAL_BYTES = 4;
 const MAX_U16_VERTICES = 65536;
+export const MAX_PALETTE = 64;
 
 export interface ParsedMesh {
   readonly vertexCount: number;
@@ -19,7 +22,11 @@ export interface ParsedMesh {
   readonly indexType: 2 | 4;
   readonly bboxMin: readonly [number, number, number];
   readonly bboxMax: readonly [number, number, number];
+  /** sRGB bytes, 3 per palette entry. */
+  readonly palette: Uint8Array;
+  readonly paletteCount: number;
   readonly positions: Int16Array;
+  /** Int8 x4 per vertex: xyz normal, then the palette index byte (read as u8). */
   readonly normals: Int8Array;
   readonly indices: Uint16Array | Uint32Array;
 }
@@ -48,8 +55,13 @@ export function parseMesh(buf: ArrayBuffer): ParsedMesh | null {
   }
   if (indexType === 2 && vertexCount > MAX_U16_VERTICES) return null;
 
+  const paletteCount = dv.getUint8(13);
+  if (paletteCount < 1 || paletteCount > MAX_PALETTE) return null;
+  const paletteBytes = Math.ceil((paletteCount * 3) / 4) * 4;
+
   const expected =
     HEADER_BYTES +
+    paletteBytes +
     (POSITION_BYTES + NORMAL_BYTES) * vertexCount +
     indexType * indexCount;
   if (buf.byteLength !== expected) return null;
@@ -63,7 +75,7 @@ export function parseMesh(buf: ArrayBuffer): ParsedMesh | null {
     if (bboxMin[a] > bboxMax[a]) return null;
   }
 
-  const posOffset = HEADER_BYTES;
+  const posOffset = HEADER_BYTES + paletteBytes;
   const nrmOffset = posOffset + POSITION_BYTES * vertexCount;
   const idxOffset = nrmOffset + NORMAL_BYTES * vertexCount;
   const indices =
@@ -74,12 +86,19 @@ export function parseMesh(buf: ArrayBuffer): ParsedMesh | null {
     if (indices[i] >= vertexCount) return null;
   }
 
+  const colorIndex = new Uint8Array(buf, nrmOffset, vertexCount * 4);
+  for (let i = 3; i < colorIndex.length; i += 4) {
+    if (colorIndex[i] >= paletteCount) return null;
+  }
+
   return {
     vertexCount,
     indexCount,
     indexType,
     bboxMin,
     bboxMax,
+    palette: new Uint8Array(buf, HEADER_BYTES, paletteCount * 3),
+    paletteCount,
     positions: new Int16Array(buf, posOffset, vertexCount * 4),
     normals: new Int8Array(buf, nrmOffset, vertexCount * 4),
     indices,

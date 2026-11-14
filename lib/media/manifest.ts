@@ -516,6 +516,18 @@ export const media = {
       height: 1240,
     },
   ],
+  "robot/robot-still": [
+    {
+      src: "/media/robot/robot-still-960.webp",
+      width: 960,
+      height: 600,
+    },
+    {
+      src: "/media/robot/robot-still-996.webp",
+      width: 996,
+      height: 623,
+    },
+  ],
   "robot/robot-still-grey": [
     {
       src: "/media/robot/robot-still-grey-960.webp",

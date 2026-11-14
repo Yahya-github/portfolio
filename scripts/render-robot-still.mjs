@@ -1,13 +1,15 @@
-// scripts/render-robot-still.mjs: renders the robot viewer's start pose to docs/material/photos/robot-still.png (08-16).
+// scripts/render-robot-still.mjs: renders the robot viewer's start pose to docs/material/photos/robot-still.png in colour, plus a grey twin robot-still-grey.png (08-16).
 // The still comes from the viewer's own shader, so the still-to-live handoff shows no jump.
 // Usage: pnpm model:still [--skip-build]  (local only, never CI; GPU-less hosts use swiftshader WebGL2)
 import { execFileSync, spawn } from "node:child_process";
 import { mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { chromium } from "@playwright/test";
+import sharp from "sharp";
 
 const OUT = "docs/material/photos/robot-still.png";
-const PORT = 4175;
+const GREY_OUT = "docs/material/photos/robot-still-grey.png";
+const PORT = Number(process.env.ROBOT_STILL_PORT ?? 4175);
 const ROUTE = `http://localhost:${PORT}/projects/robot/`;
 const VIEWPORT = { width: 1440, height: 900 };
 const SETTLE_MS = 900;
@@ -72,8 +74,9 @@ try {
   });
   mkdirSync(dirname(OUT), { recursive: true });
   await canvas.screenshot({ path: OUT, animations: "disabled" });
+  await sharp(OUT).greyscale().png().toFile(GREY_OUT);
   if (errors.length > 0) fail(errors.join("; "));
-  console.log(`robot-still: wrote ${OUT}`);
+  console.log(`robot-still: wrote ${OUT} and ${GREY_OUT}`);
 } finally {
   await browser?.close();
   server.kill();
