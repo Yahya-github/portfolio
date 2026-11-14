@@ -48,7 +48,7 @@ export const robot = {
   },
   gallery: [
     {
-      key: "achievements/crc-2026-trophies-grey",
+      key: "achievements/crc-2026-trophies",
       alt: trophiesAlt,
       caption: "The CRC 2026 team with its trophies",
     },
