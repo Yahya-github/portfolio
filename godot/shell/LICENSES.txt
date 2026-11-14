@@ -8,6 +8,9 @@ Some art in the game is from Freepik (https://www.freepik.com): metal tag and pl
   https://www.freepik.com/free-vector/wreck-ship-sunken-steamboat-ocean-sandy-bottom_6993840.htm
   https://www.freepik.com/free-vector/black-metal-labels-set-isolated-background_195402029.htm
 
+MUSIC
+"Mermaids in Town" is an original track made by the Atlantis team for this game.
+
 FONT
 Black Ops One, SIL Open Font License 1.1. https://fonts.google.com/specimen/Black+Ops+One
 

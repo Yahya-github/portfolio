@@ -101,6 +101,8 @@ const run = (args) =>
 run(["--import"]);
 run(["--export-release", PRESET, join(outDir, "play.html")]);
 copyFileSync(join(SHELL_DIR, "shell.js"), join(outDir, "shell.js"));
+// Third-party notices live next to the build; the Credits link points here.
+copyFileSync(join(SHELL_DIR, "LICENSES.txt"), join(outDir, "LICENSES.txt"));
 
 const stray = existsSync(join(ROOT, "public", "games"))
   ? readdirSync(join(ROOT, "public", "games"), { recursive: true }).filter(
