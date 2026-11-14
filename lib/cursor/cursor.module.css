@@ -29,8 +29,8 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 1px;
-  height: 1px;
+  width: var(--hair, 1px);
+  height: var(--hair, 1px);
   background: var(--color-ink);
   transform-origin: 0 0;
 }
