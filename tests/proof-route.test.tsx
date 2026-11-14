@@ -62,6 +62,9 @@ describe("Atlantis route, playable", () => {
       "aria-hidden",
       "true",
     );
+    // One whole pictogram path, no text letterforms.
+    expect(container.querySelectorAll("[data-mark] svg path")).toHaveLength(1);
+    expect(container.querySelector("[data-mark] svg text")).toBeNull();
   });
 
   it("makes no request to /games/ from src or href", () => {
