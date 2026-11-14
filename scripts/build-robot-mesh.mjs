@@ -13,7 +13,7 @@ import { gzipSync } from "node:zlib";
 import { encodeMesh, placeholderMesh } from "./lib/robot-mesh.mjs";
 
 const MAX_TRIANGLES = 60000;
-const TARGET_TRIANGLES = 40000;
+const TARGET_TRIANGLES = 48000;
 const MAX_RAW_KB = 700;
 const OUT_ROOT = "public/models/robot";
 const MODULE = "content/generated/robot-model.ts";
@@ -21,10 +21,10 @@ const DEFAULT_INPUTS = ["docs/material/robot.glb", "docs/material/robot.gltf"];
 const BYTES_PER_KB = 1024;
 const HASH_CHARS = 12;
 const GZIP_LEVEL = 9;
-const MAX_SIMPLIFY_PASSES = 14;
+const MAX_SIMPLIFY_PASSES = 30;
 const SIMPLIFY_ERROR = 0.001;
-const RATIO_STEP = 0.6;
-const ERROR_GROWTH = 1.8;
+const RATIO_STEP = 0.85;
+const ERROR_GROWTH = 1.35;
 const TRIANGLES_MODE = 4;
 
 const fail = (message) => {
