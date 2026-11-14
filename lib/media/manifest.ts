@@ -22,6 +22,11 @@ export const media = {
       width: 480,
       height: 251,
     },
+    {
+      src: "/media/achievements/crc-2026-trophies-960.webp",
+      width: 960,
+      height: 502,
+    },
   ],
   "achievements/crc-2026-trophies-grey": [
     {
@@ -50,12 +55,89 @@ export const media = {
       width: 480,
       height: 312,
     },
+    {
+      src: "/media/achievements/game-competition-2026-team-960.webp",
+      width: 960,
+      height: 623,
+    },
   ],
   "achievements/game-competition-2026-team-grey": [
     {
       src: "/media/achievements/game-competition-2026-team-grey-320.webp",
       width: 320,
       height: 207,
+    },
+  ],
+  "atlantis/atlantis-01": [
+    {
+      src: "/media/atlantis/atlantis-01-960.webp",
+      width: 960,
+      height: 540,
+    },
+    {
+      src: "/media/atlantis/atlantis-01-1280.webp",
+      width: 1280,
+      height: 720,
+    },
+  ],
+  "atlantis/atlantis-01-grey": [
+    {
+      src: "/media/atlantis/atlantis-01-grey-960.webp",
+      width: 960,
+      height: 540,
+    },
+    {
+      src: "/media/atlantis/atlantis-01-grey-1280.webp",
+      width: 1280,
+      height: 720,
+    },
+  ],
+  "atlantis/atlantis-02": [
+    {
+      src: "/media/atlantis/atlantis-02-960.webp",
+      width: 960,
+      height: 540,
+    },
+    {
+      src: "/media/atlantis/atlantis-02-1280.webp",
+      width: 1280,
+      height: 720,
+    },
+  ],
+  "atlantis/atlantis-02-grey": [
+    {
+      src: "/media/atlantis/atlantis-02-grey-960.webp",
+      width: 960,
+      height: 540,
+    },
+    {
+      src: "/media/atlantis/atlantis-02-grey-1280.webp",
+      width: 1280,
+      height: 720,
+    },
+  ],
+  "atlantis/atlantis-03": [
+    {
+      src: "/media/atlantis/atlantis-03-960.webp",
+      width: 960,
+      height: 540,
+    },
+    {
+      src: "/media/atlantis/atlantis-03-1280.webp",
+      width: 1280,
+      height: 720,
+    },
+  ],
+  "atlantis/atlantis-03-grey": [
+    {
+      src: "/media/atlantis/atlantis-03-grey-960.webp",
+      width: 960,
+      height: 540,
+    },
+    {
+      src: "/media/atlantis/atlantis-03-grey-1280.webp",
+      width: 1280,
+      height: 720,
     },
   ],
   "facturo/facturo-01-accueil": [
@@ -432,6 +514,30 @@ export const media = {
       src: "/media/portrait/portrait-devfest-2026-grey-1512.webp",
       width: 1512,
       height: 1240,
+    },
+  ],
+  "robot/robot-still": [
+    {
+      src: "/media/robot/robot-still-960.webp",
+      width: 960,
+      height: 600,
+    },
+    {
+      src: "/media/robot/robot-still-996.webp",
+      width: 996,
+      height: 623,
+    },
+  ],
+  "robot/robot-still-grey": [
+    {
+      src: "/media/robot/robot-still-grey-960.webp",
+      width: 960,
+      height: 600,
+    },
+    {
+      src: "/media/robot/robot-still-grey-996.webp",
+      width: 996,
+      height: 623,
     },
   ],
 } as const satisfies Readonly<Record<string, readonly MediaVariant[]>>;

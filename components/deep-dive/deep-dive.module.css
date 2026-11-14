@@ -4,6 +4,16 @@
     calc(var(--grid-margin) + var(--rail-col));
 }
 
+.hasMark {
+  --dive-band: clamp(220px, 21vw, 360px);
+  position: relative;
+}
+
+.hasMark .title {
+  box-sizing: border-box;
+  min-height: var(--dive-band);
+}
+
 .title {
   grid-column: 1 / -1;
   padding-top: var(--space-lg);
@@ -32,7 +42,7 @@
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: subgrid;
-  border-top: 1px solid var(--color-hair);
+  border-top: 1px solid var(--color-accent);
   padding-top: var(--space-lg);
   margin-top: var(--space-3xl);
 }
@@ -91,6 +101,19 @@
   display: inline-block;
 }
 
+/* Footer Back link at rest takes the project accent (coordinator requirement 2026-11-12). */
+.back {
+  color: var(--color-accent);
+}
+
+/* Single accent rule for the lean routes (used in 08-09). */
+.rule {
+  grid-column: 1 / -1;
+  border: 0;
+  border-top: 1px solid var(--color-accent);
+  margin: 0;
+}
+
 .source {
   display: block;
   margin-top: var(--space-xs);
@@ -125,6 +148,16 @@
 
   .main {
     padding-left: var(--grid-margin);
+  }
+
+  /* Room for the in-flow colour mark band above the title. */
+  .hasMark {
+    --dive-band: min(56vw, 300px);
+    padding-top: var(--dive-band);
+  }
+
+  .hasMark .title {
+    min-height: 0;
   }
 
   .titleWord {

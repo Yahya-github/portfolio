@@ -24,6 +24,7 @@ const CLIENT_ALLOWLIST: readonly string[] = [
   join("components", "shell", "LiveRegion.tsx"),
   join("components", "shell", "DebugOverlay.tsx"),
   join("components", "deep-dive", "StandaloneClient.tsx"),
+  join("components", "proof", "ProofClient.tsx"),
 ];
 
 function listTsx(): readonly string[] {

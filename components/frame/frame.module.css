@@ -113,6 +113,9 @@
 :global(html:has(#page-index:not([inert]))) .motion {
   visibility: hidden;
 }
+:global(html[data-model-touched]) .motion {
+  visibility: hidden;
+}
 .motionPlay {
   display: none;
 }

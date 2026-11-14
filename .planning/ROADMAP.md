@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Horizontal Pager and Input** - One page per gesture by wheel, trackpad, keys and swipe, with real URLs, Back history and accessible page hand-off
 - [x] **Phase 5: Letter Navigation and Motion** - Letters glide from the hero into the left rail, footer pager, first-visit hint, opening animation and reduced-motion versions (completed 2026-11-10)
 - [x] **Phase 6: Page Compositions and Content** - Each page gets its distinct composition: 75/75, Facturo flagship plus deep dive, Experience, Say hi with resume, phone portrait layouts (completed 2026-11-12)
-- [ ] **Phase 7: Copy, Sharing and Launch** - Yahya's final copy, per-page SEO metadata, LinkedIn share card, favicon, 404 and launch verification
+- [x] **Phase 7: Copy, Sharing and Launch** - Yahya's final copy, per-page SEO metadata, LinkedIn share card, favicon, 404 and launch verification (completed 2026-11-13)
 - [ ] **Phase 8: Interactive Proof** - Playable Atlantis in the browser and a rotatable 3D model of the robot (parallel track, does not gate launch)
 
 ## Phase Details
@@ -193,7 +193,7 @@ Plans:
 - [x] 07-05-PLAN.md — Lighthouse CI config, baseline run and `lighthouse` CI job
 - [x] 07-06-PLAN.md — Yahya's final copy placed and verified, resume re-export pinned, 50-160 char descriptions (checkpoint)
 - [x] 07-07-PLAN.md — Final visual baselines, full gate, HUMAN-UAT, ship Phases 3-7 with noindex, lighthouse required, live checks (checkpoint)
-- [ ] 07-08-PLAN.md — Launch: remove noindex, robots.txt and sitemap.xml, SEO 100, Yahya merges (checkpoint)
+- [x] 07-08-PLAN.md — Launch: remove noindex, robots.txt and sitemap.xml, SEO 100, Yahya merges (checkpoint)
 **UI hint**: yes
 
 ### Phase 8: Interactive Proof
@@ -204,7 +204,25 @@ Plans:
   1. Atlantis runs in the browser on its project page as a single-thread Godot web export, loaded only there; its asset licences and teammates' consent are confirmed before publishing; if too heavy, screenshots plus a link replace it
   2. The robot project shows a rotatable 3D model built from the real CAD file, lazy-loaded with a static image first; the page works fully without it
   3. Neither piece adds JavaScript or requests to any other page; both respect reduced motion and keyboard use
-**Plans**: TBD
+**Plans**: 17 plans
+Plans:
+- [x] 08-01-PLAN.md — Decisions checkpoint (threshold, D-06 scope, fork, music, French, row label, per-project accents, pictures) and consent request
+- [x] 08-02-PLAN.md — Shared contracts, clearance gate, generalised footer/metadata, per-project accent tokens (Facturo yellow)
+- [x] 08-03-PLAN.md — TDD: game state machine and postMessage guard
+- [x] 08-04-PLAN.md — TDD: orbit maths, auto-rotate gate, easing, RBT1 mesh format
+- [x] 08-05-PLAN.md — Disjoint Vercel headers (/games/ only gets wasm), unit pins, path-aware CSP e2e, wasm negative control
+- [x] 08-06-PLAN.md — Fork web branch, first-party Godot shell, export script with measured sizes, binary ignores
+- [x] 08-07-PLAN.md — Real boot under game CSP, screenshots, timing, embed decision checkpoint
+- [x] 08-08-PLAN.md — CAD-to-RBT1 mesh pipeline (placeholder), model size gate in measure-js
+- [x] 08-09-PLAN.md — Atlantis static route (blue accent, screenshots + team photo, stage markup)
+- [x] 08-10-PLAN.md — Atlantis lazy controller, stub game, play/Esc/Exit/Mute/touch e2e
+- [x] 08-11-PLAN.md — Robot static route (red accent, still + trophies photo)
+- [x] 08-12-PLAN.md — Raw WebGL2 viewer, motion control on the route, robot e2e
+- [x] 08-13-PLAN.md — Projects row links, sitemap 9, robots /games/, e2e route lists, isolation audit
+- [x] 08-14-PLAN.md — Row-to-deep-dive cross-document View Transitions for all three deep dives
+- [x] 08-15-PLAN.md — Atlantis consent gate, publish or fallback, visual baselines
+- [x] 08-16-PLAN.md — Robot CAD consent and real mesh, matching still, baselines
+- [ ] 08-17-PLAN.md — Publish guard, PR, preview header checks, Yahya merges
 **UI hint**: yes
 
 ## Progress
@@ -220,8 +238,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7. Phase 8 
 | 4. Horizontal Pager and Input | 14/15 | Complete    | 2026-11-10 |
 | 5. Letter Navigation and Motion | 13/13 | Complete    | 2026-11-10 |
 | 6. Page Compositions and Content | 17/17 | Complete    | 2026-11-12 |
-| 7. Copy, Sharing and Launch | 7/8 | In Progress|  |
-| 8. Interactive Proof | 0/TBD | Not started | - |
+| 7. Copy, Sharing and Launch | 8/8 | Complete   | 2026-11-13 |
+| 8. Interactive Proof | 16/17 | In Progress|  |
 
 ## Research Flags
 

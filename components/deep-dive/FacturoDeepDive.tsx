@@ -4,6 +4,7 @@ import { facturo } from "@/content/facturo";
 import type { DeepDiveImage } from "@/content/types";
 import { displayFitStyle } from "@/lib/display-fit";
 import { media } from "@/lib/media/manifest";
+import { ProjectMark } from "./ProjectMark";
 import styles from "./deep-dive.module.css";
 
 const SIZES = "(max-width: 820px) 100vw, 45vw";
@@ -17,7 +18,7 @@ interface ShotProps {
 function Shot({ image, eager, className }: ShotProps) {
   return (
     <Photo
-      sources={media[`facturo/${image.frame}-grey`]}
+      sources={media[`facturo/${image.frame}`]}
       alt={image.alt}
       sizes={SIZES}
       eager={eager}
@@ -29,11 +30,14 @@ function Shot({ image, eager, className }: ShotProps) {
 /** Facturo deep dive body (CONT-04): title, lead, meta and ruled sections (D-02). */
 export function FacturoDeepDive() {
   return (
-    <article className={`grid ${styles.body}`}>
-      <h1 className={`t-display ${styles.title}`}>
+    <article
+      className={`grid dive-surface-facturo ${styles.hasMark} ${styles.body}`}
+    >
+      <ProjectMark project="facturo" />
+      <h1 tabIndex={-1} className={`t-display ${styles.title}`}>
         <span
           style={displayFitStyle(facturo.title) as CSSProperties}
-          className={styles.titleWord}
+          className={`dive-title-facturo ${styles.titleWord}`}
         >
           {facturo.title}
         </span>

@@ -8,4 +8,6 @@ out/
 playwright-report/
 test-results/
 .lighthouseci/
+public/games/
+public/models/
 next-env.d.ts

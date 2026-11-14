@@ -54,14 +54,32 @@ export function idleBox(px: number, py: number): CursorBox {
   return { x: px - half, y: py - half, w: IDLE_SIZE_PX, h: IDLE_SIZE_PX };
 }
 
-/** Top, right, bottom, left hairline transforms for 1px-based line elements. */
+/**
+ * Puts every edge of the box on a whole device pixel, so the four hairlines share
+ * the same pixel grid and meet at the corners instead of blurring apart on
+ * fractional layout rects.
+ */
+export function snapBox(b: CursorBox, dpr: number): CursorBox {
+  const snap = (v: number): number => Math.round(v * dpr) / dpr;
+  const x = snap(b.x);
+  const y = snap(b.y);
+  return { x, y, w: snap(b.x + b.w) - x, h: snap(b.y + b.h) - y };
+}
+
+/** A hairline that is a whole number of device pixels thick (never thinner than one). */
+export function hairThickness(dpr: number): number {
+  return Math.max(1, Math.round(dpr)) / dpr;
+}
+
+/** Top, right, bottom, left hairline transforms for line elements `hair` CSS px thick. */
 export function hairlineTransforms(
   b: CursorBox,
+  hair = 1,
 ): readonly [string, string, string, string] {
   return [
-    `translate(${b.x}px, ${b.y}px) scaleX(${b.w})`,
-    `translate(${b.x + b.w - 1}px, ${b.y}px) scaleY(${b.h})`,
-    `translate(${b.x}px, ${b.y + b.h - 1}px) scaleX(${b.w})`,
-    `translate(${b.x}px, ${b.y}px) scaleY(${b.h})`,
+    `translate(${b.x}px, ${b.y}px) scaleX(${b.w / hair})`,
+    `translate(${b.x + b.w - hair}px, ${b.y}px) scaleY(${b.h / hair})`,
+    `translate(${b.x}px, ${b.y + b.h - hair}px) scaleX(${b.w / hair})`,
+    `translate(${b.x}px, ${b.y}px) scaleY(${b.h / hair})`,
   ];
 }

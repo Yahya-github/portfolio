@@ -33,8 +33,12 @@ Phase 4 (Horizontal Pager and Input) complete 2026-11-10: hand-written pager (pu
 - [x] Achievements (75/75 plus four first places as one list) with hover/focus proof previews and article links (CONT-02, CONT-10); Projects with Facturo flagship, MAME row, Atlantis, CRC problems, robot firmware and Showdown AI (CONT-03); Facturo deep-dive page /projects/facturo/ (CONT-04); Facturo pausable walkthrough (CONT-11) — Validated in Phase 6: Page Compositions and Content (desktop and emulated touch)
 - [x] Experience Work and Involvement with organisation marks, About with true-colour portrait on hover/tap, Say hi email/LinkedIn/GitHub/Resume with copy-email, resume and contact reachable from every page (CONT-05, CONT-07, CONT-08, CONT-12) — Validated in Phase 6
 - [x] Six pages with distinct compositions, proven by a layout-signature test; five decorative devices (Index grid lines, Experience "03", About quarter rings, margin names, Say hi spiral) with a footer Pause motion control (DSGN-03) — Validated in Phase 6
+- [x] About is Yahya's own voice ("Two passions", with links to Pokemon Showdown and Minecraft) and every site claim is checked against a source in 07-FACT-CHECK.md (CONT-06) — Validated in Phase 7: Copy, Sharing and Launch
+- [x] Per-page titles, descriptions and canonicals plus Person structured data (SEO-01); branded 1200x630 LinkedIn share card, favicon and an on-brand 404 (SEO-02) — Validated in Phase 7
 
 Phase 6 (Page Compositions and Content) complete 2026-11-12: 17 plans in 10 waves, 662 unit + 442 Playwright tests, 34 visual baselines regenerated in the Podman container, JS 143.9 kB gzip per route (budget 150) and a 12 kB per-lazy-chunk gate in CI. Code review: 0 critical, 5 warnings and 3 info open (06-REVIEW.md). Verification status human_needed: no code gaps. EXP-02 (phone portrait layouts) and the touch parts of CONT-10/11/12 stay unconfirmed until the real-device checks in 06-HUMAN-UAT.md are done (iPhone Safari, LinkedIn in-app, Android Chrome), as do the content claims Yahya must confirm. Recommended before launch: WR-01 (copy-email failure path) and WR-03 (walkthrough lazy-frame stall). Review defects found and fixed in 06-17: walkthrough raced at 5 ms per frame because the minifier ships `5s`/`.9s` tokens; Say hi hint was skipped on phones.
+
+Phase 7 (Copy, Sharing and Launch) complete 2026-11-13: 8 plans in 4 waves, 726 unit tests, Lighthouse CI as a required check on main, launch PR #7 merged by Yahya and live-verified (no noindex, robots.txt, 7-URL sitemap.xml, 404 still noindex). Code review: 0 critical, 1 warning, 7 info open (07-REVIEW.md). Verification status human_needed: no gaps; LinkedIn Post Inspector and the favicon/phone checks remain optional (07-HUMAN-UAT.md, D-12). Accepted deviation: Achievements meta description is 184 chars (over the 160 limit), by Yahya's choice.
 
 ### Active
 
@@ -85,6 +89,10 @@ Phase 6 (Page Compositions and Content) complete 2026-11-12: 17 plans in 10 wave
 | YAHYA letters are the nav, shrink to a left rail | His request; the "name is the map" idea carried over from the light design | — Pending |
 | Instrument Sans as the single family | Chosen by Yahya after the Phase 1 side-by-side trial on the giant YAHYA (2026-11-07); SIL Open Font License 1.1, self-hosted; 700 at wdth 75 for display, wdth 100 for body | — Pending |
 | Remove Icons8 illustrations | "Remove those cartoonish assets" | ✓ Good |
+| Row grows into the deep dive (scale) breaks the one-motion rule on purpose; 600 ms, no bounce, transform/opacity/clip-path only (Phase 8 D-19a, user choice) | He wanted the row to become the page; cross-document View Transitions keep it progressive and inside the JS budget | — Pending |
+| "Drag to rotate" is an accent cue on the robot page (Phase 8 D-12) | The affordance must be seen; accent marks it as the one interactive hint | — Pending |
+| Per-project accents on deep dives: Facturo yellow #e8c547, Atlantis blue #5fa8f0, Robot red #f2685c; main and footer only, header and rail keep green | Coordinator requirement 2026-11-12, flagged against UI-SPEC Color | — Pending |
+| Atlantis CSP split (D06): only `/games/(.*)` gets `'wasm-unsafe-eval'`, `img-src blob:`, `frame-ancestors 'self'`, `X-Frame-Options: SAMEORIGIN`; `/projects/atlantis/` keeps the site CSP and `X-Frame-Options: DENY` | Smallest relaxation: the route itself needs no change, only the iframe target (docs/material/proof-clearance.md) | — Pending |
 | Design before copy | "getting the design is the most important" | — Pending |
 | Real URLs per page, Back steps through pages | Shareable links, per-page metadata, no load flash (research Decision 1) | — Pending |
 | Letters-to-rail FLIP with the native Web Animations API, no library | 0 kB, interruptible; swap to GSAP Flip only if bugs cost over a day (Decision 2) | — Pending |
@@ -129,4 +137,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-11-12 after Phase 6 (Page Compositions and Content) completion*
+*Last updated: 2026-11-13 after Phase 7 (Copy, Sharing and Launch) completion*

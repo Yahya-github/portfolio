@@ -7,6 +7,9 @@
   },
   "scripts": {
     "dev": "next dev",
+    "game:export": "node scripts/export-atlantis.mjs",
+    "model:build": "node scripts/build-robot-mesh.mjs",
+    "model:still": "node scripts/render-robot-still.mjs",
     "build": "next build",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
@@ -27,6 +30,9 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
     "@lhci/cli": "0.16.1",
     "@playwright/test": "1.65.0",
     "@testing-library/jest-dom": "7.0.1",
@@ -39,6 +45,7 @@
     "eslint": "10.14.0",
     "eslint-config-next": "16.4.5",
     "jsdom": "31.0.0",
+    "meshoptimizer": "1.3.0",
     "prettier": "3.9.10",
     "serve": "14.2.7",
     "sharp": "0.35.5",

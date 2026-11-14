@@ -17,3 +17,6 @@ playwright-report/
 test-results/
 .lighthouseci/
 .env*
+
+# Phase 8: atlantis-demo is a local measuring build, never committed (the cleared Atlantis build and robot model are committed)
+public/games/atlantis-demo/

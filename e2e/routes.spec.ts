@@ -116,33 +116,69 @@ for (const route of ["/achievements/", "/projects/", "/say-hi/"]) {
 }
 
 // CONT-08 / CONT-04: the standalone deep dive keeps resume, contact and safe external links (also JS-off).
-const DEEP_DIVE = "/projects/facturo/";
+const DEEP_DIVES = [
+  "/projects/facturo/",
+  "/projects/atlantis/",
+  "/projects/robot/",
+];
 
-test(`${DEEP_DIVE} header links the resume and Say hi`, async ({ page }) => {
-  await page.goto(DEEP_DIVE);
-  const nav = page.locator("header nav");
+for (const deepDive of DEEP_DIVES) {
+  test(`${deepDive} header links the resume and Say hi`, async ({ page }) => {
+    await page.goto(deepDive);
+    const nav = page.locator("header nav");
+    await expect(
+      nav.getByRole("link", { name: site.resume.label, exact: true }),
+    ).toHaveAttribute("href", site.resume.href);
+    await expect(nav.getByRole("link", { name: "Say hi" })).toHaveAttribute(
+      "href",
+      "/say-hi/",
+    );
+  });
+
+  test(`${deepDive} external links are https with noopener noreferrer`, async ({
+    page,
+  }) => {
+    await page.goto(deepDive);
+    const links = page.locator('a[target="_blank"]');
+    const count = await links.count();
+    expect(count).toBeGreaterThan(0);
+    for (let i = 0; i < count; i++) {
+      const link = links.nth(i);
+      const href = (await link.getAttribute("href")) ?? "";
+      const rel = ((await link.getAttribute("rel")) ?? "").split(/\s+/);
+      expect(rel, href).toContain("noopener");
+      expect(rel, href).toContain("noreferrer");
+      expect(href).toMatch(/^https:\/\//);
+    }
+  });
+}
+
+// PROOF-01 / PROOF-02 with JS off: the stills, links and fallbacks carry the page.
+test("/projects/atlantis/ works without scripts: poster, gallery and links, no Play button", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium-nojs", "JS-off only");
+  await page.goto("/projects/atlantis/");
+  await expect(page.locator("h1")).toHaveCount(1);
   await expect(
-    nav.getByRole("link", { name: site.resume.label, exact: true }),
-  ).toHaveAttribute("href", site.resume.href);
-  await expect(nav.getByRole("link", { name: "Say hi" })).toHaveAttribute(
-    "href",
-    "/say-hi/",
+    page.locator("[data-game-slot] img, [data-game] img").first(),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Back to Projects" }).first(),
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Play Atlantis" })).toHaveCount(
+    0,
   );
 });
 
-test(`${DEEP_DIVE} external links are https with noopener noreferrer`, async ({
+test("/projects/robot/ works without scripts: still and links", async ({
   page,
-}) => {
-  await page.goto(DEEP_DIVE);
-  const links = page.locator('a[target="_blank"]');
-  const count = await links.count();
-  expect(count).toBeGreaterThan(0);
-  for (let i = 0; i < count; i++) {
-    const link = links.nth(i);
-    const href = (await link.getAttribute("href")) ?? "";
-    const rel = ((await link.getAttribute("rel")) ?? "").split(/\s+/);
-    expect(rel, href).toContain("noopener");
-    expect(rel, href).toContain("noreferrer");
-    expect(href).toMatch(/^https:\/\//);
-  }
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium-nojs", "JS-off only");
+  await page.goto("/projects/robot/");
+  await expect(page.locator("h1")).toHaveCount(1);
+  await expect(page.locator("[data-model] img").first()).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Back to Projects" }).first(),
+  ).toBeVisible();
 });

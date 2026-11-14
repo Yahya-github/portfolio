@@ -1,0 +1,35 @@
+/* Opening colour pictogram (08-UI-SPEC Color): one whole flat shape, static, project colour via --color-accent. */
+.mark {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(38vw, 720px);
+  height: var(--dive-band);
+  box-sizing: border-box;
+  padding-block: 4%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.svg {
+  display: block;
+  height: 100%;
+  width: auto;
+  aspect-ratio: 1;
+  fill: var(--color-accent);
+}
+
+@media (max-width: 820px) {
+  /* Phones: the pictogram is an in-flow band above the title, clear of the letter rail. */
+  .mark {
+    top: 0;
+    left: calc(var(--rail-col) + 8px - var(--grid-margin));
+    right: 0;
+    width: auto;
+    height: var(--dive-band);
+    justify-content: center;
+  }
+}
