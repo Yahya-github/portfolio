@@ -5,6 +5,8 @@ import type {
   ProofGate,
   RobotModel,
 } from "@/content/types";
+import { proofGate } from "@/content/proof-gate";
+import { robotModel } from "@/content/generated/robot-model";
 import {
   atlantisPlayable,
   publishProblems,
@@ -145,5 +147,11 @@ describe("publishProblems", () => {
     expect(
       publishProblems(gate("cleared", true, "cleared"), MODEL(true)),
     ).toEqual(["robot is cleared but the model is a placeholder"]);
+  });
+});
+
+describe("publish guard", () => {
+  it("is ready to publish", () => {
+    expect(publishProblems(proofGate, robotModel)).toEqual([]);
   });
 });
