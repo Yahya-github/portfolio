@@ -2,6 +2,7 @@ import type { CSSProperties, ReactNode } from "react";
 import dive from "@/components/deep-dive/deep-dive.module.css";
 import type { ProofRouteContent } from "@/content/types";
 import { displayFitStyle } from "@/lib/display-fit";
+import { ProjectMark } from "@/components/deep-dive/ProjectMark";
 import { ProofLinks } from "./ProofLinks";
 import styles from "./proof.module.css";
 
@@ -21,7 +22,10 @@ export function ProofRoute({
 }: ProofRouteProps) {
   const [lead, ...rest] = content.lines;
   return (
-    <article className={`grid dive-surface-${content.project} ${styles.body}`}>
+    <article
+      className={`grid dive-surface-${content.project} ${dive.hasMark} ${styles.body}`}
+    >
+      <ProjectMark project={content.project} />
       {/* The name sits on the h1: a two-word title must still be one transition name. */}
       <h1
         tabIndex={-1}

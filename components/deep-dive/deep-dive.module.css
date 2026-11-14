@@ -4,6 +4,16 @@
     calc(var(--grid-margin) + var(--rail-col));
 }
 
+.hasMark {
+  --dive-band: clamp(220px, 21vw, 360px);
+  position: relative;
+}
+
+.hasMark .title {
+  box-sizing: border-box;
+  min-height: var(--dive-band);
+}
+
 .title {
   grid-column: 1 / -1;
   padding-top: var(--space-lg);
@@ -138,6 +148,16 @@
 
   .main {
     padding-left: var(--grid-margin);
+  }
+
+  /* Room for the in-flow colour mark band above the title. */
+  .hasMark {
+    --dive-band: min(56vw, 300px);
+    padding-top: var(--dive-band);
+  }
+
+  .hasMark .title {
+    min-height: 0;
   }
 
   .titleWord {

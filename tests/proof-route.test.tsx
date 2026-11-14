@@ -58,6 +58,10 @@ describe("Atlantis route, playable", () => {
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
     expect(container.querySelectorAll("hr")).toHaveLength(1);
+    expect(container.querySelector("[data-mark]")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
   });
 
   it("makes no request to /games/ from src or href", () => {
