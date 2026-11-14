@@ -22,6 +22,11 @@ export const media = {
       width: 480,
       height: 251,
     },
+    {
+      src: "/media/achievements/crc-2026-trophies-960.webp",
+      width: 960,
+      height: 502,
+    },
   ],
   "achievements/crc-2026-trophies-grey": [
     {
@@ -49,6 +54,11 @@ export const media = {
       src: "/media/achievements/game-competition-2026-team-480.webp",
       width: 480,
       height: 312,
+    },
+    {
+      src: "/media/achievements/game-competition-2026-team-960.webp",
+      width: 960,
+      height: 623,
     },
   ],
   "achievements/game-competition-2026-team-grey": [

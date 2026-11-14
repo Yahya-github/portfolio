@@ -42,23 +42,23 @@ export const atlantis = {
   ],
   meta: ["Jan 2026", "Godot 4, team project", "In French"],
   poster: {
-    key: "atlantis/atlantis-01-grey",
+    key: "atlantis/atlantis-01",
     alt: "Atlantis gameplay, the title menu on a brushed-metal bulkhead with a porthole onto ruins, the ATLANTIS plate and the JOUER, TOUCHES and QUITTER buttons",
     caption: null,
   },
   gallery: [
     {
-      key: "atlantis/atlantis-02-grey",
+      key: "atlantis/atlantis-02",
       alt: "Atlantis gameplay, level 1 with the submarine at the centre of a rocky cave, a pressure gauge, an oxygen gauge and an inventory hint",
       caption: null,
     },
     {
-      key: "atlantis/atlantis-03-grey",
+      key: "atlantis/atlantis-03",
       alt: "Atlantis gameplay, the same level with the inventory panel open and four empty collectible slots",
       caption: null,
     },
     {
-      key: "achievements/game-competition-2026-team-grey",
+      key: "achievements/game-competition-2026-team",
       alt: teamPhotoAlt,
       caption:
         "The team at the Intercollegiate Video Game Creation Competition 2026",

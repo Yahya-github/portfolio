@@ -28,6 +28,7 @@ const ACHIEVEMENT_NAMES = [
   "diro-hackathon-2026-award",
   "game-competition-2026-team",
 ];
+const PROJECT_PAGE_PHOTOS = ["crc-2026-trophies", "game-competition-2026-team"];
 const FACTURO_FRAMES = [
   "01-accueil",
   "02-historique",
@@ -56,7 +57,8 @@ for (const n of ACHIEVEMENT_NAMES) {
   JOBS.push({
     key: `achievements/${n}`,
     input: `photos/${n}.jpg`,
-    widths: [480],
+    // the two project-page photos (team, trophies) also render in colour at 25vw on desktop
+    widths: PROJECT_PAGE_PHOTOS.includes(n) ? [480, 960] : [480],
     quality: 78,
   });
 }
