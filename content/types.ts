@@ -87,6 +87,7 @@ export interface Site {
     readonly github: string;
   };
   readonly shareCardAlt: string;
+  readonly seoTitle: string;
   readonly person: {
     readonly jobTitle: string;
     readonly affiliation: string;

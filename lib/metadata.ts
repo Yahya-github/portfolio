@@ -18,9 +18,25 @@ const OG_BASE = {
   images: [SHARE_IMAGE],
 };
 
+type Verification = NonNullable<Metadata["verification"]>;
+
+/** Search Console / Bing tokens come from env vars so they can be set without code changes; nothing renders when unset. */
+export function verificationFromEnv(
+  env: Readonly<Record<string, string | undefined>>,
+): Verification | undefined {
+  const google = env.NEXT_PUBLIC_GSC_VERIFICATION?.trim();
+  const bing = env.NEXT_PUBLIC_BING_VERIFICATION?.trim();
+  if (!google && !bing) return undefined;
+  return {
+    ...(google ? { google } : {}),
+    ...(bing ? { other: { "msvalidate.01": bing } } : {}),
+  };
+}
+
 export const rootMetadata: Metadata = {
   metadataBase: new URL(site.origin),
-  title: site.name,
+  title: site.seoTitle,
+  verification: verificationFromEnv(process.env),
   openGraph: { ...OG_BASE, url: "/" },
   twitter: { card: "summary_large_image", images: [SHARE_IMAGE] },
 };

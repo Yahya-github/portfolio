@@ -126,7 +126,7 @@ describe("SayHiPage", () => {
     for (const name of ["LinkedIn", "GitHub"]) {
       const link = screen.getByRole("link", { name });
       expect(link).toHaveAttribute("target", "_blank");
-      expect(link).toHaveAttribute("rel", "noopener noreferrer");
+      expect(link).toHaveAttribute("rel", "noopener noreferrer me");
     }
     for (const name of ["Email", "Resume (PDF)"]) {
       const link = screen.getByRole("link", { name });

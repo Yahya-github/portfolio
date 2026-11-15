@@ -6,7 +6,7 @@ import { SayHiSpiral } from "@/components/devices/SayHiSpiral";
 import { PageTitle } from "./Heading";
 import styles from "./say-hi-page.module.css";
 
-const EXTERNAL_REL = "noopener noreferrer";
+const EXTERNAL_REL = "noopener noreferrer me";
 
 export function SayHiPage() {
   return (
