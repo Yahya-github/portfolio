@@ -71,7 +71,9 @@ test("a link pages, then Back and Forward slide without a reload", async ({
   await page.goBack();
   await waitForLanded(page, before);
   expect(pathname(page)).toBe("/");
-  await expect(page).toHaveTitle("Yahya Hallani");
+  await expect(page).toHaveTitle(
+    "Yahya Hallani, Software Engineering Student at McGill",
+  );
   expect(
     await page.evaluate(
       () => (window as unknown as { __marker?: number }).__marker,
