@@ -6,8 +6,9 @@ import { sections, site } from "@/content/site";
 
 export const dynamic = "force-static";
 
-/** SEO-01 / D-10: the nine launch routes, no 404, no fake lastModified (launch plan). */
+/** SEO-01 / D-10: the nine launch routes, no 404. lastModified is the build date (static export, so it moves on every deploy). */
 export default function sitemap(): MetadataRoute.Sitemap {
+  const lastModified = new Date();
   return [
     ...sections.map((s) => s.route),
     facturo.route,
@@ -15,5 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     robot.route,
   ].map((route) => ({
     url: `${site.origin}${route}`,
+    lastModified,
   }));
 }

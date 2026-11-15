@@ -34,6 +34,7 @@ export const site = {
     github: "https://github.com/Yahya-github",
   },
   shareCardAlt: "Yahya Hallani, Software Engineering at McGill",
+  seoTitle: "Yahya Hallani, Software Engineering Student at McGill",
   person: {
     jobTitle: "Software Engineering student",
     affiliation: "McGill University",
@@ -47,7 +48,7 @@ export const sections = [
     letter: null,
     number: "00",
     name: "Index",
-    title: "Yahya Hallani",
+    title: site.seoTitle,
     description:
       "Yahya Hallani, Software Engineering at McGill. Competition results, projects and experience.",
   },

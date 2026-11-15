@@ -9,6 +9,7 @@ import {
   notFoundMetadata,
   pageMetadata,
   rootMetadata,
+  verificationFromEnv,
 } from "@/lib/metadata";
 import { sectionBySlug } from "@/lib/sections";
 
@@ -35,6 +36,34 @@ describe("rootMetadata", () => {
       card: "summary_large_image",
       images: [SHARE_IMAGE],
     });
+  });
+});
+
+describe("homepage title", () => {
+  it("names the person and the role", () => {
+    expect(pageMetadata("index").title).toBe(
+      "Yahya Hallani, Software Engineering Student at McGill",
+    );
+    expect(rootMetadata.title).toBe(pageMetadata("index").title);
+  });
+});
+
+describe("verificationFromEnv", () => {
+  it("renders nothing when no token is set", () => {
+    expect(verificationFromEnv({})).toBeUndefined();
+    expect(verificationFromEnv({ NEXT_PUBLIC_GSC_VERIFICATION: " " })).toBe(
+      undefined,
+    );
+    expect(rootMetadata.verification).toBeUndefined();
+  });
+
+  it("maps the Google and Bing tokens", () => {
+    expect(
+      verificationFromEnv({
+        NEXT_PUBLIC_GSC_VERIFICATION: "abc",
+        NEXT_PUBLIC_BING_VERIFICATION: "def",
+      }),
+    ).toEqual({ google: "abc", other: { "msvalidate.01": "def" } });
   });
 });
 

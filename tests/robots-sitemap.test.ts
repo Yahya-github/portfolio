@@ -27,9 +27,10 @@ describe("sitemap", () => {
     }
   });
 
-  it("carries no fake freshness", () => {
+  it("stamps every entry with the build date", () => {
     for (const e of entries) {
-      expect(e).not.toHaveProperty("lastModified");
+      expect(e.lastModified).toBeInstanceOf(Date);
+      expect(Number.isNaN((e.lastModified as Date).getTime())).toBe(false);
     }
   });
 });

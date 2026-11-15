@@ -1,7 +1,11 @@
 import { OPENING_SCRIPT } from "@/lib/first-visit/script";
 import { JS_FLAG_SCRIPT } from "@/lib/js-flag";
 import { rootMetadata } from "@/lib/metadata";
-import { personJsonLd, serialiseJsonLd } from "@/lib/structured-data";
+import {
+  personJsonLd,
+  serialiseJsonLd,
+  websiteJsonLd,
+} from "@/lib/structured-data";
 import { TRANSITION_SCRIPT } from "@/lib/transition/script";
 import { instrumentSans } from "./fonts";
 import "@/styles/tokens.css";
@@ -24,6 +28,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serialiseJsonLd(personJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serialiseJsonLd(websiteJsonLd) }}
         />
       </head>
       <body>{children}</body>

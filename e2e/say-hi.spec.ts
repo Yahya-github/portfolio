@@ -59,7 +59,7 @@ test("four ways to reach me", async ({ page }) => {
   await expect(lines.nth(3)).toHaveAttribute("href", site.resume.href);
   for (const i of [1, 2]) {
     await expect(lines.nth(i)).toHaveAttribute("target", "_blank");
-    await expect(lines.nth(i)).toHaveAttribute("rel", "noopener noreferrer");
+    await expect(lines.nth(i)).toHaveAttribute("rel", "noopener noreferrer me");
   }
 });
 

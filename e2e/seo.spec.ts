@@ -1,4 +1,4 @@
-// SEO-01 / SEO-02: per-route head metadata and Person JSON-LD in the built HTML.
+// SEO-01 / SEO-02: per-route head metadata and Person and WebSite JSON-LD in the built HTML.
 import { test, expect } from "@playwright/test";
 import { atlantis } from "../content/atlantis";
 import { atlantisBuild } from "../content/generated/atlantis-build";
@@ -78,10 +78,13 @@ for (const { route, title, description } of PAGES) {
     );
 
     const ld = head('script[type="application/ld+json"]');
-    await expect(ld).toHaveCount(1);
-    const raw = (await ld.textContent()) ?? "";
-    expect(JSON.parse(raw)["@type"]).toBe("Person");
-    expect(raw).not.toMatch(/telephone|address|email/);
+    await expect(ld).toHaveCount(2);
+    const raws = await ld.allTextContents();
+    expect(raws.map((r) => JSON.parse(r)["@type"])).toEqual([
+      "Person",
+      "WebSite",
+    ]);
+    expect(raws.join("")).not.toMatch(/telephone|address|email/);
   });
 }
 
@@ -95,7 +98,7 @@ test("404 carries the card and Person data but no canonical", async ({
   );
   await expect(
     page.locator('head script[type="application/ld+json"]'),
-  ).toHaveCount(1);
+  ).toHaveCount(2);
   await expect(page.locator("head link[rel=canonical]")).toHaveCount(0);
 });
 
